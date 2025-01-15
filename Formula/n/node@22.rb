@@ -1,8 +1,8 @@
 class NodeAT22 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v22.11.0/node-v22.11.0.tar.xz"
-  sha256 "bbf0297761d53aefda9d7855c57c7d2c272b83a7b5bad4fea9cb29006d8e1d35"
+  url "https://nodejs.org/dist/v22.13.0/node-v22.13.0.tar.xz"
+  sha256 "e50db6730716ba2ae953cf99d10c80295bd33bb72d3c829d9e99f6af56d626c7"
   license "MIT"
 
   livecheck do
@@ -11,12 +11,12 @@ class NodeAT22 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "49c1faf86ce77ef26345dd9c2f005839dd13491c71c125464fd028f5ec999530"
-    sha256 arm64_sonoma:  "5eeedf96a1c07d18c1ad6f8f19e503d193bf884c047ff387b7e3b4e966e73c40"
-    sha256 arm64_ventura: "83cef9f2dd852a0c7bdae73604bef7d9cc716319f591ca03e23a05d1b983ba47"
-    sha256 sonoma:        "2e00368aacc852f9693fd2e452a51d2b5fbbfb28299cb3b8dc39aa91158280d9"
-    sha256 ventura:       "5b1f5ddbfe5135908a0fa29a5895e746ff8121fddf1e5ba9464c5ffb5f143e59"
-    sha256 x86_64_linux:  "98af586420519db5648f5fb51a5dbcebd3ee0028b2bbbb151811f4a4d53cdb5d"
+    sha256 arm64_sequoia: "d977e2ee875b1faebc1a13d70b4d69a56d5942b024b1e1db6a57cda366a8a199"
+    sha256 arm64_sonoma:  "2da3d827f9171349163dbfca8633c14875a8798f75ff54bba9632992276b622f"
+    sha256 arm64_ventura: "70d5963616afba9cece88d5895508aa5b0ef528842b5b09c7225406c7f839475"
+    sha256 sonoma:        "07df64e9d73fd9955eb90170bb604355545fd598b46ebca39eafad819eb648ac"
+    sha256 ventura:       "5a60f44287f2f00ebf019e319bce2035cf490791e9292f3ef4d096b3bf87e267"
+    sha256 x86_64_linux:  "f70313fb80f2f214af76f17408ae6e08b36bfc2003ea3270611e42c2f3604bd1"
   end
 
   keg_only :versioned_formula
@@ -25,7 +25,7 @@ class NodeAT22 < Formula
   # disable! date: "2027-04-30", because: :unsupported
   deprecate! date: "2026-10-28", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.13" => :build
   depends_on "brotli"
   depends_on "c-ares"
@@ -46,14 +46,6 @@ class NodeAT22 < Formula
     cause <<~EOS
       error: calling a private constructor of class 'v8::internal::(anonymous namespace)::RegExpParserImpl<uint8_t>'
     EOS
-  end
-
-  fails_with gcc: "5"
-
-  # Backport support for ICU 76+
-  patch do
-    url "https://github.com/nodejs/node/commit/81517faceac86497b3c8717837f491aa29a5e0f9.patch?full_index=1"
-    sha256 "79a5489617665c5c88651a7dc364b8967bebdea5bdf361b85572d041a4768662"
   end
 
   def install

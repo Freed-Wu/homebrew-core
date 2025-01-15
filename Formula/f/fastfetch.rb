@@ -1,8 +1,8 @@
 class Fastfetch < Formula
   desc "Like neofetch, but much faster because written mostly in C"
   homepage "https://github.com/fastfetch-cli/fastfetch"
-  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.29.0.tar.gz"
-  sha256 "c3fcccf9502e41c76c30e89530820bf1c7719257e5624bfa5fa77e6627ecb602"
+  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.34.1.tar.gz"
+  sha256 "856920a6484a324088bbbcaf608555c74168078fd34cdbde4d3e4af88bc5cb5f"
   license "MIT"
   head "https://github.com/fastfetch-cli/fastfetch.git", branch: "dev"
 
@@ -12,19 +12,19 @@ class Fastfetch < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "0810a83c9da0060184eb37488283c5d87b4fa039b7528ba914ab6b0cee0bfee6"
-    sha256 arm64_sonoma:  "8b02406528c5df4562959df2b9762e7d38f2521d18ca2ca25857add9fcadc925"
-    sha256 arm64_ventura: "fa8231919977294dcaae05f01fbff22b4cd755e999fb6d0574bb17b106f4e040"
-    sha256 sonoma:        "e9e391867de7e2dac005899da24b2247a1565942e374e4c6b5c05bed2a1c5b81"
-    sha256 ventura:       "818bfbf4d9dd1e0006d0b98d9af6a939bdef68f1dcddf59b875b5aeeb4450f10"
-    sha256 x86_64_linux:  "cd826660507122be91350d45e9367cd6bc0eb93d5f74bcfbcbdc058a1a7d9529"
+    sha256 arm64_sequoia: "5b9721afb1ea40a6712c9d9b902b5f6424ecb2a834cba3a1b4b4d91745954d75"
+    sha256 arm64_sonoma:  "d7bf793f29124a0591c6bdbd54d5ae7b9f9d74a4688c1f48108ca84e80754dd6"
+    sha256 arm64_ventura: "d8b9f4c84a94899c1d3f062df66424095d502550d8e930f9b2fceeedc49307fd"
+    sha256 sonoma:        "e5efc3b559b7205f3a1fff9ec9af37f2793cab8660c51fdf84ed387380539e42"
+    sha256 ventura:       "e3a23d0d0587b059ab2405a2431d9de923440319eecbc43a39de2f21e1655223"
+    sha256 x86_64_linux:  "8e572f0603580837251f61e07d19fe9a9fb12d41fa515fcf916d9b9192445f7e"
   end
 
   depends_on "chafa" => :build
   depends_on "cmake" => :build
   depends_on "glib" => :build
   depends_on "imagemagick" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.13" => :build
   depends_on "vulkan-loader" => :build
 
@@ -48,7 +48,11 @@ class Fastfetch < Formula
   end
 
   def install
-    system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_SYSCONFDIR=#{etc}", *std_cmake_args
+    args = %W[
+      -DCMAKE_INSTALL_SYSCONFDIR=#{etc}
+      -DDBUILD_FLASHFETCH=OFF
+    ]
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
     bash_completion.install share/"bash-completion/completions/fastfetch"

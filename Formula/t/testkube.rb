@@ -1,8 +1,8 @@
 class Testkube < Formula
   desc "Kubernetes-native framework for test definition and execution"
   homepage "https://testkube.io"
-  url "https://github.com/kubeshop/testkube/archive/refs/tags/v2.1.59.tar.gz"
-  sha256 "791d52906b27848b2c12f2510488eaf5406c34bd0734a019e3c7ee4cee8c6bd7"
+  url "https://github.com/kubeshop/testkube/archive/refs/tags/v2.1.85.tar.gz"
+  sha256 "0e95a8f03c6e4f6f4058d0377f5ed9ecaf77f7e139756773ba2fe612fcb4b51b"
   license "MIT"
   head "https://github.com/kubeshop/testkube.git", branch: "main"
 
@@ -12,12 +12,12 @@ class Testkube < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f7ff00fe8b48c4d2497d26286e24a2e8fd6d39bb16424cde60fa88ec2021badd"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f7ff00fe8b48c4d2497d26286e24a2e8fd6d39bb16424cde60fa88ec2021badd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "f7ff00fe8b48c4d2497d26286e24a2e8fd6d39bb16424cde60fa88ec2021badd"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e21b5c2b7044036433505efcb52530ee7c692f4eb0ebcdb8e111f378aacae12a"
-    sha256 cellar: :any_skip_relocation, ventura:       "e21b5c2b7044036433505efcb52530ee7c692f4eb0ebcdb8e111f378aacae12a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b6c66d72a1c2946f1b8d7628ff54a934e8cb8612795efa99a33cc5269a838e0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9640762c29e9f8cf70c487ef830401396520a05f2cf68b3aef235b2ece327deb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9640762c29e9f8cf70c487ef830401396520a05f2cf68b3aef235b2ece327deb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "9640762c29e9f8cf70c487ef830401396520a05f2cf68b3aef235b2ece327deb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bf76af539362bd564e5c83f337393a0329cdecb21f899bc280a9d159ce7cbcbc"
+    sha256 cellar: :any_skip_relocation, ventura:       "bf76af539362bd564e5c83f337393a0329cdecb21f899bc280a9d159ce7cbcbc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9196f3ad9a370c4ccc522c4640149c13f21e40b53da9440c219fb4d7d36263e5"
   end
 
   depends_on "go" => :build
@@ -25,15 +25,9 @@ class Testkube < Formula
   depends_on "kubernetes-cli"
 
   def install
-    ldflags = %W[
-      -s -w
-      -X main.version=#{version}
-      -X main.builtBy=#{tap.user}
-    ]
+    ldflags = "-s -w -X main.version=#{version} -X main.builtBy=#{tap.user}"
 
-    system "go", "build", *std_go_args(output: bin/"kubectl-testkube", ldflags:),
-      "cmd/kubectl-testkube/main.go"
-
+    system "go", "build", *std_go_args(ldflags:, output: bin/"kubectl-testkube"), "./cmd/kubectl-testkube"
     bin.install_symlink "kubectl-testkube" => "testkube"
 
     generate_completions_from_executable(bin/"kubectl-testkube", "completion")

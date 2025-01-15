@@ -1,24 +1,27 @@
 class Srgn < Formula
   desc "Code surgeon for precise text and code transplantation"
   homepage "https://github.com/alexpovel/srgn"
-  url "https://github.com/alexpovel/srgn/archive/refs/tags/srgn-v0.13.3.tar.gz"
-  sha256 "cdddd6d0ec47a80ea28fc7eb411e1723e355e08ffad0369436d9f192d96382d0"
+  url "https://github.com/alexpovel/srgn/archive/refs/tags/srgn-v0.13.4.tar.gz"
+  sha256 "778766769b9c7845b6f24cb25c940f675c8634b3ba58bf1c552c717a12fe0ead"
   license "MIT"
   head "https://github.com/alexpovel/srgn.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "304dd4a56843b5b49a95a670c0e00f07d3b22acace8c7e330b915416f6a42f9f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a4f83e54ce024d8405f6c6d8f9523db92d3606270ff4796759fe0d35bf121878"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a96530c09fd92185ce00feeb1089fd7a43fa22f9f1709e5dc95b132ea336b403"
-    sha256 cellar: :any_skip_relocation, sonoma:        "dbe89f765057f30a44e94b8884f8fabeeda474e5a6bbc4dc6f7a5e133aacbafc"
-    sha256 cellar: :any_skip_relocation, ventura:       "d4dd6e71b39d8416c372f2da33b1d1a329b56abce337db6360dbabacd645e1b1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "affffc04ea97de3578ecee3aeaac4a18e94dea2f7944883cbdc5da3732712a36"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a076d8eb261a0e155f3831f12e3fa9c20d2fb55f21956511bd8709e76069c217"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "486b86d4e32bfe9bc328228770cebbeff554e13f4c47c51507611abca172ecb3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3024bb99bc151548d81b9209827098f69ac8ac4443df3cb8826c964ad6e1ccb9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "48c2a28bf3f26aff4691d7ff96174ff0d2d61c31e657789fb0ebe7c98d56b1ad"
+    sha256 cellar: :any_skip_relocation, ventura:       "7da2e134ada2cc0b4b0d0bcc3169553c29969b3c7de82e2ae020383271489c05"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a4b732ae9590d4d030261cb94737cb2e7db15dc6fce6bf7eee9a41ea0cd5c960"
   end
 
   depends_on "rust" => :build
 
   def install
     system "cargo", "install", *std_cargo_args
+
+    generate_completions_from_executable(bin/"srgn", "--completions")
   end
 
   test do

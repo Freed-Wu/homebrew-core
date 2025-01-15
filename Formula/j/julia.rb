@@ -3,9 +3,10 @@ class Julia < Formula
   homepage "https://julialang.org/"
   # Use the `-full` tarball to avoid having to download during the build.
   # TODO: Check if we can unbundle `curl`: https://github.com/JuliaLang/Downloads.jl/issues/260
-  url "https://github.com/JuliaLang/julia/releases/download/v1.11.1/julia-1.11.1-full.tar.gz"
-  sha256 "a49b804de6e86a03fe26c73f58851eaee1ff243d7204f2b5ae4dbc5c1dc2758d"
+  url "https://github.com/JuliaLang/julia/releases/download/v1.11.2/julia-1.11.2-full.tar.gz"
+  sha256 "a7365b969944f27df0d8563716ca9769e07f3f77b9f9fbb48bcd114ddf752ca4"
   license all_of: ["MIT", "BSD-3-Clause", "Apache-2.0", "BSL-1.0"]
+  revision 1
   head "https://github.com/JuliaLang/julia.git", branch: "master"
 
   # Upstream creates GitHub releases for both stable and LTS versions, so the
@@ -18,12 +19,12 @@ class Julia < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "3b2539c87cfe9806329260581fc67be5bc2c86ea093e1e51a06ca180a11e31ed"
-    sha256 cellar: :any,                 arm64_sonoma:  "4cc98c936169dcc782b9c25c33c2ed2970a15472c19196ece265c73c695f7d0e"
-    sha256 cellar: :any,                 arm64_ventura: "030f65d72a6defa11b745578c309204e0524256ff4bdbf3dfba014abb28774d3"
-    sha256 cellar: :any,                 sonoma:        "8729de1cbe4595e6410284e7806dbe32868cf1aa58b5aaec1b53e9f1f2836bd6"
-    sha256 cellar: :any,                 ventura:       "4a84666af1dc53c87a29c6d717601626190f6137166d3029ecc060d7f54797d0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c202ab099227ac14559c988c050b92a8a1a346c9796141e418839686fa05ebf8"
+    sha256                               arm64_sequoia: "e99f73e9dcbfa534e6714e425bee4a3901e23052d2de2265a91d43532791fedb"
+    sha256 cellar: :any,                 arm64_sonoma:  "e059eb30c2fbc23a7dd674a6364f1080dff6139007e8a0a66087a319f5ce569f"
+    sha256 cellar: :any,                 arm64_ventura: "6c2ec071b4efddd94350904200996c2731a99409f6f80f066192b71e03bb6ced"
+    sha256 cellar: :any,                 sonoma:        "99847aae7ecc8b0aead8c11a1a9719fafcc50444e0f8745995cb8d1e9f71bf55"
+    sha256 cellar: :any,                 ventura:       "156c1e9f1771ae3944adaccf5db2a1ba46c2f4ae84fd2a4fb150bac201513256"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a15ebfd5262883df6bc6ac59725a8e2d07741f6c1b5dfe2fb6ef26bce90e57ae"
   end
 
   depends_on "cmake" => :build # Needed to build LLVM
@@ -34,7 +35,7 @@ class Julia < Formula
   # TODO: depends_on "curl"
   depends_on "gmp"
   depends_on "libblastrampoline"
-  depends_on "libgit2"
+  depends_on "libgit2@1.8"
   depends_on "libnghttp2"
   depends_on "libssh2"
   depends_on "mbedtls@2"
@@ -59,10 +60,11 @@ class Julia < Formula
   conflicts_with "juliaup", because: "both install `julia` binaries"
 
   # Link against libgcc_s.1.1.dylib, not libgcc_s.1.dylib
-  # https://github.com/JuliaLang/julia/issues/48056
+  # https://github.com/JuliaLang/julia/pull/56965#event-15826575851
+  # Remove in 1.12
   patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/202ccbabd44bd5ab02fbdee2f51f87bb88d74417/julia/libgcc_s-1.8.5.diff"
-    sha256 "1eea77d8024ad8bc9c733a0e0770661bc08228d335b20c4696350ed5dfdab29a"
+    url "https://github.com/JuliaLang/julia/commit/75cdffeb0f37b438950534712755a4f7cebbdd8c.patch?full_index=1"
+    sha256 "7b62554131a2627c70570b800c8fea35048e863ba2e11fc6c93d6fe26920cda8"
   end
 
   def install
@@ -236,14 +238,14 @@ class Julia < Formula
                           name.start_with?("sys", "libjulia-internal", "libccalltest")
                         end
 
-    (testpath/"library_test.jl").write <<~EOS
+    (testpath/"library_test.jl").write <<~JULIA
       using Libdl
       libraries = #{libs}
       for lib in libraries
         handle = dlopen(lib)
         @assert dlclose(handle) "Unable to close $(lib)!"
       end
-    EOS
+    JULIA
     system bin/"julia", *args, "library_test.jl"
   end
 end

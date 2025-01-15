@@ -1,8 +1,8 @@
 class StorjUplink < Formula
   desc "Uplink CLI for the Storj network"
   homepage "https://storj.io"
-  url "https://github.com/storj/storj/archive/refs/tags/v1.116.5.tar.gz"
-  sha256 "58c94ffc34ad92c9b1178295983d9eb240486946bedcd9132dc85cf1dfcf3e9b"
+  url "https://github.com/storj/storj/archive/refs/tags/v1.120.3.tar.gz"
+  sha256 "2eaa9ee583046f7bda4f7bb603192bde1324f86c917ef800248662f64093fde8"
   license "AGPL-3.0-only"
 
   # Upstream creates stable releases and marks them as "pre-release" before
@@ -18,25 +18,25 @@ class StorjUplink < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8dda1a8adbd10a6dbd58aec6eb7238f76192b91d56a05f835762d135b7d4d560"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8dda1a8adbd10a6dbd58aec6eb7238f76192b91d56a05f835762d135b7d4d560"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "8dda1a8adbd10a6dbd58aec6eb7238f76192b91d56a05f835762d135b7d4d560"
-    sha256 cellar: :any_skip_relocation, sonoma:        "4a90a201e33761c1e717cc03bdd5ee97d1910513495f3a73c27b2c22b4f6048d"
-    sha256 cellar: :any_skip_relocation, ventura:       "4a90a201e33761c1e717cc03bdd5ee97d1910513495f3a73c27b2c22b4f6048d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2331be1e2318a8480510840eb3b67249247a2b5801ca79483750558826f3ddf7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "db03a3e3fd21091b158d48015a1baae25d43a5bdfe8ac80b45092e5e04751831"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "db03a3e3fd21091b158d48015a1baae25d43a5bdfe8ac80b45092e5e04751831"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "db03a3e3fd21091b158d48015a1baae25d43a5bdfe8ac80b45092e5e04751831"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bc2035cee94f532d67846b78c784f10cb6894ce131394e94549439bbf3b7608f"
+    sha256 cellar: :any_skip_relocation, ventura:       "bc2035cee94f532d67846b78c784f10cb6894ce131394e94549439bbf3b7608f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "da0b963516b8af5d90adb46de47de4c94cd684b8497c79e6cc7eb3c2ba491af6"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args(output: bin/"uplink"), "./cmd/uplink"
+    system "go", "build", *std_go_args(ldflags: "-s -w", output: bin/"uplink"), "./cmd/uplink"
   end
 
   test do
-    (testpath/"config.ini").write <<~EOS
+    (testpath/"config.ini").write <<~INI
       [metrics]
       addr=
-    EOS
+    INI
     ENV["UPLINK_CONFIG_DIR"] = testpath.to_s
     ENV["UPLINK_INTERACTIVE"] = "false"
     assert_match "No accesses configured", shell_output("#{bin}/uplink ls 2>&1", 1)

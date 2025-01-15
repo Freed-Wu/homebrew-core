@@ -1,10 +1,9 @@
 class GitSvn < Formula
   desc "Bidirectional operation between a Subversion repository and Git"
   homepage "https://git-scm.com"
-  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.47.0.tar.xz"
-  sha256 "1ce114da88704271b43e027c51e04d9399f8c88e9ef7542dae7aebae7d87bc4e"
+  url "https://mirrors.edge.kernel.org/pub/software/scm/git/git-2.48.1.tar.xz"
+  sha256 "1c5d545f5dc1eb51e95d2c50d98fdf88b1a36ba1fa30e9ae5d5385c6024f82ad"
   license "GPL-2.0-only"
-  revision 1
   head "https://github.com/git/git.git", branch: "master"
 
   livecheck do
@@ -12,12 +11,12 @@ class GitSvn < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "017b7d9a97446224f44c0be02e93d8d7716e3d23a8b475e6db54e0d31a5a9615"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "017b7d9a97446224f44c0be02e93d8d7716e3d23a8b475e6db54e0d31a5a9615"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "dd55e3ea4758a20fc8d7ed8ec35bf52ed750361e567ba540b6b00dfaefc6b7ab"
-    sha256 cellar: :any_skip_relocation, sonoma:        "017b7d9a97446224f44c0be02e93d8d7716e3d23a8b475e6db54e0d31a5a9615"
-    sha256 cellar: :any_skip_relocation, ventura:       "dd55e3ea4758a20fc8d7ed8ec35bf52ed750361e567ba540b6b00dfaefc6b7ab"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "510c822204b3fdcbf35ea5fe0536d0fe8b6a3de8b02ac3fa3773990c8bd7af66"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8945f482dda309468e921266bb80a9418602d43aac686f842621dfb47b8348d7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8945f482dda309468e921266bb80a9418602d43aac686f842621dfb47b8348d7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4de67e0698cd8f91e7edb5899d6f1a15b761897fed1b931a3848093069b09d60"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8945f482dda309468e921266bb80a9418602d43aac686f842621dfb47b8348d7"
+    sha256 cellar: :any_skip_relocation, ventura:       "4de67e0698cd8f91e7edb5899d6f1a15b761897fed1b931a3848093069b09d60"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7b495bebe6a4b5f0bd571a09f0e2ba16849f669bfd11704e83df69ba781a2baa"
   end
 
   depends_on "git"

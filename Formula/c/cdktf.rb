@@ -1,23 +1,21 @@
 class Cdktf < Formula
   desc "Cloud Development Kit for Terraform"
   homepage "https://github.com/hashicorp/terraform-cdk"
-  url "https://registry.npmjs.org/cdktf-cli/-/cdktf-cli-0.20.8.tgz"
-  sha256 "69e4fe68d4c08bef7702f711143129ba8c58f71ef768f380dafc1981987f55e1"
+  url "https://registry.npmjs.org/cdktf-cli/-/cdktf-cli-0.20.11.tgz"
+  sha256 "d540d7528bf60e2021137eeb0ea3182b097b76c9ca3dd8e80168926f6e9da70d"
   license "MPL-2.0"
 
   bottle do
-    sha256                               arm64_sequoia: "29f9252c836e8e13e4ea97f2249b13ccb1533fc1d7424b74896bc0a68ea56783"
-    sha256                               arm64_sonoma:  "9a952f8e2eb5a172087916efef210c28df9e99677e0e9315d472cd3c23a80672"
-    sha256                               arm64_ventura: "48c6a39648dcfa2bf9970625adef03a2c13c5b86753b39428a1729421c9d0ac7"
-    sha256                               sonoma:        "ee958ef4377d9cb4a8426cd3ef63f0f10c48af27619ad13784fb9132374bccf1"
-    sha256                               ventura:       "605b00c5de6da561ef2272a535d84dd4879d741880e7db54238a1b7c51f1d10a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5ac4a9ad9c8e608bae4efd4c65fe35ce6635c511e2843110ca5adf47a8e7cce8"
+    sha256                               arm64_sequoia: "d9c05950fee5fa8000d1f010b6eaad577ac5aa5f419c10f0ca813bd2c311a6aa"
+    sha256                               arm64_sonoma:  "fbb32788c4d64e507bf8a90bf7b902c3a093661fc3e3aff08b4c29a7c96dd564"
+    sha256                               arm64_ventura: "a886206a94a0b6048f75134526ce52e7c14e02d31b7e1c1d1a9c02b8b60a316b"
+    sha256                               sonoma:        "185177f5904e445b7294fd3301ef9c10abfb1d55641db567c485e75b94acbf8d"
+    sha256                               ventura:       "fc4eb723bdd5415ad33ea1d1cec829346aadba4632fd227f92f4f74fc6d5f0f5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "924796822602c0d54f866e3ef7e7ac625e1b8032d4a1db054093a7b8e87e169d"
   end
 
-  deprecate! date: "2024-03-13", because: "uses soon-to-be deprecated terraform"
-
+  depends_on "opentofu" => :test
   depends_on "node"
-  depends_on "terraform"
 
   def install
     system "npm", "install", *std_npm_args
@@ -36,6 +34,8 @@ class Cdktf < Formula
   end
 
   test do
+    ENV["TERRAFORM_BINARY_NAME"] = "tofu"
+
     touch "unwanted-file"
     output = shell_output("#{bin}/cdktf init --template='python' 2>&1", 1)
     assert_match "ERROR: Cannot initialize a project in a non-empty directory", output

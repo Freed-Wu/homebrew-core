@@ -1,17 +1,17 @@
 class AwsAmplify < Formula
   desc "Build full-stack web and mobile apps in hours. Easy to start, easy to scale"
-  homepage "https://aws.amazon.com/amplify"
-  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.13.0.tgz"
-  sha256 "ab866b12ca7c686feb551fe2f9abc56b889192dba1cb1d1e03d6f42af0410d70"
+  homepage "https://aws.amazon.com/amplify/"
+  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.14.0.tgz"
+  sha256 "7e9a40e4327d78dce4780ad4cffa1fbe571ee35b6e7dfcb16874452fb1feaad6"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, sonoma:        "279e981881421d053d92f81891d6fdbd4790a6f50f8de5c18313cffe21e52de1"
-    sha256 cellar: :any_skip_relocation, ventura:       "279e981881421d053d92f81891d6fdbd4790a6f50f8de5c18313cffe21e52de1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1f74450b24f282297347a77e999bba503ad0d21c99601d6ea03cf598dec63881"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6f247b7c3a967bea5201d82a917be2c935af8ca3720634690f7073141de77914"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6f247b7c3a967bea5201d82a917be2c935af8ca3720634690f7073141de77914"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6f247b7c3a967bea5201d82a917be2c935af8ca3720634690f7073141de77914"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d3ea406301b4bc6aeb7a23745f9a046cf0c059ec8f2acd9272f0f72e2acd33ee"
+    sha256 cellar: :any_skip_relocation, ventura:       "d3ea406301b4bc6aeb7a23745f9a046cf0c059ec8f2acd9272f0f72e2acd33ee"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7ac61d6b75d47bc42f98e4e838d6882afaa3000a735ebf6731992753756e86f1"
   end
 
   depends_on "node"

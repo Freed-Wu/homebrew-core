@@ -1,27 +1,39 @@
 class Sheldon < Formula
   desc "Fast, configurable, shell plugin manager"
   homepage "https://sheldon.cli.rs"
-  url "https://github.com/rossmacarthur/sheldon/archive/refs/tags/0.8.0.tar.gz"
-  sha256 "71c6c27b30d1555e11d253756a4fce515600221ec6de6c06f9afb3db8122e5b5"
   license any_of: ["Apache-2.0", "MIT"]
+  revision 2
   head "https://github.com/rossmacarthur/sheldon.git", branch: "trunk"
 
-  bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "cef072269673d984ad6652c14124942d829d6c09ae97e717d044b12950fae909"
-    sha256 cellar: :any,                 arm64_sonoma:   "92282f5ae930b2bab08f86cf2baaffb54eb88c94847b5c1abd29a08addf9007d"
-    sha256 cellar: :any,                 arm64_ventura:  "2224e9f9e5ddcf6239dfe92b269ef06d942c4cd5d548dcd31d1d235fe03617e5"
-    sha256 cellar: :any,                 arm64_monterey: "7f7f7970cf7c2fcd1b10972db6ac9a2ce1fe98114d051158d775c92986cd8e1e"
-    sha256 cellar: :any,                 sonoma:         "3a40d9b78e571efbff661f8e19f61bad8d2337c120395489a7ac1d530b88a552"
-    sha256 cellar: :any,                 ventura:        "9741bf2aaa1e807893582ace21f69a93f529633d9641022accd890e58eb65bd6"
-    sha256 cellar: :any,                 monterey:       "053bd969792bf0ff6ab3c8b7447bc15e1fb787cb1e51312b9aa54e4d47e1b168"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "484a82b6474cbc25d40ce7a9a3f0fd562438fb6dbd218bc3e0d856167235a4a5"
+  stable do
+    url "https://github.com/rossmacarthur/sheldon/archive/refs/tags/0.8.0.tar.gz"
+    sha256 "71c6c27b30d1555e11d253756a4fce515600221ec6de6c06f9afb3db8122e5b5"
+
+    # libgit2 1.9 patch, upstream pr ref, https://github.com/rossmacarthur/sheldon/pull/192
+    patch do
+      url "https://github.com/rossmacarthur/sheldon/commit/7a195493252ca908b88b5ddd82dd0fe5ce4ab811.patch?full_index=1"
+      sha256 "45432a98ab2e8dbd772e083a826e883ee0a2de3958bda2ea518b31fab91cd9f0"
+    end
   end
 
-  depends_on "pkg-config" => :build
+  bottle do
+    sha256 cellar: :any,                 arm64_sequoia: "875da89f7f77f5732a41cf11d9e07b910c83df53308e15db903cd8a94db399d2"
+    sha256 cellar: :any,                 arm64_sonoma:  "184896fd71f1b89f52b938b00b11a3a970b6686f169a4901de096eb62b6394e6"
+    sha256 cellar: :any,                 arm64_ventura: "3c2e0757902ea633afc098891c7d0dffc180ac777d204914010bf0a90e979e9b"
+    sha256 cellar: :any,                 sonoma:        "99d2d886fe8e349ec5fb9e94fabdf4c0d745ac691ff9523e0ab5aa38abf49141"
+    sha256 cellar: :any,                 ventura:       "364a7a195e5bdabaf3b3a4f792e3d7cd81fc7179b10a8398c71c51e814963d80"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a0926421d405a3141ab5fefc7370874c51705d728900bfc25a5f3e105f846b2"
+  end
+
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
-  depends_on "curl"
   depends_on "libgit2"
   depends_on "openssl@3"
+
+  # curl-config on ventura builds do not report http2 feature,
+  # see discussions in https://github.com/Homebrew/homebrew-core/pull/197727
+  # FIXME: We should be able to use macOS curl on Ventura, but `curl-config` is broken.
+  uses_from_macos "curl", since: :sonoma
 
   def install
     # Ensure the declared `openssl@3` dependency will be picked up.
@@ -49,14 +61,16 @@ class Sheldon < Formula
   test do
     touch testpath/"plugins.toml"
     system bin/"sheldon", "--config-dir", testpath, "--data-dir", testpath, "lock"
-    assert_predicate testpath/"plugins.lock", :exist?
+    assert_path_exists testpath/"plugins.lock"
 
-    [
+    libraries = [
       Formula["libgit2"].opt_lib/shared_library("libgit2"),
-      Formula["curl"].opt_lib/shared_library("libcurl"),
       Formula["openssl@3"].opt_lib/shared_library("libssl"),
       Formula["openssl@3"].opt_lib/shared_library("libcrypto"),
-    ].each do |library|
+    ]
+    libraries << (Formula["curl"].opt_lib/shared_library("libcurl")) if OS.linux?
+
+    libraries.each do |library|
       assert check_binary_linkage(bin/"sheldon", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."
     end

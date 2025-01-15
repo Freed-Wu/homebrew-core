@@ -1,8 +1,8 @@
 class FleetCli < Formula
   desc "Manage large fleets of Kubernetes clusters"
   homepage "https://github.com/rancher/fleet"
-  url "https://github.com/rancher/fleet/archive/refs/tags/v0.10.4.tar.gz"
-  sha256 "425fb5aec5e7526bc90064f9ae64777a457f663a6aaeaf175bef2b6015a7f02c"
+  url "https://github.com/rancher/fleet/archive/refs/tags/v0.11.2.tar.gz"
+  sha256 "9ad494ac11a282c23153fbcb393367f3b4f4806f919ac52a6704118f311835a9"
   license "Apache-2.0"
   head "https://github.com/rancher/fleet.git", branch: "master"
 
@@ -12,12 +12,12 @@ class FleetCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b877afedf6b9e584a53817770b49184be81b17017c7270a85756271335100a32"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ac313f0d1b62d6780ffe032746d819f0002ea45bd64f0579e3c7f90229d2291a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "ef590cc9cbf7699e03fd64b76e2053448b4e4b7aaa9f69cf3903588d4e57ea75"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5ef5f6c9f3c77652ff43768e690eeeb84d2c47a342f4c2530cd48be5165bb129"
-    sha256 cellar: :any_skip_relocation, ventura:       "46e6f09d4238ae29b1cee4c60ad060fe791a367a2121da8ff705c70f20d0ee4d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8356e1eca75075deafbb8cd11a2d362e1326346819c212d182796f7402e4f9b9"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "942ddd88af660584ba21760a0231ae76ed624806fb57ec46b4c40a99c7db1d7e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "78007a98c38816c919e822bdca8a3a6ca5eabcdbe13c7f636ea5f4e404a706a5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "711834d74b3dd114676cc65079b708c74fccf21be5beae194c1029036d952c32"
+    sha256 cellar: :any_skip_relocation, sonoma:        "db9e5b38e093fc30bd73bde4cb7a7e981da1108ac4a20d276473bd0aaf55ecee"
+    sha256 cellar: :any_skip_relocation, ventura:       "dc1b38e62cbcf6f72553d42a3cbb96f6bd836b8edae1e9b3772ddacf0237f340"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c2867b658833b43939e175000dafd8e6277c145164560b13f5c87089c3d9ab56"
   end
 
   depends_on "go" => :build
@@ -30,7 +30,7 @@ class FleetCli < Formula
     ]
     system "go", "build", *std_go_args(output: bin/"fleet", ldflags:), "./cmd/fleetcli"
 
-    generate_completions_from_executable(bin/"fleet", "completion", base_name: "fleet")
+    generate_completions_from_executable(bin/"fleet", "completion")
   end
 
   test do

@@ -18,7 +18,7 @@ class Ormolu < Formula
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc" => :build
+  depends_on "ghc@9.10" => :build # GHC 9.12 PR: https://github.com/tweag/ormolu/pull/1140
 
   def install
     system "cabal", "v2-update"
@@ -26,7 +26,7 @@ class Ormolu < Formula
   end
 
   test do
-    (testpath/"test.hs").write <<~EOS
+    (testpath/"test.hs").write <<~HASKELL
       foo =
         f1
         p1
@@ -40,8 +40,8 @@ class Ormolu < Formula
       foo'' =
         f3 p1 p2
         p3
-    EOS
-    expected = <<~EOS
+    HASKELL
+    expected = <<~HASKELL
       foo =
         f1
           p1
@@ -59,7 +59,7 @@ class Ormolu < Formula
           p1
           p2
           p3
-    EOS
+    HASKELL
     assert_equal expected, shell_output("#{bin}/ormolu test.hs")
   end
 end

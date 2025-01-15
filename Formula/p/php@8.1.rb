@@ -2,11 +2,10 @@ class PhpAT81 < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.1.30.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.1.30.tar.xz"
-  sha256 "f24a6007f0b25a53cb7fbaee69c85017e0345b62089c2425a0afb7e177192ed1"
+  url "https://www.php.net/distributions/php-8.1.31.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.1.31.tar.xz"
+  sha256 "c4f244d46ba51c72f7d13d4f66ce6a9e9a8d6b669c51be35e01765ba58e7afca"
   license "PHP-3.01"
-  revision 2
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -14,12 +13,13 @@ class PhpAT81 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "836259e2119ea3f9c30b40685f85b5c3471c70037e05c4c2e08d454eebc0de61"
-    sha256 arm64_sonoma:  "fbb4050b4c60e34ef0dd5d84bdfa0e1bd6fc524d3065795fe6bea653f5d7ec41"
-    sha256 arm64_ventura: "ffa827dd8d987ffe82c3bcf35b022624062ab5aa9f6df2311af7acb17e671670"
-    sha256 sonoma:        "a67ab5f8b0f1a668200232c2d98d599a4da105c8be8958f58f88d2041e6c4a19"
-    sha256 ventura:       "e16b9823b0db3fc8944896d6fda566addbfa5161aee0c8d474bd377e71532320"
-    sha256 x86_64_linux:  "cce0f4e37bd479b860ce444af543f52b87efb0a9e046ff8208658085bf566aa0"
+    rebuild 1
+    sha256 arm64_sequoia: "91f378070315f79e3ea29844fdb760b7c78aa0a3d7ee8b781c0580a6b7a9545e"
+    sha256 arm64_sonoma:  "6ee70538bb6f56be0498bf507f6ba97c15b81d391e3943bee2cf9689bdb11829"
+    sha256 arm64_ventura: "e209c206738287ca105874ebe5fbfaf2a00f0f374ceca12b39033f830b18246c"
+    sha256 sonoma:        "5c6a7694fb43f99910e2dc33f2a6c2f3fad4cfd2f121b2c7ee8750c1f6f75bba"
+    sha256 ventura:       "fd351cb3f3df68e0455be9ffabf287c97f7ba2090fc5f4467d76d3421399c03f"
+    sha256 x86_64_linux:  "ffbf178e5f53e44970e81ef9ea0f3bd65c94849cb53a141822584896fc668ccc"
   end
 
   keg_only :versioned_formula
@@ -29,7 +29,7 @@ class PhpAT81 < Formula
   deprecate! date: "2025-12-31", because: :unsupported
 
   depends_on "httpd" => [:build, :test]
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "apr"
   depends_on "apr-util"
   depends_on "argon2"
@@ -120,6 +120,9 @@ class PhpAT81 < Formula
 
     # Prevent homebrew from hardcoding path to sed shim in phpize script
     ENV["lt_cv_path_SED"] = "sed"
+
+    # Identify build provider in phpinfo()
+    ENV["PHP_BUILD_PROVIDER"] = tap.user
 
     # system pkg-config missing
     ENV["KERBEROS_CFLAGS"] = " "
@@ -367,11 +370,11 @@ class PhpAT81 < Formula
       port_fpm = free_port
 
       expected_output = /^Hello world!$/
-      (testpath/"index.php").write <<~EOS
+      (testpath/"index.php").write <<~PHP
         <?php
         echo 'Hello world!' . PHP_EOL;
         var_dump(ldap_connect());
-      EOS
+      PHP
       main_config = <<~EOS
         Listen #{port}
         ServerName localhost:#{port}

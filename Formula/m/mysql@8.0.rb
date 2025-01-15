@@ -4,7 +4,7 @@ class MysqlAT80 < Formula
   url "https://cdn.mysql.com/Downloads/MySQL-8.0/mysql-boost-8.0.40.tar.gz"
   sha256 "eb34a23d324584688199b4222242f4623ea7bca457a3191cd7a106c63a7837d9"
   license "GPL-2.0-only" => { with: "Universal-FOSS-exception-1.0" }
-  revision 2
+  revision 6
 
   livecheck do
     url "https://dev.mysql.com/downloads/mysql/8.0.html?tpl=files&os=src&version=8.0"
@@ -12,19 +12,19 @@ class MysqlAT80 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "fe30827dfc0fee9443e5687bd2352f0eef65ea10e2f1d5ab1f5d9bca140cc25d"
-    sha256 arm64_sonoma:  "208ea81302be022ebaed62029b7a6a6b1405b4c91ab0c6f7ba1baeb5efa8d2a7"
-    sha256 arm64_ventura: "b2bc8b11bf8d78bb2447fe4f95126dd2ee906789506aafbc3bda5f75dd684d87"
-    sha256 sonoma:        "c061c785a53c2f008fb6b52e534ee186557c59b063a35ddb24749826d6e07c49"
-    sha256 ventura:       "b7dd4e44734a345538e4191460404bc8879bf4b5c78f04dde5ee879947a07caa"
-    sha256 x86_64_linux:  "682f90acc07696d7597bd2425afae03f72e4bdfc04ce46b2fe7bd713ef1f70f3"
+    sha256 arm64_sequoia: "675a5aa2b49b8ea24cd20cd6e002d2459846af17ec2362dd49fd5df0fdb26ac2"
+    sha256 arm64_sonoma:  "ef1f6a68c4e041be98fbd1143bc4a922f7432acfbbad6af40e0f107be439bb13"
+    sha256 arm64_ventura: "95f2bba21e6561478593b6387a8370fdb94734889d97cf8056e3413f31c0fbf1"
+    sha256 sonoma:        "f3d4dad5b24e7f9ad9640bf06c9bd6da2ab367819ed64f07426b8b10bea8fa09"
+    sha256 ventura:       "97a5aa6a2d6571b18d1aad0777c3c3f4d2f6d3b79208be10723d751ffc94e21b"
+    sha256 x86_64_linux:  "a789bd3d286cfdae3bfeab735139c850efc8d4d8e85692b45183124ce3f9b769"
   end
 
   keg_only :versioned_formula
 
   depends_on "bison" => :build
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "abseil"
   depends_on "icu4c@76"
   depends_on "libevent"
@@ -44,11 +44,6 @@ class MysqlAT80 < Formula
     depends_on "libtirpc"
   end
 
-  fails_with :gcc do
-    version "6"
-    cause "Requires C++17"
-  end
-
   # Patch out check for Homebrew `boost`.
   # This should not be necessary when building inside `brew`.
   # https://github.com/Homebrew/homebrew-test-bot/pull/820
@@ -59,18 +54,8 @@ class MysqlAT80 < Formula
   end
 
   def install
-    if OS.linux?
-      # Disable ABI checking
-      inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0"
-
-      # Work around build issue with Protobuf 22+ on Linux
-      # Ref: https://bugs.mysql.com/bug.php?id=113045
-      # Ref: https://bugs.mysql.com/bug.php?id=115163
-      inreplace "cmake/protobuf.cmake" do |s|
-        s.gsub! 'IF(APPLE AND WITH_PROTOBUF STREQUAL "system"', 'IF(WITH_PROTOBUF STREQUAL "system"'
-        s.gsub! ' INCLUDE REGEX "${HOMEBREW_HOME}.*")', ' INCLUDE REGEX "libabsl.*")'
-      end
-    end
+    # Disable ABI checking
+    inreplace "cmake/abi_check.cmake", "RUN_ABI_CHECK 1", "RUN_ABI_CHECK 0" if OS.linux?
 
     icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
                 .to_formula

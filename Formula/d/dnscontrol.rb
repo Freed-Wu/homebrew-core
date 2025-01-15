@@ -1,8 +1,8 @@
 class Dnscontrol < Formula
   desc "Synchronize your DNS to multiple providers from a simple DSL"
   homepage "https://dnscontrol.org/"
-  url "https://github.com/StackExchange/dnscontrol/archive/refs/tags/v4.14.2.tar.gz"
-  sha256 "d31e488e828524ee083e170dac7bd9d0d144f3ae112e2be73ec7abc68a5789f9"
+  url "https://github.com/StackExchange/dnscontrol/archive/refs/tags/v4.15.3.tar.gz"
+  sha256 "c0322bd15392b28d18e76ffa148a2b8d4ae5923caab724fa89c3c08abc39964e"
   license "MIT"
   version_scheme 1
 
@@ -15,12 +15,12 @@ class Dnscontrol < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e48050b08b80e7aebb5029d12cdae846305dc0f6425f016b538c3bed895b1be2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e48050b08b80e7aebb5029d12cdae846305dc0f6425f016b538c3bed895b1be2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e48050b08b80e7aebb5029d12cdae846305dc0f6425f016b538c3bed895b1be2"
-    sha256 cellar: :any_skip_relocation, sonoma:        "4f31f49cb1a618d86fb0464cb160b7a701ddf066a9ce6499d6a68f1d8146ba8a"
-    sha256 cellar: :any_skip_relocation, ventura:       "4f31f49cb1a618d86fb0464cb160b7a701ddf066a9ce6499d6a68f1d8146ba8a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "edc87a502813053545d7dd24e82c2193103d74c332f3980d50b32815b09f6ab7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ea4858b9480cfb627a7b5eae2152a879e828dec86b0a54d5f8f3af8665d24a6c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ea4858b9480cfb627a7b5eae2152a879e828dec86b0a54d5f8f3af8665d24a6c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ea4858b9480cfb627a7b5eae2152a879e828dec86b0a54d5f8f3af8665d24a6c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f4a65b79b4398988dd443383e37123db989509051d11d767b77d629f70e40f50"
+    sha256 cellar: :any_skip_relocation, ventura:       "f4a65b79b4398988dd443383e37123db989509051d11d767b77d629f70e40f50"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "42d03c44504ab276f395cd7e2823a6166ba2da8498bd3268da59af50e8a2661a"
   end
 
   depends_on "go" => :build
@@ -39,7 +39,7 @@ class Dnscontrol < Formula
     version_output = shell_output("#{bin}/dnscontrol version")
     assert_match version.to_s, version_output
 
-    (testpath/"dnsconfig.js").write <<~EOS
+    (testpath/"dnsconfig.js").write <<~JS
       var namecom = NewRegistrar("name.com", "NAMEDOTCOM");
       var r53 = NewDnsProvider("r53", "ROUTE53")
 
@@ -49,7 +49,7 @@ class Dnscontrol < Formula
         MX("@",5,"mail.myserver.com."),
         A("test", "5.6.7.8")
       )
-    EOS
+    JS
 
     output = shell_output("#{bin}/dnscontrol check #{testpath}/dnsconfig.js 2>&1").strip
     assert_equal "No errors.", output

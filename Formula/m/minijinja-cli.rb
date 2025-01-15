@@ -1,24 +1,26 @@
 class MinijinjaCli < Formula
   desc "Render Jinja2 templates directly from the command-line to stdout"
   homepage "https://docs.rs/minijinja/latest/minijinja/"
-  url "https://github.com/mitsuhiko/minijinja/archive/refs/tags/2.4.0.tar.gz"
-  sha256 "28f862b3805e71bd4537637d14e5f1b0af67dae84f13851af8bc5c2e416a539a"
+  url "https://github.com/mitsuhiko/minijinja/archive/refs/tags/2.6.0.tar.gz"
+  sha256 "c1eb888635a550b886089a8b92753537533e84216c1324a644ae6149a4c1e7b7"
   license "Apache-2.0"
   head "https://github.com/mitsuhiko/minijinja.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2268518274efc391385b3fb172124fb21c240b915e21a2670a34199034394a23"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "51d869cc4644b37cae43d90103f71a486cd31fd11c0c39d9e042338e2fbb60e0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e9a3c9ca63d61344ec7c5db929bb6da3d1736d195a4f34a46c1a55b0174095ae"
-    sha256 cellar: :any_skip_relocation, sonoma:        "aebc256d6ade3d94c81b53116b9c95905b54b609cb908048c3b1bc1f6364ff07"
-    sha256 cellar: :any_skip_relocation, ventura:       "dcb8ee381259cde5beaf7ea33b19124a25721bb933b46d080d439d19669aa3da"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "837b3027559799552e901e827da4d45370db679751dede80a08995f83a332d26"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9eb5e97ebadca7bedb7e3160533cf252e06b7d5df7be2cd5cc916c73ce6a6a85"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "59115ec81f78c5972a87bb61f1583d8ae4715776bd3dedd977fd1e0809b47537"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "e25f6a8bfd2bbe9681437eff1e54b0cbe085bd05f61b3f6a714b89ef9c3c4090"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3d7076bf2fcb4d71db86c56a776e098caefe996669e81b88fabbc48cc3391812"
+    sha256 cellar: :any_skip_relocation, ventura:       "b72ed6db6b822c4c98139b111e7c989f8b4da7c9722be8bf729dd4a6bd6ebcca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a3b1480803991e1e3c6eabdabc7791c88d3391d132e5112125669901ff634f8b"
   end
 
   depends_on "rust" => :build
 
   def install
     system "cargo", "install", *std_cargo_args(path: "minijinja-cli")
+
+    generate_completions_from_executable(bin/"minijinja-cli", "--generate-completion")
   end
 
   test do

@@ -1,17 +1,17 @@
 class PhraseCli < Formula
   desc "Tool to interact with the Phrase API"
   homepage "https://phrase.com/"
-  url "https://github.com/phrase/phrase-cli/archive/refs/tags/2.33.1.tar.gz"
-  sha256 "5b68b4c961c459073ecc1f8e3fdf275e9fd096433ef00227852265a8c50b387d"
+  url "https://github.com/phrase/phrase-cli/archive/refs/tags/2.35.5.tar.gz"
+  sha256 "0a421d0cc57b45b40653d406ea787f1564240a58d454f1b28a0292da6e6cbdd8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "23af1b2f778a0f0e2233cae57f19f7cce6ccc7b9b7be4bc7f9331d143b588a12"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "23af1b2f778a0f0e2233cae57f19f7cce6ccc7b9b7be4bc7f9331d143b588a12"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "23af1b2f778a0f0e2233cae57f19f7cce6ccc7b9b7be4bc7f9331d143b588a12"
-    sha256 cellar: :any_skip_relocation, sonoma:        "74d555d5c7e2b2dc89e1d71d632b134699b0f63ca22599b913a2c11c2ba931e0"
-    sha256 cellar: :any_skip_relocation, ventura:       "74d555d5c7e2b2dc89e1d71d632b134699b0f63ca22599b913a2c11c2ba931e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7e43b43244dfb7bc3199aee3991711b49e02b6efdff8856aa7e1cdd8a442198e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b0ecbe706010de639a99f94c5f3f77f626ce95fd16344f3e59d92f7039d9252f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b0ecbe706010de639a99f94c5f3f77f626ce95fd16344f3e59d92f7039d9252f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b0ecbe706010de639a99f94c5f3f77f626ce95fd16344f3e59d92f7039d9252f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "510a9d32b82f1af9acd468cd0e3c942b809b6c4a7563789e2d01a3e7c522cd12"
+    sha256 cellar: :any_skip_relocation, ventura:       "510a9d32b82f1af9acd468cd0e3c942b809b6c4a7563789e2d01a3e7c522cd12"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d6f8f328a0ec924019f5c1011ee49ea85c563022d3656b247514c230a499ef3a"
   end
 
   depends_on "go" => :build
@@ -24,7 +24,7 @@ class PhraseCli < Formula
     system "go", "build", *std_go_args(ldflags:)
     bin.install_symlink "phrase-cli" => "phrase"
 
-    generate_completions_from_executable(bin/"phrase", "completion", base_name: "phrase", shells: [:bash])
+    generate_completions_from_executable(bin/"phrase", "completion", shells: [:bash])
   end
 
   test do

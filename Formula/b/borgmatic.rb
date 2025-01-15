@@ -3,17 +3,17 @@ class Borgmatic < Formula
 
   desc "Simple wrapper script for the Borg backup software"
   homepage "https://torsion.org/borgmatic/"
-  url "https://files.pythonhosted.org/packages/8d/e4/098ca9ab91fd59a7198007b463abb7c60680f83a47703babc13ee74b62dd/borgmatic-1.9.0.tar.gz"
-  sha256 "6a099c743cf29787909d65c26ab6214318f5e7edc343958c839cc5ec520556fc"
+  url "https://files.pythonhosted.org/packages/ec/b9/9ff4a08cb6d20b30fd86947924996873b16662c48ec73b461f3f527a37ea/borgmatic-1.9.5.tar.gz"
+  sha256 "c1518cd81b2099988a5adb5c788c39a5b246618d95dfe318d48bfce8fc08714f"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "4ecf8b39920ea72a1f225fe7cc230488ecddea13dd9b88533005f2e2004e0c52"
-    sha256 cellar: :any,                 arm64_sonoma:  "226a550c27455ca672b7dcb80c21e99e3e986907710e6f1f73b2e98e06599983"
-    sha256 cellar: :any,                 arm64_ventura: "22438f52022d945c7a014014dde1f40efcec6fb1642489eb0681e7463eaf800f"
-    sha256 cellar: :any,                 sonoma:        "80cd901cab1191e07aa121c3447de218b6588deaa3e894e391d230dc7f46fbf0"
-    sha256 cellar: :any,                 ventura:       "1084376a74bdf855b934c9c3cc9788bdf0c92bdfe4f0801538899590a6a112c1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c60a2ef03c2f98f83fdabf49b2cc9a24ad926bb1e44c513f50096b1040eb3f9f"
+    sha256 cellar: :any,                 arm64_sequoia: "c33eb2088f39a7a1c918066a2ee6337d81d94a34acf1d7f01fdee1b9fe4ffc08"
+    sha256 cellar: :any,                 arm64_sonoma:  "2e3665053ea156a3573f0cf7a00192188ffeb01e0d033d53b2d3374b045d2a54"
+    sha256 cellar: :any,                 arm64_ventura: "c7dc75dfcdc6374d2a46ec48f129f4375b6b6664669730ef5ffde61662ecf49c"
+    sha256 cellar: :any,                 sonoma:        "a88facabf304a54e16faca34fadac5639856066ae3ed54f816c916f8594070aa"
+    sha256 cellar: :any,                 ventura:       "d5457847b8f93a3ae9a676692dc5010cbe50de9b502e1ed3ce8fc3ba67fe0a79"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "deadc50d953569a923f4e360d455e7a254e3c797cf03dbd043da0bec2afaa154"
   end
 
   depends_on "rust" => :build # for rpds-py
@@ -21,18 +21,13 @@ class Borgmatic < Formula
   depends_on "python@3.13"
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/attrs-24.2.0.tar.gz"
-    sha256 "5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"
+    url "https://files.pythonhosted.org/packages/48/c8/6260f8ccc11f0917360fc0da435c5c9c7504e3db174d5a12a1494887b045/attrs-24.3.0.tar.gz"
+    sha256 "8f5c07333d543103541ba7be0e2ce16eeee8130cb0b3f9238ab904ce1e85baff"
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
-    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
-  end
-
-  resource "colorama" do
-    url "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz"
-    sha256 "08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"
+    url "https://files.pythonhosted.org/packages/16/b0/572805e227f01586461c80e0fd25d65a2115599cc9dad142fee4b747c357/charset_normalizer-3.4.1.tar.gz"
+    sha256 "44251f18cd68a75b56585dd00dae26183e102cd5e0f9f1466e6df5da2ed64ea3"
   end
 
   resource "idna" do
@@ -51,8 +46,8 @@ class Borgmatic < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "referencing" do
@@ -66,8 +61,8 @@ class Borgmatic < Formula
   end
 
   resource "rpds-py" do
-    url "https://files.pythonhosted.org/packages/25/cb/8e919951f55d109d658f81c9b49d0cc3b48637c50792c5d2e77032b8c5da/rpds_py-0.20.1.tar.gz"
-    sha256 "e1791c4aabd117653530dccd24108fa03cc6baf21f58b950d0a73c3b3b29a350"
+    url "https://files.pythonhosted.org/packages/01/80/cce854d0921ff2f0a9fa831ba3ad3c65cee3a46711addf39a2af52df2cfd/rpds_py-0.22.3.tar.gz"
+    sha256 "e32fee8ab45d3c2db6da19a5323bc3362237c8b653c70194414b892fd06a080d"
   end
 
   resource "ruamel-yaml" do
@@ -75,31 +70,13 @@ class Borgmatic < Formula
     sha256 "8b27e6a217e786c6fbe5634d8f3f11bc63e0f80f6a5890f28863d9c45aac311b"
   end
 
-  resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/27/b8/f21073fde99492b33ca357876430822e4800cdf522011f18041351dfa74b/setuptools-75.1.0.tar.gz"
-    sha256 "d59a21b17a275fb872a9c3dae73963160ae079f1049ed956880cd7c09b120538"
-  end
-
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
-    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
-  end
-
-  # upstream patch ref, https://projects.torsion.org/borgmatic-collective/borgmatic/commit/be08e889f00beda6858070becf96ae552334d473
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/fa4f1fe3e40198e8425fe80c79891f9cf947765d/borgmatic/1.9.0.patch"
-    sha256 "6bbb02832d46f6438bd8b1b75206d88da88d7d450e35cb6e3b1d61bcf19b9027"
-  end
-
-  def python3
-    "python3.13"
+    url "https://files.pythonhosted.org/packages/aa/63/e53da845320b757bf29ef6a9062f5c669fe997973f966045cb019c3f4b66/urllib3-2.3.0.tar.gz"
+    sha256 "f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d"
   end
 
   def install
-    venv = virtualenv_create(libexec, python3)
-    venv.pip_install resource("setuptools")
-    venv.pip_install resources.reject { |r| r.name == "setuptools" }
-    venv.pip_install_and_link buildpath
+    virtualenv_install_with_resources
   end
 
   test do
@@ -113,7 +90,7 @@ class Borgmatic < Formula
     sentinel_path = testpath/"init_done"
 
     # Create a fake borg info json
-    borg_info_json.write <<~EOS
+    borg_info_json.write <<~JSON
       {
           "cache": {
               "path": "",
@@ -136,10 +113,10 @@ class Borgmatic < Formula
           },
           "security_dir": ""
       }
-    EOS
+    JSON
 
     # Create a fake borg executable to log requested commands
-    borg.write <<~EOS
+    borg.write <<~SHELL
       #!/bin/sh
       echo $@ >> #{log_path}
 
@@ -165,7 +142,8 @@ class Borgmatic < Formula
       if [ "$1" = "create" ]; then
         exit 0
       fi
-    EOS
+    SHELL
+
     borg.chmod 0755
 
     # Generate a config
@@ -193,21 +171,30 @@ class Borgmatic < Formula
     log_content = File.read(log_path)
 
     # Assert that the proper borg commands were executed
-    assert_equal <<~EOS, log_content
+    expected_log = <<~EOS
       --version --debug --show-rc
       info --json #{repo_path}
       init --encryption repokey --debug #{repo_path}
       --version
-      create #{repo_path}::{hostname}-{now:%Y-%m-%dT%H:%M:%S.%f} /etc /home #{testpath}/./borgmatic #{config_path}
+      create #{repo_path}::{hostname}-{now:%Y-%m-%dT%H:%M:%S.%f} /etc /home #{testpath}/borgmatic-.{8}/./borgmatic/bootstrap #{config_path}
       prune --keep-daily 7 --glob-archives {hostname}-* #{repo_path}
       compact #{repo_path}
       info --json #{repo_path}
       check --glob-archives {hostname}-* #{repo_path}
       --version
-      create --json #{repo_path}::{hostname}-{now:%Y-%m-%dT%H:%M:%S.%f} /etc /home #{testpath}/./borgmatic #{config_path}
+      create --json #{repo_path}::{hostname}-{now:%Y-%m-%dT%H:%M:%S.%f} /etc /home #{testpath}/borgmatic-.{8}/./borgmatic/bootstrap #{config_path}
       prune --keep-daily 7 --glob-archives {hostname}-* #{repo_path}
       compact #{repo_path}
       info --json #{repo_path}
     EOS
+    expected = expected_log.split("\n").map(&:strip)
+
+    log_content.lines.map.with_index do |line, i|
+      if line.start_with?("create")
+        assert_match(/#{expected[i].chomp}/, line.chomp)
+      else
+        assert_equal expected[i].chomp, line.chomp
+      end
+    end
   end
 end

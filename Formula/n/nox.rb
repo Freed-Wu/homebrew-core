@@ -6,21 +6,23 @@ class Nox < Formula
   url "https://files.pythonhosted.org/packages/08/93/4df547afcd56e0b2bbaa99bc2637deb218a01802ed62d80f763189be802c/nox-2024.10.9.tar.gz"
   sha256 "7aa9dc8d1c27e9f45ab046ffd1c3b2c4f7c91755304769df231308849ebded95"
   license "Apache-2.0"
+  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c609c27d2ec6fdc453d36a3c630358b3f66d7da808a724fe054db8ac8af4b18c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c609c27d2ec6fdc453d36a3c630358b3f66d7da808a724fe054db8ac8af4b18c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "c609c27d2ec6fdc453d36a3c630358b3f66d7da808a724fe054db8ac8af4b18c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "071e91ded38a19bdba8a8e1487ad8b79ea2bdd6bbf22ff96c6bce822086211fb"
-    sha256 cellar: :any_skip_relocation, ventura:       "071e91ded38a19bdba8a8e1487ad8b79ea2bdd6bbf22ff96c6bce822086211fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "24302d2409e051265a414d9ac8268b11b1a70bc79933f6b9ae5dfeca751e5bd6"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "24456477ab731833f7e0792d772ee89d897a38fcd65bfeac97a82248cbb2ad1a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "24456477ab731833f7e0792d772ee89d897a38fcd65bfeac97a82248cbb2ad1a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "24456477ab731833f7e0792d772ee89d897a38fcd65bfeac97a82248cbb2ad1a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8c3bbe3f8b9ed39e70bcb7eba40eb03046a6f1a163b677d7381d8345d989338a"
+    sha256 cellar: :any_skip_relocation, ventura:       "8c3bbe3f8b9ed39e70bcb7eba40eb03046a6f1a163b677d7381d8345d989338a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2ff339389924bb5dec027d1a6e377cef65842056e3c8195d5653a19aa4f67016"
   end
 
   depends_on "python@3.13"
 
   resource "argcomplete" do
-    url "https://files.pythonhosted.org/packages/5f/39/27605e133e7f4bb0c8e48c9a6b87101515e3446003e0442761f6a02ac35e/argcomplete-3.5.1.tar.gz"
-    sha256 "eb1ee355aa2557bd3d0145de7b06b2a45b0ce461e1e7813f5d066039ab4177b4"
+    url "https://files.pythonhosted.org/packages/7f/03/581b1c29d88fffaa08abbced2e628c34dd92d32f1adaed7e42fc416938b0/argcomplete-3.5.2.tar.gz"
+    sha256 "23146ed7ac4403b70bd6026402468942ceba34a6732255b9edf5b7354f68a6bb"
   end
 
   resource "colorlog" do
@@ -56,22 +58,25 @@ class Nox < Formula
   def install
     virtualenv_install_with_resources
     (bin/"tox-to-nox").unlink
+
+    generate_completions_from_executable(libexec/"bin/register-python-argcomplete", "nox",
+                                         shell_parameter_format: :arg)
   end
 
   test do
     ENV["LC_ALL"] = "en_US.UTF-8"
-    (testpath/"noxfile.py").write <<~EOS
+    (testpath/"noxfile.py").write <<~PYTHON
       import nox
 
       @nox.session
       def tests(session):
           session.install("pytest")
           session.run("pytest")
-    EOS
-    (testpath/"test_trivial.py").write <<~EOS
+    PYTHON
+    (testpath/"test_trivial.py").write <<~PYTHON
       def test_trivial():
           assert True
-    EOS
+    PYTHON
     assert_match "usage", shell_output("#{bin}/nox --help")
     assert_match "Sessions defined in #{testpath}/noxfile.py", shell_output("#{bin}/nox --list-sessions")
   end

@@ -18,25 +18,29 @@ class Hlint < Formula
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9.8" => :build
+  depends_on "ghc@9.8" => :build # TODO: switch to ghc@9.10 (or newer if supported) in next release
 
   uses_from_macos "ncurses"
 
   def install
+    # GHC 9.10 support: https://github.com/ndmitchell/hlint/commit/7aafde56f6bc526aedb95fb282d8fd2b4ea290cc
+    # GHC 9.12 support: https://github.com/ndmitchell/hlint/pull/1629
+    odie "Update GHC build dependency!" if build.stable? && version > "3.8"
+
     system "cabal", "v2-update"
     system "cabal", "v2-install", *std_cabal_v2_args
     man1.install "data/hlint.1"
   end
 
   test do
-    (testpath/"test.hs").write <<~EOS
+    (testpath/"test.hs").write <<~HASKELL
       main = do putStrLn "Hello World"
-    EOS
+    HASKELL
     assert_match "No hints", shell_output("#{bin}/hlint test.hs")
 
-    (testpath/"test1.hs").write <<~EOS
+    (testpath/"test1.hs").write <<~HASKELL
       main = do foo x; return 3; bar z
-    EOS
+    HASKELL
     assert_match "Redundant return", shell_output("#{bin}/hlint test1.hs", 1)
   end
 end

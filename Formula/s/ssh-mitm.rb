@@ -6,16 +6,17 @@ class SshMitm < Formula
   url "https://files.pythonhosted.org/packages/65/22/d5a7a153b1f40f31e1a7e15439e4e3a2aad1413a486aa69c2f0be6482295/ssh_mitm-5.0.0.tar.gz"
   sha256 "0c3ad0e925c7144e1c95efa08ab183100fcb8257068ae0729fb19493e3a45d60"
   license "GPL-3.0-only"
+  revision 1
   head "https://github.com/ssh-mitm/ssh-mitm.git", branch: "master"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any,                 arm64_sequoia: "45b617ec5165aaa7ee90bbd55d84e5d4d2c5d6d45f9e981d5bc67661d29067a8"
-    sha256 cellar: :any,                 arm64_sonoma:  "f8773df78248f061b570f36462197ce1204ad0495cc480531a01930bcf429313"
-    sha256 cellar: :any,                 arm64_ventura: "96241fca6a95b8941284996b11cc70a3428bff31fb80199a87f08329ba0a1fc2"
-    sha256 cellar: :any,                 sonoma:        "8d953e30a1ba698d02939524c056859792aecc77b29f4259d6abd38a8974f37b"
-    sha256 cellar: :any,                 ventura:       "5fe6697f827617e56f21e57cadadc45744de62ccef3483c9a123a3ea8e3f6cb8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7b9dc80395106c70b3cd444a83c5d8634d3c1a30c4a7fa1b823c932ef6155793"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "bad464b27d45fd17f9b91d5d2cd652ac9b66b4cbe45c4725ffb723820bb0319d"
+    sha256 cellar: :any,                 arm64_sonoma:  "8a4509d8f7de16690cb3c292ff9e19fe55d66550283effbfbef02a0bcd8e1152"
+    sha256 cellar: :any,                 arm64_ventura: "1000a33333cb126802387132f451f0eb777a5d899e556daef27ce03995c26a49"
+    sha256 cellar: :any,                 sonoma:        "349b210d8d17ed642d0000abbd7605b32fe790ac7b4a61a8daa813e3fce6885e"
+    sha256 cellar: :any,                 ventura:       "8b1f21b4a7a49deecba74ff91467dcda93895f9b79919f2b5ebac46aa9d1f72f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "972bf036544288557f5abe6b087d4a1355c12f47469abbb757dc41bf95a03a80"
   end
 
   depends_on "rust" => :build # for bcrypt
@@ -30,8 +31,8 @@ class SshMitm < Formula
   end
 
   resource "argcomplete" do
-    url "https://files.pythonhosted.org/packages/5f/39/27605e133e7f4bb0c8e48c9a6b87101515e3446003e0442761f6a02ac35e/argcomplete-3.5.1.tar.gz"
-    sha256 "eb1ee355aa2557bd3d0145de7b06b2a45b0ce461e1e7813f5d066039ab4177b4"
+    url "https://files.pythonhosted.org/packages/7f/03/581b1c29d88fffaa08abbced2e628c34dd92d32f1adaed7e42fc416938b0/argcomplete-3.5.2.tar.gz"
+    sha256 "23146ed7ac4403b70bd6026402468942ceba34a6732255b9edf5b7354f68a6bb"
   end
 
   resource "bcrypt" do
@@ -115,8 +116,10 @@ class SshMitm < Formula
   end
 
   def install
-    ENV["SODIUM_INSTALL"] = "system"
     virtualenv_install_with_resources
+
+    generate_completions_from_executable(libexec/"bin/register-python-argcomplete", "ssh-mitm",
+                                         shell_parameter_format: :arg)
   end
 
   test do

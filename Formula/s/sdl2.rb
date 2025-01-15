@@ -1,8 +1,8 @@
 class Sdl2 < Formula
   desc "Low-level access to audio, keyboard, mouse, joystick, and graphics"
   homepage "https://www.libsdl.org/"
-  url "https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-2.30.9.tar.gz"
-  sha256 "24b574f71c87a763f50704bbb630cbe38298d544a1f890f099a4696b1d6beba4"
+  url "https://github.com/libsdl-org/SDL/releases/download/release-2.30.11/SDL2-2.30.11.tar.gz"
+  sha256 "8b8d4aef2038533da814965220f88f77d60dfa0f32685f80ead65e501337da7f"
   license "Zlib"
 
   livecheck do
@@ -12,12 +12,12 @@ class Sdl2 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "cbff6c079fb44cb4b568dddb0a69c5da08b396fe6f6a4c90618f2fe8486456ea"
-    sha256 cellar: :any,                 arm64_sonoma:  "84704c6ab26482890a172d9da912fbe51656de29caea75e46e287397f60461e0"
-    sha256 cellar: :any,                 arm64_ventura: "a8168508bbddc2439d5434b85b3fd4fec4f8b5cbbfeb11dc4c4b33faadaaabff"
-    sha256 cellar: :any,                 sonoma:        "e0e36f68524a09d5f0b9318b8ce905a4d3a87408eea94a238084075e55bd1176"
-    sha256 cellar: :any,                 ventura:       "7726275e371a832296395ce5e0d3988ccca358d1ddba82d384be5a9dbdc4c23b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ebc21173917029b88754e65099236a393bf42e5f3b07f100977140ba4b7f71cf"
+    sha256 cellar: :any,                 arm64_sequoia: "b87f0d34432faf3630ad1f7ed5a65b8387ffadc8eb51c936fe7e973642a8207d"
+    sha256 cellar: :any,                 arm64_sonoma:  "6eed4d7882ace75c6831382cbadbdeb7cad356cdd5000fad7f0b2e7b17d917f8"
+    sha256 cellar: :any,                 arm64_ventura: "47101386010f483cb135c3b0caa574c8912777277ec63afdd8216788e8dfc720"
+    sha256 cellar: :any,                 sonoma:        "eb8211e78231337e7b2a50665a839d46254cac5a6cf6a88cef738ad81f7054cf"
+    sha256 cellar: :any,                 ventura:       "9809878a8d7eab5b71acb0cdcccc528313896a99972ae251ca693032df7bb427"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f53ea335f9990ec2aef849a995ea2d7b56db073ea4eb7fb8a34a53e4275d6970"
   end
 
   head do
@@ -29,7 +29,7 @@ class Sdl2 < Formula
   end
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "libice"
     depends_on "libxcursor"
     depends_on "libxscrnsaver"

@@ -1,25 +1,25 @@
 class Lychee < Formula
   desc "Fast, async, resource-friendly link checker"
   homepage "https://lychee.cli.rs/"
-  url "https://github.com/lycheeverse/lychee/archive/refs/tags/lychee-v0.16.1.tar.gz"
-  sha256 "ee61627083c80459e0f6a48c11cd910711c86b744a294b6a00f7072dffa1b04b"
+  url "https://github.com/lycheeverse/lychee/archive/refs/tags/lychee-v0.18.0.tar.gz"
+  sha256 "56127481c8684b6f611a22e3940dacb06abf6db6ea24d1af38ccefe91bc09dbe"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/lycheeverse/lychee.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "49f4fb0ea2630a4462cd308fd07159871134b617d04ee4fe8b822f1b3ab833f1"
-    sha256 cellar: :any,                 arm64_sonoma:  "1232583501b21c4ee9315dd68a64a4d4bae16c10837981a1e8f0b6ea45f79399"
-    sha256 cellar: :any,                 arm64_ventura: "a1023e1168f68db6715051a1c16246fac45c009d9509b24e2f3990a4ac3134d2"
-    sha256 cellar: :any,                 sonoma:        "134df392c7219a9ef99e64d1263e483b6677d44f8180c9cb6ce4701e2936b9d1"
-    sha256 cellar: :any,                 ventura:       "cda14df0d4a466aa06feef91dc35f5fde6df916a7db24ea0bf7809dfa07b2fd3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d261886646d80ed00a9ba4d5f72154d5c104e40489b1b3c16f6c112bfe7908fd"
+    sha256 cellar: :any,                 arm64_sequoia: "f01661ebbdc9d7eb66c8f9699a8a96c2afb661ab2f77eb1743de6cac3a556948"
+    sha256 cellar: :any,                 arm64_sonoma:  "66069fbc154c6043a20a8e1f8e790ba643a3b10fb20b04ee8f37c77be1c0b1e1"
+    sha256 cellar: :any,                 arm64_ventura: "a6cb858c378dc4aae9301e2021b8867e6e0f406022135da98529fcbc41438553"
+    sha256 cellar: :any,                 sonoma:        "fb589459ee6a636e4121a2e7e67e8cb62f485f455ce7d81eef652eec8393c23e"
+    sha256 cellar: :any,                 ventura:       "56c93a6348c63e31fd910bea61d9ff6d31786fcfc042ec9000238eb1835b9ce6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8b438c0a8636f69aa3a00f92ddc19a708ad691e7ff18a0efc90b856aa7dc0c6c"
   end
 
   depends_on "rust" => :build
   depends_on "openssl@3"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
   end
 
   def install

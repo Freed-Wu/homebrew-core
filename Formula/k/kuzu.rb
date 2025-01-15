@@ -1,18 +1,18 @@
 class Kuzu < Formula
   desc "Embeddable graph database management system built for query speed & scalability"
   homepage "https://kuzudb.com/"
-  url "https://github.com/kuzudb/kuzu/archive/refs/tags/v0.6.1.tar.gz"
-  sha256 "00bbcae4bd47cdb02c4e23de99188312b6478d5f0a2b64a2d48ea24b239a9704"
+  url "https://github.com/kuzudb/kuzu/archive/refs/tags/v0.7.1.tar.gz"
+  sha256 "fbe86c1f2149f50635dac6fa2ef8da77786f7d1204f0aa2f7341d33059c99e64"
   license "MIT"
   head "https://github.com/kuzudb/kuzu.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "218768d818535a97c4d8977dcc386230b81aa757ab816c56afcd2eacdebc1a26"
-    sha256 cellar: :any,                 arm64_sonoma:  "0ea525fc338d0e87b7e49106553670ec0cefa019636f20c3c6e196ae6d001a56"
-    sha256 cellar: :any,                 arm64_ventura: "db3249db98c1f4da40d12b8d9e375d915b695e7059abcc73ba8d94558c411528"
-    sha256 cellar: :any,                 sonoma:        "aa71a7edf5e60da807b58a373cd126d73859f0c39531e945ff3e1e6fd6c8f630"
-    sha256 cellar: :any,                 ventura:       "29ada93bbd297e594fb55397765fef8cbd2568a2eb904182bbdae21f0a115ef5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d05b91c67ba816085a1cc5d76bb6b6df3274d37f267299854bcb61ae51e803ec"
+    sha256 cellar: :any,                 arm64_sequoia: "67d7c37377cd1d0459b4fb431b5676bf27499ec6efbde68eb301a2fe9e45a2f4"
+    sha256 cellar: :any,                 arm64_sonoma:  "e4ba5e264744192f46486d632b942ae2239938bcb4ee051e4de0d0a7df4d8f57"
+    sha256 cellar: :any,                 arm64_ventura: "3799f3f71ba6681ac241691bc68a87e17888f6df6204747e4619b9235e7afb77"
+    sha256 cellar: :any,                 sonoma:        "d6385b5821a6a49e168eb305f85ddb4b21ec162fac2b5f6b9ce1fff7538c195d"
+    sha256 cellar: :any,                 ventura:       "7b0992cb06fba64d9d60f46d4086ed2a8de180aedb01825f80daaff33530ef32"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9dd1b87344c3384e753672519b1f18bb27b4d1087d4594fce28e9190d862c1ef"
   end
 
   depends_on "cmake" => :build

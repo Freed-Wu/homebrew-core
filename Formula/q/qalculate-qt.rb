@@ -1,20 +1,20 @@
 class QalculateQt < Formula
   desc "Multi-purpose desktop calculator"
   homepage "https://qalculate.github.io/"
-  url "https://github.com/Qalculate/qalculate-qt/releases/download/v5.3.0/qalculate-qt-5.3.0.tar.gz"
-  sha256 "535aa5513d15c97c953f853225390effd7a3875d2564abeeb8584addf43050a9"
+  url "https://github.com/Qalculate/qalculate-qt/releases/download/v5.5.0/qalculate-qt-5.5.0.tar.gz"
+  sha256 "e7e97b2fb6fde836eae2e7bc4249d54cd5ecac13c00e56188de0c21664fb4086"
   license "GPL-2.0-or-later"
   head "https://github.com/Qalculate/qalculate-qt.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "6b50afdc2f02ca675fa76d2454502efc30628b2f007debacf5b2fcbc5476dbce"
-    sha256 cellar: :any,                 arm64_ventura: "181792531b47243e84b0fea5ec13d8ba63998e944962672b9c558f3386e18514"
-    sha256 cellar: :any,                 sonoma:        "59e33fc72bb520ea8ca22a6958d46ab727144bc8dcbe14a36126caadd36afad3"
-    sha256 cellar: :any,                 ventura:       "a632fa9a12cd594646d4b60dff2d4683241adf7a4aa1c794bb1d0e0999dc2b59"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0560b558736c380de57779ba37dec31767efad265630f0274957a79bb1891798"
+    sha256 cellar: :any,                 arm64_sonoma:  "37caa473c2b48e5e6bd3c498ce5d2ca638192adff0cfe72599c33f4731d8d374"
+    sha256 cellar: :any,                 arm64_ventura: "e2ad4002f02e22d166a3af195e6892678ba8e7c7eed08f2eee30ac6bbc64db02"
+    sha256 cellar: :any,                 sonoma:        "e14797dec296ea99cb35a501eed70e86e6c8c5ff2de57006b673fffe3dd581fb"
+    sha256 cellar: :any,                 ventura:       "676d648e392041cf859e3caa1905ffdbbd108d04fa53cd5b5a33cd619f2530e0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "16e07f18e15d0b528dadf060a42c4326c1a096317e479fabf43a3bf5efe60c0f"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "libqalculate"
   depends_on "qt"

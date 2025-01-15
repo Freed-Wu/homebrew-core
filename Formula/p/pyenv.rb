@@ -1,8 +1,8 @@
 class Pyenv < Formula
   desc "Python version management"
   homepage "https://github.com/pyenv/pyenv"
-  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.4.17.tar.gz"
-  sha256 "e2d6cfa737738f1fc228beb7b2bccb5455889ebaa1b554ef6db1960e7b347a99"
+  url "https://github.com/pyenv/pyenv/archive/refs/tags/v2.5.0.tar.gz"
+  sha256 "12c42bdaf3741895ad710a957d44dc2b0c5260f95f857318a6681981fe1b1c0b"
   license "MIT"
   version_scheme 1
   head "https://github.com/pyenv/pyenv.git", branch: "master"
@@ -13,17 +13,17 @@ class Pyenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "4ca678f82f00798f662c57df1f3da88be1d20c672777fa39645895fd0ff701d0"
-    sha256 cellar: :any,                 arm64_sonoma:  "234336a0f590020e08b43b79aeb188a2200f2dd7658655565c7dfe573d1da60b"
-    sha256 cellar: :any,                 arm64_ventura: "b3302ba37ce6da72130211cc4d0e1760a011ca10176e9d6d973df385964dfad3"
-    sha256 cellar: :any,                 sonoma:        "8c9e2e9c79a7b2039a2d53830508f7d7cbadb7e834f8c0b5694f1342e872fd5b"
-    sha256 cellar: :any,                 ventura:       "41cfd9693ee695baf7aaae77c14ea67cbdf4c49d4e14f8a628c306e7e64cb4fb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1b4ea9d12dbf0d22ac1e4c201d5325dc28aacef63ed5ac17da8bdc3a5615d305"
+    sha256 cellar: :any,                 arm64_sequoia: "c9e923d3c320b329e05775daa2072e79444917f8f37ec005f63af714b9c770de"
+    sha256 cellar: :any,                 arm64_sonoma:  "a6b9d6a9499382455ea2cfe1d0f114767e0f5ec36dfffa140c01b0e6b6641f64"
+    sha256 cellar: :any,                 arm64_ventura: "ae28c4968f3a42aabe29db6325f404ec544074d8e2684077bab411e81bfab702"
+    sha256 cellar: :any,                 sonoma:        "dcdc6eefc1d642506d53d71c632c53f317a3dbde330bdf9622fcdee05efdafec"
+    sha256 cellar: :any,                 ventura:       "12fdc7267113c5abc0faf58e4c46269431b06152afb3851179dac49943c7e241"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cb9d708ce6dbf5acd5c46a7a8e51b0a6366a1a838a53883a55f11767b9ca822d"
   end
 
   depends_on "autoconf"
   depends_on "openssl@3"
-  depends_on "pkg-config"
+  depends_on "pkgconf"
   depends_on "readline"
 
   uses_from_macos "python" => :test

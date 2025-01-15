@@ -1,8 +1,8 @@
 class Teleport < Formula
   desc "Modern SSH server for teams managing distributed infrastructure"
   homepage "https://goteleport.com/"
-  url "https://github.com/gravitational/teleport/archive/refs/tags/v16.4.6.tar.gz"
-  sha256 "4c8b8f48c58649441502cf11d675036561ecf6a407351bc204af50ec6e5973f1"
+  url "https://github.com/gravitational/teleport/archive/refs/tags/v17.1.6.tar.gz"
+  sha256 "ad309d5e21cbe0414889fc2518196b8d30645ae150e66a0f7e8b7310b6ef213e"
   license all_of: ["AGPL-3.0-or-later", "Apache-2.0"]
   head "https://github.com/gravitational/teleport.git", branch: "master"
 
@@ -18,18 +18,16 @@ class Teleport < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "0c4918f4f741014fa82f5f1e267863f38b04b3e62fa1a75458cd92e60b95d6bd"
-    sha256 cellar: :any,                 arm64_sonoma:  "890427e93fc2a97fb40ed7219288b62c3ac4eac0df365cdb4735ef2fe5473f24"
-    sha256 cellar: :any,                 arm64_ventura: "7b23cd79f65acf7a2a3e06fd7e1e44bec627f0551acdc65f2eedfa9a91a48438"
-    sha256 cellar: :any,                 sonoma:        "560333dd05ec9f53cdc381ff704a7a2dd9072a3828d1dc11c16b20f788514b24"
-    sha256 cellar: :any,                 ventura:       "eaac7023290fe2ea193358cba07ef0167349fd23f0c2cc449e39f998e402d3c4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0e36eac1d5423401cf7412fe0538ac8c846f998bd58627a7ac844ca6167e4b70"
+    sha256 cellar: :any,                 arm64_sequoia: "97426e4ac029e187824a94b684c685fdc6b7f1690252348a609816f8be1ef848"
+    sha256 cellar: :any,                 arm64_sonoma:  "df3fb943b5c444242e995408d030a569713073ba61836f75562f9b88f19a0fef"
+    sha256 cellar: :any,                 arm64_ventura: "76f1f15dcab698de50eaf4cc0f8dbf37dfcac66b0cb47776569a74ff67c3a06e"
+    sha256 cellar: :any,                 sonoma:        "2327b59792d93fda23a769e6115b8ec0c54f30d83e4054fb6b05ca0c9fc3ba18"
+    sha256 cellar: :any,                 ventura:       "0f7eafe67150c8815960384d0e265c67bb3d54c8d9e53358185751523b83c7e9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5e12958de77836bd6ae1bf13811dbcd9af880878820d5962df197bbba75ea15"
   end
 
-  # Use "go" again after https://github.com/gravitational/teleport/commit/e4010172501f0ed18bb260655c83606dfa872fbd
-  # is released, likely in a version 17.x.x (or later?):
-  depends_on "go@1.22" => :build
-  depends_on "pkg-config" => :build
+  depends_on "go" => :build
+  depends_on "pkgconf" => :build
   depends_on "pnpm" => :build
   depends_on "rust" => :build
   # TODO: try to remove rustup dependancy, see https://github.com/Homebrew/homebrew-core/pull/191633#discussion_r1774378671
@@ -39,12 +37,16 @@ class Teleport < Formula
   depends_on "node"
   depends_on "openssl@3"
 
-  uses_from_macos "curl" => :test
-  uses_from_macos "netcat" => :test
   uses_from_macos "zip"
 
   conflicts_with "etsh", because: "both install `tsh` binaries"
   conflicts_with "tctl", because: "both install `tctl` binaries"
+
+  # disable `wasm-opt` for ironrdp pkg release build, upstream pr ref, https://github.com/gravitational/teleport/pull/50178
+  patch do
+    url "https://github.com/gravitational/teleport/commit/994890fb05360b166afd981312345a4cf01bc422.patch?full_index=1"
+    sha256 "9d60180ff69a8a8985773d3b2a107ab910b22040e4cbf6afed11bd2b64fc6996"
+  end
 
   def install
     ENV.prepend_path "PATH", Formula["rustup"].bin
@@ -61,7 +63,7 @@ class Teleport < Formula
     assert_match version.to_s, shell_output("#{bin}/tctl version")
 
     mkdir testpath/"data"
-    (testpath/"config.yml").write <<~EOS
+    (testpath/"config.yml").write <<~YAML
       version: v2
       teleport:
         nodename: testhost
@@ -69,17 +71,14 @@ class Teleport < Formula
         log:
           output: stderr
           severity: WARN
-    EOS
+    YAML
 
-    fork do
-      exec "#{bin}/teleport start --roles=proxy,node,auth --config=#{testpath}/config.yml"
-    end
-
+    spawn bin/"teleport", "start", "--roles=proxy,node,auth", "--config=#{testpath}/config.yml"
     sleep 10
     system "curl", "--insecure", "https://localhost:3080"
 
-    status = shell_output("#{bin}/tctl --config=#{testpath}/config.yml status")
-    assert_match(/Cluster\s*testhost/, status)
-    assert_match(/Version\s*#{version}/, status)
+    status = shell_output("#{bin}/tctl status --config=#{testpath}/config.yml")
+    assert_match(/Cluster:\s*testhost/, status)
+    assert_match(/Version:\s*#{version}/, status)
   end
 end

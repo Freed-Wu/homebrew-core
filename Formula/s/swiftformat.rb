@@ -1,19 +1,18 @@
 class Swiftformat < Formula
   desc "Formatting tool for reformatting Swift code"
   homepage "https://github.com/nicklockwood/SwiftFormat"
-  url "https://github.com/nicklockwood/SwiftFormat/archive/refs/tags/0.54.6.tar.gz"
-  sha256 "6149936f669e672705fd0be87759548b57ed28da32c13d054a285dd08fc56ce3"
+  url "https://github.com/nicklockwood/SwiftFormat/archive/refs/tags/0.55.4.tar.gz"
+  sha256 "b72e0f0548ca6e8029a81b4f27cb11b648e84c36f8938b88d75f10a894ae31cd"
   license "MIT"
-  revision 1
   head "https://github.com/nicklockwood/SwiftFormat.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "03eb08eb7de0e697e574b5d5c94104a88c9548ee880b942f1916536fe7ff897a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0ff9c3c154fea61303bd060da1aecebb025a3a33460b24910cf55e6ae366574e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "52200577da57cebd27e7d4b6a9ed84f6d3475b7f91e28ec4f5947fc2992cd943"
-    sha256 cellar: :any_skip_relocation, sonoma:        "9f79e28a0a5c7172be8bfcf23fca47de08f8bc03a3ddcdfbf52704445b9d8b18"
-    sha256 cellar: :any_skip_relocation, ventura:       "416528899d45dc25edc2f14c857239a2c922b4be548345423857f140c6b90f0f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "86c47e1a74da98ff5646c8d510ea5e6de45e9dc97bc59f151bd2a8848b5bc9f8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c3630103f688c867f0400ae75832f9a2704e46c8edd2cb3c867e43336c5067e1"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "491111aa6521d28ff46539dfb95aa22e1350c657c8aab002d19eb7d74925cac6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a1fec1fa8008ac7461b23acc0817f1633b7cd636fcd015a7d3c45595dac00d24"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3a3492fec361535ee067dd5b3eae6d5ce77d9128dd16f8b447ede4bb73b677ce"
+    sha256 cellar: :any_skip_relocation, ventura:       "42f13de50ad12ebc6272f151d17310cea05d1fcbbe9570b81ad6203adf474329"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "04815282a5c6028bb96b3fe3ed5f5f5bb65ea836b9b4289da276cbe9e95e00ac"
   end
 
   depends_on xcode: ["10.1", :build]
@@ -31,11 +30,11 @@ class Swiftformat < Formula
   end
 
   test do
-    (testpath/"potato.swift").write <<~EOS
+    (testpath/"potato.swift").write <<~SWIFT
       struct Potato {
         let baked: Bool
       }
-    EOS
+    SWIFT
     system bin/"swiftformat", "#{testpath}/potato.swift"
   end
 end

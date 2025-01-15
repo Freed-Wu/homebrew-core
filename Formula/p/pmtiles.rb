@@ -1,8 +1,8 @@
 class Pmtiles < Formula
   desc "Single-file executable tool for creating, reading and uploading PMTiles archives"
   homepage "https://protomaps.com/docs/pmtiles"
-  url "https://github.com/protomaps/go-pmtiles/archive/refs/tags/v1.22.1.tar.gz"
-  sha256 "f94ef5867c45958724227254a2c6d0b4e561a1de102a97c82000f07e0fd4483d"
+  url "https://github.com/protomaps/go-pmtiles/archive/refs/tags/v1.23.1.tar.gz"
+  sha256 "fe4a63efe6cf8b3dbd36cb5e3afa57f518fa80f9b30629dbaffce8e8bd2b6015"
   license "BSD-3-Clause"
 
   livecheck do
@@ -11,18 +11,18 @@ class Pmtiles < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4fa56b78e0013ff1c9616fae3ed9e7d3a6aefd6d6567bbc83c7c303e9c5c9f0c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4fa56b78e0013ff1c9616fae3ed9e7d3a6aefd6d6567bbc83c7c303e9c5c9f0c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4fa56b78e0013ff1c9616fae3ed9e7d3a6aefd6d6567bbc83c7c303e9c5c9f0c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "1fd9423f07ec0ba44a17c7ecdb143110bf00172bfdaee505b3a1ea8cef91ad10"
-    sha256 cellar: :any_skip_relocation, ventura:       "1fd9423f07ec0ba44a17c7ecdb143110bf00172bfdaee505b3a1ea8cef91ad10"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "22dbad70fea86537f1f62102796893df95ddb05ed003e3facfb1ba74ebc1b92f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "35d93ad49765762fa5faae6015c8790a70112cbaa7249f544f695d9fa1093328"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "35d93ad49765762fa5faae6015c8790a70112cbaa7249f544f695d9fa1093328"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "35d93ad49765762fa5faae6015c8790a70112cbaa7249f544f695d9fa1093328"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6a7a88facca73560f3082b38ba18e971e19fc962826ceaecc3e9470f0dd43015"
+    sha256 cellar: :any_skip_relocation, ventura:       "6a7a88facca73560f3082b38ba18e971e19fc962826ceaecc3e9470f0dd43015"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d73bc1b024c48b7c047929886afdaad48dbdfff3773c12178ffd485e24eb214"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args
+    system "go", "build", *std_go_args(ldflags: "-s -w")
   end
 
   test do

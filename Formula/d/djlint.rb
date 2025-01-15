@@ -3,26 +3,27 @@ class Djlint < Formula
 
   desc "Lint & Format HTML Templates"
   homepage "https://djlint.com"
-  url "https://files.pythonhosted.org/packages/b1/60/45f31c057ed7957aa28fadca9e9575c89273c785de774b6a8cae3d1cc4b5/djlint-1.36.0.tar.gz"
-  sha256 "c6a16905d69d02bfd745084a3ebf065707efbaf0a31762b34441802beb206b51"
+  url "https://files.pythonhosted.org/packages/74/89/ecf5be9f5c59a0c53bcaa29671742c5e269cc7d0e2622e3f65f41df251bf/djlint-1.36.4.tar.gz"
+  sha256 "17254f218b46fe5a714b224c85074c099bcb74e3b2e1f15c2ddc2cf415a408a1"
   license "GPL-3.0-or-later"
   head "https://github.com/djlint/djLint.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "40725ba70889326c76ab3c88ddcff26dd804d8853e9d1a268452a46a8a08695c"
-    sha256 cellar: :any,                 arm64_sonoma:  "d0dd6f2358464ec14de61c13e1b075a048a933c85f64acbb9102bc4a0d1e3187"
-    sha256 cellar: :any,                 arm64_ventura: "eedb191ca2f56dbc377f64ecbf42c6b226da3db35a0664b2dc7b9ee8504b2665"
-    sha256 cellar: :any,                 sonoma:        "73688cd73df2d17a94990ef7de571f899046ac1434deb128b949199e69273897"
-    sha256 cellar: :any,                 ventura:       "691dc9af1b862d327f16e3c397f82e03ffa4b4b1bae9633bf88b668a856f7c78"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8610c9a3b389b2691e83e5c8974cbd49f10c40f8dae175dd682c3f2e88fd7ddc"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "ffffd50d9a981e616541d88a685b44ddd5fdb425873563681e3c0611775f48f7"
+    sha256 cellar: :any,                 arm64_sonoma:  "15f38fb5cc8c6d57101be9f42ddef52a9e8c82b23874dff59b2051c282656e11"
+    sha256 cellar: :any,                 arm64_ventura: "25d8dd0b2238eef47a3f7d9cde2ff99c5bac124bdae44855aba1ef11fd4f977b"
+    sha256 cellar: :any,                 sonoma:        "b6d24985a8a4d539ff7b2ce6f121eda24a96691ef42b5785714cd0394e9c7d9e"
+    sha256 cellar: :any,                 ventura:       "2f351016b97bf06731b52dfca66ae25fd7b2d8a95442bf70e0c011789dd63105"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fa3b3445307399671cdda0fb78276dc88e33823b28c4db26a27ded1f8ff9e4e9"
   end
 
   depends_on "libyaml"
   depends_on "python@3.13"
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz"
-    sha256 "ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"
+    url "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz"
+    sha256 "ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"
   end
 
   resource "colorama" do
@@ -36,8 +37,8 @@ class Djlint < Formula
   end
 
   resource "editorconfig" do
-    url "https://files.pythonhosted.org/packages/3d/85/7b5c2fac7fdc37d959fab714b13b9acb75884490dcc0e8b1dc5e64105084/EditorConfig-0.12.4.tar.gz"
-    sha256 "24857fa1793917dd9ccf0c7810a07e05404ce9b823521c7dce22a4fb5d125f80"
+    url "https://files.pythonhosted.org/packages/b4/29/785595a0d8b30ab8d2486559cfba1d46487b8dcbd99f74960b6b4cca92a4/editorconfig-0.17.0.tar.gz"
+    sha256 "8739052279699840065d3a9f5c125d7d5a98daeefe53b0e5274261d77cb49aa2"
   end
 
   resource "jsbeautifier" do
@@ -46,8 +47,8 @@ class Djlint < Formula
   end
 
   resource "json5" do
-    url "https://files.pythonhosted.org/packages/91/59/51b032d53212a51f17ebbcc01bd4217faab6d6c09ed0d856a987a5f42bbc/json5-0.9.25.tar.gz"
-    sha256 "548e41b9be043f9426776f05df8635a00fe06104ea51ed24b67f908856e151ae"
+    url "https://files.pythonhosted.org/packages/85/3d/bbe62f3d0c05a689c711cff57b2e3ac3d3e526380adb7c781989f075115c/json5-0.10.0.tar.gz"
+    sha256 "e66941c8f0a02026943c52c2eb34ebeb2a6f819a0be05920a6f5243cd30fd559"
   end
 
   resource "pathspec" do
@@ -61,30 +62,32 @@ class Djlint < Formula
   end
 
   resource "regex" do
-    url "https://files.pythonhosted.org/packages/f9/38/148df33b4dbca3bd069b963acab5e0fa1a9dbd6820f8c322d0dd6faeff96/regex-2024.9.11.tar.gz"
-    sha256 "6c188c307e8433bcb63dc1915022deb553b4203a70722fc542c363bf120a01fd"
+    url "https://files.pythonhosted.org/packages/8e/5f/bd69653fbfb76cf8604468d3b4ec4c403197144c7bfe0e6a5fc9e02a07cb/regex-2024.11.6.tar.gz"
+    sha256 "7ab159b063c52a0333c884e4679f8d7a85112ee3078fe3d9004b2dd875585519"
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
-    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
+    url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
+    sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/e9/34/bef135b27fe1864993a5284ad001157ee9b5538e859ac90f5b0e8cc8c9ec/tqdm-4.66.6.tar.gz"
-    sha256 "4bdd694238bef1485ce839d67967ab50af8f9272aab687c0d7702a01da0be090"
+    url "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz"
+    sha256 "f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2"
   end
 
   def install
     virtualenv_install_with_resources
+
+    generate_completions_from_executable(bin/"djlint", shells: [:fish, :zsh], shell_parameter_format: :click)
   end
 
   test do
     assert_includes shell_output("#{bin}/djlint --version"), version.to_s
 
-    (testpath/"test.html").write <<~EOS
+    (testpath/"test.html").write <<~HTML
       {% load static %}<!DOCTYPE html>
-    EOS
+    HTML
 
     assert_includes shell_output("#{bin}/djlint --reformat #{testpath}/test.html", 1), "1 file was updated."
   end

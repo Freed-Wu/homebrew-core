@@ -18,7 +18,7 @@ class StylishHaskell < Formula
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9.8" => :build
+  depends_on "ghc@9.8" => :build # GHC 9.10 PR: https://github.com/haskell/stylish-haskell/pull/480
 
   def install
     system "cabal", "v2-update"
@@ -26,7 +26,7 @@ class StylishHaskell < Formula
   end
 
   test do
-    (testpath/"test.hs").write <<~EOS
+    (testpath/"test.hs").write <<~HASKELL
       {-# LANGUAGE ViewPatterns, TemplateHaskell #-}
       {-# LANGUAGE GeneralizedNewtypeDeriving,
                   ViewPatterns,
@@ -39,8 +39,8 @@ class StylishHaskell < Formula
 
       import qualified Data.Map as M
       import      Data.Map    ((!), keys, Map)
-    EOS
-    expected = <<~EOS
+    HASKELL
+    expected = <<~HASKELL
       {-# LANGUAGE GeneralizedNewtypeDeriving #-}
       {-# LANGUAGE ScopedTypeVariables        #-}
       {-# LANGUAGE TemplateHaskell            #-}
@@ -52,7 +52,7 @@ class StylishHaskell < Formula
 
       import           Data.Map            (Map, keys, (!))
       import qualified Data.Map            as M
-    EOS
+    HASKELL
     assert_equal expected, shell_output("#{bin}/stylish-haskell test.hs")
   end
 end

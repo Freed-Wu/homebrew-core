@@ -3,18 +3,17 @@ class PythonArgcomplete < Formula
 
   desc "Tab completion for Python argparse"
   homepage "https://kislyuk.github.io/argcomplete/"
-  url "https://files.pythonhosted.org/packages/5f/39/27605e133e7f4bb0c8e48c9a6b87101515e3446003e0442761f6a02ac35e/argcomplete-3.5.1.tar.gz"
-  sha256 "eb1ee355aa2557bd3d0145de7b06b2a45b0ce461e1e7813f5d066039ab4177b4"
+  url "https://files.pythonhosted.org/packages/0c/be/6c23d80cb966fb8f83fb1ebfb988351ae6b0554d0c3a613ee4531c026597/argcomplete-3.5.3.tar.gz"
+  sha256 "c12bf50eded8aebb298c7b7da7a5ff3ee24dffd9f5281867dfe1424b58c55392"
   license "Apache-2.0"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "db7b67601e51e5ff28032dde4c6c311e07a611d1bbe4708c6c42a4c7bd912b3a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "db7b67601e51e5ff28032dde4c6c311e07a611d1bbe4708c6c42a4c7bd912b3a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "db7b67601e51e5ff28032dde4c6c311e07a611d1bbe4708c6c42a4c7bd912b3a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "518e92572b64ec91e24b1cb9c64aab5985cd477c0fe6746e705fe3e8202c2e53"
-    sha256 cellar: :any_skip_relocation, ventura:       "518e92572b64ec91e24b1cb9c64aab5985cd477c0fe6746e705fe3e8202c2e53"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b7c1a0b591b50cf76d1d38f6b86cc8bf071d1ea3e6b0bdab3c0a076284915e75"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "982cb0f26b5dfe5090e33156d2b34e38bdeba8f2cdab54895a5f273096ff4d59"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "982cb0f26b5dfe5090e33156d2b34e38bdeba8f2cdab54895a5f273096ff4d59"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "982cb0f26b5dfe5090e33156d2b34e38bdeba8f2cdab54895a5f273096ff4d59"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c4707397f76be1f1e95b3249087c508b5ef64b4c0f3516adb52d1fd47ef7cdd3"
+    sha256 cellar: :any_skip_relocation, ventura:       "c4707397f76be1f1e95b3249087c508b5ef64b4c0f3516adb52d1fd47ef7cdd3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56b12d97b4b00ef8c9430c388f5ab6c7f62003d56434628c701ec139e306047c"
   end
 
   depends_on "python@3.13"

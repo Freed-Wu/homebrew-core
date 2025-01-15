@@ -1,10 +1,20 @@
 class Shellcheck < Formula
   desc "Static analysis and lint tool, for (ba)sh scripts"
   homepage "https://www.shellcheck.net/"
-  url "https://github.com/koalaman/shellcheck/archive/refs/tags/v0.10.0.tar.gz"
-  sha256 "149ef8f90c0ccb8a5a9e64d2b8cdd079ac29f7d2f5a263ba64087093e9135050"
   license "GPL-3.0-or-later"
   head "https://github.com/koalaman/shellcheck.git", branch: "master"
+
+  stable do
+    # TODO: Check if `aeson` allow-newer workaround can be removed
+    url "https://github.com/koalaman/shellcheck/archive/refs/tags/v0.10.0.tar.gz"
+    sha256 "149ef8f90c0ccb8a5a9e64d2b8cdd079ac29f7d2f5a263ba64087093e9135050"
+
+    # Backport upper bound increase for filepath, needed for GHC 9.12
+    patch do
+      url "https://github.com/koalaman/shellcheck/commit/0ee46a0f33ebafde128e2c93dd45f2757de4d4ec.patch?full_index=1"
+      sha256 "c73663bee3577068700b580140d468834cd42f88f7753f950f501e8781656ff5"
+    end
+  end
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sequoia:  "5045be1e530288251353848343322f5a423617d061830b7ea7465fe550787364"
@@ -22,20 +32,24 @@ class Shellcheck < Formula
   depends_on "pandoc" => :build
 
   def install
+    # Workaround to build with GHC 9.12, remove after https://github.com/haskell/aeson/pull/1126
+    # is merged and available on Hackage or if `aeson` is willing to provide a metadata revision
+    args = ["--allow-newer=aeson:ghc-prim,aeson:template-haskell"]
+
     system "cabal", "v2-update"
-    system "cabal", "v2-install", *std_cabal_v2_args
+    system "cabal", "v2-install", *args, *std_cabal_v2_args
     system "./manpage"
     man1.install "shellcheck.1"
   end
 
   test do
     sh = testpath/"test.sh"
-    sh.write <<~EOS
+    sh.write <<~SH
       for f in $(ls *.wav)
       do
         echo "$f"
       done
-    EOS
+    SH
     assert_match "[SC2045]", shell_output("#{bin}/shellcheck -f gcc #{sh}", 1)
   end
 end

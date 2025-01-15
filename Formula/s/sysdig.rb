@@ -2,7 +2,7 @@ class Sysdig < Formula
   desc "System-level exploration and troubleshooting tool"
   homepage "https://sysdig.com/"
   license "Apache-2.0"
-  revision 8
+  revision 14
 
   stable do
     url "https://github.com/draios/sysdig/archive/refs/tags/0.38.1.tar.gz"
@@ -22,12 +22,12 @@ class Sysdig < Formula
   end
 
   bottle do
-    sha256                               arm64_sequoia: "73d8001f1501c3dbf721bb7cf6931c0b8c0ae03af9fdc8462ae38a50e3dbc139"
-    sha256                               arm64_sonoma:  "c495becf5ad90d218c6fe6ee520c7a64ee3b76a16c8c0fabd998f14ff18eab20"
-    sha256                               arm64_ventura: "9642fe14b6b62001688abaedeac9d81fb427e8b4f36695e65a94339c949484a4"
-    sha256                               sonoma:        "bb58356975a7a7adc3fa1a82a7fb1a02b0198919e7befcc4168f36c826916216"
-    sha256                               ventura:       "f2b7d2aff2a4dd129c6a47564ad7c606b2dc4bcc9b9dbc2f9f2e0a92799aaf64"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e8c690d5882a584d8dc76f5409eef1208a1dc74bea9391924cec7757f4bf6efe"
+    sha256                               arm64_sequoia: "dec6d83e133c6f1179e7a4f43a6afdf894fb4d68db57f05e4189c845de9bb16e"
+    sha256                               arm64_sonoma:  "14b630015ceb9318f8d5dc4ad64d67f42c5f34cdcb60bdfe40a4c65615dfe071"
+    sha256                               arm64_ventura: "660e66a065808d1ef86e5a057bb31c95ce261605a59dbc3686cc1f7bef3a437e"
+    sha256                               sonoma:        "f4d477945faeb8aa30c70811d8365395f85cf41f0bf004ce7f268cea39ec0083"
+    sha256                               ventura:       "50cbb48f40abd7ac76f45c671034126b88ef665d7537410c7283ccfaea769adc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e485410f09083bbb28c9e656e63ffd0345e478ca0df2cec9d75649f2a17b75e4"
   end
 
   head do
@@ -62,8 +62,6 @@ class Sysdig < Formula
     depends_on "protobuf"
     depends_on "zstd"
   end
-
-  fails_with gcc: "5" # C++17
 
   # More info on https://gist.github.com/juniorz/9986999
   resource "homebrew-sample_file" do

@@ -2,16 +2,15 @@ class Gstreamer < Formula
   desc "Development framework for multimedia applications"
   homepage "https://gstreamer.freedesktop.org/"
   license all_of: ["LGPL-2.0-or-later", "LGPL-2.1-or-later", "MIT"]
-  revision 1
 
   stable do
-    url "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.24.9/gstreamer-1.24.9.tar.bz2"
-    sha256 "3b284fa1c3b5cf0b1ad6eab64d506c2e1d62e37578ef8c0eb6dce3668ae76b77"
+    url "https://gitlab.freedesktop.org/gstreamer/gstreamer/-/archive/1.24.11/gstreamer-1.24.11.tar.bz2"
+    sha256 "df174a076509d00e9a6e6b5bf54ecceb6396a4e8cfb1e20ccbda8389b06bc6bf"
 
     # When updating this resource, use the tag that matches the GStreamer version.
     resource "rs" do
-      url "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/gstreamer-1.24.9/gst-plugins-rs-gstreamer-1.24.9.tar.bz2"
-      sha256 "417881ccd886e0962261f9181faa341f1073ee262775e04f2e8aedaa9ab97fb1"
+      url "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/gstreamer-1.24.11/gst-plugins-rs-gstreamer-1.24.11.tar.bz2"
+      sha256 "1a91972a5ff283a6f3a01f734a22b5dbafdc5cc906ff7dc4acc8913daba0a83f"
 
       # Backport support for newer `dav1d`
       # upstream commit ref, https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/commit/7e1ab086de00125bc0d596f9ec5d74c9b82b2cc0
@@ -28,12 +27,12 @@ class Gstreamer < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "5e2a09550f44ff75fe539c36ddc4688d76955f89ed104849c686e13a507826e7"
-    sha256 arm64_sonoma:  "802aac638b3eab7fb3f85476369acff565bdcaf5f71fef3170f6f1392ed6a651"
-    sha256 arm64_ventura: "d4624f5ed38155e4449d454ef967fed3a095042bbfda4495c0262ae3b98a8d25"
-    sha256 sonoma:        "71bbfb0d931dbe58eb37bf4599fb2549806e25990798de09c11b7df57bd8abde"
-    sha256 ventura:       "2fd059f3e26b9548af43dad654887d561542fe0ef3e9f2e5f52c9c92995cad8a"
-    sha256 x86_64_linux:  "7190c7784d132b720b54bb616a35f20a9f2fc5c7c6ade3497b7e132a296c2575"
+    sha256 arm64_sequoia: "0ca708d2dac9e42836f705af9e7e435fffe4f4eec9cdad0fc0a95c39534125cf"
+    sha256 arm64_sonoma:  "ec62276379caad60d8fa908827dbb3b8dd0b5cbf7f3b8836b66855d824f50cbc"
+    sha256 arm64_ventura: "eef4dbef615e30133e65f822fd47f2ca278712788eff2a5f3936c8f6e9a53409"
+    sha256 sonoma:        "41780b5581d2574ae95c97b222d6546baf899a87b5d0c3586cf9536140eada7c"
+    sha256 ventura:       "1749b688522ce8bc00cc84744bfaf00f724c4a85d45edd3f4be1b782f213930b"
+    sha256 x86_64_linux:  "e5dd1a31f1aa5ea5ebb163c523283c7d5c77b42b0d3928f27ff00c1e445a2c20"
   end
 
   head do
@@ -51,7 +50,7 @@ class Gstreamer < Formula
   depends_on "meson" => :build
   depends_on "nasm" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "aom"
   depends_on "cairo"
@@ -256,12 +255,12 @@ class Gstreamer < Formula
     #   https://github.com/orgs/Homebrew/discussions/3740
     system bin/"gst-validate-launcher", "--usage"
 
-    system python3, "-c", <<~EOS
+    system python3, "-c", <<~PYTHON
       import gi
       gi.require_version('Gst', '1.0')
       from gi.repository import Gst
       print (Gst.Fraction(num=3, denom=5))
-    EOS
+    PYTHON
 
     # FIXME: The initial plugin load takes a long time without extra permissions on
     # macOS, which frequently causes the slower Intel macOS runners to time out.

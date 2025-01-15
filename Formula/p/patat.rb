@@ -16,9 +16,9 @@ class Patat < Formula
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc" => :build
+  depends_on "ghc@9.10" => :build
   depends_on "pandoc" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   uses_from_macos "zlib"
 
@@ -29,12 +29,12 @@ class Patat < Formula
 
   test do
     test_file = testpath/"test.md"
-    test_file.write <<~EOS
+    test_file.write <<~MARKDOWN
       # Hello from Patat
       Slide 1
       ---
       Slide 2
-    EOS
+    MARKDOWN
     output = shell_output("#{bin}/patat --dump --force #{test_file}")
     assert_match "Hello from Patat", output
 

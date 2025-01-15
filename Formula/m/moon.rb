@@ -1,8 +1,8 @@
 class Moon < Formula
   desc "Task runner and repo management tool for the web ecosystem, written in Rust"
   homepage "https://moonrepo.dev/moon"
-  url "https://github.com/moonrepo/moon/archive/refs/tags/v1.29.4.tar.gz"
-  sha256 "4d34851b666805ee368edbe9aa679605122f63bd1bc7bab5d4de52463b8aa6c7"
+  url "https://github.com/moonrepo/moon/archive/refs/tags/v1.31.2.tar.gz"
+  sha256 "5b7eb3d360caee2173d14b1344393f4f4263d49e195d96fffae5a410cbd1aa88"
   license "MIT"
   head "https://github.com/moonrepo/moon.git", branch: "master"
 
@@ -12,15 +12,15 @@ class Moon < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6f54f43f234aafe238b3fd58dbb71f6562e5775214b10d6d67954bbea1673bcc"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "83219e8ea564e4871dd1824e454612e911982f2ad86ad9ac33f16e9dad08fab0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "8929cd336235661dccf2cca43d7925df261a0e21f8c6f57c53d58b274d0877a6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b1c6b7e484e83bbac3a60208ead76ce6fa16216e6e5720653ddee66619f392a2"
-    sha256 cellar: :any_skip_relocation, ventura:       "cdcfe069cf63edc5fba6c3c7dbca9d4b2984c6b30d74092303ac98dea8204baa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5fef0cfb489bc789fe14e585fe36af1123c4c4cc16d7aec333feeae81f12f16a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2dd2576060e81ecd3e4e79c56f970edeb15bdebaf7e0d9cb24be3b5123499fa4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "795e4c861bbc4acfc1ec521ad9ebdede5b979e6f2221aec160b3c356da3d8b54"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6827470368ef396a8c67bdf9163e77f5f2206935919af3d15d09f6bd8c5420a8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9c32d9b394cd6e4b03ecf969b572309bcda3f8d933c38bca8ace36ffb126b347"
+    sha256 cellar: :any_skip_relocation, ventura:       "e3fd08e945bf5dd59199a9fe529a329581f38ef0ee54fbe0f844f6cbc61842a4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4243212ebaca674ba370e39ff6ce44ea5a99d5027770d4b26e26612c16563e9f"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
 
   uses_from_macos "bzip2"
@@ -44,6 +44,6 @@ class Moon < Formula
 
   test do
     system bin/"moon", "init", "--minimal", "--yes"
-    assert_predicate testpath/".moon"/"workspace.yml", :exist?
+    assert_path_exists testpath/".moon/workspace.yml"
   end
 end

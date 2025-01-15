@@ -1,28 +1,29 @@
 class ApacheArrow < Formula
   desc "Columnar in-memory analytics layer designed to accelerate big data"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-18.0.0/apache-arrow-18.0.0.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-18.0.0/apache-arrow-18.0.0.tar.gz"
-  sha256 "abcf1934cd0cdddd33664e9f2d9a251d6c55239d1122ad0ed223b13a583c82a9"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-18.1.0/apache-arrow-18.1.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-18.1.0/apache-arrow-18.1.0.tar.gz"
+  sha256 "2dc8da5f8796afe213ecc5e5aba85bb82d91520eff3cf315784a52d0fa61d7fc"
   license "Apache-2.0"
+  revision 6
   head "https://github.com/apache/arrow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "a82ce25f5618bbdba2ee11331e549bd8214c2add540149a0b8fb1d804297b307"
-    sha256 cellar: :any,                 arm64_sonoma:  "1ef3a0812cabb2207641e9a6f265951cbbb365a6a2a90c31d26553f0448c66e1"
-    sha256 cellar: :any,                 arm64_ventura: "fa4a97fbfe5480374e60dff3183033af43970dfe07cebbc95267f455d447d8f2"
-    sha256 cellar: :any,                 sonoma:        "85345c652d786253c58940d1c19e59af24a1830b18d99dc6740eb7f3f54fd4ad"
-    sha256 cellar: :any,                 ventura:       "cbe9df1c7793b1610bbc4c73556d20711782d798e1a04ebe6eab31b6215745fa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b1b78619b359374ed148d2994c39b833e6d202241cf6fed4073decbbfb100f71"
+    sha256 cellar: :any,                 arm64_sequoia: "839c246eae02896257c3ea5e21814e70dbd68f2616e08672cc901c8df2fb5128"
+    sha256 cellar: :any,                 arm64_sonoma:  "91907f0fe9d62eb0d4bab3bb64997aec4774fb71998007516953b6f8376f740b"
+    sha256 cellar: :any,                 arm64_ventura: "8a82c7da56b9041a92264337db3c1f99da7b5ebb84856c0d44842e3d61d226ce"
+    sha256 cellar: :any,                 sonoma:        "5ef8cc307319af3054406c48db5c9ba06d4c50d9bcfa0ca185a6d802e14edf6b"
+    sha256 cellar: :any,                 ventura:       "4c040f0723b9eb2cdb1fd5c9c773407fbaa7b1926d350d8fea669be86372ec3b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "82c50ad1238be66720786e2de996522e191a1c5939843d1c9b0d6f5f56cd92dd"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
   depends_on "gflags" => :build
-  depends_on "ninja" => :build
   depends_on "rapidjson" => :build
   depends_on "xsimd" => :build
   depends_on "abseil"
+  depends_on "aws-crt-cpp"
   depends_on "aws-sdk-cpp"
   depends_on "brotli"
   depends_on "grpc"
@@ -40,11 +41,15 @@ class ApacheArrow < Formula
   uses_from_macos "bzip2"
   uses_from_macos "zlib"
 
-  on_macos do
-    depends_on "c-ares"
+  # Issue ref: https://github.com/protocolbuffers/protobuf/issues/19447
+  fails_with :gcc do
+    version "12"
+    cause "Protobuf 29+ generated code with visibility and deprecated attributes needs GCC 13+"
   end
 
   def install
+    ENV.llvm_clang if OS.linux?
+
     # We set `ARROW_ORC=OFF` because it fails to build with Protobuf 27.0
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
@@ -73,10 +78,16 @@ class ApacheArrow < Formula
       -DARROW_WITH_UTF8PROC=ON
       -DARROW_INSTALL_NAME_RPATH=OFF
       -DPARQUET_BUILD_EXECUTABLES=ON
-      -GNinja
     ]
-
     args << "-DARROW_MIMALLOC=ON" unless Hardware::CPU.arm?
+    # Reduce overlinking. Can remove on Linux if GCC 11 issue is fixed
+    args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,#{OS.mac? ? "-dead_strip_dylibs" : "--as-needed"}"
+    # ARROW_SIMD_LEVEL sets the minimum required SIMD. Since this defaults to
+    # SSE4.2 on x86_64, we need to reduce level to match oldest supported CPU.
+    # Ref: https://arrow.apache.org/docs/cpp/env_vars.html#envvar-ARROW_USER_SIMD_LEVEL
+    if build.bottle? && Hardware::CPU.intel? && (!OS.mac? || !MacOS.version.requires_sse42?)
+      args << "-DARROW_SIMD_LEVEL=NONE"
+    end
 
     system "cmake", "-S", "cpp", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
@@ -84,6 +95,8 @@ class ApacheArrow < Formula
   end
 
   test do
+    ENV.method(DevelopmentTools.default_compiler).call if OS.linux?
+
     (testpath/"test.cpp").write <<~CPP
       #include "arrow/api.h"
       int main(void) {

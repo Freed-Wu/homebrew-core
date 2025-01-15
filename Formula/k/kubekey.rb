@@ -28,7 +28,7 @@ class Kubekey < Formula
   depends_on "gpgme"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "btrfs-progs"
     depends_on "device-mapper"
   end
@@ -47,7 +47,7 @@ class Kubekey < Formula
     ]
     system "go", "build", *std_go_args(ldflags:, output: bin/"kk"), "-tags", tags, "./cmd/kk"
 
-    generate_completions_from_executable(bin/"kk", "completion", "--type", shells: [:bash, :zsh], base_name: "kk")
+    generate_completions_from_executable(bin/"kk", "completion", "--type", shells: [:bash, :zsh])
   end
 
   test do
@@ -56,6 +56,6 @@ class Kubekey < Formula
     assert_match "GitTreeState:\"clean\"", version_output
 
     system bin/"kk", "create", "config", "-f", "homebrew.yaml"
-    assert_predicate testpath/"homebrew.yaml", :exist?
+    assert_path_exists testpath/"homebrew.yaml"
   end
 end

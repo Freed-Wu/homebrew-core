@@ -1,18 +1,23 @@
 class Ryelang < Formula
   desc "Rye is a homoiconic programming language focused on fluid expressions"
   homepage "https://ryelang.org/"
-  url "https://github.com/refaktor/rye/archive/refs/tags/v0.0.26.tar.gz"
-  sha256 "ecfad63fd8901bbfc12374998fc603037ad32e84a6f2383ad17259db3415993d"
-  license "Apache-2.0"
+  url "https://github.com/refaktor/rye/archive/refs/tags/v0.0.33.tar.gz"
+  sha256 "b932a734f97cfb1e9f46a6cd110c586a083aba99f4a14784712358cb6fd7131e"
+  license "BSD-3-Clause"
   head "https://github.com/refaktor/rye.git", branch: "main"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c1b1141d3842e28f41dfcb7db3e1be364526970f939265c6fabd427af40deab2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f7250821b862b9de318e0184ec379ddb6cf7c568446e349f9a8c2da18716dfa1"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "06500afb25333d7d95ec1bc631815ab5fd98e51b5d0d62e7ecc8ce366d3b3f66"
-    sha256 cellar: :any_skip_relocation, sonoma:        "51028f6d219b369c1220f9041073e8aa0c09556fa1aac0996995fe41bfbb9055"
-    sha256 cellar: :any_skip_relocation, ventura:       "5451f0f7f8017f6e83756ee68ed8558723c942ed55072b598b5d51e3ce213c89"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e29bd1fd25f060102bd229075e5c8de1d9e71d8bab77f5f6106c16a7a51fb5b4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9c2016dfbcfcd9295dbf6340087b7bbc1a3767c5832a1518d1ccd5cc0d478078"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "026123e82f5387c00bddc5b2555467e5f63fa2c23af8d2e1212470640f816ce4"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0dce6c00e1e944011f2111b106abc6e9a7ee305f3deb48de78d5681f63dd28ee"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1be9b573665c4b38c570ce40633bdfa664f02b975d89d26f41a8506483561d90"
+    sha256 cellar: :any_skip_relocation, ventura:       "322f268858ec889b94f211425f6aafa63d08a197fa96ce2f01d6da75e1e274c9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d5a6460dc90e8799d2de10cde822bf83a461e0e20cee90e45d6c69d626c1ef25"
   end
 
   depends_on "go" => :build

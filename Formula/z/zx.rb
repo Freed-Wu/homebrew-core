@@ -1,12 +1,12 @@
 class Zx < Formula
   desc "Tool for writing better scripts"
   homepage "https://github.com/google/zx"
-  url "https://registry.npmjs.org/zx/-/zx-8.2.0.tgz"
-  sha256 "46c4db19f693c5fe78ad9e3c762ec528adb35b86824078e89f54fb3f175eb7e3"
+  url "https://registry.npmjs.org/zx/-/zx-8.3.0.tgz"
+  sha256 "b2f96100b863355511425d5f116df9e62f8e364a597cb03fa603931f7260d436"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "08bd8a50fd5da7ee0d91fd62bc0a21c9dff9e43257d8416ba9be237e2e816b55"
+    sha256 cellar: :any_skip_relocation, all: "05f1f69292ec5b531e6eda6d9af88cd2643ccfdcdc0f166858e0467312a09093"
   end
 
   depends_on "node"
@@ -21,17 +21,17 @@ class Zx < Formula
   end
 
   test do
-    (testpath/"test.mjs").write <<~EOS
+    (testpath/"test.mjs").write <<~JAVASCRIPT
       #!/usr/bin/env zx
 
       let name = YAML.parse('foo: bar').foo
       console.log(`name is ${name}`)
       await $`touch ${name}`
-    EOS
+    JAVASCRIPT
 
     output = shell_output("#{bin}/zx #{testpath}/test.mjs")
     assert_match "name is bar", output
-    assert_predicate testpath/"bar", :exist?
+    assert_path_exists testpath/"bar"
 
     assert_match version.to_s, shell_output("#{bin}/zx --version")
   end

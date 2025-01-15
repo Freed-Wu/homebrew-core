@@ -1,27 +1,32 @@
 class Kor < Formula
   desc "CLI tool to discover unused Kubernetes resources"
   homepage "https://github.com/yonahd/kor"
-  url "https://github.com/yonahd/kor/archive/refs/tags/v0.5.6.tar.gz"
-  sha256 "a655d04eadde49c23fa8171248423304adb6db1da695df19b28863b90cae8e3a"
+  url "https://github.com/yonahd/kor/archive/refs/tags/v0.5.8.tar.gz"
+  sha256 "aeecaa2f4faf3c2c8dafabe0124749c39fce455f5a87565dd291706547c89251"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "28238df1bac4fe98410a6fba34e5498d6eba1c9140fdf2158379d10c473ce53b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ba38a28dac4a58367ce3f4277013227adedd4e9b3ac16abbd0624c050a6aa431"
-    sha256 cellar: :any_skip_relocation, ventura:       "ba38a28dac4a58367ce3f4277013227adedd4e9b3ac16abbd0624c050a6aa431"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "df19b69c5ac4a9c000d0b1df27c1d955d1676c19ed64e6afaa763d10aa9cf47c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "771f6e0a1b10b5fc2a30a8fdd979f7b9aa9050ee17c2921693c9358e99eac62a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "771f6e0a1b10b5fc2a30a8fdd979f7b9aa9050ee17c2921693c9358e99eac62a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "771f6e0a1b10b5fc2a30a8fdd979f7b9aa9050ee17c2921693c9358e99eac62a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a215ad9521e062a5f955943c3ffba5c30510f60e7bc442f6eccc60c619cac941"
+    sha256 cellar: :any_skip_relocation, ventura:       "a215ad9521e062a5f955943c3ffba5c30510f60e7bc442f6eccc60c619cac941"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c3af78a5ef61c45d2e0705d5233dce3f1c82bd9c64717c3c9e6b810b8504ac76"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args(ldflags: "-s -w")
+    ldflags = "-s -w -X github.com/yonahd/kor/pkg/utils.Version=#{version}"
+    system "go", "build", *std_go_args(ldflags:)
+
+    generate_completions_from_executable(bin/"kor", "completion")
   end
 
   test do
-    (testpath/"mock-kubeconfig").write <<~EOS
+    assert_match version.to_s, shell_output("#{bin}/kor version")
+
+    (testpath/"mock-kubeconfig").write <<~YAML
       apiVersion: v1
       clusters:
         - cluster:
@@ -40,7 +45,8 @@ class Kor < Formula
         - name: kube:admin/mock-server:6443
           user:
             token: sha256~QTYGVumELfyzLS9H9gOiDhVA2B1VnlsNaRsiztOnae0
-    EOS
+    YAML
+
     out = shell_output("#{bin}/kor all -k #{testpath}/mock-kubeconfig 2>&1", 1)
     assert_match "Failed to retrieve namespaces: Get \"https://mock-server:6443/api/v1/namespaces\"", out
   end

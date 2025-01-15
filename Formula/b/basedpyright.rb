@@ -1,18 +1,18 @@
 class Basedpyright < Formula
   desc "Pyright fork with various improvements and built-in pylance features"
   homepage "https://github.com/DetachHead/basedpyright"
-  url "https://registry.npmjs.org/basedpyright/-/basedpyright-1.21.0.tgz"
-  sha256 "d5b4cccf0e016937154c5cbd9d526c21eb6b17d61d22b88fe0da2329061369c7"
+  url "https://registry.npmjs.org/basedpyright/-/basedpyright-1.23.2.tgz"
+  sha256 "f8e47530497f165a9790363aa0d860b7de07ea13060d56e2546e2cd33c8c7c27"
   license "MIT"
   head "https://github.com/detachhead/basedpyright.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8b3fc437bdc9cfd2913b70efe4c22111ed768506ea22b589273cf37ccadd38b2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8b3fc437bdc9cfd2913b70efe4c22111ed768506ea22b589273cf37ccadd38b2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "8b3fc437bdc9cfd2913b70efe4c22111ed768506ea22b589273cf37ccadd38b2"
-    sha256 cellar: :any_skip_relocation, sonoma:        "70f0f7a9087d4ab5bb1dd1238cada677daf420b9fe284a125df1183b925acfd5"
-    sha256 cellar: :any_skip_relocation, ventura:       "70f0f7a9087d4ab5bb1dd1238cada677daf420b9fe284a125df1183b925acfd5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8b3fc437bdc9cfd2913b70efe4c22111ed768506ea22b589273cf37ccadd38b2"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b102903f8ba45c797290e10ed329fdec7d7a60836f5bc8c58258d9f8b03e9837"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b102903f8ba45c797290e10ed329fdec7d7a60836f5bc8c58258d9f8b03e9837"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b102903f8ba45c797290e10ed329fdec7d7a60836f5bc8c58258d9f8b03e9837"
+    sha256 cellar: :any_skip_relocation, sonoma:        "25cb700edd4a0ea716869ba60fd0fb83a2d0877239c6a769fba6e7ce3cc19e11"
+    sha256 cellar: :any_skip_relocation, ventura:       "25cb700edd4a0ea716869ba60fd0fb83a2d0877239c6a769fba6e7ce3cc19e11"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b102903f8ba45c797290e10ed329fdec7d7a60836f5bc8c58258d9f8b03e9837"
   end
 
   depends_on "node"
@@ -24,11 +24,11 @@ class Basedpyright < Formula
   end
 
   test do
-    (testpath/"broken.py").write <<~EOS
+    (testpath/"broken.py").write <<~PYTHON
       def wrong_types(a: int, b: int) -> str:
           return a + b
-    EOS
-    output = pipe_output("#{bin}/basedpyright broken.py 2>&1")
+    PYTHON
+    output = shell_output("#{bin}/basedpyright broken.py 2>&1", 1)
     assert_match "error: Type \"int\" is not assignable to return type \"str\"", output
   end
 end

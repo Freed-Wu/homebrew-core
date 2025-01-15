@@ -2,8 +2,8 @@ class Ollama < Formula
   desc "Create, run, and share large language models (LLMs)"
   homepage "https://ollama.com/"
   url "https://github.com/ollama/ollama.git",
-      tag:      "v0.3.14",
-      revision: "f2890a4494f9fb3722ee7a4c506252362d1eab65"
+      tag:      "v0.5.5",
+      revision: "32bd37adf805f5224a4fa18c2d4e7f33d9a972d8"
   license "MIT"
   head "https://github.com/ollama/ollama.git", branch: "main"
 
@@ -16,18 +16,22 @@ class Ollama < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "aad7ab2bba4691dd42cb669ab7c9e22930a404da2b7dd256400a1aab8678d1b6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6057edec2a88a59a8f1da2e633433938838fef5df6b3b1a3ee8e0efac4285552"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a00d8116e4925f44eaafd95181e476cb3cd06d52ecc83d591d6fad0a7f71b294"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3064acfc34eedc3e4235f84ebc0cd8b8f636970ae772306a1d3df2f4d6de577e"
-    sha256 cellar: :any_skip_relocation, ventura:       "98e39d2e5af94ca268f0c3f8fa7ff73e5b4c9db4c8ee6239fa372e098d5128af"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f57c6e116d85ea1b183cf8d391e17db85c10b08ad00913e35606845cbc46b3b4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "99d8c30b92362f27a4b462767a3c7abebb9261632877c3f3caf54df0afeffe59"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a26badec2ddcf5c5ebaf2bbdf2b954c0c42eac944c0a4bb402a715756c0f31df"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "24c4e59e3a03cac23ab006f54b18fbdef00d70e303c603c6259316e284931465"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3338d4d6a62e4e64cbe22e605e9872cdc279aea497818775bea08c36b35d8f9f"
+    sha256 cellar: :any_skip_relocation, ventura:       "074fa9e55ed0274bad769b123bc157a91de63971a0ae3d06910997965f291ec7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1076c0fc3df0d8d0f26ba01f299d6e9f52c712629186adaa21a1fbcadc2b4b47"
   end
 
   depends_on "cmake" => :build
   depends_on "go" => :build
 
   def install
+    # Fix to makefile path, should be checked in next release
+    # https://github.com/ollama/ollama/blob/89d5e2f2fd17e03fd7cd5cb2d8f7f27b82e453d7/llama/llama.go#L3
+    inreplace "llama/llama.go", "//go:generate make -j", "//go:generate make -C ../ -j"
+
     # Silence tens of thousands of SDK warnings
     ENV["SDKROOT"] = MacOS.sdk_path if OS.mac?
 

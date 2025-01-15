@@ -1,8 +1,8 @@
 class Nuget < Formula
   desc "Package manager for Microsoft development platform including .NET"
   homepage "https://www.nuget.org/"
-  url "https://dist.nuget.org/win-x86-commandline/v6.11.1/nuget.exe"
-  sha256 "c0ddc9cb0633c4607da7e8028eb4f91248c8b74e45a68b0c79fcfa7d78c2a481"
+  url "https://dist.nuget.org/win-x86-commandline/v6.12.2/nuget.exe"
+  sha256 "64f467376f2ee364ba389461df4a29a8f8dd9aa38120d29046e70b9c82045d97"
   license "MIT"
 
   livecheck do
@@ -11,17 +11,17 @@ class Nuget < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "e1f4e36d6acc5460499cb712dfa3e16853f9c6112bbb4da3adffbee04a7f64fc"
+    sha256 cellar: :any_skip_relocation, all: "0798dd072f3da3514d389f1c24b29b4fc87a459f92f63395f023a9ff8880617b"
   end
 
   depends_on "mono"
 
   def install
     libexec.install "nuget.exe" => "nuget.exe"
-    (bin/"nuget").write <<~EOS
+    (bin/"nuget").write <<~BASH
       #!/bin/bash
       mono #{libexec}/nuget.exe "$@"
-    EOS
+    BASH
   end
 
   test do

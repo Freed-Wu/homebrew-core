@@ -24,15 +24,19 @@ class Antlr4CppRuntime < Formula
   depends_on "cmake" => :build
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "util-linux"
   end
 
-  fails_with gcc: "5"
-
   def install
-    system "cmake", ".", "-DANTLR4_INSTALL=ON", "-DANTLR_BUILD_CPP_TESTS=OFF", *std_cmake_args
-    system "cmake", "--build", ".", "--target", "install"
+    args = %w[
+      -DANTLR4_INSTALL=ON
+      -DANTLR_BUILD_CPP_TESTS=OFF
+    ]
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

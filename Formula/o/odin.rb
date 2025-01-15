@@ -2,26 +2,24 @@ class Odin < Formula
   desc "Programming language with focus on simplicity, performance and modern systems"
   homepage "https://odin-lang.org/"
   url "https://github.com/odin-lang/Odin.git",
-      tag:      "dev-2024-11",
-      revision: "e6475fec4d2a3e34099b24a7a3bf890c7a3ef8d9"
-  version "2024-11"
+      tag:      "dev-2025-01",
+      revision: "2aae4cfd461860bd10dcb922f867c98212a11449"
+  version "2025-01"
   license "BSD-3-Clause"
   head "https://github.com/odin-lang/Odin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "a91650f6f1f162e4f97edb3eb37ff405a4b3489879fea827b59d60de897f1611"
-    sha256 cellar: :any,                 arm64_sonoma:  "e0e206de0cb654f640506f8c290a4cd9adbbc3b6dfe922514eaf001a38bbaecc"
-    sha256 cellar: :any,                 arm64_ventura: "b3aa71ba40266020de5094de62da209d8636c80ff468c236e0c6b5fe9e657284"
-    sha256 cellar: :any,                 sonoma:        "6aaa0043560c7a7350b340dc84f98883536fbfd023a1a4d0ccd3f99a8e592105"
-    sha256 cellar: :any,                 ventura:       "681e64950b8d627be9441afade8a93730ae9dcd2049d4dd56382cd95b331d3eb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5525674250061c026a799c4007e9e75a0ec4a72c46540464ca341874b3fe5ad6"
+    sha256 cellar: :any,                 arm64_sequoia: "4e7bdc1317a42ae5abbf25913daf9d45412abdf651eba3a8e47abb8dcf9fca61"
+    sha256 cellar: :any,                 arm64_sonoma:  "307893ac9b98be7a83ec48b5ed4e4e6c4fbd0e9318179d9c4fbdd9985f00b042"
+    sha256 cellar: :any,                 arm64_ventura: "361128b9c3353870dd9a91a5630e8fa9725484114c75808c0479bac638d19c40"
+    sha256 cellar: :any,                 sonoma:        "e0271a0dcecc2d8098a5cab9c2c0e1f76e10492090e25af96046864757261f21"
+    sha256 cellar: :any,                 ventura:       "add63569ff77ba21247fa8ec3b4489773a190287abd89183daac98a969b9c706"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8efa7d664380ed3f899f5f70ebab76e58c8162206821361100fe30378eb2a03b"
   end
 
   depends_on "glfw"
-  depends_on "llvm@18"
+  depends_on "llvm"
   depends_on "raylib"
-
-  fails_with gcc: "5" # LLVM is built with GCC
 
   resource "raygui" do
     url "https://github.com/raysan5/raygui/archive/refs/tags/4.0.tar.gz"
@@ -49,6 +47,12 @@ class Odin < Formula
 
     raylib_installpath = if OS.linux?
       "vendor/raylib/linux"
+    else
+      "vendor/raylib/macos"
+    end
+
+    raygui_installpath = if OS.linux?
+      "vendor/raylib/linux"
     elsif Hardware::CPU.intel?
       "vendor/raylib/macos"
     else
@@ -64,9 +68,9 @@ class Odin < Formula
     ln_s Formula["glfw"].lib/"libglfw3.a", buildpath/glfw_installpath/"libglfw3.a"
 
     ln_s Formula["raylib"].lib/"libraylib.a", buildpath/raylib_installpath/"libraylib.a"
-    # This is actually raylib 5.0, but upstream had not incremented this number yet when it released.
-    ln_s Formula["raylib"].lib/shared_library("libraylib", "4.5.0"),
-      buildpath/raylib_installpath/shared_library("libraylib", "500")
+    # In order to match the version 500 used in odin
+    ln_s Formula["raylib"].lib/shared_library("libraylib", "5.5.0"),
+      buildpath/raylib_installpath/shared_library("libraylib", "550")
 
     resource("raygui").stage do
       cp "src/raygui.h", "src/raygui.c"
@@ -75,7 +79,7 @@ class Odin < Formula
       system ENV.cc, "-c", "-o", "raygui.o", "src/raygui.c",
         "-fpic", "-DRAYGUI_IMPLEMENTATION", "-I#{Formula["raylib"].include}"
       system "ar", "-rcs", "libraygui.a", "raygui.o"
-      cp "libraygui.a", buildpath/raylib_installpath
+      cp "libraygui.a", buildpath/raygui_installpath
 
       # build shared library
       args = [
@@ -92,7 +96,7 @@ class Odin < Formula
 
       args += ["-framework", "OpenGL"] if OS.mac?
       system ENV.cc, *args
-      cp shared_library("libraygui"), buildpath/raylib_installpath
+      cp shared_library("libraygui"), buildpath/raygui_installpath
     end
 
     # By default the build runs an example program, we don't want to run it during install.
@@ -105,16 +109,16 @@ class Odin < Formula
     args << "ODIN_VERSION=dev-#{version}" unless build.head?
     system "make", "release", *args
     libexec.install "odin", "core", "shared", "base", "vendor"
-    (bin/"odin").write <<~EOS
+    (bin/"odin").write <<~BASH
       #!/bin/bash
       export PATH="#{llvm.opt_bin}:$PATH"
       exec -a odin "#{libexec}/odin" "$@"
-    EOS
+    BASH
     pkgshare.install "examples"
   end
 
   test do
-    (testpath/"hellope.odin").write <<~EOS
+    (testpath/"hellope.odin").write <<~ODIN
       package main
 
       import "core:fmt"
@@ -122,11 +126,11 @@ class Odin < Formula
       main :: proc() {
         fmt.println("Hellope!");
       }
-    EOS
+    ODIN
     system bin/"odin", "build", "hellope.odin", "-file"
     assert_equal "Hellope!\n", shell_output("./hellope")
 
-    (testpath/"miniaudio.odin").write <<~EOS
+    (testpath/"miniaudio.odin").write <<~ODIN
       package main
 
       import "core:fmt"
@@ -137,10 +141,10 @@ class Odin < Formula
         assert(len(ver) > 0)
         fmt.println(ver)
       }
-    EOS
+    ODIN
     system bin/"odin", "run", "miniaudio.odin", "-file"
 
-    (testpath/"raylib.odin").write <<~EOS
+    (testpath/"raylib.odin").write <<~ODIN
       package main
 
       import rl "vendor:raylib"
@@ -153,7 +157,7 @@ class Odin < Formula
         num := rl.GetRandomValue(42, 1337)
         assert(42 <= num && num <= 1337)
       }
-    EOS
+    ODIN
     system bin/"odin", "run", "raylib.odin", "-file"
 
     if OS.mac?
@@ -161,7 +165,7 @@ class Odin < Formula
         "-define:RAYLIB_SHARED=true", "-define:RAYGUI_SHARED=true"
     end
 
-    (testpath/"glfw.odin").write <<~EOS
+    (testpath/"glfw.odin").write <<~ODIN
       package main
 
       import "core:fmt"
@@ -170,7 +174,7 @@ class Odin < Formula
       main :: proc() {
         fmt.println(glfw.GetVersion())
       }
-    EOS
+    ODIN
     ENV.prepend_path "LD_LIBRARY_PATH", Formula["glfw"].lib if OS.linux?
     system bin/"odin", "run", "glfw.odin", "-file", "-define:GLFW_SHARED=true",
       "-extra-linker-flags:\"-L#{Formula["glfw"].lib}\""

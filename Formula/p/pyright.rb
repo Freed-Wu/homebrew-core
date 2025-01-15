@@ -1,18 +1,18 @@
 class Pyright < Formula
   desc "Static type checker for Python"
   homepage "https://github.com/microsoft/pyright"
-  url "https://registry.npmjs.org/pyright/-/pyright-1.1.388.tgz"
-  sha256 "f81e93b5b9073d1a4d29e5b29d5a4c6490d1746af1e5b4f664c42225ae70b593"
+  url "https://registry.npmjs.org/pyright/-/pyright-1.1.392.tgz"
+  sha256 "73c411cac7b62b605511a85e34d5582fed72c5dc0a9f62d26daddea2700d0109"
   license "MIT"
   head "https://github.com/microsoft/pyright.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "80983bf84c93f16354b790a991028b2057eb41a7e5ba7a62dce16ba74b41012d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "80983bf84c93f16354b790a991028b2057eb41a7e5ba7a62dce16ba74b41012d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "80983bf84c93f16354b790a991028b2057eb41a7e5ba7a62dce16ba74b41012d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "94e3903b7acc19c635eb51d7c6d68a357728bb46e4e2586ad4decfe1db63eba8"
-    sha256 cellar: :any_skip_relocation, ventura:       "94e3903b7acc19c635eb51d7c6d68a357728bb46e4e2586ad4decfe1db63eba8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "80983bf84c93f16354b790a991028b2057eb41a7e5ba7a62dce16ba74b41012d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "946f79382b843a3b46109600f6e9a4a88dc0480a4d8d09ef639aaf45e7c4fb5f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "946f79382b843a3b46109600f6e9a4a88dc0480a4d8d09ef639aaf45e7c4fb5f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "946f79382b843a3b46109600f6e9a4a88dc0480a4d8d09ef639aaf45e7c4fb5f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b2f5c66b287c8b65bbccc711da7c1f906e77bc1a6887c58d9b4b5476ec8f69d3"
+    sha256 cellar: :any_skip_relocation, ventura:       "b2f5c66b287c8b65bbccc711da7c1f906e77bc1a6887c58d9b4b5476ec8f69d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "946f79382b843a3b46109600f6e9a4a88dc0480a4d8d09ef639aaf45e7c4fb5f"
   end
 
   depends_on "node"
@@ -23,10 +23,10 @@ class Pyright < Formula
   end
 
   test do
-    (testpath/"broken.py").write <<~EOS
+    (testpath/"broken.py").write <<~PYTHON
       def wrong_types(a: int, b: int) -> str:
           return a + b
-    EOS
+    PYTHON
     output = pipe_output("#{bin}/pyright broken.py 2>&1")
     assert_match "error: Type \"int\" is not assignable to return type \"str\"", output
   end

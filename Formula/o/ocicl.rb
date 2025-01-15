@@ -1,18 +1,18 @@
 class Ocicl < Formula
   desc "OCI-based ASDF system distribution and management tool for Common Lisp"
   homepage "https://github.com/ocicl/ocicl"
-  url "https://github.com/ocicl/ocicl/archive/refs/tags/v2.5.13.tar.gz"
-  sha256 "ba28c9dc813fcd9f519a736daacc3362e6e4780a33f6fceba9b25fb0fdef35a5"
+  url "https://github.com/ocicl/ocicl/archive/refs/tags/v2.5.16.tar.gz"
+  sha256 "da6d6b51ab4b5160c461f94713f3a6860bb0ef964306f5930ee2325a88a58ab4"
   license "MIT"
   revision 1
 
   bottle do
-    sha256 arm64_sequoia: "225ce3b0531983673b264b9cbddab740dbe436f6f9370d4d7e52d51458db1374"
-    sha256 arm64_sonoma:  "49c0978da52737b7c779dcbcb2d1ac303ed4225f4616d6fbc23dbb44d94c9c28"
-    sha256 arm64_ventura: "ec01b9c86a7d97f3096ba684dbe72fce6cb7e01b7ee01688d3fa15d780c1ba7f"
-    sha256 sonoma:        "8c56987e4a96595ec567e92401ffa91742426c72e65b7c8b7fb721728e875e10"
-    sha256 ventura:       "92423e44512c7cd31dafc29e42866690fd77cfcbb4a1dcf2b4399a0f156749ef"
-    sha256 x86_64_linux:  "05b84d129fa33f548079bf233c21126b0d5d90cf2e98fc7da806a0629a158f9c"
+    sha256 arm64_sequoia: "7a6718603a13fa4ae8a07bdb830dfd4edaedbd8ce24b2e603e1af86e0ddde9f5"
+    sha256 arm64_sonoma:  "f80fbcf90990d2d1e26eac1fd87e8cdb257bd7f94430a7012c24019aadd30563"
+    sha256 arm64_ventura: "dd361b92c2ca039f1d11628585d558561528d7f17011cb4ea7028dc9b5d6d59b"
+    sha256 sonoma:        "b671aa86eff66f7ddf8e7ac1354d88b024ecea9dfe5619bb41d5088ac51af12f"
+    sha256 ventura:       "f336cfac8a501f1da5a484dbdc98c8824099414990cfd51f3edc878418f6954a"
+    sha256 x86_64_linux:  "1098533b721c8f4b4ec75aa0d9386709e55372ab8996267448e3af40c6ebee61"
   end
 
   depends_on "sbcl"
@@ -39,11 +39,11 @@ class Ocicl < Formula
            LISP
 
     # Write a shell script to wrap ocicl
-    (bin/"ocicl").write <<~EOS
+    (bin/"ocicl").write <<~LISP
       #!/usr/bin/env -S sbcl --core #{libexec}/ocicl.core --script
       (uiop:restore-image)
       (ocicl:main)
-    EOS
+    LISP
   end
 
   test do

@@ -1,8 +1,8 @@
 class CiliumCli < Formula
   desc "CLI to install, manage & troubleshoot Kubernetes clusters running Cilium"
   homepage "https://cilium.io"
-  url "https://github.com/cilium/cilium-cli/archive/refs/tags/v0.16.19.tar.gz"
-  sha256 "e16441d7f6371eb31290111b23e74947c5569501d30b2299009510c3f1ad8a6f"
+  url "https://github.com/cilium/cilium-cli/archive/refs/tags/v0.16.23.tar.gz"
+  sha256 "a0464981234670738e0a997b25f34faae0b68134b2c3dab381141010ced140c3"
   license "Apache-2.0"
 
   # Upstream uses GitHub releases to indicate that a version is released
@@ -14,12 +14,12 @@ class CiliumCli < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "bd892b2e392bfdba2e4ecb49c82d49dbbdf0810e9313b86746bca3e8af3a2a84"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "15068eb79020ed2beedc8098f34855c27964e5bc3601415de6382e45a121300e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "470843c391f180df8e7fb46c965927563d9e452a2994ad0ab61fcd818c6bdd0a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "1729cdd952423d0265764b48b5c9c2afdfd23ddec70f2543343afadd1e23d818"
-    sha256 cellar: :any_skip_relocation, ventura:       "48c231ddfc32ae50de9ab874d4396991540aec5314dab1582c652ae64d23175b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "55bd49c48e81819c5edcf94ebec9bd9440e5ef815a67fa7dff180d83d87f9363"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2f64fbd2843f5d14ffc388ae24540e2eb25215cf9d8a22087403bf4fdf318d03"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9fa3276e0f03316e5a31deff5b37971607693eefc96eb1d50d571979439d80cd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c9fee69b8f3965a0774418ace5216c7914093e141db04755226082a6b8a93029"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8d688a25336fe3b0181a891ff6b1d225379ff7f4ea621cba69cc89dff2f276d2"
+    sha256 cellar: :any_skip_relocation, ventura:       "a4b3b71f3790b792ad17f0fccb870892e9d87832e5dcda8615f10d027fec3706"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f1d90d0f092be3644c53328750a9a585ec15959664b53afd50e8337d0d9281ac"
   end
 
   depends_on "go" => :build
@@ -35,7 +35,7 @@ class CiliumCli < Formula
     ]
     system "go", "build", *std_go_args(ldflags:, output: bin/"cilium"), "./cmd/cilium"
 
-    generate_completions_from_executable(bin/"cilium", "completion", base_name: "cilium")
+    generate_completions_from_executable(bin/"cilium", "completion")
   end
 
   test do

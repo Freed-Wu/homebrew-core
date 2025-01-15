@@ -1,18 +1,18 @@
 class Flow < Formula
   desc "Static type checker for JavaScript"
   homepage "https://flow.org/"
-  url "https://github.com/facebook/flow/archive/refs/tags/v0.251.1.tar.gz"
-  sha256 "07d0d439f2f0f339c0b8f7d680d85a47a1edbafecdea793dad399cc1d3baa107"
+  url "https://github.com/facebook/flow/archive/refs/tags/v0.258.1.tar.gz"
+  sha256 "4b5127a687dfd8cf58bbcddf53e90ecaef64b3dc29b86eddcd12f65babc2de95"
   license "MIT"
   head "https://github.com/facebook/flow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8989886630f8e33d7f2abbc53031580a49b2d168f30b95a4a2d249eb3bb97f55"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "698be02705f59bd5c94c95c00c036c287f3428657ec2e8ff961c4fd930463fd8"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e377d8c57f1d61ff82038109180ec516969719f68a2e9d0f251b606c732e30f3"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c85bde0bc0b6c5fb6913ec6f284b0cb1a73f631e5761435714c20dbb38cb41cd"
-    sha256 cellar: :any_skip_relocation, ventura:       "afda482370089aca5e29ef9af88bce51d20fb9c1a0bbf230172d1675bdede2c8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "45fc8b0b766483c55e514b8a5354e28055b350bcdba3279bb7494af3a7f9d9fc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "69a9d5fef9a171579de56d64c08b9d98b4435c82567e6cbfc862f5783fafac80"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ed1ae3a6b3605ec0005608bd921b4a59628a2eebba20f49365caddde7df69e5c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "9595863de81e02d208ba3312ec651bd3d9c33a53ba212bada2c1309e2f5d6c13"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6611638d72ef3ab143f543be67949857a540c14d77686a395595abd799714e08"
+    sha256 cellar: :any_skip_relocation, ventura:       "7df86e67f1a57a55b4e90a76bccc1ea0436aed10e6a6b71850adda41b48d53c8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "caf352be82c7968aa7e607f00f36ce1d052a81d98bf31d8def1123af64b749c7"
   end
 
   depends_on "ocaml" => :build
@@ -35,10 +35,10 @@ class Flow < Formula
 
   test do
     system bin/"flow", "init", testpath
-    (testpath/"test.js").write <<~EOS
+    (testpath/"test.js").write <<~JS
       /* @flow */
       var x: string = 123;
-    EOS
+    JS
     expected = /Found 1 error/
     assert_match expected, shell_output("#{bin}/flow check #{testpath}", 2)
   end

@@ -1,18 +1,18 @@
 class Kubelogin < Formula
   desc "OpenID Connect authentication plugin for kubectl"
   homepage "https://github.com/int128/kubelogin"
-  url "https://github.com/int128/kubelogin/archive/refs/tags/v1.31.0.tar.gz"
-  sha256 "75dd8f9669804a42c65fb52f54b0deb176c4f4d126af0259279fe41cd4d15d6e"
+  url "https://github.com/int128/kubelogin/archive/refs/tags/v1.31.1.tar.gz"
+  sha256 "80224a49a2133bfef96d54b277065d4823faeb411fa1fd22f28009d31dcd8355"
   license "Apache-2.0"
   head "https://github.com/int128/kubelogin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "fd54f1305a5b4156df1cf66d02285e6729711b13ca7beae544a83eae9c13902c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fd54f1305a5b4156df1cf66d02285e6729711b13ca7beae544a83eae9c13902c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "fd54f1305a5b4156df1cf66d02285e6729711b13ca7beae544a83eae9c13902c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "008f52544faf3b23c5c43a4a28ccaaf4c5966e40f8f224f72c7c2dec4555357d"
-    sha256 cellar: :any_skip_relocation, ventura:       "008f52544faf3b23c5c43a4a28ccaaf4c5966e40f8f224f72c7c2dec4555357d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1cd9ec1ade640da4e4da728b42cf40c0eb710d085bb2d3974066b9f1a376f8b1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6e8bbacf41e7ae77170391e882c29601aba3f90099615ed91b4ab0e58ebf3d99"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6e8bbacf41e7ae77170391e882c29601aba3f90099615ed91b4ab0e58ebf3d99"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6e8bbacf41e7ae77170391e882c29601aba3f90099615ed91b4ab0e58ebf3d99"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1921051de1894d2358a60b7ffb7b44ea5c618f7e20a7996b6e53554d57c9b5f9"
+    sha256 cellar: :any_skip_relocation, ventura:       "1921051de1894d2358a60b7ffb7b44ea5c618f7e20a7996b6e53554d57c9b5f9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "938becd0829f2e0990943a2c05e9f458856456dc190597c2f6020aa06c4defef"
   end
 
   depends_on "go" => :build
@@ -22,13 +22,15 @@ class Kubelogin < Formula
     ENV["CGO_ENABLED"] = OS.mac? ? "1" : "0"
     ldflags = "-s -w -X main.version=#{version}"
     system "go", "build", *std_go_args(ldflags:, output: bin/"kubectl-oidc_login")
+
+    generate_completions_from_executable(bin/"kubectl-oidc_login", "completion")
   end
 
   test do
     version_output = shell_output("#{bin}/kubectl-oidc_login --version")
     assert_match version.to_s, version_output
 
-    assert_equal shell_output("kubectl oidc-login --version"), version_output
+    assert_equal version_output, shell_output("kubectl oidc-login --version")
 
     # Connect to non-existant OIDC endpoint
     get_token_output = shell_output("kubectl oidc-login get-token " \

@@ -1,9 +1,9 @@
 class Snort < Formula
   desc "Flexible Network Intrusion Detection System"
   homepage "https://www.snort.org"
-  url "https://github.com/snort3/snort3/archive/refs/tags/3.5.0.0.tar.gz"
-  mirror "https://fossies.org/linux/misc/snort3-3.5.0.0.tar.gz"
-  sha256 "212a9b4c1852d5c84153c2e776ece6ae617435241020329d4fdc27ac23965e3a"
+  url "https://github.com/snort3/snort3/archive/refs/tags/3.6.1.0.tar.gz"
+  mirror "https://fossies.org/linux/misc/snort3-3.6.1.0.tar.gz"
+  sha256 "aba1c8d1dd099bf7abfeac7f073413ce4b6bd527d8ecaa92aa47726c753c3a89"
   license "GPL-2.0-only"
   head "https://github.com/snort3/snort3.git", branch: "master"
 
@@ -16,17 +16,17 @@ class Snort < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "efbef34365e58ba63391e393dbd560ee57c3d7a883817dea54850f47f2b59fbf"
-    sha256 cellar: :any,                 arm64_sonoma:  "c1b5061c1c003d3bbbd4f56001c681fb0e55b535e0d46247db20582709d6f00e"
-    sha256 cellar: :any,                 arm64_ventura: "9dd28d2238b7da35c8f8b7fc6a44862610c7a3a4689f59dd4c5de9f77d5a8966"
-    sha256 cellar: :any,                 sonoma:        "58fbc2fe762634282403d2c60ca9390e0da0353203666405f49f109eca856ea2"
-    sha256 cellar: :any,                 ventura:       "4cf3fa11bd69615cc333ffd71402e593ffe67ab0d3f36c83434b142639174845"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3714938ad0f7af4d1462b2dc5e7bcb1083981597a41f6305558f890380c26900"
+    sha256 cellar: :any,                 arm64_sequoia: "d7bd66b401bceb3caeb5bbda60946ee009691f6b0484232fb76a1d687d07cfa2"
+    sha256 cellar: :any,                 arm64_sonoma:  "a567d082e09c81c64eaa5576793291cac50c8fc3a11e21b146a92a6a93c82ef6"
+    sha256 cellar: :any,                 arm64_ventura: "2d2d9bdf176831fa28bd4b373b7efc77a5785aee4a73ac05d5d09f70fb3bdc98"
+    sha256 cellar: :any,                 sonoma:        "caaf853abfda911109b20997f2c50bdbc5fab27ce6736bd513be4b6687a4ec83"
+    sha256 cellar: :any,                 ventura:       "8493270ce84dfe671011d1c218aba7eb0d4e92aee00080c9c6c150c5fb8f8188"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "be018499e0f606d7741574019f56d348207a719b81d39cc6cd1aa24d6bfecbf7"
   end
 
   depends_on "cmake" => :build
   depends_on "flex" => :build # need flex>=2.6.0
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "daq"
   depends_on "hwloc"
   depends_on "jemalloc"
@@ -43,8 +43,6 @@ class Snort < Formula
   on_linux do
     depends_on "libunwind"
   end
-
-  fails_with gcc: "5"
 
   def install
     # These flags are not needed for LuaJIT 2.1 (Ref: https://luajit.org/install.html).

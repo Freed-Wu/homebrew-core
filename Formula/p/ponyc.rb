@@ -2,17 +2,17 @@ class Ponyc < Formula
   desc "Object-oriented, actor-model, capabilities-secure programming language"
   homepage "https://www.ponylang.io/"
   url "https://github.com/ponylang/ponyc.git",
-      tag:      "0.58.6",
-      revision: "41be76e6a9a04fbded3dcdcbc4ecad329c50b383"
+      tag:      "0.58.9",
+      revision: "cabe71ef4dd3d59b620c2b348e381e91d1905a84"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c98438616492c5fbcbdf8e909975f2632b3187eecd6f75064f372249757b4734"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b2636ce85f414bf4b3cae31d52319a601afeeec7c5230a51b7cb1697c952a095"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e58162e39f7915d9207122821bc1c891514931ca62fe8120a76b1b8f598b6d46"
-    sha256 cellar: :any_skip_relocation, sonoma:        "47170d0364e39d66d157e900899ac3f11ae4b5894fac7b316fe384b90ead3ea7"
-    sha256 cellar: :any_skip_relocation, ventura:       "d9be64ca274eb039c36cb2b7932b0a8f58dc6e1111af2eb191eb96407880209e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f8eb0d99c5f2dd944761817f36f348ba6199dbe293646203095bb12fba1dbafa"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4ed1755717a011056bcd1fec998be976a1b65e575d5971cf4cee20610f3c2979"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e065f745573c180e1370b5bc552a9be9a9bb9675b2a7c8469fc9c416e2dff72f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "01cec72461f9014cc6527a13ffd562f1d6086251b93120c76f81a56b81aa7711"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e54d06689c83a3e71c3946ae1022565433365f37c0878559843043aacd66cda0"
+    sha256 cellar: :any_skip_relocation, ventura:       "c345120fb40f5fb5b366e3de0806bf78fe241306eddc9c245aca5e2147b9269b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "222e01cd8e9ae391b59a840f94135aee3294d912279d994e7246b43d8d37d658"
   end
 
   depends_on "cmake" => :build
@@ -23,7 +23,7 @@ class Ponyc < Formula
 
   # We use LLVM to work around an error while building bundled `google-benchmark` with GCC
   fails_with :gcc do
-    cause <<-EOS
+    cause <<~EOS
       .../src/gbenchmark/src/thread_manager.h:50:31: error: expected ')' before '(' token
          50 |   GUARDED_BY(GetBenchmarkMutex()) Result results;
             |                               ^
@@ -48,11 +48,11 @@ class Ponyc < Formula
 
     system bin/"ponyc", "-rexpr", "#{prefix}/packages/stdlib"
 
-    (testpath/"test/main.pony").write <<~EOS
+    (testpath/"test/main.pony").write <<~PONY
       actor Main
         new create(env: Env) =>
           env.out.print("Hello World!")
-    EOS
+    PONY
     system bin/"ponyc", "test"
     assert_equal "Hello World!", shell_output("./test1").strip
   end

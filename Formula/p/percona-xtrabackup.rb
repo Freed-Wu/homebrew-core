@@ -1,10 +1,9 @@
 class PerconaXtrabackup < Formula
   desc "Open source hot backup tool for InnoDB and XtraDB databases"
   homepage "https://www.percona.com/software/mysql-database/percona-xtrabackup"
-  url "https://downloads.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.35-31/source/tarball/percona-xtrabackup-8.0.35-31.tar.gz"
-  sha256 "c6bda1e7f983e5a667bff22d1d67d33404db4e741676d03c9c60bbd4b263cabf"
+  url "https://downloads.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.35-32/source/tarball/percona-xtrabackup-8.0.35-32.tar.gz"
+  sha256 "04982a36e36d0e9dfb8487afa77329dd0d2d38da163a205f0179635ceea1aff1"
   license "GPL-2.0-only"
-  revision 6
 
   livecheck do
     url "https://docs.percona.com/percona-xtrabackup/latest/"
@@ -19,18 +18,18 @@ class PerconaXtrabackup < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "e3b466d69ebad7a8020995326e37d19c905a0d9c0c8c9ab2aab6ff7dad131b17"
-    sha256 arm64_sonoma:  "1db2f3083327007dec6b5783eaddeb65f81faddfe06ec9bcbe489460af3bebbe"
-    sha256 arm64_ventura: "84d15e9881b7782825fed6b7fec70d99b82f2935e6834c36b13536f192293bda"
-    sha256 sonoma:        "7889406b4ccb32dab2cfd96356bdacf12e407ebe3fb7c18b3089ca1923048f34"
-    sha256 ventura:       "3312598e4919ebaf8067a9c60ca76e0c35c035bb6ce814922dbdf91b4461359e"
-    sha256 x86_64_linux:  "ab4f71ab25f0f3fb5675743d4906380299612c029ab1b3540039c91ed8b0f316"
+    sha256 arm64_sequoia: "f21c1256125dcf16feba00f268c88b5e4edd20e396eba3c605b954727c62d432"
+    sha256 arm64_sonoma:  "d624852bd566780d5fc378a45a0c8c880a5c302c7f2c9e2b25cc7949870e2aaa"
+    sha256 arm64_ventura: "69efc01730b8230aea87ce84144fbe8394bf55da92576f9881a4e0ce26f8a989"
+    sha256 sonoma:        "8a9f84bc40e71aae6b5124ea4d58032ab1c08a7c8adb6f2208a0b2fc2877041b"
+    sha256 ventura:       "3fa829ea1354b1cd556d6f52d4806c037a6a0fa0e7d55ccc1151116e012b9e76"
+    sha256 x86_64_linux:  "f2f75e79031d01bf4d44d2a74ae85e19897b95546608136bc54cfcc00fcb8e5d"
   end
 
   depends_on "bison" => :build # needs bison >= 3.0.4
   depends_on "cmake" => :build
   depends_on "libevent" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "sphinx-doc" => :build
   depends_on "abseil"
   depends_on "icu4c@76"
@@ -59,11 +58,6 @@ class PerconaXtrabackup < Formula
     depends_on "procps"
   end
 
-  fails_with :gcc do
-    version "6"
-    cause "The build requires GCC 7.1 or later."
-  end
-
   # Should be installed before DBD::mysql
   resource "Devel::CheckLib" do
     url "https://cpan.metacpan.org/authors/id/M/MA/MATTN/Devel-CheckLib-1.16.tar.gz"
@@ -83,7 +77,7 @@ class PerconaXtrabackup < Formula
 
   # https://github.com/percona/percona-xtrabackup/blob/percona-xtrabackup-#{version}/cmake/boost.cmake
   resource "boost" do
-    url "https://boostorg.jfrog.io/artifactory/main/release/1.77.0/source/boost_1_77_0.tar.bz2"
+    url "https://downloads.sourceforge.net/project/boost/boost/1.77.0/boost_1_77_0.tar.bz2"
     sha256 "fc9f85fc030e233142908241af7a846e60630aa7388de9a5fafb1f3a26840854"
   end
 

@@ -1,19 +1,18 @@
 class Gopass < Formula
   desc "Slightly more awesome Standard Unix Password Manager for Teams"
   homepage "https://github.com/gopasspw/gopass"
-  url "https://github.com/gopasspw/gopass/releases/download/v1.15.14/gopass-1.15.14.tar.gz"
-  sha256 "70e66461b872843312897e86208b23e3202c70ee182ad1d2bfda245db9d3680e"
+  url "https://github.com/gopasspw/gopass/releases/download/v1.15.15/gopass-1.15.15.tar.gz"
+  sha256 "f1b0cf88f37d9de7c858021d79512be084b527dd00f3d9d762d660a29ad843aa"
   license "MIT"
   head "https://github.com/gopasspw/gopass.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "da43f853ea2c5bd2dec9a797579d833e0c03c853dff0c6d77bf3a0cc21d40595"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "074ccedcbf498e9428b3aa34ffe051bd9c3782e72f6ee5dd0ff6113a0d19a437"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b735453e9525f1bc900f13436fd53310fa83ae0c18ac2a7c50722fbbed3d777d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5d2dea9f7da5cf404982b1db827834a98f157e2e0c805d6f3d0030be960965ef"
-    sha256 cellar: :any_skip_relocation, sonoma:         "601afa57475bf3645a3f2486d34dca22a28896ae1d629e6f215e6d022bfc6351"
-    sha256 cellar: :any_skip_relocation, ventura:        "b892b968cb60306d29bc2320932dfd573063c4c037931b407677156969d46f06"
-    sha256 cellar: :any_skip_relocation, monterey:       "5bfae2bd096de6b616bd8aefe62acbb9ceb3bc0733cba19fd1c0832fe4d11cef"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ea1a999505bb9fc45de94d7c798a9d4a5085d467f3d5b01e6a267dbe72d616b8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "538aefb269b6fff24e5f618f140787d032f146af739f01ac760e6824deee0a05"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "69dc4091d1142d25a59e44ab4614fa38cb5314d4bd80403f7de18e5ac5c3ccc9"
+    sha256 cellar: :any_skip_relocation, sonoma:        "af05bb99ecb7d158aa8883086304a995ad76d26593160b797e87167133b650b6"
+    sha256 cellar: :any_skip_relocation, ventura:       "2bbbf7a40c463eb4ca6bef1a6c02a6998935fac8786461134fe56255e40e808f"
   end
 
   depends_on "go" => :build
@@ -26,7 +25,7 @@ class Gopass < Formula
   def install
     system "make", "install", "PREFIX=#{prefix}/"
 
-    bash_completion.install "bash.completion" => "gopass.bash"
+    bash_completion.install "bash.completion" => "gopass"
     fish_completion.install "fish.completion" => "gopass.fish"
     zsh_completion.install "zsh.completion" => "_gopass"
     man1.install "gopass.1"
@@ -51,7 +50,7 @@ class Gopass < Formula
 
       system bin/"gopass", "init", "--path", testpath, "noop", "testing@foo.bar"
       system bin/"gopass", "generate", "Email/other@foo.bar", "15"
-      assert_predicate testpath/"Email/other@foo.bar.gpg", :exist?
+      assert_path_exists testpath/"Email/other@foo.bar.gpg"
     ensure
       system Formula["gnupg"].opt_bin/"gpgconf", "--kill", "gpg-agent"
       system Formula["gnupg"].opt_bin/"gpgconf", "--homedir", "keyrings/live",

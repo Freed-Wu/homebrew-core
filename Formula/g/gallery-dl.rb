@@ -3,21 +3,21 @@ class GalleryDl < Formula
 
   desc "Command-line downloader for image-hosting site galleries and collections"
   homepage "https://github.com/mikf/gallery-dl"
-  url "https://files.pythonhosted.org/packages/4a/32/359add1bb070d5cbce70fcf348f1b61312db833b8a4b10187d3aaa35fa2d/gallery_dl-1.27.7.tar.gz"
-  sha256 "f587310fb007e14d9d3a1022527927c30185cbda69945150ed19f870ebc37447"
+  url "https://files.pythonhosted.org/packages/e5/bf/9758417620763595e420d6e37806243cef14f536fcd12aa8ed983be12098/gallery_dl-1.28.4.tar.gz"
+  sha256 "de2eff1032fcf6cf1f6b1d942ea230246a63eb0c71530dd3b23413f0e5e692ed"
   license "GPL-2.0-only"
   head "https://github.com/mikf/gallery-dl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "c3f3b4ae1247901a147cdf52661cb81a919fdba6042676df7449187c8ad6bd3b"
+    sha256 cellar: :any_skip_relocation, all: "66df5086ab86628ded83bdbf84ada8eea87511719da957f6b2f703f1ddca6e13"
   end
 
   depends_on "certifi"
   depends_on "python@3.13"
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
-    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
+    url "https://files.pythonhosted.org/packages/16/b0/572805e227f01586461c80e0fd25d65a2115599cc9dad142fee4b747c357/charset_normalizer-3.4.1.tar.gz"
+    sha256 "44251f18cd68a75b56585dd00dae26183e102cd5e0f9f1466e6df5da2ed64ea3"
   end
 
   resource "idna" do
@@ -31,8 +31,8 @@ class GalleryDl < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
-    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
+    url "https://files.pythonhosted.org/packages/aa/63/e53da845320b757bf29ef6a9062f5c669fe997973f966045cb019c3f4b66/urllib3-2.3.0.tar.gz"
+    sha256 "f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d"
   end
 
   def install

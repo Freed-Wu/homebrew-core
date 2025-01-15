@@ -1,8 +1,8 @@
 class Bazel < Formula
   desc "Google's own build tool"
   homepage "https://bazel.build/"
-  url "https://github.com/bazelbuild/bazel/releases/download/7.4.0/bazel-7.4.0-dist.zip"
-  sha256 "198d70bb73b93bb2b630c26feb08c4f832e7520c2390776672a853d68f46f428"
+  url "https://github.com/bazelbuild/bazel/releases/download/7.4.1/bazel-7.4.1-dist.zip"
+  sha256 "83386618bc489f4da36266ef2620ec64a526c686cf07041332caff7c953afaf5"
   license "Apache-2.0"
 
   livecheck do
@@ -11,11 +11,12 @@ class Bazel < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c4c711bbf985648069cca286d256c6d116ba6c73db416864e686c5da6f449cb7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d26ffe31e03231f75d41e0b2c0abfa30ae7a384d4df06dfaf309fbc2a08e252b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "60f47d339c1e2b02a45c4fc46f450a1720f18e169d3214e464bb5a2248113f66"
-    sha256 cellar: :any_skip_relocation, sonoma:        "666deb365e5e9eb0e59385eae0fa23fa3f69dd5f8686be626dd5b51486912704"
-    sha256 cellar: :any_skip_relocation, ventura:       "e6bbedc9fa932259ef674ba860fb0775fc26b00a49905b32d383a3f351dce04c"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1d0e1ab6f5803279244b510d252b7da929451f871dd84bc69089de5399b23170"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "182820919fd8a4729c3769fad482783bc15f42da84b3128d9db5ffec2e6ec900"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "3fff3607b0e68a3ef19810fe60418093e9ba3ac59fa6dc1af71a8187ba8c304a"
+    sha256 cellar: :any_skip_relocation, sonoma:        "819cc3996a5b758d2ee1892f777c8236849fd480fd9b742d4fb11cf13598fee8"
+    sha256 cellar: :any_skip_relocation, ventura:       "d8d1a7f56fd5131c04fdf8c12056dbbee07252f371e0971d684591cec46600cc"
   end
 
   depends_on "python@3.13" => :build
@@ -60,7 +61,7 @@ class Bazel < Formula
       (libexec/"bin").install "output/bazel" => "bazel-real"
       bin.env_script_all_files libexec/"bin", Language::Java.java_home_env("21")
 
-      bash_completion.install "bazel-bin/scripts/bazel-complete.bash"
+      bash_completion.install "bazel-bin/scripts/bazel-complete.bash" => "bazel"
       zsh_completion.install "scripts/zsh_completion/_bazel"
       fish_completion.install "bazel-bin/scripts/bazel.fish"
     end
@@ -69,13 +70,13 @@ class Bazel < Formula
   test do
     touch testpath/"WORKSPACE"
 
-    (testpath/"ProjectRunner.java").write <<~EOS
+    (testpath/"ProjectRunner.java").write <<~JAVA
       public class ProjectRunner {
         public static void main(String args[]) {
           System.out.println("Hi!");
         }
       }
-    EOS
+    JAVA
 
     (testpath/"BUILD").write <<~EOS
       java_binary(
@@ -86,16 +87,16 @@ class Bazel < Formula
     EOS
 
     system bin/"bazel", "build", "//:bazel-test"
-    assert_equal "Hi!\n", pipe_output("bazel-bin/bazel-test")
+    assert_equal "Hi!\n", shell_output("bazel-bin/bazel-test")
 
     # Verify that `bazel` invokes Bazel's wrapper script, which delegates to
     # project-specific `tools/bazel` if present. Invoking `bazel-VERSION`
     # bypasses this behavior.
-    (testpath/"tools"/"bazel").write <<~EOS
+    (testpath/"tools/bazel").write <<~SHELL
       #!/bin/bash
       echo "stub-wrapper"
       exit 1
-    EOS
+    SHELL
     (testpath/"tools/bazel").chmod 0755
 
     assert_equal "stub-wrapper\n", shell_output("#{bin}/bazel --version", 1)

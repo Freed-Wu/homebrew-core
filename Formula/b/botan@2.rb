@@ -6,11 +6,6 @@ class BotanAT2 < Formula
   license "BSD-2-Clause"
   head "https://github.com/randombit/botan.git", branch: "release-2"
 
-  livecheck do
-    url :homepage
-    regex(/href=.*?Botan[._-]v?(2(?:\.\d+)+)\.t/i)
-  end
-
   bottle do
     rebuild 1
     sha256 arm64_sequoia: "1104641a2c34fa2c1212ad9002fc1a2089a75be4c9fb66ad655a1680c8428ad0"
@@ -27,14 +22,12 @@ class BotanAT2 < Formula
   # Ref: https://botan.randombit.net/#releases
   deprecate! date: "2024-12-31", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.13"
   depends_on "sqlite"
 
   uses_from_macos "bzip2"
   uses_from_macos "zlib"
-
-  fails_with gcc: "5"
 
   def python3
     which("python3.13")

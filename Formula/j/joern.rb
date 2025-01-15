@@ -1,8 +1,8 @@
 class Joern < Formula
   desc "Open-source code analysis platform based on code property graphs"
   homepage "https://joern.io/"
-  url "https://github.com/joernio/joern/archive/refs/tags/v4.0.130.tar.gz"
-  sha256 "f91c8a8c6f51513794af7b250856dd402b02d42e39c05c30d532e7592ecd94f7"
+  url "https://github.com/joernio/joern/archive/refs/tags/v4.0.210.tar.gz"
+  sha256 "125e1d1a1f74eddf7ca149477f85ea4c755734d43c2f0bd0c4c744d1ac77a169"
   license "Apache-2.0"
 
   livecheck do
@@ -12,12 +12,12 @@ class Joern < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2e1fc4c0cb073d49b4faa4e4074a16c3fcb9ad10abfb69505b0fac3d943b88b3"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2e1fc4c0cb073d49b4faa4e4074a16c3fcb9ad10abfb69505b0fac3d943b88b3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "2e1fc4c0cb073d49b4faa4e4074a16c3fcb9ad10abfb69505b0fac3d943b88b3"
-    sha256 cellar: :any_skip_relocation, sonoma:        "869f08822bcdff9c4706a9b0d07d6ecec7bc229acd55c307ccabec3e7c4406fc"
-    sha256 cellar: :any_skip_relocation, ventura:       "869f08822bcdff9c4706a9b0d07d6ecec7bc229acd55c307ccabec3e7c4406fc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "546d5f9fdcf66d582e6e6059bcbb47c52b1063ee0923fbfdd514990ae594bf0d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "62df2be9e0afb904a7308fde09ec988e77c2891bbfb22401f3286d53a791f5b9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "66b761c376465daf2d7b4a1b75c87480c72486cfd569ebe3594e87fe6377736d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "66b761c376465daf2d7b4a1b75c87480c72486cfd569ebe3594e87fe6377736d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bb8234d12f75823035cdae5cf0b28932773141275087b5f34ab09ae20c5a8a02"
+    sha256 cellar: :any_skip_relocation, ventura:       "ddbd43b8e83d5bb8ab254d09dbc7670a90d334bdc96e8a8226a96690e845ce22"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8c133aeeb1a0d02d23554a627a2d3cbf6f07c083330f161f93280cdc4e716cca"
   end
 
   depends_on "sbt" => :build
@@ -25,6 +25,8 @@ class Joern < Formula
   depends_on "coreutils"
   depends_on "openjdk"
   depends_on "php"
+
+  uses_from_macos "zlib"
 
   def install
     system "sbt", "stage"
@@ -36,9 +38,9 @@ class Joern < Formula
 
     # Remove incompatible pre-built binaries
     os = OS.mac? ? "macos" : OS.kernel_name.downcase
-    astgen_suffix = Hardware::CPU.intel? ? "astgen-#{os}" : "astgen-#{os}-#{Hardware::CPU.arch}"
-    libexec.glob("frontends/{csharp,go}src2cpg/bin/astgen/{dotnet,go}astgen-*").each do |f|
-      f.unlink unless f.basename.to_s.end_with?(astgen_suffix)
+    astgen_suffix = Hardware::CPU.intel? ? [os] : ["#{os}-#{Hardware::CPU.arch}", "#{os}-arm"]
+    libexec.glob("frontends/{csharp,go,js}src2cpg/bin/astgen/{dotnet,go,}astgen-*").each do |f|
+      f.unlink unless f.basename.to_s.end_with?(*astgen_suffix)
     end
 
     libexec.children.select { |f| f.file? && f.executable? }.each do |f|

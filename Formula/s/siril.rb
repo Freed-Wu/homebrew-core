@@ -1,25 +1,29 @@
 class Siril < Formula
   desc "Astronomical image processing tool"
   homepage "https://www.siril.org"
-  url "https://free-astro.org/download/siril-1.2.4.tar.bz2"
-  sha256 "6d9391558b4289615ad0567e953ef645df9a00965c6c6fbc723ad25f3ac0925a"
+  url "https://free-astro.org/download/siril-1.2.5.tar.bz2"
+  sha256 "698be7f689cffa0d657261f67990e7de7d02d527f999cedfa48af523dcd74270"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://gitlab.com/free-astro/siril.git", branch: "master"
 
+  livecheck do
+    url "https://siril.org/download/"
+    regex(/href=.*?siril[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
-    sha256 arm64_sonoma:   "18d857fa2251085c51fabbe80fd0afcf4b04da7ac700f00063fbd49cd8fdf34b"
-    sha256 arm64_ventura:  "827f6ac0b787fcad63b1cbaaaf49e3cc2e75e7ada8259651f9581ca352584f77"
-    sha256 arm64_monterey: "84c02fc306787657281c512b983e6c91057f41738bee0c8158b02ac067c4d0fc"
-    sha256 sonoma:         "e271167f4688b1020d1e1dd907875b11f23e61c7ad76cb934a1bc3d0ccfc0c2a"
-    sha256 ventura:        "f1bfa543e11626e6e4736e87697f82210fa59f7ae7308e374db8c4828a0aa80b"
-    sha256 monterey:       "f73f021d14bd9eef882abe226d7cfc5f5a1000231735ffa41fe2a6f71e472136"
-    sha256 x86_64_linux:   "756fc0a1c9f6344351bece2c2161dd0ce52c5c1839fbb7322ee571172d7c98c3"
+    sha256 arm64_sonoma:  "ad0729c7f9755a27ae6a8f0dc8b7b68bf40c27b5d8e6457a7140d7af4785a570"
+    sha256 arm64_ventura: "fdd5fbfaa1f25f92bab18c2ea361d4bf3e41f9e618cac24e24deac008ddc67c0"
+    sha256 sonoma:        "ed8b020bbcadd8fbcc69804fa040eb0fa457ee1321439f6604c0c94d87de2c5e"
+    sha256 ventura:       "9ae2060d2b860a7f91fcf0bd6df3105cfeb1c93fb478edb25971b39e251017f7"
+    sha256 x86_64_linux:  "ed47518cedcc6957827e50359c59f4cfd6bf1f1807fbb52daf79a01144d3123a"
   end
 
   depends_on "cmake" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "adwaita-icon-theme"
   depends_on "cairo"
@@ -54,8 +58,6 @@ class Siril < Formula
     depends_on "gtk-mac-integration"
     depends_on "libomp"
   end
-
-  fails_with gcc: "5" # ffmpeg is compiled with GCC
 
   def install
     args = %w[

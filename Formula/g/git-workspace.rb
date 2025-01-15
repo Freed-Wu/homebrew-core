@@ -1,23 +1,30 @@
 class GitWorkspace < Formula
   desc "Sync personal and work git repositories from multiple providers"
   homepage "https://github.com/orf/git-workspace"
-  url "https://github.com/orf/git-workspace/archive/refs/tags/v1.7.0.tar.gz"
-  sha256 "547ccd48bedab03f0439920be12c37cb02f837e27cba3a0fa5166dfc34199274"
+  url "https://github.com/orf/git-workspace/archive/refs/tags/v1.8.0.tar.gz"
+  sha256 "b6499b70362730dbe1674fd07bd9aefef0bcd45ba4504ed0cce62ef2c7ecad1f"
   license "MIT"
+  revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "a664c2005258367b604d7fb31a80f8f9dfaf5ccd2b9d32f8226868aeadcdba37"
-    sha256 cellar: :any,                 arm64_sonoma:  "6efe100bc02d6fe50e9a4834522d3f2e7f13d5778142a6f56a524dccf70067c3"
-    sha256 cellar: :any,                 arm64_ventura: "158b62a573be88e82afc5f05426ae29e2d5c4bb9e72a55438905238ea9aaf145"
-    sha256 cellar: :any,                 sonoma:        "9d7da5c7c03137653583c077700e0b7bfc05abcfcf9be1c9e01f6bbd30d2d63a"
-    sha256 cellar: :any,                 ventura:       "05db764547caa9d0bc19b2e2f843fad408ca6d03b9d326f02bceffc2288be8d1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "084cfd8dd58e7b636cb63a7d5ece84846e596277a76bda14ed6b7736ef765315"
+    sha256 cellar: :any,                 arm64_sequoia: "37536ae9e70e4244174267114d5727b34d002276e3daaf09ab03eea059288915"
+    sha256 cellar: :any,                 arm64_sonoma:  "bd263f8dcf6df3bc14102c2300a2735c07e3ca4d03e89d6b461c1266f64bc993"
+    sha256 cellar: :any,                 arm64_ventura: "5063d18c73c5f99151cfb9c7bf9f057e401264104c2106198bdaf9d4ae1e1dad"
+    sha256 cellar: :any,                 sonoma:        "6a6a2b672032b44124896ae6d4817e9a8b4e86a69fa8fedc7eb15f28832cf4ed"
+    sha256 cellar: :any,                 ventura:       "5223e5ff55ff03b1aa3e6ba8621da0351156424bc6cb6657b0ffbed528a6414d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a4cd16d0a2c3941d7abc2fd59a437ff96fd62b4f6dd552d52f1a8af4b8286c32"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "libgit2"
   depends_on "openssl@3"
+
+  # patch to support libgit2 1.9, upstream pr ref, https://github.com/orf/git-workspace/pull/390
+  patch do
+    url "https://github.com/orf/git-workspace/commit/9250483b38f24ac60a025ddcd49b21f847d37b60.patch?full_index=1"
+    sha256 "3d8201522021b5aacfb9b332c02ddac4c1ca409857cbe4acca226f229fd5ae8f"
+  end
 
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"

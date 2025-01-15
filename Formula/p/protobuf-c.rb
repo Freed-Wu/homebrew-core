@@ -4,15 +4,15 @@ class ProtobufC < Formula
   url "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz"
   sha256 "7b404c63361ed35b3667aec75cc37b54298d56dd2bcf369de3373212cc06fd98"
   license "BSD-2-Clause"
-  revision 12
+  revision 16
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "d41d8e2810be2c6b407858cfcdc388bd50b6e876520090202883d38c6cf922a9"
-    sha256 cellar: :any,                 arm64_sonoma:  "3972558e6edf7738eebbb771f17bedb7edd69f0a06352d68741c576bda6414c9"
-    sha256 cellar: :any,                 arm64_ventura: "365b1a39a08002c87ab523e8f24b5fcf2aa00c12cc2308093b54ab17681e96f4"
-    sha256 cellar: :any,                 sonoma:        "412a5685c185e124c29e63d45c06413670da2cf8f87041b12b78e4814b813c94"
-    sha256 cellar: :any,                 ventura:       "d00b15e374af0308b1cf81405cb206d0a16f98f8dc70a441022503c2f282c544"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0546972473388485cbf82ecc77939ce6680544a00f65f7e254ebe01fa01252ac"
+    sha256 cellar: :any,                 arm64_sequoia: "e126a9b3a7187dd6d62c635505b284c9bf15375f76f53e8fcb37b4864a9d4606"
+    sha256 cellar: :any,                 arm64_sonoma:  "ebfe8527faeef9424fc49ece715eb37648789eaf39bb6d46b9f57b17fdc88af7"
+    sha256 cellar: :any,                 arm64_ventura: "bb0ad5bef5a788dd56b3472bc3f8c62879c483c786b9a3a3c9ea61be5d5486a5"
+    sha256 cellar: :any,                 sonoma:        "a0db027a6bc9d54bd10f0bfa47ff2fb4ad0fcf4efd4ecf0f1243651dc8d84a49"
+    sha256 cellar: :any,                 ventura:       "ba6edb598c82c195302f320fc934ffc3e640b89744c93ec96fe8c8f64ea5aeca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d79036e60276199da3118381a3b616b125e1a17d3a8b8f43a9c12d0f905f861a"
   end
 
   head do
@@ -24,7 +24,7 @@ class ProtobufC < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "abseil"
   depends_on "protobuf"
 
@@ -46,7 +46,7 @@ class ProtobufC < Formula
   end
 
   test do
-    testdata = <<~EOS
+    testdata = <<~PROTO
       syntax = "proto3";
       package test;
       message TestCase {
@@ -55,7 +55,7 @@ class ProtobufC < Formula
       message Test {
         repeated TestCase case = 1;
       }
-    EOS
+    PROTO
     (testpath/"test.proto").write testdata
     system Formula["protobuf"].opt_bin/"protoc", "test.proto", "--c_out=."
 

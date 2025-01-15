@@ -1,25 +1,23 @@
 class Akamai < Formula
   desc "CLI toolkit for working with Akamai's APIs"
   homepage "https://github.com/akamai/cli"
-  url "https://github.com/akamai/cli/archive/refs/tags/v1.6.0.tar.gz"
-  sha256 "dede02e8809659f752415e55e5d1a42134d1c6f131dd2cd7b02ed91532848b61"
+  url "https://github.com/akamai/cli/archive/refs/tags/v1.6.1.tar.gz"
+  sha256 "72670806967ecb63bf516b3e36635cdbbccff7a1f648782996b6e614f06565c8"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "7d6c7c34ba1d380099f2b82b2ea591c7678baf1d623cd60260f6f4c6ed2e0808"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c9e56901b3d5999efa5d5c95faaf1bc1a0378f15c5293abb0997437c35bff2eb"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c9e56901b3d5999efa5d5c95faaf1bc1a0378f15c5293abb0997437c35bff2eb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c9e56901b3d5999efa5d5c95faaf1bc1a0378f15c5293abb0997437c35bff2eb"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8edbeeb8344a4b66bb50adf30c224a1ff98070abac44247f48f068ba889099f7"
-    sha256 cellar: :any_skip_relocation, ventura:        "8edbeeb8344a4b66bb50adf30c224a1ff98070abac44247f48f068ba889099f7"
-    sha256 cellar: :any_skip_relocation, monterey:       "8edbeeb8344a4b66bb50adf30c224a1ff98070abac44247f48f068ba889099f7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3e790d3e8a5067d51753040cbb809520e6e3371fafe8f59456d5ddf8d1385d51"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dc904bcc85efab494238756c0cc09bc9afcb011006c77c185db0851db18302e0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dc904bcc85efab494238756c0cc09bc9afcb011006c77c185db0851db18302e0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "dc904bcc85efab494238756c0cc09bc9afcb011006c77c185db0851db18302e0"
+    sha256 cellar: :any_skip_relocation, sonoma:        "55212608af5d376981fd87232f8558d9640636ba83bc39ca05ff9ff24d0f53cd"
+    sha256 cellar: :any_skip_relocation, ventura:       "55212608af5d376981fd87232f8558d9640636ba83bc39ca05ff9ff24d0f53cd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9fe29135622fbeb235f21de31bf5c7879ea3441eee7a7e8df9c5dcaf5100daa3"
   end
 
   depends_on "go" => [:build, :test]
 
   def install
-    system "go", "build", "-tags", "noautoupgrade nofirstrun", *std_go_args, "cli/main.go"
+    system "go", "build", "-tags", "noautoupgrade nofirstrun", *std_go_args(ldflags: "-s -w"), "./cli"
   end
 
   test do

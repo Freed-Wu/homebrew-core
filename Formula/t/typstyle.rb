@@ -1,24 +1,26 @@
 class Typstyle < Formula
   desc "Beautiful and reliable typst code formatter"
   homepage "https://enter-tainer.github.io/typstyle/"
-  url "https://github.com/Enter-tainer/typstyle/archive/refs/tags/v0.12.1.tar.gz"
-  sha256 "68138962a660bec25cfa81503753505a02dc6b14f7b1b7b587c8cd521e96f8e0"
+  url "https://github.com/Enter-tainer/typstyle/archive/refs/tags/v0.12.14.tar.gz"
+  sha256 "053ae2b6349fe244f44dc816f7d91036c152eeb14bfc2c6bfeeca33cc5ac0c34"
   license "Apache-2.0"
   head "https://github.com/Enter-tainer/typstyle.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0ff234e84ab0ec10ccff0d0fc1d1391309bee331a3588a189227125350a5a4cb"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "096179ee91c7958a85d328ecefe3fd59643b14d27dfc7180c3d6df2fb2097f14"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "1146b362990231f368f443d6c4135d860817b9378ab29c4f2e2fac15fcd99b26"
-    sha256 cellar: :any_skip_relocation, sonoma:        "be57f5c74911b01a89b5c795078d03fc81b02a01835f0a52c0797e84b7a60289"
-    sha256 cellar: :any_skip_relocation, ventura:       "7ae8107449944ace38a706408b16ef1fa065ce2d0ab920babea2515781a105ea"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b14266c28d68d15afc9affdafe4eacfedae6f839fd630c8ecf297f27bec0b3b4"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "759fba8d651af21577a615edb982b79e6d0f7fa23ca8f7cf277900168916bb76"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "279c9d125533cc71206936b43984f94e17c11701d05c13ca53c5e71b9285b917"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "86199b50c9190696ae34d53dae8c40f63d5a3d76ab4b03b47c61e79f3623a59e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f480fcfc34c4085dcb992e2b44a522199fbc517d0b6183aab90bde01c4249eac"
+    sha256 cellar: :any_skip_relocation, ventura:       "b6b50d19095e5bd7aaafd78b2653c3c4563ae9afce8c0e1c903e6b86890a798a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "92eaf6c364cb0a38df44abb3316dd07cb83b69a53045b7b815f66ce15b0d8a60"
   end
 
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", *std_cargo_args(path: "crates/typstyle")
+
+    generate_completions_from_executable(bin/"typstyle", "completions")
   end
 
   test do

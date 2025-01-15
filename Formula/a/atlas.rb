@@ -3,18 +3,18 @@ class Atlas < Formula
   homepage "https://atlasgo.io/"
   # Upstream may not mark patch releases as latest on GitHub; it is fine to ship them.
   # See https://github.com/ariga/atlas/issues/1090#issuecomment-1225258408
-  url "https://github.com/ariga/atlas/archive/refs/tags/v0.28.1.tar.gz"
-  sha256 "52f58d90d5ee9ba562b1c235832c35887275a680ed9b3572d680a38c7a06efce"
+  url "https://github.com/ariga/atlas/archive/refs/tags/v0.30.0.tar.gz"
+  sha256 "aa01d568af8c46cfc4467d3b09320586d51267f41460f6c31f5a1519b5e2087f"
   license "Apache-2.0"
   head "https://github.com/ariga/atlas.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "887b43d00680480dca0c25d3f79c1877203931051b666e8f7b93016899560dd2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "35a474cb27324e398bc7b022b717f7486769186aa813f01107e1426d2a431dbc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9072993c2884575441ba51f06eb04b62c3c1ff7370ac757ee21d012ea702e7f6"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5ca0c28bd799203e6e55b73db4bee2bd9eb61f6e26a9eaeea3a7e6e74d1378de"
-    sha256 cellar: :any_skip_relocation, ventura:       "36fb546258e2144f2439341de24dce1fda5f2eb9a3be3fa1abd8c03dfceda54a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b54e0603d3ad3896b8403ad9e907350a1550132c367ea3a8313c7cce29a2f99a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8c447b525d7fd5beba2fa5da2b0aaf3ae2c19eac8dda06d9b062bbd88b14bb93"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "935034c10dd28f3a87cc0d5973bcd488df713b0500e05051e9b1884b8b2ca54f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "adf0f6ce533a8debbe454e210a20e2c42311d6ad77aaa85f874626eceeda4c21"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2d4da3dd70cbf787728dd4ea06c8cd155eee07222fb7c6f4eaa50880c9d4d553"
+    sha256 cellar: :any_skip_relocation, ventura:       "b654ce40a5200e06693d02e4d7b74c5cc9224c15733a45f9fab899a4e45a8136"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c188954a4259cc8e25804dc0b91989e1e28796b04ae74f2460e862a2d310859f"
   end
 
   depends_on "go" => :build

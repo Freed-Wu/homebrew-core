@@ -1,9 +1,9 @@
 class UniversalCtags < Formula
   desc "Maintained ctags implementation"
   homepage "https://github.com/universal-ctags/ctags"
-  url "https://github.com/universal-ctags/ctags/archive/refs/tags/p6.1.20241103.0.tar.gz"
-  version "p6.1.20241103.0"
-  sha256 "a31de56fece3252c105f212f2cb25b60772fe009e37ecc7caa8140df49b665d6"
+  url "https://github.com/universal-ctags/ctags/archive/refs/tags/p6.1.20250112.0.tar.gz"
+  version "p6.1.20250112.0"
+  sha256 "616ce4e7c0c90464fdd8224b890535af0636f22b639890d725149fa4d17103eb"
   license "GPL-2.0-only"
   head "https://github.com/universal-ctags/ctags.git", branch: "master"
 
@@ -13,19 +13,19 @@ class UniversalCtags < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "1a6b390e6cf51b39e408f78f0efa45d58177568ef772028bffa45d2ed1748e68"
-    sha256 cellar: :any,                 arm64_sonoma:  "1ef6b540793e25b8cb93439943de853c47d13cb57aaea286e7216a25da3ff2bd"
-    sha256 cellar: :any,                 arm64_ventura: "d6d53404a35b701eed44d7210e6aa33ca7e4c43b688e76f76f1f8256147725c6"
-    sha256 cellar: :any,                 sonoma:        "7d1ed72f0af0bbbef6acffb6ab2a5dc23f9d735f09e3fe6fb5555722ca69b2ac"
-    sha256 cellar: :any,                 ventura:       "71232505e844d086f9023cb25dc2e896ae7b28d184a778f330f04e26f6d472af"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2753207d36633bbd71c48665c449c3dbea0b999ff46a0be5b6b3b9d0b877c006"
+    sha256 cellar: :any,                 arm64_sequoia: "edb44100da8b05b2186f42ea526af8f41e1cc4efd453e6dab567b1255adde5db"
+    sha256 cellar: :any,                 arm64_sonoma:  "b6fc534d15d39e6baffc5b8af83ef4e8564ec4728a31a87e5636d5a98045507d"
+    sha256 cellar: :any,                 arm64_ventura: "976759c968afe021512577a7979b13e4d7b853984c33c43c713d0b804efdaad7"
+    sha256 cellar: :any,                 sonoma:        "2469c648116cd16e58eae1c509f5862815eb3f340ff1842909f17ba38386e2be"
+    sha256 cellar: :any,                 ventura:       "9db4ca84cd176054b54e5fa4ef771421177499b8928f9439c5b9ef7e74d40895"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f1fc16caaebb96fa824e3956bd4dbe0be4173147d5952f39d7492e9a6d7e6810"
   end
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "docutils" => :build
-  depends_on "pkg-config" => :build
-  depends_on "python@3.12" => :build
+  depends_on "pkgconf" => :build
+  depends_on "python@3.13" => :build
   depends_on "jansson"
   depends_on "libyaml"
   depends_on "pcre2"

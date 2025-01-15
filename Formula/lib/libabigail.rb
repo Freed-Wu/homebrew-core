@@ -5,6 +5,11 @@ class Libabigail < Formula
   sha256 "3bfa8ba753ff27722baa7f73b15a475f8a4599355e47439108423d1912bb5469"
   license "Apache-2.0" => { with: "LLVM-exception" }
 
+  livecheck do
+    url "https://mirrors.kernel.org/sourceware/libabigail/"
+    regex(/href=.*?libabigail[._-]v?(\d+(?:\.\d+)+)\.t/i)
+  end
+
   bottle do
     sha256 x86_64_linux: "39bfad0c9e5cbb11821b3ee99ae6e599d84a20343eb8ae49294c88d2514da12a"
   end
@@ -17,7 +22,7 @@ class Libabigail < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "elfutils"
   depends_on "libxml2"
   depends_on :linux
@@ -25,7 +30,7 @@ class Libabigail < Formula
 
   def install
     system "autoreconf", "--force", "--install", "--verbose" if build.head?
-    system "./configure", *std_configure_args, "--disable-silent-rules"
+    system "./configure", "--disable-silent-rules", *std_configure_args
     system "make", "install"
   end
 

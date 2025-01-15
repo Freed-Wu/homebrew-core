@@ -1,8 +1,8 @@
 class Pdnsrec < Formula
   desc "Non-authoritative/recursing DNS server"
   homepage "https://www.powerdns.com/powerdns-recursor"
-  url "https://downloads.powerdns.com/releases/pdns-recursor-5.1.3.tar.bz2"
-  sha256 "c34ee31f522d93997e04ab2ed0fb58de6569c13ed2a2cb0d371cef49a585356a"
+  url "https://downloads.powerdns.com/releases/pdns-recursor-5.2.0.tar.bz2"
+  sha256 "69e390b40a2228964a1d4db85a067065fd4513d26318c858d24b4972f6b73010"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
 
   livecheck do
@@ -11,15 +11,15 @@ class Pdnsrec < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "d39d99f50a9faa4930c53cccd4523f96f714534d8b451da7aee4901067e5852a"
-    sha256 arm64_sonoma:  "205cbb72a025f112394579fa2c0505fff082de938b4661bf394747c8e6eeaa82"
-    sha256 arm64_ventura: "46c1519c1e233fcaa04ad06b26cbe9b8f5fd1baf04aff741ed7922a23fc7c3b6"
-    sha256 sonoma:        "d69ca7830e338ab817471a60bad915d60dc39e8cdaa83d3fb7ca7be4a8837a4a"
-    sha256 ventura:       "9e402489725b2789f6ed2f5ab235ed7b0eddc0bd7d7749bf0b317b84d26d5eeb"
-    sha256 x86_64_linux:  "147788759dc5124c955f4889a8c047534c2ccf8991383c7b600c82add87f5262"
+    sha256 arm64_sequoia: "711514c2e6f8e074667ccb9b87c06891bd4ab218f46c167cffdc422ff26d06da"
+    sha256 arm64_sonoma:  "07680d46ee62dc1cd1ba9dd3b679b0f83f93044cd5e9e842e4effbfd7e455388"
+    sha256 arm64_ventura: "176a3f47e3839dee421c9d9c13dbb7982c55d8bfef5cf320071cf4fc93a2f0e2"
+    sha256 sonoma:        "2ded0a3853fcacbbe5623d74c3804b619562c6c76c06546eb6fecf9f8c9fe91a"
+    sha256 ventura:       "f543d0d328587c583cc419d837f3e3a9188db6606c4ec38eb0518e9e3fffc6e3"
+    sha256 x86_64_linux:  "b4e16e947cdb9388e8fe172d55d42f8cff0cadc0ce388ff47cfc0cb1881dfd5a"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "boost"
   depends_on "lua"
@@ -33,13 +33,11 @@ class Pdnsrec < Formula
 
   fails_with :clang do
     build 1100
-    cause <<-EOS
+    cause <<~EOS
       Undefined symbols for architecture x86_64:
         "MOADNSParser::init(bool, std::__1::basic_string_view<char, std::__1::char_traits<char> > const&)"
     EOS
   end
-
-  fails_with gcc: "5"
 
   def install
     ENV.cxx11

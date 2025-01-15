@@ -2,21 +2,22 @@ class Licensed < Formula
   desc "Cache and verify the licenses of dependencies"
   homepage "https://github.com/github/licensed"
   url "https://github.com/github/licensed.git",
-      tag:      "v5.0.0",
-      revision: "20ccab13f3e8738cf12543ef78da3469bf63c249"
+      tag:      "v5.0.1",
+      revision: "d74f3bcf74c241eb79b9b82d7ae3d4bad22bc791"
   license "MIT"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "990ad6b8f14675784a86be75e7b9f21be512f96e9730629b25fcfe505955bdbe"
-    sha256 cellar: :any,                 arm64_sonoma:  "4f6aadedd0c21c9020adefe0afe9e04a2c86a4462ce171624b25f98a61e65e52"
-    sha256 cellar: :any,                 arm64_ventura: "53e1e619abf7a41e12b4577e5ad797d0a9fb9c1d7ab4cb53dd233d4bd1622619"
-    sha256 cellar: :any,                 sonoma:        "17b2447ccfac484d354e9b46b36b4d800c1b342cf4109f5f1b7b8c920a3b752c"
-    sha256 cellar: :any,                 ventura:       "7c0e78d953be402d8a7591fc514d38eb24dfdb6c4489e423b569c81e9825e56a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6efb61e7c4ea635c3307aa38fc200af81299fedc3907fb66d33f2f2f84783626"
+    sha256 cellar: :any,                 arm64_sequoia: "ff62a265e124b6dfa61060017d0ec1c861083f2dcada89e8b08bab249575288b"
+    sha256 cellar: :any,                 arm64_sonoma:  "77d2b90ddeb1201923133997788dc353e87815d3b32f6de90ecf1e87b88d672b"
+    sha256 cellar: :any,                 arm64_ventura: "13556d3679589482caaeb4d7c3073583447a9a0123cebbaec555e4449f67d5e0"
+    sha256 cellar: :any,                 sonoma:        "46eeb6cb7f8eb7e815b2ee960608945c988e539064e866929b1541a279117804"
+    sha256 cellar: :any,                 ventura:       "0f12df0a2caf888b9b35102c87d98d4c493147c5628f7dbc9b18d4814418f119"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ee93a8cb1c187dfbaeb94dab3ebe70157d14360a3b93f88c8187f315e3f61f9"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "ruby"
   depends_on "xz"
 
@@ -56,13 +57,12 @@ class Licensed < Formula
       gem 'licensed', '#{version}'
     EOS
 
-    (testpath/".licensed.yml").write <<~EOS
+    (testpath/".licensed.yml").write <<~YAML
       name: 'test'
       allowed:
         - mit
-    EOS
+    YAML
 
-    assert_match "Caching dependency records for test",
-                        shell_output(bin/"licensed cache")
+    assert_match "Caching dependency records for test", shell_output("#{bin}/licensed cache")
   end
 end

@@ -6,21 +6,17 @@ class Black < Formula
   url "https://files.pythonhosted.org/packages/d8/0d/cc2fb42b8c50d80143221515dd7e4766995bd07c56c9a3ed30baf080b6dc/black-24.10.0.tar.gz"
   sha256 "846ea64c97afe3bc677b761787993be4991810ecc7a4a937816dd6bddedc4875"
   license "MIT"
+  revision 1
   head "https://github.com/psf/black.git", branch: "main"
-
-  livecheck do
-    url :stable
-    regex(%r{href=.*?/packages.*?/black[._-]v?(\d+(?:\.\d+)*(?:[a-z]\d+)?)\.t}i)
-  end
 
   bottle do
     rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6e296fe4b7f53f7672f55135de2bd938f53ddd82d35052290830bedc1791ec8a"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "00e3340e380d57fbede70ca0a3026bc8a533994cb0d4eac45a537b3bef0320a7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "57ac7f772cee8f91bd3fe7a3c1ec12726e9b27544fdc805da0705f1b1537eba4"
-    sha256 cellar: :any_skip_relocation, sonoma:        "a4479d14270468443384706e21783821282f7884d6026077f0b2c04f5534069f"
-    sha256 cellar: :any_skip_relocation, ventura:       "4888531407e661d7486794b4caeccb11f6172679b6e6eeb3c0db27b0b5b77c16"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "62a4e5950e9431d6d86bba7aa91f0d2f385599113734286ad804a9635c724c9a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1d907b91a649712809d1ee774c56b098d77824b94e844eeab813ccaa9473b118"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "3317317a40344aa0134a70f9843208e3404de3b9884ff94d3b82903364238a60"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6d2d3dd428ea124603044c3191378e9e2d86fc04a96b3d8cbda4265226934627"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6a41000d596987c927ef1f018bb07de8f62aed2c38ee45b2a6bebc30ca5f33ee"
+    sha256 cellar: :any_skip_relocation, ventura:       "06b304505e915cdc75102d3cff1fd089237c454fd2bd73ee7b49fb29aeb9acb8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6f23e5359f4294329e7b47878c065d16e6497f106d7ec31b1d94fc52dd7922d0"
   end
 
   depends_on "python@3.13"
@@ -31,8 +27,8 @@ class Black < Formula
   end
 
   resource "aiohttp" do
-    url "https://files.pythonhosted.org/packages/14/40/f08c5d26398f987c1a27e1e351a4b461a01ffdbf9dde429c980db5286c92/aiohttp-3.10.9.tar.gz"
-    sha256 "143b0026a9dab07a05ad2dd9e46aa859bffdd6348ddc5967b42161168c24f857"
+    url "https://files.pythonhosted.org/packages/1d/cd/af0e573bdb77ae7df1148fe8e4ea854215a37db0b116aac6b5496335095e/aiohttp-3.11.4.tar.gz"
+    sha256 "9d95cce8bb010597b3f2217155befe4708e0538d3548aa08d640ebf54e3f57cb"
   end
 
   resource "aiosignal" do
@@ -51,8 +47,8 @@ class Black < Formula
   end
 
   resource "frozenlist" do
-    url "https://files.pythonhosted.org/packages/cf/3d/2102257e7acad73efc4a0c306ad3953f68c504c16982bbdfee3ad75d8085/frozenlist-1.4.1.tar.gz"
-    sha256 "c037a86e8513059a2613aaba4d817bb90b9d9b6b69aace3ce9c877e8c8ed402b"
+    url "https://files.pythonhosted.org/packages/8f/ed/0f4cec13a93c02c47ec32d81d11c0c1efbadf4a471e3f3ce7cad366cbbd3/frozenlist-1.5.0.tar.gz"
+    sha256 "81d5af29e61b9c8348e876d442253723928dce6433e0e76cd925cd83f1b4b817"
   end
 
   resource "idna" do
@@ -71,8 +67,8 @@ class Black < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pathspec" do
@@ -91,11 +87,12 @@ class Black < Formula
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/46/fe/2ca2e5ef45952f3e8adb95659821a4e9169d8bbafab97eb662602ee12834/yarl-1.14.0.tar.gz"
-    sha256 "88c7d9d58aab0724b979ab5617330acb1c7030b79379c8138c1c8c94e121d1b3"
+    url "https://files.pythonhosted.org/packages/4b/d5/0d0481857de42a44ba4911f8010d4b361dc26487f48d5503c66a797cff48/yarl-1.17.2.tar.gz"
+    sha256 "753eaaa0c7195244c84b5cc159dc8204b7fd99f716f11198f999f2332a86b178"
   end
 
   def install
+    ENV["HATCH_BUILD_HOOK_ENABLE_MYPYC"] = "1"
     virtualenv_install_with_resources
 
     generate_completions_from_executable(bin/"black", shells: [:fish, :zsh], shell_parameter_format: :click)
@@ -111,16 +108,20 @@ class Black < Formula
   end
 
   test do
+    assert_match "compiled: yes", shell_output("#{bin}/black --version")
+
     ENV["LC_ALL"] = "en_US.UTF-8"
-    (testpath/"black_test.py").write <<~EOS
+    (testpath/"black_test.py").write <<~PYTHON
       print(
       'It works!')
-    EOS
+    PYTHON
     system bin/"black", "black_test.py"
-    assert_equal "print(\"It works!\")\n", (testpath/"black_test.py").read
+    assert_equal 'print("It works!")', (testpath/"black_test.py").read.strip
+
     port = free_port
-    fork { exec "#{bin}/blackd --bind-host 127.0.0.1 --bind-port #{port}" }
+    spawn bin/"blackd", "--bind-host=127.0.0.1", "--bind-port=#{port}"
     sleep 10
-    assert_match "print(\"valid\")", shell_output("curl -s -XPOST localhost:#{port} -d \"print('valid')\"").strip
+    output = shell_output("curl -s -XPOST localhost:#{port} -d \"print('valid')\"").strip
+    assert_match 'print("valid")', output
   end
 end

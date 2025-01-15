@@ -1,17 +1,22 @@
 class Lego < Formula
   desc "Let's Encrypt client and ACME library"
   homepage "https://go-acme.github.io/lego/"
-  url "https://github.com/go-acme/lego/archive/refs/tags/v4.19.2.tar.gz"
-  sha256 "c6741f3ae0f17370b1b400ed170fd070575c55ba6bc2aa71d90738f3f0a719d9"
+  url "https://github.com/go-acme/lego/archive/refs/tags/v4.21.0.tar.gz"
+  sha256 "21204483e62bff3e762583e42044183dbe6efe6b401772bb186be821501d9463"
   license "MIT"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ce84010d590a56e5451f2ff92fbdcf7a7cad6c883f11cfb16d8d6dfa2f19ce94"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ce84010d590a56e5451f2ff92fbdcf7a7cad6c883f11cfb16d8d6dfa2f19ce94"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "ce84010d590a56e5451f2ff92fbdcf7a7cad6c883f11cfb16d8d6dfa2f19ce94"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b8457652a1ef2831b8d66e5cf3de4a425a3ce1a6f97a0a3ed752a4cd10f3c471"
-    sha256 cellar: :any_skip_relocation, ventura:       "b8457652a1ef2831b8d66e5cf3de4a425a3ce1a6f97a0a3ed752a4cd10f3c471"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3bf0a1f35d1cfed5cad23f6a32d8383f3541fcd740c0e2b57d06cb4f15d5d0f7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "22a130780af1ae4102daeb202ed9b06df799d8fba4ee24595709f6a3e928471f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "22a130780af1ae4102daeb202ed9b06df799d8fba4ee24595709f6a3e928471f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "22a130780af1ae4102daeb202ed9b06df799d8fba4ee24595709f6a3e928471f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9e4935c9943b0b018fa7835873f9d3ebb592de50fee14302580e75117de92263"
+    sha256 cellar: :any_skip_relocation, ventura:       "9e4935c9943b0b018fa7835873f9d3ebb592de50fee14302580e75117de92263"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "728dfd9eca049126a1d3b30e9cf78360b8c1721951c3272f01a98b7f87e647d7"
   end
 
   depends_on "go" => :build

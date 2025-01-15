@@ -1,8 +1,8 @@
 class V2ray < Formula
   desc "Platform for building proxies to bypass network restrictions"
   homepage "https://v2fly.org/"
-  url "https://github.com/v2fly/v2ray-core/archive/refs/tags/v5.21.0.tar.gz"
-  sha256 "880a929caff7b72ef9d3b9a3262cec0dff6566c2481989822a6b27fdaaeed975"
+  url "https://github.com/v2fly/v2ray-core/archive/refs/tags/v5.24.0.tar.gz"
+  sha256 "1b434135924f324dc3f6cf415b9109596a7b356ffcb7948b4e206b50a5e41a88"
   license all_of: ["MIT", "CC-BY-SA-4.0"]
   head "https://github.com/v2fly/v2ray-core.git", branch: "master"
 
@@ -12,29 +12,29 @@ class V2ray < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "558c6bccde42c4dcb7a6d7eb57dad73afa5734cc7a26ecf894490e59f241bf2d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "558c6bccde42c4dcb7a6d7eb57dad73afa5734cc7a26ecf894490e59f241bf2d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "558c6bccde42c4dcb7a6d7eb57dad73afa5734cc7a26ecf894490e59f241bf2d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7c78cf5df23f9e12ffd062388be3cc2854dfe086d30f3c8ef3237277e4b0e685"
-    sha256 cellar: :any_skip_relocation, ventura:       "7c78cf5df23f9e12ffd062388be3cc2854dfe086d30f3c8ef3237277e4b0e685"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f8d48ba94394072931a225c3099361411deb8123b2003fadd3fbf3677430b5f3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dad0d48d31c2766373234e90ce91b71876c81b80cdd46b4685d1b169ac67193f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "dad0d48d31c2766373234e90ce91b71876c81b80cdd46b4685d1b169ac67193f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "dad0d48d31c2766373234e90ce91b71876c81b80cdd46b4685d1b169ac67193f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "fd6648c66205bf578b9887b56edc33dbcb5d114a5d669a9b5c584169c31887ed"
+    sha256 cellar: :any_skip_relocation, ventura:       "fd6648c66205bf578b9887b56edc33dbcb5d114a5d669a9b5c584169c31887ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2c8b27ab1f1641d02a47e995affb1f01e85ecd23117367730a112630dcedbb86"
   end
 
   depends_on "go" => :build
 
   resource "geoip" do
-    url "https://github.com/v2fly/geoip/releases/download/202410170052/geoip.dat"
-    sha256 "6f5b65aee82da0415bfbe87903673cd006183f8833659646fca6b531e8c155ea"
+    url "https://github.com/v2fly/geoip/releases/download/202501020052/geoip.dat"
+    sha256 "dba9102d288936e3b9b6511c0d0b03e62865c130a2263cb4719ad80b7a9f69bf"
   end
 
   resource "geoip-only-cn-private" do
-    url "https://github.com/v2fly/geoip/releases/download/202410170052/geoip-only-cn-private.dat"
-    sha256 "37541ed2186d7fe661580e680cc5ed89f554fb02fad1acf6951361696eee6e6f"
+    url "https://github.com/v2fly/geoip/releases/download/202501020052/geoip-only-cn-private.dat"
+    sha256 "db672a549a0ac8c3774eaf83ac32629a8f352af092bf004ca62a3bdce27b07f9"
   end
 
   resource "geosite" do
-    url "https://github.com/v2fly/domain-list-community/releases/download/20241013063848/dlc.dat"
-    sha256 "f820556ed3aa02eb7eadba7a3743d7e6df8e9234785d0d82d2d1edce20fe4b3c"
+    url "https://github.com/v2fly/domain-list-community/releases/download/20241221105938/dlc.dat"
+    sha256 "aa65cee72dd6afbf9dd4c474b4ff28ceb063f6abf99249a084091adb4f282f09"
   end
 
   def install
@@ -65,7 +65,7 @@ class V2ray < Formula
   end
 
   test do
-    (testpath/"config.json").write <<~EOS
+    (testpath/"config.json").write <<~JSON
       {
         "log": {
           "access": "#{testpath}/log"
@@ -95,7 +95,7 @@ class V2ray < Formula
           ]
         }
       }
-    EOS
+    JSON
     output = shell_output "#{bin}/v2ray test -c #{testpath}/config.json"
 
     assert_match "Configuration OK", output

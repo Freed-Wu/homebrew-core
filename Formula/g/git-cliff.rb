@@ -1,22 +1,29 @@
 class GitCliff < Formula
   desc "Highly customizable changelog generator"
   homepage "https://github.com/orhun/git-cliff"
-  url "https://github.com/orhun/git-cliff/archive/refs/tags/v2.6.1.tar.gz"
-  sha256 "96d2759bb276bfddf4f6653a06afe2982d0bdc9678a5d2cb3880685a681a8a3e"
+  url "https://github.com/orhun/git-cliff/archive/refs/tags/v2.7.0.tar.gz"
+  sha256 "7b9a74f0871983bf5c326ffd7358ba46925f14a6feb1638c8c1e5d6b36448eae"
   license all_of: ["Apache-2.0", "MIT"]
+  revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "e38be5334e0b66baf08b69e292d52f27abc22aea4970dc14c1d3c2ededc8e841"
-    sha256 cellar: :any,                 arm64_sonoma:  "cbb83919485ca184cb109f6f3aa27719251dfd9efc9b534c57132819055ccb64"
-    sha256 cellar: :any,                 arm64_ventura: "a3dab23f71833ee3ed1a818fd8633242f59375690029f4f16c006a9af4f0f6df"
-    sha256 cellar: :any,                 sonoma:        "13d20ac72e3f380d6aab5f4f0160be881b252b5f5501d79f047f7b2b66507a8f"
-    sha256 cellar: :any,                 ventura:       "adc87f385c104c034cbb0914e81ba5b1fcf774d6f3d7e92998eaa57dea5a4c46"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8d736d2e383cb6c3eb64091b40d8c71b2f9a510a6131767bf47c46efd413af7d"
+    sha256 cellar: :any,                 arm64_sequoia: "c0b3c51c4e0acf10cc05d274fe62490f4f71480f304fc99d367ccc05405f9871"
+    sha256 cellar: :any,                 arm64_sonoma:  "ab69ab2b69d6ced04fbfebfd58f7c0dc8846f9c177398fe00711ae1f9589c5c3"
+    sha256 cellar: :any,                 arm64_ventura: "e8087d7374b0e27975691c07dac781330cd335c14469510c03812ef466d94f34"
+    sha256 cellar: :any,                 sonoma:        "f607863bf8a829f4dd905e90bb66e01b1b6ef2c2a1bba1a3f2cd63abb9b45b88"
+    sha256 cellar: :any,                 ventura:       "a11a9463dd9f4b7527747ed0f7bd32bdc55672d484bd8f762d4638bcea7edb53"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dca33fff18fdf624befd45cce3bd2e7ce53a7040bfe0e2c5fddd6d53e55620c5"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "libgit2"
+
+  # patch to build with libgit2 1.9, upstream pr ref, https://github.com/orhun/git-cliff/pull/1002
+  patch do
+    url "https://github.com/orhun/git-cliff/commit/ff4bfb112d7ac72cbd759718f6fc96c708684f4f.patch?full_index=1"
+    sha256 "647235c0db29b56bb54c72c3bf89087bdd0abfe96a65773627d0937e323d1bdb"
+  end
 
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"
@@ -42,7 +49,7 @@ class GitCliff < Formula
 
   test do
     system "git", "cliff", "--init"
-    assert_predicate testpath/"cliff.toml", :exist?
+    assert_path_exists testpath/"cliff.toml"
 
     system "git", "init"
     system "git", "add", "cliff.toml"
