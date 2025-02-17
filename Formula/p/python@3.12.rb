@@ -1,10 +1,9 @@
 class PythonAT312 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.12.7/Python-3.12.7.tgz"
-  sha256 "73ac8fe780227bf371add8373c3079f42a0dc62deff8d612cd15a618082ab623"
+  url "https://www.python.org/ftp/python/3.12.9/Python-3.12.9.tgz"
+  sha256 "45313e4c5f0e8acdec9580161d565cf5fea578e3eabf25df7cc6355bf4afa1ee"
   license "Python-2.0"
-  revision 1
 
   livecheck do
     url "https://www.python.org/ftp/python/"
@@ -12,19 +11,19 @@ class PythonAT312 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "c1488710f182d429f03b04294806abe8f6557ec13fe9f2c2560d46738b050dfa"
-    sha256 arm64_sonoma:  "aee7d14e059df53e92482d3ea9068de1f62283668a793d861630fd714220364d"
-    sha256 arm64_ventura: "45b2608e22222fb0437ce940e1ac5d6d6df0c1da24090c8a8f89605be78ccf44"
-    sha256 sonoma:        "fc226c0822597d960f7163b240d850884440099e9e3851658339f7e5a01402f0"
-    sha256 ventura:       "6c8b3a2dbd1b52f009a9d5de3b654ab9d69183c9431955bace60c0151a6b00cf"
-    sha256 x86_64_linux:  "3d498209044ebc2d504c7365a04b248d242ccc567418be013b33e71e1c5cb15d"
+    sha256 arm64_sequoia: "71e9ee527c125b2fccb9a7495496c7f0dcc1aff8274a2c3992f5f4f5fb9adaa9"
+    sha256 arm64_sonoma:  "c9e66e2321e176e9df376f87f9e9ec945176fcb6600bc7efcc60a5cf74eb5e29"
+    sha256 arm64_ventura: "baf24645f477ac3ee234d093faa555784ab9bc031dd204c3b8244314e724f318"
+    sha256 sonoma:        "f6c2cd7fcb21085baca22c9806d3887429f77e1bbe77803b7d27be3fd0640e5a"
+    sha256 ventura:       "e119ba92f3944191dc95a6b9e0ff05f26f818b7dbdd02274b23af896d12bc914"
+    sha256 x86_64_linux:  "ccd07e056195c9929284bc1d1de1ac5c1a29a80a1930ac07571b39f7df140f72"
   end
 
   # setuptools remembers the build flags python is built with and uses them to
   # build packages later. Xcode-only systems need different flags.
   pour_bottle? only_if: :clt_installed
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "mpdecimal"
   depends_on "openssl@3"
   depends_on "sqlite"
@@ -47,23 +46,23 @@ class PythonAT312 < Formula
 
   # Always update to latest release
   resource "flit-core" do
-    url "https://files.pythonhosted.org/packages/c4/e6/c1ac50fe3eebb38a155155711e6e864e254ce4b6e17fe2429b4c4d5b9e80/flit_core-3.9.0.tar.gz"
-    sha256 "72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba"
+    url "https://files.pythonhosted.org/packages/d5/ae/09427bea9227a33ec834ed5461432752fd5d02b14f93dd68406c91684622/flit_core-3.10.1.tar.gz"
+    sha256 "66e5b87874a0d6e39691f0e22f09306736b633548670ad3c09ec9db03c5662f7"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/4d/87/fb90046e096a03aeab235e139436b3fe804cdd447ed2093b0d70eba3f7f8/pip-24.2.tar.gz"
-    sha256 "5b5e490b5e9cb275c879595064adce9ebd31b854e3e803740b72f9ccf34a45b8"
+    url "https://files.pythonhosted.org/packages/47/3e/68beeeeb306ea20ffd30b3ed993f531d16cd884ec4f60c9b1e238f69f2af/pip-25.0.tar.gz"
+    sha256 "8e0a97f7b4c47ae4a494560da84775e9e2f671d415d8d828e052efefb206b30b"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/27/b8/f21073fde99492b33ca357876430822e4800cdf522011f18041351dfa74b/setuptools-75.1.0.tar.gz"
-    sha256 "d59a21b17a275fb872a9c3dae73963160ae079f1049ed956880cd7c09b120538"
+    url "https://files.pythonhosted.org/packages/92/ec/089608b791d210aec4e7f97488e67ab0d33add3efccb83a056cbafe3a2a6/setuptools-75.8.0.tar.gz"
+    sha256 "c5afc8f407c626b8313a86e10311dd3f661c6cd9c09d4bf8c15c0e11f9f2b0e6"
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/b7/a0/95e9e962c5fd9da11c1e28aa4c0d8210ab277b1ada951d2aee336b505813/wheel-0.44.0.tar.gz"
-    sha256 "a29c3f2817e95ab89aa4660681ad547c0e9547f20e75b0562fe7723c9a2a9d49"
+    url "https://files.pythonhosted.org/packages/8a/98/2d9906746cdc6a6ef809ae6338005b3f21bb568bea3165cfc6a243fdc25c/wheel-0.45.1.tar.gz"
+    sha256 "661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729"
   end
 
   # Modify default sysconfig to match the brew install layout.
@@ -189,7 +188,7 @@ class PythonAT312 < Formula
 
     # Disabled modules - provided in separate formulae
     args += %w[
-      py_cv_module__tkinter=disabled
+      py_cv_module__tkinter=n/a
     ]
 
     system "./configure", *args
@@ -378,7 +377,7 @@ class PythonAT312 < Formula
     # Mark Homebrew python as externally managed: https://peps.python.org/pep-0668/#marking-an-interpreter-as-using-an-external-package-manager
     # Placed after ensurepip since it invokes pip in isolated mode, meaning
     # we can't pass --break-system-packages.
-    (lib_cellar/"EXTERNALLY-MANAGED").write <<~EOS
+    (lib_cellar/"EXTERNALLY-MANAGED").write <<~INI
       [externally-managed]
       Error=To install Python packages system-wide, try brew install
        xyz, where xyz is the package you are trying to
@@ -407,11 +406,11 @@ class PythonAT312 < Formula
        file. Failure to do this can result in a broken Homebrew installation.
 
        Read more about this behavior here: <https://peps.python.org/pep-0668/>
-    EOS
+    INI
   end
 
   def sitecustomize
-    <<~EOS
+    <<~PYTHON
       # This file is created by Homebrew and is executed on each python startup.
       # Don't print from here, or else python command line scripts may fail!
       # <https://docs.brew.sh/Homebrew-and-Python>
@@ -464,7 +463,7 @@ class PythonAT312 < Formula
           split_prefix = f"#{HOMEBREW_PREFIX}/opt/python-{split_module}@#{version.major_minor}/libexec"
           if os.path.isdir(split_prefix):
               sys.path.append(split_prefix)
-    EOS
+    PYTHON
   end
 
   def caveats
@@ -509,7 +508,7 @@ class PythonAT312 < Formula
                  shell_output("#{python3} -Sc 'import dbm.gnu' 2>&1", 1)
 
     # Verify that the selected DBM interface works
-    (testpath/"dbm_test.py").write <<~EOS
+    (testpath/"dbm_test.py").write <<~PYTHON
       import dbm
 
       with dbm.ndbm.open("test", "c") as db:
@@ -518,7 +517,7 @@ class PythonAT312 < Formula
           assert list(db.keys()) == [b"foo \\xbd"]
           assert b"foo \\xbd" in db
           assert db[b"foo \\xbd"] == b"bar \\xbd"
-    EOS
+    PYTHON
     system python3, "dbm_test.py"
 
     system bin/"pip#{version.major_minor}", "list", "--format=columns"

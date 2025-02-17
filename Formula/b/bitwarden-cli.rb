@@ -1,8 +1,8 @@
 class BitwardenCli < Formula
   desc "Secure and free password manager for all of your devices"
   homepage "https://bitwarden.com/"
-  url "https://github.com/bitwarden/clients/archive/refs/tags/cli-v2024.10.0.tar.gz"
-  sha256 "1396b949f482f398bca4f59a4a7e0c2d9549f9b461bf6af5a9db04dd9b6bcb64"
+  url "https://github.com/bitwarden/clients/archive/refs/tags/cli-v2025.1.3.tar.gz"
+  sha256 "4ca7ac116545c9f1de0d8c0f776ef21f10e472e10785e7ed1e3df64e4dd2545d"
   license "GPL-3.0-only"
 
   livecheck do
@@ -11,18 +11,19 @@ class BitwardenCli < Formula
   end
 
   bottle do
-    sha256                               arm64_sequoia: "73e7bdccf0453ac4bbc1f95bfe6e6ee474f75f1582b82cd10dd2747d92c0b529"
-    sha256                               arm64_sonoma:  "325dcafb82e8eb23bfecde70ddf00b6c571352afb5ecc1a745c1412e3e170e21"
-    sha256                               arm64_ventura: "a9b8783ab289d58d0fd6ad59600e1111fa835615e5e3a71c0b68a46b823e2cb3"
-    sha256                               sonoma:        "cc9639064cbc26be1346bbcf58f2bfe357cea4a36b4afce8d032d9a679eabb09"
-    sha256                               ventura:       "7f73b6b16e524414c4fad0d86dbaedeb0d37546aeb18fd1b01bf70480d180f95"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a8f2196b98caa890d5db72683c335d684fb4981cd7a6ba450cb172cd42f57a77"
+    sha256                               arm64_sequoia: "05defee18c99358facc3bc9c10a4a72a31a8c512aa9db9bf87f0b02855623da9"
+    sha256                               arm64_sonoma:  "272cfc1de81eacb3044316005404d6b0d10f8b28b459558fc2c4704faa8bd3af"
+    sha256                               arm64_ventura: "31007d79fbe018888d055b44569c33d49902534929b5a89d6f64f26cc832b956"
+    sha256                               sonoma:        "faa20f0e8cdaa8ccce9e6b67dee053783cbb31de7921de7714dd5f06518ed0b7"
+    sha256                               ventura:       "87f926b74605f030c44cea0cc0ac9afdbddd35b1e396a1c2bb31f5ae343fca23"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0fc6b0dd2a775aa8062f67cb76e9ae082d647620ef7454e85990a34347b3e754"
   end
 
   depends_on "node"
 
   def install
     system "npm", "ci", "--ignore-scripts"
+
     cd buildpath/"apps/cli" do
       # The `oss` build of Bitwarden is a GPL backed build
       system "npm", "run", "build:oss:prod", "--ignore-scripts"
@@ -40,10 +41,7 @@ class BitwardenCli < Formula
     (node_modules/"argon2/prebuilds/linux-x64/argon2.musl.node").unlink
     (node_modules/"argon2/prebuilds").each_child { |dir| rm_r(dir) if dir.basename.to_s != "#{os}-#{arch}" }
 
-    generate_completions_from_executable(
-      bin/"bw", "completion",
-      base_name: "bw", shell_parameter_format: :arg, shells: [:zsh]
-    )
+    generate_completions_from_executable(bin/"bw", "completion", shells: [:zsh], shell_parameter_format: :arg)
   end
 
   test do

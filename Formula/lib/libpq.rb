@@ -1,10 +1,9 @@
 class Libpq < Formula
   desc "Postgres C API library"
   homepage "https://www.postgresql.org/docs/current/libpq.html"
-  url "https://ftp.postgresql.org/pub/source/v17.0/postgresql-17.0.tar.bz2"
-  sha256 "7e276131c0fdd6b62588dbad9b3bb24b8c3498d5009328dba59af16e819109de"
+  url "https://ftp.postgresql.org/pub/source/v17.3/postgresql-17.3.tar.bz2"
+  sha256 "13c18b35bf67a97bd639925fc581db7fd2aae4d3548eac39fcdb8da74ace2bea"
   license "PostgreSQL"
-  revision 2
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,19 +11,19 @@ class Libpq < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "a7d324023a64b4c30827a296e90b013c6568985e0a2a0ca07267ddbb57ed6b64"
-    sha256 arm64_sonoma:  "2bd5ab7f788d564457ca517c3301444b0f000c326cb4e44a253077b2c5d0f8cb"
-    sha256 arm64_ventura: "2ddaa7ed1c71d98592877c034df221bd3d9fdfcb4b4fe1aee1f36a751693891a"
-    sha256 sonoma:        "6df62d3e1f4ed6e379acf636a7e2516fb06af0c07da39daa1cb669b125f56794"
-    sha256 ventura:       "da2f9440626b64ff20efa7844b0941b661b4cd15a8e9ce0be8e5fc14ae44a544"
-    sha256 x86_64_linux:  "8f8e4ead281acc6b88d933d2ed995211c016cf9050dba494e1103f0eb57d5afa"
+    sha256 arm64_sequoia: "a7b0daa94e55cc029a4f8a004370bab0e8342bcd977c758008faabe4b0c4e90c"
+    sha256 arm64_sonoma:  "c052a28f0b6bfe5a643e980a05dd9b7a7dd3681c04c61eeb2bffcdb9cc9a769c"
+    sha256 arm64_ventura: "59b0561eaaf7bc7ba59c5a2b05e14fa155ebecba273c92ffb195dd118be0d823"
+    sha256 sonoma:        "d3be8a2df3ded18c000603e4017a1b5f82eee69176bf44bec6cec7100043cb72"
+    sha256 ventura:       "e77ca5cfeeb10fdbb2804f60ccda8ca3bd4a4959480904af41202f935892c5ca"
+    sha256 x86_64_linux:  "cb6cb466058f4f1db16ac9f739ffad4d38ce87e12b0297753f2857fb5d52a0b9"
   end
 
   keg_only "conflicts with postgres formula"
 
   depends_on "docbook" => :build
   depends_on "docbook-xsl" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "icu4c@76"
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.

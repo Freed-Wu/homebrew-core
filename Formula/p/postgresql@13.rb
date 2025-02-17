@@ -1,10 +1,9 @@
 class PostgresqlAT13 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v13.16/postgresql-13.16.tar.bz2"
-  sha256 "c9cbbb6129f02328204828066bb3785c00a85c8ca8fd329c2a8a53c1f5cd8865"
+  url "https://ftp.postgresql.org/pub/source/v13.19/postgresql-13.19.tar.bz2"
+  sha256 "482cce0a9f8d24c2447cfc7b2817e55f86d51afe5f7f1a85214bf93644e774ea"
   license "PostgreSQL"
-  revision 3
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,12 +11,12 @@ class PostgresqlAT13 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "17a6eae58d117228eb7667156d9d361c2b74b69f3037983ffa3b38dc66374761"
-    sha256 arm64_sonoma:  "5ebb7ff431bd87d3858bf9a39f8b1cf8b2d593e6d35e24c385e148aaf890fed1"
-    sha256 arm64_ventura: "c5f805b722e2147a49b4f375caea05c48dfcd7412353e4925768f5f6ac7bc9b4"
-    sha256 sonoma:        "4bcdd9ea81134477bff029eb28fa243d4145a9fee360c2a307fc3620d6bfda5a"
-    sha256 ventura:       "7a64a71846cdb50876257f1dffe5d5acf63f04c2be2676d09c97ced2c63e3d29"
-    sha256 x86_64_linux:  "a748f1625a05fef7eaa29766cb2ded75fba51d210b4cef6fd5ef325803d80b7c"
+    sha256 arm64_sequoia: "80940e44500af3661fe465de8908351ee9b0fcce3d105b6ed8756ccae0fea55e"
+    sha256 arm64_sonoma:  "5aef44da3b54b91f75b8d75de16b45b49b5e576490e006c2eec8ab36e9ae322e"
+    sha256 arm64_ventura: "d90181b5f1a4a5e161a7fdc382bd9ee4a4239803ca9edeed4302a89290b789e3"
+    sha256 sonoma:        "a78e002e8e77d8cd3f6d6126e0ae12f2d9bab89cc9ffa6c054f1eb41a6844707"
+    sha256 ventura:       "302013fb0f1abcea635afc33fcd7f40fe6d35f35f648a4617922e9ae64d5f9a7"
+    sha256 x86_64_linux:  "d6748ead2e758cfd3df8250e7b6757af103cb59b6602d19cc292bfe7c1c7487f"
   end
 
   keg_only :versioned_formula
@@ -25,7 +24,7 @@ class PostgresqlAT13 < Formula
   # https://www.postgresql.org/support/versioning/
   deprecate! date: "2025-11-13", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.

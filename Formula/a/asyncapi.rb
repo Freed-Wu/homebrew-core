@@ -1,17 +1,17 @@
 class Asyncapi < Formula
   desc "All in one CLI for all AsyncAPI tools"
   homepage "https://github.com/asyncapi/cli"
-  url "https://registry.npmjs.org/@asyncapi/cli/-/cli-2.8.0.tgz"
-  sha256 "04f18ab4062541442661467ea467ad62d1f8b5b261f9b2919fc1ba7db8d6f4c4"
+  url "https://registry.npmjs.org/@asyncapi/cli/-/cli-2.16.4.tgz"
+  sha256 "31b3c316d31acd334042713c72f17105f9e4571a28bd3df307df050d953b5d1c"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "ddaa6d718d5c633a94c83db42a6ec1325ecaa5b4a862c4c36094e12b4ce8d5b2"
-    sha256 cellar: :any,                 arm64_sonoma:  "ddaa6d718d5c633a94c83db42a6ec1325ecaa5b4a862c4c36094e12b4ce8d5b2"
-    sha256 cellar: :any,                 arm64_ventura: "ddaa6d718d5c633a94c83db42a6ec1325ecaa5b4a862c4c36094e12b4ce8d5b2"
-    sha256 cellar: :any,                 sonoma:        "d77f22ef7ed880aaf5141c0e0850f5c6da53f1f34041a75211ce29e46a587506"
-    sha256 cellar: :any,                 ventura:       "d77f22ef7ed880aaf5141c0e0850f5c6da53f1f34041a75211ce29e46a587506"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "87641f381eb6508f230419312facaa53b5542cd7d704c665d56a0053f5bc0a45"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "09795ed53c1ee8d128eae3ecdb611db0289dfb63823414a1631796b28923fc30"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "09795ed53c1ee8d128eae3ecdb611db0289dfb63823414a1631796b28923fc30"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "09795ed53c1ee8d128eae3ecdb611db0289dfb63823414a1631796b28923fc30"
+    sha256 cellar: :any_skip_relocation, sonoma:        "2fa42ccd61668c251dcf7106ee9ad3fe83b5c52c2bd25e3ae7dd725f5b715f56"
+    sha256 cellar: :any_skip_relocation, ventura:       "2fa42ccd61668c251dcf7106ee9ad3fe83b5c52c2bd25e3ae7dd725f5b715f56"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "09795ed53c1ee8d128eae3ecdb611db0289dfb63823414a1631796b28923fc30"
   end
 
   depends_on "node"
@@ -19,13 +19,10 @@ class Asyncapi < Formula
   def install
     system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
-
-    # Replace universal binaries with their native slices
-    deuniversalize_machos
   end
 
   test do
-    system bin/"asyncapi", "new", "--file-name=asyncapi.yml", "--example=default-example.yaml", "--no-tty"
+    system bin/"asyncapi", "new", "file", "--file-name=asyncapi.yml", "--example=default-example.yaml", "--no-tty"
     assert_predicate testpath/"asyncapi.yml", :exist?, "AsyncAPI file was not created"
   end
 end

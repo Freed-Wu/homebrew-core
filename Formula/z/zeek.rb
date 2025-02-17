@@ -1,9 +1,8 @@
 class Zeek < Formula
   desc "Network security monitor"
-  homepage "https://www.zeek.org"
-  url "https://github.com/zeek/zeek.git",
-      tag:      "v7.0.3",
-      revision: "7a73f817929b72b8c7acf697bf52b7267606a207"
+  homepage "https://zeek.org/"
+  url "https://github.com/zeek/zeek/releases/download/v7.1.0/zeek-7.1.0.tar.gz"
+  sha256 "9a40199c5f6c97b4c79e968caa3a83742bf4fd45c293b21c9bfb3b632d4849c0"
   license "BSD-3-Clause"
   head "https://github.com/zeek/zeek.git", branch: "master"
 
@@ -13,13 +12,12 @@ class Zeek < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sequoia: "ce92ee784b8b302175a1f29e31fc292cf7fef775fa506ee78fadf3f45b759177"
-    sha256 arm64_sonoma:  "d5b8f011c59888ac864fe9b0c4be5a30d0d0b9817df178bb524e1062ddcd289c"
-    sha256 arm64_ventura: "21efb12b934dc15638b60052ef638c1ed1c1aaf9809bfab0c76177b4591076dd"
-    sha256 sonoma:        "99f4c4cbacb50db354127e5d9e46f17d7288b02d9ee6893060e49976a0353af5"
-    sha256 ventura:       "b4c634b6c6da782915437cbad88432169b83c5057275331101752de234be418e"
-    sha256 x86_64_linux:  "e96efe18a7ad36db69d738674573f55d177e61ef5883ac9d17851b32c7a2f83a"
+    sha256 arm64_sequoia: "0cb1561fae1e9f05853d88a507619329c233d3a780c1b13dcbfb0c1578944147"
+    sha256 arm64_sonoma:  "7fb32a2554210fa6112bfb1c5817401cac686dd556b0551b82dea2fa0f29884b"
+    sha256 arm64_ventura: "002083175e96e35197d3faa06e686a593571e0c476715aeb360ca5699ffac8c4"
+    sha256 sonoma:        "736147e3868e41b67acb04aca99cf5028c71bf9ce50a7b4f05ceeaa2d4d939b1"
+    sha256 ventura:       "201e30eb46c09bc1c865ec5fcf21b92263c6a831bbc3bf0930d0983804ea7c85"
+    sha256 x86_64_linux:  "11eddbd32d64c8d7e4281f60d2831cda0fce32ecd67ad0011394c2ef3dfeaf9f"
   end
 
   depends_on "bison" => :build
@@ -36,8 +34,6 @@ class Zeek < Formula
   uses_from_macos "libpcap"
   uses_from_macos "libxcrypt"
   uses_from_macos "zlib"
-
-  fails_with gcc: "5"
 
   def install
     # Remove SDK paths from zeek-config. This breaks usage with other SDKs.
@@ -71,10 +67,10 @@ class Zeek < Formula
     assert_match "version #{version}", shell_output("#{bin}/zeek --version")
     assert_match "ARP packet analyzer", shell_output("#{bin}/zeek --print-plugins")
     system bin/"zeek", "-C", "-r", test_fixtures("test.pcap")
-    assert_predicate testpath/"conn.log", :exist?
-    refute_predicate testpath/"conn.log", :empty?
-    assert_predicate testpath/"http.log", :exist?
-    refute_predicate testpath/"http.log", :empty?
+    assert_path_exists testpath/"conn.log"
+    refute_empty (testpath/"conn.log").read
+    assert_path_exists testpath/"http.log"
+    refute_empty (testpath/"http.log").read
     # For bottling MacOS SDK paths must not be part of the public include directories, see zeek/zeek#1468.
     refute_includes shell_output("#{bin}/zeek-config --include_dir").chomp, "MacOSX"
   end

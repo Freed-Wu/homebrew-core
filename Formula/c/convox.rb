@@ -1,8 +1,8 @@
 class Convox < Formula
   desc "Command-line interface for the Convox PaaS"
   homepage "https://convox.com/"
-  url "https://github.com/convox/convox/archive/refs/tags/3.19.2.tar.gz"
-  sha256 "36d3885b5fcf2b26401288aa4bd9d1eee045f993b747e79648ef59967d52c6ec"
+  url "https://github.com/convox/convox/archive/refs/tags/3.19.7.tar.gz"
+  sha256 "1d30881ad7d08114abe6bca1109a9db944db6245a76ff55138fdc01378931e68"
   license "Apache-2.0"
   version_scheme 1
 
@@ -12,16 +12,16 @@ class Convox < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2f87df5f67f13af01a979a58e45f9b6f3d7ee6eb67ad8200be6b9af14edefbb0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2af4d6f82f557fe485d087b6ac7190b541b7e6c6bf5c0d58f4b3402359b3e973"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6d0f461106d58ed101816fda5c84e1b9d2f163b3156e795828a925dd3c284dbd"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c4c2125e368510657c5c047c45e2fd8ea241c688a91b36911488d74a64af24f2"
-    sha256 cellar: :any_skip_relocation, ventura:       "ab5ec5b5fb759bc903e424eb0a746dc1b47e3342d0f9fa28bc9d49a76010d2dc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d1fc415db6ff906fa0c11863122cb57e32ef27b4efa8e91806be25272c1e0f0b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "86a8732a890cab557519fc16525424185097329aba946df2e7426ea576e5545b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e32080d07be5ac2034f5561a9021019bb34f9e9435ab5534bff87a07c445d580"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "efd8bfeebeb09cda933eb542bf48d5b406be38d1d7c31b00df53c2a1e5ae8a39"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1e92e28c3bf3b2cfc0e360b4f335a42d6e01141ef3d266e9a167543ca3e8ad7d"
+    sha256 cellar: :any_skip_relocation, ventura:       "9e50c098f471f1c581f0c466f74ed11be0eafadf3a29cb22a519dd7e82a486c7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fbd292b9576997c276b4dfb6b237da77790655eb7ed3b927d98c927be6e8b1d4"
   end
 
   depends_on "go" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   on_linux do
     depends_on "systemd" # for libudev

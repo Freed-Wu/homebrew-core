@@ -1,18 +1,18 @@
 class Egctl < Formula
   desc "Command-line utility for operating Envoy Gateway"
   homepage "https://gateway.envoyproxy.io/"
-  url "https://github.com/envoyproxy/gateway/archive/refs/tags/v1.1.3.tar.gz"
-  sha256 "061318e4c3daf8d85470fd77c84c09a87a55357512e1f1d749d2647c1a4ca4ad"
+  url "https://github.com/envoyproxy/gateway/archive/refs/tags/v1.3.0.tar.gz"
+  sha256 "9ab6a574670b12ac535e1cbe00d478aba5bb714ac77b64c8e9fcbde056f0202b"
   license "Apache-2.0"
   head "https://github.com/envoyproxy/gateway.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "868f136e60b1d4e9f5467957a800d0bfaf5c31274a56a2b92fa524588444d2a7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "69c44a30a7191ef5e0e0a34c3a2ba1fceb8fc76b14a8e17819db1f9d730fa48f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "73973cbf8fa4e3b6d3a447f0beea15679372551a8350ab56cb7571c42c562fb7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c3ec8d1ca3747edfe612a65349ef1cfb1fa0fffefef434785409243fbd5326be"
-    sha256 cellar: :any_skip_relocation, ventura:       "9c1ae84fd5fea28039b73f244f4532264fd645e8c548b96573eb74c17cc38486"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e02b056d012d9cc79a25460d381687ece0200876d3cab7bcff0c736702477061"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d4a2187f5d34071e42cf26d39fa242547554dc1578afd5537e293c7ca60eab53"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f3a7d524a72349ac573da85326dce733c3768145244e8cf0d25fe2943dbe5ea1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d072dbc45ee85b4be351f919564f6aecc0131d049f03f22794a32b1245ed4abf"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8e01ada218a171ee584b07c076122fc01ce4310f7ef6fea1acb248a148c0fd5d"
+    sha256 cellar: :any_skip_relocation, ventura:       "f7c8d086124cb9ef66d07eb96c0588768c0f229c2cfe883e4ab1722685c710e9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ac4cec51a734f0d932f2c35319a2ea0b8208d5c184a6d6aaddee595c44c70c11"
   end
 
   depends_on "go" => :build
@@ -35,7 +35,7 @@ class Egctl < Formula
   test do
     assert_equal version.to_s, shell_output("#{bin}/egctl version --remote=false").strip
 
-    (testpath/"input.yaml").write <<~EOS
+    (testpath/"input.yaml").write <<~YAML
       apiVersion: gateway.networking.k8s.io/v1
       kind: GatewayClass
       metadata:
@@ -100,7 +100,7 @@ class Egctl < Formula
               - path:
                   type: PathPrefix
                   value: /
-    EOS
+    YAML
 
     expected = <<~EOS
       xds:
@@ -118,7 +118,7 @@ class Egctl < Formula
                   filterMetadata:
                     envoy-gateway:
                       resources:
-                      - kind: ""
+                      - kind: Gateway
                         name: eg
                         namespace: default
                         sectionName: http
@@ -142,6 +142,6 @@ class Egctl < Formula
     EOS
 
     output = shell_output("#{bin}/egctl x translate --from gateway-api --to xds -t route -f #{testpath}/input.yaml")
-    assert_equal output, expected
+    assert_equal expected, output
   end
 end

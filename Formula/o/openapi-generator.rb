@@ -1,8 +1,8 @@
 class OpenapiGenerator < Formula
   desc "Generate clients, server & docs from an OpenAPI spec (v2, v3)"
   homepage "https://openapi-generator.tech/"
-  url "https://search.maven.org/remotecontent?filepath=org/openapitools/openapi-generator-cli/7.9.0/openapi-generator-cli-7.9.0.jar"
-  sha256 "f0cb7839a2ead9040b204519b03f1473b39c7725fd1f43134bb550515cb3dbee"
+  url "https://search.maven.org/remotecontent?filepath=org/openapitools/openapi-generator-cli/7.11.0/openapi-generator-cli-7.11.0.jar"
+  sha256 "113c25df5a781d5a1fc2b883f12fe8f263db285ab12e15854d5b15306e1bf7fc"
   license "Apache-2.0"
 
   livecheck do
@@ -11,7 +11,7 @@ class OpenapiGenerator < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "423dd6369073e4f7653940bbdbb3cc6e2eed814bc7b7caa94f4a59494757295b"
+    sha256 cellar: :any_skip_relocation, all: "ec269873d2848f8720e22647684662d000d3d0978825b2b7c5682fa30652b890"
   end
 
   head do
@@ -36,7 +36,7 @@ class OpenapiGenerator < Formula
   test do
     # From the OpenAPI Spec website
     # https://web.archive.org/web/20230505222426/https://swagger.io/docs/specification/basic-structure/
-    (testpath/"minimal.yaml").write <<~EOS
+    (testpath/"minimal.yaml").write <<~YAML
       ---
       openapi: 3.0.3
       info:
@@ -60,7 +60,7 @@ class OpenapiGenerator < Formula
                       type: array
                       items:
                         type: string
-    EOS
+    YAML
     system bin/"openapi-generator", "generate", "-i", "minimal.yaml", "-g", "openapi", "-o", "./"
     # Python is broken for (at least) Java 20
     system bin/"openapi-generator", "generate", "-i", "minimal.yaml", "-g", "python", "-o", "./"

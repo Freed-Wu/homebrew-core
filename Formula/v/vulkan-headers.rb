@@ -1,8 +1,8 @@
 class VulkanHeaders < Formula
   desc "Vulkan Header files and API registry"
   homepage "https://github.com/KhronosGroup/Vulkan-Headers"
-  url "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.3.300.tar.gz"
-  sha256 "9a0542fb2233e39179fcc9aba8b0dd9deee4a19a2d7adb89449144b2e3d80e93"
+  url "https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.4.307.tar.gz"
+  sha256 "6e8445bc12c1e2702c27f4f02d1a057fb83f40cc56c6a8e4583141d4eaad90d4"
   license "Apache-2.0"
   head "https://github.com/KhronosGroup/Vulkan-Headers.git", branch: "main"
 
@@ -12,12 +12,17 @@ class VulkanHeaders < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "4d04ed5117afb6546fdefa02ce6430d148364aace0cd0e0926415fa6dd41bfb0"
+    sha256 cellar: :any_skip_relocation, all: "2f1dc61764f763c7009a68a7190d9f431b4a1d16367d5214db96d0d64e4eec2e"
   end
 
   depends_on "cmake" => :build
 
   def install
+    # Ensure bottles are uniform.
+    inreplace "include/vulkan/vulkan.hpp" do |s|
+      s.gsub! "/usr/local", HOMEBREW_PREFIX
+    end
+
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args
     system "cmake", "--install", "build"
   end

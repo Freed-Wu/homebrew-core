@@ -1,8 +1,8 @@
 class Nexttrace < Formula
   desc "Open source visual route tracking CLI tool"
   homepage "https://nxtrace.github.io/NTrace-core/"
-  url "https://github.com/nxtrace/NTrace-core/archive/refs/tags/v1.3.5.tar.gz"
-  sha256 "8a373935e92bf94959898ce4a6980269270ce5ca88cbe5fb04dd1b3bfeb620fd"
+  url "https://github.com/nxtrace/NTrace-core/archive/refs/tags/v1.3.7.tar.gz"
+  sha256 "94f8893f80b6b0a8d02b2fe709a62557034f3e32879a55807c38cb6ee2f8ab01"
   license "GPL-3.0-only"
   head "https://github.com/nxtrace/NTrace-core.git", branch: "main"
 
@@ -14,16 +14,15 @@ class Nexttrace < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "33ee30f11117168da4010b9c58bd97aa72a1bb1639315f6add861fe7b34d007d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1b5bee2bef7ceb80340287776cd8c9613232d59f274a27332a7b0858f0dc10d0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "655f5897e273bb725cc69063cc7a86333e76b4acd8b1f21a16165d79e2d56188"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e196e386e5950104b094dc1c5704315c614bff0ac5b7168613281a502a69d0f1"
-    sha256 cellar: :any_skip_relocation, ventura:       "2a95597e78b4bc1093a9507fe988e463a18c1357d5f5ea31a523a9d3c86759bb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "55d83647143535207d8207bf7e90b2f0bf50efcd5ac4edd93b1e36d64cfb6298"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a8b5bb14877fa350d7773932829e4335623b50ade2686c3f44d8cf079fd09196"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a8b5bb14877fa350d7773932829e4335623b50ade2686c3f44d8cf079fd09196"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "a8b5bb14877fa350d7773932829e4335623b50ade2686c3f44d8cf079fd09196"
+    sha256 cellar: :any_skip_relocation, sonoma:        "93a381eb86c70db50cc45be13c35e5572394aec6272f9ce3e307b5adf5971748"
+    sha256 cellar: :any_skip_relocation, ventura:       "93a381eb86c70db50cc45be13c35e5572394aec6272f9ce3e307b5adf5971748"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4ca06181781f7224df88e79f8cad3eea96ed4741f5046d527f4d02cfe7d67061"
   end
 
-  # use "go" again after https://github.com/nxtrace/NTrace-core/issues/247 is fixed and released
-  depends_on "go@1.22" => :build
+  depends_on "go" => :build
 
   def install
     ldflags = %W[
@@ -31,7 +30,9 @@ class Nexttrace < Formula
       -X github.com/nxtrace/NTrace-core/config.Version=#{version}
       -X github.com/nxtrace/NTrace-core/config.CommitID=brew
       -X github.com/nxtrace/NTrace-core/config.BuildDate=#{time.iso8601}
+      -checklinkname=0
     ]
+    # checklinkname=0 is a workaround for Go >= 1.23, see https://github.com/nxtrace/NTrace-core/issues/247
     system "go", "build", *std_go_args(ldflags:)
   end
 

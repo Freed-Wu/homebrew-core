@@ -1,10 +1,9 @@
 class PostgresqlAT14 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v14.13/postgresql-14.13.tar.bz2"
-  sha256 "59aa3c4b495ab26a9ec69f3ad0a0228c51f0fe6facf3634dfad4d1197d613a56"
+  url "https://ftp.postgresql.org/pub/source/v14.16/postgresql-14.16.tar.bz2"
+  sha256 "673c26f15ebb14306ad0ea051d8acfb3915dd342de942f5b502e5354a0ab760c"
   license "PostgreSQL"
-  revision 3
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,18 +11,18 @@ class PostgresqlAT14 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "c1718c6a52e7af8f7a788225fbab94cf8fde46a5f0b2611756dfe01f8ca4835d"
-    sha256 arm64_sonoma:  "26b55f9137c6f503106a49659c753cfefc5c284f0ed16ef3bf4cc6e2c318ea48"
-    sha256 arm64_ventura: "3addca67130a3af596c1d20070dd78b09c85fe3c6417be0513de7f177f002bc1"
-    sha256 sonoma:        "bc885e75b856adbe14ad5a876d0caa2096418267b4e0142612abff688be52074"
-    sha256 ventura:       "73c7d10fc062a76107dc4d47f5af211648bb570fd125a5abc796262dc8405332"
-    sha256 x86_64_linux:  "47e44f202f5538f2531b3e63ed9494b0183f21935fd0f2b1f406b6b4e096e823"
+    sha256 arm64_sequoia: "ec2d97d524cf656a1c06384594e42f8de27cfb79ed2203f86404c591d9b6a4c5"
+    sha256 arm64_sonoma:  "5b98dbed99fe2e8acb7c247255c7624bedd2c892c9b5b1964cba16656a5f25a3"
+    sha256 arm64_ventura: "0e1f509c88c1c9db7dd90ae79d6c2eea7725974b7e910c5482814af3099657ff"
+    sha256 sonoma:        "027e8c24358630b8c8c2d20fec4e024edf7078c6e1726f54a327f2a4348b30cb"
+    sha256 ventura:       "6bb289f503ea71898b6ca2c07ce352b1ab663c623ee5da7ce5b7172f71b8859e"
+    sha256 x86_64_linux:  "01c23c0db2fd7f7c7d5ff542e88507acc9d8f2a3873426b96765c32be0471a9e"
   end
 
   # https://www.postgresql.org/support/versioning/
   deprecate! date: "2026-11-12", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.

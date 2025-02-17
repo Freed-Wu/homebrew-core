@@ -3,18 +3,18 @@ class Virtualenv < Formula
 
   desc "Tool for creating isolated virtual python environments"
   homepage "https://virtualenv.pypa.io/"
-  url "https://files.pythonhosted.org/packages/8c/b3/7b6a79c5c8cf6d90ea681310e169cf2db2884f4d583d16c6e1d5a75a4e04/virtualenv-20.27.1.tar.gz"
-  sha256 "142c6be10212543b32c6c45d3d3893dff89112cc588b7d0879ae5a1ec03a47ba"
+  url "https://files.pythonhosted.org/packages/f1/88/dacc875dd54a8acadb4bcbfd4e3e86df8be75527116c91d8f9784f5e9cab/virtualenv-20.29.2.tar.gz"
+  sha256 "fdaabebf6d03b5ba83ae0a02cfe96f48a716f4fae556461d180825866f75b728"
   license "MIT"
   head "https://github.com/pypa/virtualenv.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "11fce5f2b079b35fc1e4648678c4767c7b50debdef4412a52c8a0afc35445754"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "11fce5f2b079b35fc1e4648678c4767c7b50debdef4412a52c8a0afc35445754"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "11fce5f2b079b35fc1e4648678c4767c7b50debdef4412a52c8a0afc35445754"
-    sha256 cellar: :any_skip_relocation, sonoma:        "898494253c6d2066bac72c5cbe923c4d277c3ea808f21a52972994351a4ff8a2"
-    sha256 cellar: :any_skip_relocation, ventura:       "898494253c6d2066bac72c5cbe923c4d277c3ea808f21a52972994351a4ff8a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "474032101317938d6cd1eb869e1adf8523bd1a79ecde2e8bf7e237df4972fa80"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6cc974e506610e8f9be4f08735ca5e2a93968b9552b500ed9e1fc26cad4468b6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6cc974e506610e8f9be4f08735ca5e2a93968b9552b500ed9e1fc26cad4468b6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6cc974e506610e8f9be4f08735ca5e2a93968b9552b500ed9e1fc26cad4468b6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "c9df836255af453b6249cc72e8fd7e326be7114043b7280f30cf91ac38f20706"
+    sha256 cellar: :any_skip_relocation, ventura:       "c9df836255af453b6249cc72e8fd7e326be7114043b7280f30cf91ac38f20706"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2558af06383e70c528eba40ea120ed3149f313e969f7603682ae26859bc6ad5d"
   end
 
   depends_on "python@3.13"
@@ -25,8 +25,8 @@ class Virtualenv < Formula
   end
 
   resource "filelock" do
-    url "https://files.pythonhosted.org/packages/9d/db/3ef5bb276dae18d6ec2124224403d1d67bccdbefc17af4cc8f553e341ab1/filelock-3.16.1.tar.gz"
-    sha256 "c249fbfcd5db47e5e2d6d62198e565475ee65e4831e2561c8e313fa7eb961435"
+    url "https://files.pythonhosted.org/packages/dc/9c/0b15fb47b464e1b663b1acd1253a062aa5feecb07d4e597daea542ebd2b5/filelock-3.17.0.tar.gz"
+    sha256 "ee4e77401ef576ebb38cd7f13b9b28893194acc20a8e68e18730ba9c0e54660e"
   end
 
   resource "platformdirs" do

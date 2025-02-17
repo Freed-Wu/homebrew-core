@@ -2,18 +2,18 @@ class Kubevela < Formula
   desc "Application Platform based on Kubernetes and Open Application Model"
   homepage "https://kubevela.io"
   url "https://github.com/kubevela/kubevela.git",
-      tag:      "v1.9.13",
-      revision: "d56da069eb5ee06d9716810e828d6370b93b70ba"
+      tag:      "v1.10.1",
+      revision: "711c9f0053284595414a9742f0b54bc657560a2b"
   license "Apache-2.0"
   head "https://github.com/kubevela/kubevela.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "fe1e54b93fe1283c9055ad8eeec23c03ae97e875551203c8e38b0e2667eda8c2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fe1e54b93fe1283c9055ad8eeec23c03ae97e875551203c8e38b0e2667eda8c2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "fe1e54b93fe1283c9055ad8eeec23c03ae97e875551203c8e38b0e2667eda8c2"
-    sha256 cellar: :any_skip_relocation, sonoma:        "248c969a99ec3799628cf1a8213db0213199114c08cac51d5d6a91615812f876"
-    sha256 cellar: :any_skip_relocation, ventura:       "248c969a99ec3799628cf1a8213db0213199114c08cac51d5d6a91615812f876"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "5bf136e25f6812d38c07f3c8db51e5c80e0290d3df3adaf601c3423ff79664ad"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "127d9bb55521f17a2fb46585023198dcf3d19cb35de6858c17ef11095cf5f71d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "127d9bb55521f17a2fb46585023198dcf3d19cb35de6858c17ef11095cf5f71d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "127d9bb55521f17a2fb46585023198dcf3d19cb35de6858c17ef11095cf5f71d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "91b135785b2be968e069dfef7df32f7178d6dffcc4c095f616eb3e8cec8a9e89"
+    sha256 cellar: :any_skip_relocation, ventura:       "91b135785b2be968e069dfef7df32f7178d6dffcc4c095f616eb3e8cec8a9e89"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4dc87260fb6c066023eef520caa18a9053a960cc1dc09eb9a9dda7434d0108eb"
   end
 
   depends_on "go" => :build
@@ -28,7 +28,7 @@ class Kubevela < Formula
 
     system "go", "build", *std_go_args(output: bin/"vela", ldflags:), "./references/cmd/cli"
 
-    generate_completions_from_executable(bin/"vela", "completion", shells: [:bash, :zsh], base_name: "vela")
+    generate_completions_from_executable(bin/"vela", "completion", shells: [:bash, :zsh])
   end
 
   test do
@@ -36,7 +36,7 @@ class Kubevela < Formula
     status_output = shell_output("#{bin}/vela up 2>&1", 1)
     assert_match "error: either app name or file should be set", status_output
 
-    (testpath/"kube-config").write <<~EOS
+    (testpath/"kube-config").write <<~YAML
       apiVersion: v1
       clusters:
       - cluster:
@@ -55,7 +55,7 @@ class Kubevela < Formula
       - name: test
         user:
           token: test
-    EOS
+    YAML
 
     ENV["KUBECONFIG"] = testpath/"kube-config"
     version_output = shell_output("#{bin}/vela version 2>&1")

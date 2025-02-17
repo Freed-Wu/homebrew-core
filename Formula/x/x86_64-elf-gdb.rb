@@ -1,9 +1,9 @@
 class X8664ElfGdb < Formula
   desc "GNU debugger for x86_64-elf cross development"
   homepage "https://www.gnu.org/software/gdb/"
-  url "https://ftp.gnu.org/gnu/gdb/gdb-15.2.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gdb/gdb-15.2.tar.xz"
-  sha256 "83350ccd35b5b5a0cba6b334c41294ea968158c573940904f00b92f76345314d"
+  url "https://ftp.gnu.org/gnu/gdb/gdb-16.2.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gdb/gdb-16.2.tar.xz"
+  sha256 "4002cb7f23f45c37c790536a13a720942ce4be0402d929c9085e92f10d480119"
   license "GPL-3.0-or-later"
   head "https://sourceware.org/git/binutils-gdb.git", branch: "master"
 
@@ -12,19 +12,19 @@ class X8664ElfGdb < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "b4a37cc07ed4f167af859b14f5bbef1810d6da398c2950bfc4dbc229b660d603"
-    sha256 arm64_sonoma:  "c2cfcaf13fb0a884526f28b1d3e5c003f434ceb32ebc763d5c93effd960b387f"
-    sha256 arm64_ventura: "2aabe359b5ba0134d73be955a7acb49439c2a32cad29da4a3d2f5be748a87fed"
-    sha256 sonoma:        "86aab0c249fae16a8ac42e32ee2b9b3e199c603eeb2e420ffbad806b22ca48d6"
-    sha256 ventura:       "f49d50a7283884ac80ee9564e88abab5bd3dd367a84161bd56166e9f814834de"
-    sha256 x86_64_linux:  "93c20ca8de2681ae1b9262d0c52831acce867060e19d2f936aa0487b96aad2ec"
+    sha256 arm64_sequoia: "de74875cbd1859e8c1fa82848274c39547668f7be7d97b722177017c61ea8497"
+    sha256 arm64_sonoma:  "30072350c40b7764e703fef9a4829e3ed6b7d6e9aa78845a5c3f9e00a4ce094f"
+    sha256 arm64_ventura: "5992bcfc7efda98494052c965cb6b0360e1680c2c1b6ac6299d962d2cde71b01"
+    sha256 sonoma:        "8a0f7aca58e0736c3faead51e6f80fad9565a67e8097214c85ead9fd913ca874"
+    sha256 ventura:       "184ee71eb79f730ca61b2edbd673cfd096b9085b792547070cf45e9245fd5360"
+    sha256 x86_64_linux:  "0e74c4348f72702b1ddf300469815ef0e919780a17176dcdd8c2c5550fa833e1"
   end
 
   depends_on "x86_64-elf-gcc" => :test
 
   depends_on "gmp"
   depends_on "mpfr"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "xz" # required for lzma support
 
   uses_from_macos "expat"
@@ -44,7 +44,7 @@ class X8664ElfGdb < Formula
       --infodir=#{info}/#{target}
       --mandir=#{man}
       --with-lzma
-      --with-python=#{which("python3.12")}
+      --with-python=#{which("python3.13")}
       --with-system-zlib
       --disable-binutils
     ]
@@ -61,7 +61,7 @@ class X8664ElfGdb < Formula
 
   test do
     (testpath/"test.c").write "void _start(void) {}"
-    system "#{Formula["x86_64-elf-gcc"].bin}/x86_64-elf-gcc", "-g", "-nostdlib", "test.c"
+    system Formula["x86_64-elf-gcc"].bin/"x86_64-elf-gcc", "-g", "-nostdlib", "test.c"
 
     output = shell_output("#{bin}/x86_64-elf-gdb -batch -ex 'info address _start' a.out")
     assert_match "Symbol \"_start\" is a function at address 0x", output

@@ -1,8 +1,8 @@
 class Kubeshark < Formula
   desc "API Traffic Analyzer providing real-time visibility into Kubernetes network"
   homepage "https://www.kubeshark.co/"
-  url "https://github.com/kubeshark/kubeshark/archive/refs/tags/v52.3.88.tar.gz"
-  sha256 "b3d1d7ba4767c993351b7b64e782adc065ecee38be8fed761e9375163eb7a270"
+  url "https://github.com/kubeshark/kubeshark/archive/refs/tags/v52.4.2.tar.gz"
+  sha256 "cca57936bd79403f13f343c254267bc23bc3db56eb5e8ecc40b4963dcffe7412"
   license "Apache-2.0"
 
   # Upstream creates releases that use a stable tag (e.g., `v1.2.3`) but are
@@ -14,12 +14,12 @@ class Kubeshark < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ca80d59146797c0edb7eaa1c0aa5c8ec98abf0c6523388f06ccdddeba253bbf2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "19d2ed39fc4fe476f4ecdfbc20bc96625c7dce343b59a779f83ce4bef29b0ea6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6534384996556d53c3bb8a5f0e36ddb6693e977f47640ed40e9f4e32f86a2438"
-    sha256 cellar: :any_skip_relocation, sonoma:        "f8348a3557191a497d0b80ea3fd08c1e72ace133601cfb2e1d0c06a09df7228c"
-    sha256 cellar: :any_skip_relocation, ventura:       "2411a7842b38c313023e43d0dc18525b95c6b6d02778a9a6bc295a0e6c708536"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b3106a39d21aebb9afe5fc42c6dfc4f07f51dbb307b8eab334f370980eb5986b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1b03b9b77e08bd11b54045909bb37ba3b1505241fa14673faae0177195e019d6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9df44fdd7d3d92000ecdbc282d74e0a350b9ad19d1084bfab7265cbad22fae29"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1d9ba28a254e99c618df43c9b76f0589c0314821e3ca66ad24ea554ac8579efb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6fd467a75deead7981f77f8790323c5e60c8c68366619776fb54662b2ad5563b"
+    sha256 cellar: :any_skip_relocation, ventura:       "ee7c7decd4f8c5698a78f4ba6dd1321e42bf8ed2fedeb0788d15fea9bc43ab0b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e394ae2609cc2b8dbc614e8e89f41f5199f21f6ad33298bb6d680d1c5782167f"
   end
 
   depends_on "go" => :build
@@ -32,6 +32,8 @@ class Kubeshark < Formula
       -X "github.com/kubeshark/kubeshark/misc.Ver=v#{version}"
     ]
     system "go", "build", *std_go_args(ldflags:)
+
+    generate_completions_from_executable(bin/"kubeshark", "completion")
   end
 
   test do

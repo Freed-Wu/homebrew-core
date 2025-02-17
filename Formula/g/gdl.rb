@@ -1,6 +1,6 @@
 class Gdl < Formula
   desc "GNOME Docking Library provides docking features for GTK+ 3"
-  homepage "https://gitlab.gnome.org/GNOME/gdl"
+  homepage "https://gitlab.gnome.org/Archive/gdl"
   url "https://download.gnome.org/sources/gdl/3.40/gdl-3.40.0.tar.xz"
   sha256 "3641d4fd669d1e1818aeff3cf9ffb7887fc5c367850b78c28c775eba4ab6a555"
   license "LGPL-2.0-or-later"
@@ -17,10 +17,12 @@ class Gdl < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "83b01e8322122e6bbca3d696cb820b83409a1320a3439ef5aa3f56a2de3e908f"
   end
 
+  deprecate! date: "2025-01-15", because: :repo_archived
+
   depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "intltool" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
 
   depends_on "cairo"
   depends_on "gdk-pixbuf"
@@ -49,14 +51,9 @@ class Gdl < Formula
   end
 
   def install
-    if OS.linux?
-      ENV.prepend_path "PERL5LIB", Formula["perl-xml-parser"].libexec/"lib/perl5"
-      ENV["INTLTOOL_PERL"] = Formula["perl"].bin/"perl"
-    end
-
     system "./configure", "--disable-silent-rules",
                           "--enable-introspection=yes",
-                          *std_configure_args.reject { |s| s["--disable-debug"] }
+                          *std_configure_args
     system "make", "install"
   end
 
@@ -70,8 +67,8 @@ class Gdl < Formula
       }
     C
 
-    pkg_config_flags = shell_output("pkg-config --cflags --libs gdl-3.0").chomp.split
-    system ENV.cc, "test.c", *pkg_config_flags, "-o", "test"
+    pkgconf_flags = shell_output("pkgconf --cflags --libs gdl-3.0").chomp.split
+    system ENV.cc, "test.c", *pkgconf_flags, "-o", "test"
     system "./test"
   end
 end

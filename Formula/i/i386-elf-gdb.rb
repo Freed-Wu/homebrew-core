@@ -1,9 +1,9 @@
 class I386ElfGdb < Formula
   desc "GNU debugger for i386-elf cross development"
   homepage "https://www.gnu.org/software/gdb/"
-  url "https://ftp.gnu.org/gnu/gdb/gdb-15.2.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gdb/gdb-15.2.tar.xz"
-  sha256 "83350ccd35b5b5a0cba6b334c41294ea968158c573940904f00b92f76345314d"
+  url "https://ftp.gnu.org/gnu/gdb/gdb-16.2.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gdb/gdb-16.2.tar.xz"
+  sha256 "4002cb7f23f45c37c790536a13a720942ce4be0402d929c9085e92f10d480119"
   license "GPL-3.0-or-later"
   head "https://sourceware.org/git/binutils-gdb.git", branch: "master"
 
@@ -12,18 +12,18 @@ class I386ElfGdb < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "be8a2a2f0f18a53349a0f6103a4ef0859768f7ab41e5c2c52d604b2429ed8039"
-    sha256 arm64_sonoma:  "6070a72caa2528c08bff3f308faa1bb181e106415a7fda814b88b3d9dc068943"
-    sha256 arm64_ventura: "516c2c1674652d852968a86967e603fecca37b0c011f9e41c3b53d1289964585"
-    sha256 sonoma:        "f42540c98d2ecd220c569272d1f0dce591f38fde394c70bf7b5ea513ea78144c"
-    sha256 ventura:       "c524423fa98380fcb953e7ef6bc539f1822dc1c36e9a6706997515877121f66c"
-    sha256 x86_64_linux:  "1167a22ec9850be75bf301911ceb7250f0964e491a92fd50d50d2896d517c783"
+    sha256 arm64_sequoia: "59ce7ab783da5490d59be3a7cc1ebb048711501e91a7fb43365a99c4ca62c4c3"
+    sha256 arm64_sonoma:  "5e892bdad375fccc5b950692d917b3b9b1cbea713a5845ea00a6450b3e137ae8"
+    sha256 arm64_ventura: "bc1098d808117951a4944c9e66c8161725f6a0d230c188074708c311bbb4c4a7"
+    sha256 sonoma:        "bd1fe9eca3dd9c00f938887815f55acd158beef0208ae573350ac9ccd1754d0e"
+    sha256 ventura:       "485a217eb5c5798d6b1182eee07449c993809f40afa37c143192e9fdb81d9129"
+    sha256 x86_64_linux:  "997e66c3b98bb1ae9612bd4d4ce6b60c4384cd821e9e0265a6088381a0913c10"
   end
 
   depends_on "i686-elf-gcc" => :test
   depends_on "gmp"
   depends_on "mpfr"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "xz" # required for lzma support
 
   uses_from_macos "expat"
@@ -43,7 +43,7 @@ class I386ElfGdb < Formula
       --infodir=#{info}/#{target}
       --mandir=#{man}
       --with-lzma
-      --with-python=#{which("python3.12")}
+      --with-python=#{which("python3.13")}
       --with-system-zlib
       --disable-binutils
     ]

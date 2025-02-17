@@ -1,8 +1,8 @@
 class Libshumate < Formula
   desc "Shumate is a GTK toolkit providing widgets for embedded maps"
   homepage "https://gitlab.gnome.org/GNOME/libshumate"
-  url "https://download.gnome.org/sources/libshumate/1.3/libshumate-1.3.0.tar.xz"
-  sha256 "8227a6e8281cde12232894fef83760d44fa66b39ef033c61ed934a86c6dc75d4"
+  url "https://download.gnome.org/sources/libshumate/1.3/libshumate-1.3.2.tar.xz"
+  sha256 "f8762bbc6e296d78be1f8422f56da4c40bc8d12afc7002a324172a9198eeed5c"
   license "LGPL-2.1-or-later"
 
   # libshumate doesn't use GNOME's "even-numbered minor is stable" version
@@ -14,19 +14,19 @@ class Libshumate < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "2517fea647c6e674a0274fd84f21bd69378c11fa4f8d21e66f4e3e3ea71f8088"
-    sha256 cellar: :any, arm64_sonoma:  "7a232678438570be80c279c907a34425c23fd9b0bd5745997df022a6fab9d96e"
-    sha256 cellar: :any, arm64_ventura: "3ef76423c53eb188ca971e2a4aa06269de6907b0ab3b6570d2ee0456d6411e3e"
-    sha256 cellar: :any, sonoma:        "2946cd6030e56bfa241a3933b98f13a14165f35bcd2e37feab882dbd030d4652"
-    sha256 cellar: :any, ventura:       "6f19ed24dbdaf42e395496dcc57a2dfc30597a87a3454595d40237aa84fbb2dd"
-    sha256               x86_64_linux:  "e45d6bf8192712e852789008130cff4e13b069137b8ebeeb14d7ee0527c373e0"
+    sha256 cellar: :any, arm64_sequoia: "2c96971a44774a291fda60f4099c87e7d4a2eac6eb24a8e735860d454935fe27"
+    sha256 cellar: :any, arm64_sonoma:  "1c975ddb47a87e7d2020c5bbed49dbccf5c147a2fc7719942c05e75cab9deccc"
+    sha256 cellar: :any, arm64_ventura: "ac966c7637876a110425dff41f613ba16259472ca06343ca46adc6f880b139bc"
+    sha256 cellar: :any, sonoma:        "abb49bd6f209c345b52961ba5ba3d68c47a5ef3fd319b2022a4373a54cba84fd"
+    sha256 cellar: :any, ventura:       "a96c728cef1ee54fa0d44749ec6fed19f89fe0bce0d6dab42d6c4e85f60bbcb5"
+    sha256               x86_64_linux:  "0a4fadfdfaf002a17cc45cd7de8a6279893bd7dedba6841e8ac2d20fc5c9b493"
   end
 
   depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "vala" => :build
 
   depends_on "cairo"
@@ -66,7 +66,7 @@ class Libshumate < Formula
     # TODO: remove this after rewriting icu-uc in `libpsl`'s pkg-config file
     ENV.prepend_path "PKG_CONFIG_PATH", Formula["icu4c"].opt_lib/"pkgconfig" if OS.mac?
 
-    flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs shumate-1.0").strip.split
+    flags = shell_output("#{Formula["pkgconf"].opt_bin}/pkgconf --cflags --libs shumate-1.0").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
 

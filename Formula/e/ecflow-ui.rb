@@ -1,8 +1,8 @@
 class EcflowUi < Formula
   desc "User interface for client/server workflow package"
   homepage "https://confluence.ecmwf.int/display/ECFLOW"
-  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.13.5-Source.tar.gz"
-  sha256 "f09e19534a14ae3746be301914c726ae51fe2d52ffc595d34d23fa845bd00ac3"
+  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.13.7-Source.tar.gz"
+  sha256 "658a8d31e14e625be93ad6c952ac8ef6929a23c68d79b1d670496f1860fef370"
   license "Apache-2.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class EcflowUi < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:  "c6e5abfd5aab56b67276e21535a37b833ca1f7bc8286196bdb8c707090e34edd"
-    sha256                               arm64_ventura: "ec18cd2397b8b6cb6cc7c8928af6f91a98777c05f472995db3187377e4136965"
-    sha256                               sonoma:        "c7a798dd5ff7f5b438347d19ace2a19d93f08971d38d2e47b3e437c1124a12c2"
-    sha256                               ventura:       "dd7d4f5f256c9b18ac81029933f90fee86b3045d8db995cd2cc0bdfdf4dc8cb3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6c592c4983963f0197663d46351f76c514ca2f4329ee092563db276e27394204"
+    sha256                               arm64_sonoma:  "153bc8ab240d65a16a4c5ad4449c185d90329ef43ea074c6504acb0680e8a9a4"
+    sha256                               arm64_ventura: "94420e9fd169676d0a1c33cbc2f47a64466195057a0047d8ec732ffd2c0c48ab"
+    sha256                               sonoma:        "e9eee9af7a98101c0838eba512f52128b8fda9d97b3393115b7218f1e968604c"
+    sha256                               ventura:       "7263d14acf0987506e03b09cedbe0e21ad34316f80330d110ecc719bd513497c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "83d02added8979e97cc532eecd8354c125016fa1e2d71dc399b39902d992d718"
   end
 
   depends_on "boost" => :build
@@ -24,9 +24,6 @@ class EcflowUi < Formula
   depends_on "qt"
 
   uses_from_macos "libxcrypt"
-
-  # requires C++17 compiler to build with Qt
-  fails_with gcc: "5"
 
   def install
     args = %w[

@@ -1,8 +1,8 @@
 class Hck < Formula
   desc "Sharp cut(1) clone"
   homepage "https://github.com/sstadick/hck"
-  url "https://github.com/sstadick/hck/archive/refs/tags/v0.10.1.tar.gz"
-  sha256 "8aecac1a52852f238390e9e20c85b14846d1b6c1035920603d1a8196396896d3"
+  url "https://github.com/sstadick/hck/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "7b3d2e61d1e0014184e111c86a0ef92437820f9a090effa43bce6af2c220b315"
   license any_of: ["MIT", "Unlicense"]
   head "https://github.com/sstadick/hck.git", branch: "master"
 
@@ -12,14 +12,12 @@ class Hck < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "21450a28d64eda3776cbc703afbb39c26d293114e465875f5ecba49c1825a453"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "982bfb5992b79fedcd55c78635b869d00a82588c61d19db1f6ff40ec52f0544d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2aad26fabf6f8b16a6022ed9bd107a8cefbce21542d48fd180b0b1fb476c1493"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f04da72de485181504132aee5fdc14f6d39e406907f8a055fede41d835ce44b2"
-    sha256 cellar: :any_skip_relocation, sonoma:         "901841a1c43b4a15143122f9e3d6d14c34d8030f036e9a4296705589804e0eff"
-    sha256 cellar: :any_skip_relocation, ventura:        "f4799e2d8f41ba474efc42d7dcc0bd8ee3d831d2fa29716dfd9b1dd54c823a4c"
-    sha256 cellar: :any_skip_relocation, monterey:       "a4333a0f8ab5446cc998e60c27f32585c6e2474d236983e6a27d06af03e7de64"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4507e7f70a48f62704e80070cf9aa43b6419f579c6ac9061da5e2165dd8d518d"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2a4f7c52884ffae92ceef635acdda542e37b4aff4c4b4d27a1146b62886949fe"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "daa063259c96328b3831aea3ab2e6d3bc6844d7b0dd4d120c5e203f0658eb610"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d99340dfa7b6251cf578f888599da7fff55f87bc12066e55f9ebe52d6eb82fe6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "87e61fc6932eb1fb9a4fee02c1dbcd81154813e0e7915240913b975484e88579"
+    sha256 cellar: :any_skip_relocation, ventura:       "cb6d4a89264fb160c1c8250a20b130f940814e9e5df5fbbcceb81a4a676ae8a1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f66f7609187b084c1cbb7b0336d333bfa87822760d211bfdef0edc81d63f0b3e"
   end
 
   depends_on "cmake" => :build

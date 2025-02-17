@@ -6,6 +6,11 @@ class Libhubbub < Formula
   license "MIT"
   head "https://git.netsurf-browser.org/libhubbub.git", branch: "master"
 
+  livecheck do
+    url :homepage
+    regex(/href=.*?libhubbub[._-]v?(\d+(?:\.\d+)+)[._-]src\.t/i)
+  end
+
   bottle do
     sha256 cellar: :any,                 arm64_sequoia: "508f0ebd9f00da4d05a4d477c55c9cae35ecd8b2b80ae83871623ae11c67ef9b"
     sha256 cellar: :any,                 arm64_sonoma:  "e024f9c815850423b7eed9a0cb5c9d3f0a83e980f6a5aced31b006c9f43fd6f8"
@@ -16,7 +21,7 @@ class Libhubbub < Formula
   end
 
   depends_on "netsurf-buildsystem" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "libparserutils"
 
   uses_from_macos "gperf" => :build

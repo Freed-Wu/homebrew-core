@@ -3,20 +3,17 @@ class Solargraph < Formula
   homepage "https://solargraph.org"
   # Must be git, because solargraph.gemspec uses git ls-files
   url "https://github.com/castwide/solargraph.git",
-      tag:      "v0.50.0",
-      revision: "58f3b8d0f31a3bded0b1cdbb6b2934eee262f03b"
+      tag:      "v0.51.2",
+      revision: "f86dc1c908e8e54e665accb8531c1f535e3b0d87"
   license "MIT"
-  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "1deca10c6cdef6ffd6b11bd15f9cf0db603e1558efd3d3dd74ff88747e25f38b"
-    sha256 cellar: :any,                 arm64_sonoma:   "adf2c964dbf8a6e8e6df15c78a99c7635cad6a8e29eeb922e418a135f414c38b"
-    sha256 cellar: :any,                 arm64_ventura:  "ac3502934bfd32481fc7bb267318ac17fa4a1f4c4f87d83a1226c0fc7b84243e"
-    sha256 cellar: :any,                 arm64_monterey: "a5d150ce559e3a63e7c2cf8cacd0b693ecae7d3a0cc4053ab4bfb118ca55e8b8"
-    sha256 cellar: :any,                 sonoma:         "9a0a1f7fbdbd210833a3fd49228457bb49d73df9aaa3255bbdf539f40bb5755b"
-    sha256 cellar: :any,                 ventura:        "7c26cfc1b83a167f245b25283fc9c15af0083605f4a6e8a188932466efe3ac32"
-    sha256 cellar: :any,                 monterey:       "77c8978cae979848b8caf92d1a11c9a7bfa64657b2b27fdedc11d2584a2ec5a5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "36d017f532d294cfc9a8d42ec0997e89117b49d6f9457cdfb0c69bf1da2c88c2"
+    sha256 cellar: :any,                 arm64_sequoia: "055dfb6268fa93c530c653e78393504356b9c6dc137cd5ac73e44895d6006c3c"
+    sha256 cellar: :any,                 arm64_sonoma:  "b63ac5d5c7e5948c1d588f4713dbb4671a72b1ca18f3b49cb0bf23d750d681d1"
+    sha256 cellar: :any,                 arm64_ventura: "06860f84eb44f9addca3e61aec95904c4766186a3624daa5711a3c2da0b6dc2a"
+    sha256 cellar: :any,                 sonoma:        "51bba6b6f255c9630b211bca622357f8be953b555d14487f1654e4645b8bf5a7"
+    sha256 cellar: :any,                 ventura:       "97af4d64cdd227870688e78f85daeea4f548d41c1b1b3c4e9ad5ba6cd6d45aad"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b083fa6cae88dcd1109efe0c920dbb5834a93d013bf89f21655ba7dfae4cedc3"
   end
 
   depends_on "ruby" # Requires >= Ruby 2.7

@@ -1,8 +1,8 @@
 class Gegl < Formula
   desc "Graph based image processing framework"
   homepage "https://www.gegl.org/"
-  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.50.tar.xz"
-  sha256 "6084969b06ee86ca71142133773f27e13f02e5a6a22c2cfce452ecaaddb790c1"
+  url "https://download.gimp.org/pub/gegl/0.4/gegl-0.4.54.tar.xz"
+  sha256 "35a342f08c6b4379adee2cb5748fc4e307cfdcf2417c0bb17d6ca6543f238b1e"
   license all_of: ["LGPL-3.0-or-later", "GPL-3.0-or-later", "BSD-3-Clause", "MIT"]
   head "https://gitlab.gnome.org/GNOME/gegl.git", branch: "master"
 
@@ -12,21 +12,22 @@ class Gegl < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "6bd88cae8516ebe58073db2ea3360f874a3fbc50d8c03b9c4b2da49844594751"
-    sha256 arm64_sonoma:  "1e25aa3f9c365f2b4c649ed0e3627aa0edc64e52c9ea3d0f8fe30801ca1bc37f"
-    sha256 arm64_ventura: "6277609123c9cb3126f995c2338d148027ab1806d0272ca8ec62138dca9fac34"
-    sha256 sonoma:        "c01c80479a69d3193fd07f6d8c7327eac886c0883ef399e5cea646e657c17004"
-    sha256 ventura:       "20a1ffd5936c47ecf52336d4d01b16f6c3a7847de705cd2a31618cc39af05318"
-    sha256 x86_64_linux:  "73e0aea27efd64a9c2b143108504694945b46e431fca56b7a3a40ab4d2088b1b"
+    sha256 arm64_sequoia: "a785f128328733feb0b406241d69cef44bee86a6e6fcdf38e4f305c7d6736c90"
+    sha256 arm64_sonoma:  "c28fad7c14e1b73fe7faab66b1c07cde024a679ddf70a9458458af2aa11bf9ca"
+    sha256 arm64_ventura: "d7aac72171fcf4bd621ee47d07d962e3f0748c17cd26443c452c75df60e9d365"
+    sha256 sonoma:        "ec04339a372756e2b4159e9954d2555282518f80058f87a8b4a3e555a8b5b3c8"
+    sha256 ventura:       "dddc5322ed23341f623259cc8656a42cf669f219b8aa2d84f7d0c146a9c58c8f"
+    sha256 x86_64_linux:  "604c85171d76a5724f55b96d71abda65fdbc0dd532f4be2ea13caaca650b1c79"
   end
 
   depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "babl"
+  depends_on "cairo"
   depends_on "glib"
   depends_on "jpeg-turbo"
   depends_on "json-glib"
@@ -39,7 +40,6 @@ class Gegl < Formula
   end
 
   on_linux do
-    depends_on "cairo"
     depends_on "poppler"
   end
 
@@ -56,7 +56,6 @@ class Gegl < Formula
 
     args = %w[
       -Ddocs=false
-      -Dcairo=disabled
       -Djasper=disabled
       -Dumfpack=disabled
       -Dlibspiro=disabled
@@ -77,14 +76,13 @@ class Gegl < Formula
         return 0;
       }
     C
-    system ENV.cc,
-           "-I#{Formula["babl"].opt_include}/babl-0.1",
-           "-I#{Formula["glib"].opt_include}/glib-2.0",
-           "-I#{Formula["glib"].opt_lib}/glib-2.0/include",
-           "-L#{Formula["glib"].opt_lib}", "-lgobject-2.0", "-lglib-2.0",
-           testpath/"test.c",
-           "-I#{include}/gegl-0.4", "-L#{lib}", "-lgegl-0.4",
-           "-o", testpath/"test"
+    system ENV.cc, "test.c", "-o", "test",
+                   "-I#{Formula["babl"].opt_include}/babl-0.1",
+                   "-I#{Formula["glib"].opt_include}/glib-2.0",
+                   "-I#{Formula["glib"].opt_lib}/glib-2.0/include",
+                   "-I#{include}/gegl-0.4",
+                   "-L#{lib}", "-lgegl-0.4",
+                   "-L#{Formula["glib"].opt_lib}", "-lgobject-2.0", "-lglib-2.0"
     system "./test"
   end
 end

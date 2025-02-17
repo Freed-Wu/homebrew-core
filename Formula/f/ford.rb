@@ -3,19 +3,19 @@ class Ford < Formula
 
   desc "Automatic documentation generator for modern Fortran programs"
   homepage "https://github.com/Fortran-FOSS-Programmers/ford"
-  url "https://files.pythonhosted.org/packages/a2/00/1dee70777917617df2c63bef8db8ec4e8a68495fae0d77b9208cdda6b458/ford-7.0.8.tar.gz"
-  sha256 "b9d0695eac1779f73078776e11f5e6c7dbf22e5c9e3dff4a5e7fbe92a0740562"
+  url "https://files.pythonhosted.org/packages/b5/eb/ec32133d28c57141d96081f5a23060e7cca71b423ff96505cd7ebac50aa7/ford-7.0.9.tar.gz"
+  sha256 "b9b660552a753f1d5265c3355548ca2bc4e38828a0802c03da347ebdd6d594ab"
   license "GPL-3.0-or-later"
+  revision 1
   head "https://github.com/Fortran-FOSS-Programmers/ford.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "31d81fd7d9ca6f006d5111a7c14cc47f76bd3ec8a96d3bd771b9a586841bb832"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "06fa6b73f3a053c394fc7d6ac3497643f264c86405d8dac570ecce9e830dccc4"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "65c0d96e9974bbca08e97968e19570c659d2ad290b036524a31e86b4fe8fd79a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "1092b5a0e8b819d1d23ef65079c3b552a871fffed206488ed0e9420216485aff"
-    sha256 cellar: :any_skip_relocation, ventura:       "e872dc9b038faa03e93af74a04423101333d8331cbc14f4b3c95e56f3c264faa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c0e3abcf24353357b4896fb22a7035f10eb8aae17936e6cf33e4f858b0128bb7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1a0fa96b6790de84f5eacae47090caabe5a9a6c16acc02b2bdbdce9e14d7c5ef"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ac332b481fb1e3e05eb8061de37bd1b63603df932e07eff966955d193efbd1a5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "25c7925a6b7d8c6f31709e7306bedc2da35277c6a71b68d2b953856e6b9aca72"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e89790615e281ac0032a6c9bae4f0b388603ce3908a1aa8c30be1bcefadf0ee5"
+    sha256 cellar: :any_skip_relocation, ventura:       "0ee7361647e568b5fa78e3850e2ed0a5f72ebda33c279050497d4153488c3266"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ea1c88c245514786604f6c8932041b3273b3cec7c645affdacbbed21016a41e6"
   end
 
   depends_on "graphviz"
@@ -32,8 +32,8 @@ class Ford < Formula
   end
 
   resource "jinja2" do
-    url "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz"
-    sha256 "4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369"
+    url "https://files.pythonhosted.org/packages/af/92/b3130cbbf5591acf9ade8708c365f3238046ac7cb8ccba6e81abccb0ccff/jinja2-3.1.5.tar.gz"
+    sha256 "8fefff8dc3034e27bb80d67c671eb8a9bc424c0ef4c0826edbff304cceff43bb"
   end
 
   resource "markdown" do
@@ -52,8 +52,8 @@ class Ford < Formula
   end
 
   resource "markupsafe" do
-    url "https://files.pythonhosted.org/packages/b4/d2/38ff920762f2247c3af5cbbbbc40756f575d9692d381d7c520f45deb9b8f/markupsafe-3.0.1.tar.gz"
-    sha256 "3e683ee4f5d0fa2dde4db77ed8dd8a876686e3fc417655c2ece9a90576905344"
+    url "https://files.pythonhosted.org/packages/b2/97/5d42485e71dfc078108a86d6de8fa46db44a1a9295e89c5d6d4a06e23a62/markupsafe-3.0.2.tar.gz"
+    sha256 "ee55d3edf80167e48ea11a923c7386f4669df67d7994554387f84e7d8b0a2bf0"
   end
 
   resource "mdurl" do
@@ -77,8 +77,8 @@ class Ford < Formula
   end
 
   resource "rich" do
-    url "https://files.pythonhosted.org/packages/aa/9e/1784d15b057b0075e5136445aaea92d23955aad2c93eaede673718a40d95/rich-13.9.2.tar.gz"
-    sha256 "51a2c62057461aaf7152b4d611168f93a9fc73068f8ded2790f29fe2b5366d0c"
+    url "https://files.pythonhosted.org/packages/ab/3a/0316b28d0761c6734d6bc14e770d85506c986c85ffb239e688eeaab2c2bc/rich-13.9.4.tar.gz"
+    sha256 "439594978a49a09530cff7ebc4b5c7103ef57baf48d5ea3184f21d9a2befa098"
   end
 
   resource "soupsieve" do
@@ -103,7 +103,7 @@ class Ford < Formula
   end
 
   test do
-    (testpath/"test-project.md").write <<~EOS
+    (testpath/"test-project.md").write <<~MARKDOWN
       project: Example Project
       summary: This is a short example project
           that demonstrates many of Ford's features
@@ -157,7 +157,7 @@ class Ford < Formula
       \end{equation}
       So let your imagination run wild. As you can tell, I'm more or less just
       filling in space now. This will be the last sentence.
-    EOS
+    MARKDOWN
     mkdir testpath/"src" do
       (testpath/"src"/"ford_test_program.f90").write <<~FORTRAN
         program ford_test_program

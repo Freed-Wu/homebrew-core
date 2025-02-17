@@ -1,10 +1,9 @@
 class NodeAT20 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v20.18.0/node-v20.18.0.tar.xz"
-  sha256 "7d9433e91fd88d82ba8de86e711ec41907638e227993d22e95126b02f6cd714a"
+  url "https://nodejs.org/dist/v20.18.3/node-v20.18.3.tar.xz"
+  sha256 "0674f16f3bc284c11724cd3f7c2a43f7c2c13d2eb7a872dd0db198f3d588c5f2"
   license "MIT"
-  revision 2
 
   livecheck do
     url "https://nodejs.org/dist/"
@@ -12,12 +11,12 @@ class NodeAT20 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "874818ba31fe060162b85ea787fa3fc35a124c938e0f3376f502a27935781bc1"
-    sha256 arm64_sonoma:  "41187899bbe909ad4d4ecb8f0eadcf3013a3e2149fee743bb7174a8e786bd586"
-    sha256 arm64_ventura: "696029d3b569d3b3386821e260332c45cc3e0b7f6d7cc053ed2e1d458d315d68"
-    sha256 sonoma:        "4cb337e7f16bef5e6e2853f7fc2e295020783b0fc3a72c166beb08ca4cce44a4"
-    sha256 ventura:       "d853beb0f7385fe1ebd60252a7b200513904a654470f6ce68433cad67f911821"
-    sha256 x86_64_linux:  "cd247adf3ec196949a60780f1dcea7f10a97f2c1c3aad12a1a9ca58fd54b6f24"
+    sha256 arm64_sequoia: "ece504f250c87c031e311dac4f4555b11cdf905b87e05a0a6b3ae12114100d49"
+    sha256 arm64_sonoma:  "6cf6db1590b126899fb9f7b026d3ea66fa81ef76581cf449be08f7afab0c4779"
+    sha256 arm64_ventura: "4ae750cb4cfac525f8d11671387ebd426d7ab32055108733ca7346864c02a59b"
+    sha256 sonoma:        "4664065d83c6a4f2ac820a523598dcc0a0a751ad190efbe0f4b99b44c69ef033"
+    sha256 ventura:       "f86c7c19cbbaaebac8eb436e028c4db50b5e826ed6359f58a49155f9816b87c2"
+    sha256 x86_64_linux:  "6397d89ffb633f51832d1dd8771fa237e0d3118be4198413a092b7418c20bc6a"
   end
 
   keg_only :versioned_formula
@@ -26,7 +25,7 @@ class NodeAT20 < Formula
   # disable! date: "2026-04-30", because: :unsupported
   deprecate! date: "2025-10-28", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.13" => :build
   depends_on "brotli"
   depends_on "c-ares"
@@ -47,14 +46,6 @@ class NodeAT20 < Formula
     cause <<~EOS
       error: calling a private constructor of class 'v8::internal::(anonymous namespace)::RegExpParserImpl<uint8_t>'
     EOS
-  end
-
-  fails_with gcc: "5"
-
-  # Backport support for ICU 76+
-  patch do
-    url "https://github.com/nodejs/node/commit/81517faceac86497b3c8717837f491aa29a5e0f9.patch?full_index=1"
-    sha256 "79a5489617665c5c88651a7dc364b8967bebdea5bdf361b85572d041a4768662"
   end
 
   def install

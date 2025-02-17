@@ -1,20 +1,18 @@
 class EditorconfigChecker < Formula
   desc "Tool to verify that your files are in harmony with your .editorconfig"
   homepage "https://github.com/editorconfig-checker/editorconfig-checker"
-  url "https://github.com/editorconfig-checker/editorconfig-checker/archive/refs/tags/v3.0.3.tar.gz"
-  sha256 "b3d927bbbf3a89bc75d91ce00dcb3c836906e6522097c836285adb26850ca3eb"
+  url "https://github.com/editorconfig-checker/editorconfig-checker/archive/refs/tags/v3.2.0.tar.gz"
+  sha256 "caa296ed32e34edd579ca239cdbbfd74d5e00f8736c56a1fca7d0350fe18492d"
   license "MIT"
   head "https://github.com/editorconfig-checker/editorconfig-checker.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "647b956fd0c03b795a17b81bd6572efc1c8079a6e91504edeb75ba0bdbe55ec0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "448f1ebb1897e6d07f5d6928066339ce01ea89f7e1f6e820bbbd483dafac853f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "448f1ebb1897e6d07f5d6928066339ce01ea89f7e1f6e820bbbd483dafac853f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "448f1ebb1897e6d07f5d6928066339ce01ea89f7e1f6e820bbbd483dafac853f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "e16b0702aa4bbba6586ca67b2ec147fd781c3b480f1df50a68eda6d4eaa090e1"
-    sha256 cellar: :any_skip_relocation, ventura:        "e16b0702aa4bbba6586ca67b2ec147fd781c3b480f1df50a68eda6d4eaa090e1"
-    sha256 cellar: :any_skip_relocation, monterey:       "e16b0702aa4bbba6586ca67b2ec147fd781c3b480f1df50a68eda6d4eaa090e1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bfc53564fea2c9f3fddc605ad05d7e083be27a830ade4236713e8699daeb71be"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f4af3b8717a3b2077ecf64e7165e0665bc403afa8ec62c0a5710bf33a45aa148"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f4af3b8717a3b2077ecf64e7165e0665bc403afa8ec62c0a5710bf33a45aa148"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f4af3b8717a3b2077ecf64e7165e0665bc403afa8ec62c0a5710bf33a45aa148"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8ab433bbead68e79dbbe8f3d339f5519bc94ec5670054ac515c96215e03551eb"
+    sha256 cellar: :any_skip_relocation, ventura:       "8ab433bbead68e79dbbe8f3d339f5519bc94ec5670054ac515c96215e03551eb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d0062e974be954072f792cfe9bedb17f0c6124ef2aab67211c7a765ae43438b0"
   end
 
   depends_on "go" => :build

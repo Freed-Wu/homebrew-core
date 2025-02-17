@@ -30,7 +30,7 @@ class Msitools < Formula
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "vala" => :build
   depends_on "gcab"
   depends_on "glib"
@@ -50,12 +50,12 @@ class Msitools < Formula
 
   test do
     # wixl-heat: make an xml fragment
-    assert_match "<Fragment>", pipe_output("#{bin}/wixl-heat --prefix test")
+    assert_match "<Fragment>", pipe_output("#{bin}/wixl-heat --prefix test", nil, 0)
 
     # wixl: build two installers
     1.upto(2) do |i|
       (testpath/"test#{i}.txt").write "abc"
-      (testpath/"installer#{i}.wxs").write <<~EOS
+      (testpath/"installer#{i}.wxs").write <<~XML
         <?xml version="1.0"?>
         <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
            <Product Id="*" UpgradeCode="DADAA9FC-54F7-4977-9EA1-8BDF6DC73C7#{i}"
@@ -78,20 +78,18 @@ class Msitools < Formula
               </Feature>
            </Product>
         </Wix>
-      EOS
+      XML
       system bin/"wixl", "-o", "installer#{i}.msi", "installer#{i}.wxs"
-      assert_predicate testpath/"installer#{i}.msi", :exist?
+      assert_path_exists testpath/"installer#{i}.msi"
     end
 
     # msidiff: diff two installers
-    lines = `#{bin}/msidiff --list installer1.msi installer2.msi 2>/dev/null`.split("\n")
-    assert_equal 0, $CHILD_STATUS.exitstatus
+    lines = shell_output("#{bin}/msidiff --list installer1.msi installer2.msi 2>/dev/null").split("\n")
     assert_equal "-Program Files/test/test1.txt", lines[-2]
     assert_equal "+Program Files/test/test2.txt", lines[-1]
 
     # msiinfo: show info for an installer
-    out = `#{bin}/msiinfo suminfo installer1.msi`
-    assert_equal 0, $CHILD_STATUS.exitstatus
+    out = shell_output("#{bin}/msiinfo suminfo installer1.msi")
     assert_match(/Author: BigCo/, out)
 
     # msiextract: extract files from an installer
@@ -103,7 +101,7 @@ class Msitools < Formula
     # msidump: dump tables from an installer
     mkdir "idt"
     system bin/"msidump", "--directory", "idt", "installer1.msi"
-    assert_predicate testpath/"idt/File.idt", :exist?
+    assert_path_exists testpath/"idt/File.idt"
 
     # msibuild: replace a table in an installer
     system bin/"msibuild", "installer1.msi", "-i", "idt/File.idt"

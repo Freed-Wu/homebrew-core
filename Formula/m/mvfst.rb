@@ -1,18 +1,18 @@
 class Mvfst < Formula
   desc "QUIC transport protocol implementation"
   homepage "https://github.com/facebook/mvfst"
-  url "https://github.com/facebook/mvfst/archive/refs/tags/v2024.11.04.00.tar.gz"
-  sha256 "92c4bd07608bd22debf50645b5a1f7fa1e4bfd554e356e571311117b29eb1ec8"
+  url "https://github.com/facebook/mvfst/archive/refs/tags/v2025.02.10.00.tar.gz"
+  sha256 "fedb840a4906750c915ad62323f585b435553ed2e6a152556575e2968372a072"
   license "MIT"
   head "https://github.com/facebook/mvfst.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "55617d9f5b7342818ebcafcbe36fdc4a8ca3881bbd098dce73ee0dcf2755edb4"
-    sha256 cellar: :any,                 arm64_sonoma:  "38589c071f75c544e25832ce8d24b42832e8515ae228a193a742e003852e936f"
-    sha256 cellar: :any,                 arm64_ventura: "35e08e2f49adfae4b73725c38270307d1a47657c6868e2c44f2e39a7e0a26784"
-    sha256 cellar: :any,                 sonoma:        "753a6426acaada3a248164a9b957af44e9527eb184e36e6dc9a2827176952d60"
-    sha256 cellar: :any,                 ventura:       "d2d94b46ea5ae2be7e5790aa6ce87ab66e8c20948c0f721723afba088907112a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "21227284ee953a1659162d8da7cf29358b1d4da3a18282d15f13360fbbe789a5"
+    sha256 cellar: :any,                 arm64_sequoia: "41c3b4af81027b909e8d04beba173b754c6b020db77c4e61734fd7677267d90f"
+    sha256 cellar: :any,                 arm64_sonoma:  "3ac3b2fe0134b56407bdb71770c67dba8fc36841034947f2edb07a04904e3d11"
+    sha256 cellar: :any,                 arm64_ventura: "f7d3cc0d2b087ec3c00752edc5a35700f08174df7789e793234de1673c286c89"
+    sha256 cellar: :any,                 sonoma:        "1db498f14908137330264e09669452b873aed4a6ac460f8440244edf2689be6a"
+    sha256 cellar: :any,                 ventura:       "f086791832bf0ab0193dad3618112063306468c296846f8a872026b209374f17"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "64c690873cb6f8e9d55e7f08abca62fcef91ba8ce5ae4f3f31e4daec9bf2ab1d"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -61,16 +61,16 @@ class Mvfst < Formula
       target_include_directories(echo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
     CMAKE
 
-    system "cmake", ".", *std_cmake_args
-    system "cmake", "--build", "."
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
 
     server_port = free_port
-    server_pid = spawn "./echo", "--mode", "server",
-                                 "--host", "127.0.0.1", "--port", server_port.to_s
+    server_pid = spawn "./build/echo", "--mode", "server",
+                                       "--host", "127.0.0.1", "--port", server_port.to_s
     sleep 5
 
     Open3.popen3(
-      "./echo", "--mode", "client",
+      "./build/echo", "--mode", "client",
                 "--host", "127.0.0.1", "--port", server_port.to_s
     ) do |stdin, _, stderr|
       stdin.write "Hello world!\n"

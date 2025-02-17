@@ -1,10 +1,9 @@
 class PostgresqlAT15 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v15.8/postgresql-15.8.tar.bz2"
-  sha256 "4403515f9a69eeb3efebc98f30b8c696122bfdf895e92b3b23f5b8e769edcb6a"
+  url "https://ftp.postgresql.org/pub/source/v15.11/postgresql-15.11.tar.bz2"
+  sha256 "5367e97e81e493301cc4aab049dfbc9b4913822985bc62379faab2a281cfbdf0"
   license "PostgreSQL"
-  revision 3
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,12 +11,12 @@ class PostgresqlAT15 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "c7ad0d4d989ebcd32d2ab52119d5685fb2fe8e3db1ab26e2f9db6ed8fc335cfa"
-    sha256 arm64_sonoma:  "4e3be9fcc6dde338e95adb41ac9579c077b129063820e9c2d04e49e77cc9e74d"
-    sha256 arm64_ventura: "477b7725f2bbf9871b46b90fdcc9574cd70300dc03fece1f5204295f84d8af8a"
-    sha256 sonoma:        "3da1fcbf956ca09bd668b81847b4c54b46415d0b1797ac50b266ea9e8d932c3c"
-    sha256 ventura:       "b42c51b25c72bdcd74439edd84190564c919505b12b380dd44cbfc376a66df33"
-    sha256 x86_64_linux:  "78601001296e44ff856fd8d636737b5b3a349183a0ef3cae4293244b63a7fd3e"
+    sha256 arm64_sequoia: "f7de0959a4aee6b4eed3c2909d54af39252d7d541f35b85ceda97ec707a3d4c0"
+    sha256 arm64_sonoma:  "68679f690665aeb174f7076895b951f84b432f960454f03fab53bfb4dc1233df"
+    sha256 arm64_ventura: "a9e01daeecb438d3553c7674cf16de02ed284409f460de6f261f97725c8df7ab"
+    sha256 sonoma:        "8052b7d4d9703ef02d686138f5f55c5e772ff4a10fde58533b0bb31ffa76d39d"
+    sha256 ventura:       "5619e284a6a90d933bcbec08058a8ee8d9b00498f1ceffad23cbe7192f322938"
+    sha256 x86_64_linux:  "f4dac3d0e3b1b194ace4cf1f1098cf0de7cac37526cb36247040f34fd922904b"
   end
 
   keg_only :versioned_formula
@@ -26,7 +25,7 @@ class PostgresqlAT15 < Formula
   deprecate! date: "2027-11-11", because: :unsupported
 
   depends_on "gettext" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "icu4c@76"
 
   # GSSAPI provided by Kerberos.framework crashes when forked.

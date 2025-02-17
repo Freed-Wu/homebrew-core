@@ -1,14 +1,13 @@
 class Yadm < Formula
   desc "Yet Another Dotfiles Manager"
   homepage "https://yadm.io/"
-  url "https://github.com/TheLocehiliosan/yadm/archive/refs/tags/3.2.2.tar.gz"
-  sha256 "c5fb508748995ce4c08a21d8bcda686ad680116ccf00a5318bbccf147f4c33ad"
+  url "https://github.com/yadm-dev/yadm/archive/refs/tags/3.4.0.tar.gz"
+  sha256 "fb0ab375cc41a34e014fb4a34c65f12670aedc859823b943f626adff24bde95d"
   license "GPL-3.0-or-later"
-  head "https://github.com/TheLocehiliosan/yadm.git", branch: "master"
+  head "https://github.com/yadm-dev/yadm.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, all: "3a6b4ce5923f10c490affc90e19372b2393d40aa1ab188a71627bb3005b5ec8a"
+    sha256 cellar: :any_skip_relocation, all: "98fc64e460827dd5a7ad790e0c1c0ca5fe99e2f392d1dd9ca7433ab0b1982da8"
   end
 
   def install
@@ -20,7 +19,7 @@ class Yadm < Formula
 
   test do
     system bin/"yadm", "init"
-    assert_predicate testpath/".local/share/yadm/repo.git/config", :exist?, "Failed to init repository."
+    assert_path_exists testpath/".local/share/yadm/repo.git/config", "Failed to init repository."
     assert_match testpath.to_s, shell_output("#{bin}/yadm gitconfig core.worktree")
 
     # disable auto-alt

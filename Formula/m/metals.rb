@@ -1,8 +1,8 @@
 class Metals < Formula
   desc "Scala language server"
   homepage "https://github.com/scalameta/metals"
-  url "https://github.com/scalameta/metals/archive/refs/tags/v1.4.0.tar.gz"
-  sha256 "0eb6abaa1ebcb8875fa25572dfca164ed9b8fbbb2ce2f6fb4019225f107f049d"
+  url "https://github.com/scalameta/metals/archive/refs/tags/v1.5.1.tar.gz"
+  sha256 "18129489076b71428131af22a81a4e1e6b1b5ef879fcff74429cf822617fec5c"
   license "Apache-2.0"
 
   # Some version tags don't become a release, so it's necessary to check the
@@ -13,12 +13,12 @@ class Metals < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "98a9ab26bfb783c6789afed041ac6ca9f20a6383a0b46a729214a0db5fbd7521"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "386704b2abed4d2c33a7331828302073103f722cd4a55a076ac78858d304c85a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "cf605e6647a99386db932778a3440ee650547dfe6c261091dba807e01ff57d4b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "24908b4a15a4fa2e655da8248300365c2913ad989c8fadc1b31e61d1c54fb353"
-    sha256 cellar: :any_skip_relocation, ventura:       "563190e160e4df63e45d3530a413e080d6f76e6e321d6e06581ce40de255c616"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ab7449efc9d2ef613d1f14e7b974468a11427638515732fb4a8517dcda8ea934"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "fadf1d0d19ba2deb8c7ef3f7ad7b7c3e40b00540a5af933b3364df62be1a34f6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "203741e97a0af5334c3716fc88237a871fa81b9b7e6e880f26955ece8f5575ae"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8f4e6d2a638380812ecb24695da15b56d5c1a86259436984352b0ce9ecbcacdb"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0ae82a3c64b1925d4c1f672fea06bef32fd2f2155bdf03497490d355870376a0"
+    sha256 cellar: :any_skip_relocation, ventura:       "cbce8c9e8c771b705fa32a5469cc7ba0a53735d51369aaf070f6a29818570d4b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4a8e1c6c0396e8541d3666a79ec6b9893655f47e3ca47c38188e9fbb193c639c"
   end
 
   depends_on "sbt" => :build

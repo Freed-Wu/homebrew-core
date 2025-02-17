@@ -1,9 +1,9 @@
 class Mkvtoolnix < Formula
   desc "Matroska media files manipulation tools"
   homepage "https://mkvtoolnix.download/"
-  url "https://mkvtoolnix.download/sources/mkvtoolnix-88.0.tar.xz"
-  mirror "https://fossies.org/linux/misc/mkvtoolnix-88.0.tar.xz"
-  sha256 "f2f08c0100740668ef8aba7953fe4aed8c04ee6a5b51717816a4b3d529df0a25"
+  url "https://mkvtoolnix.download/sources/mkvtoolnix-90.0.tar.xz"
+  mirror "https://fossies.org/linux/misc/mkvtoolnix-90.0.tar.xz"
+  sha256 "35d2585454723e6a621e10ba61fbe2a7723f4d60ee67503d4d9e984d4d070ab0"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -12,11 +12,11 @@ class Mkvtoolnix < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:  "329977efb28115e0916b81930aa5c3d80f704873fa01a84e455cd1121c54d390"
-    sha256 cellar: :any, arm64_ventura: "e198ed850fe3a7321c3731779aad017805044d2baf2b87ece83ea2a9992d78e8"
-    sha256 cellar: :any, sonoma:        "c21a7bec8c15d18e0393fdd9c06a6e32735d3c18601c684e444a2bdcdc2058c1"
-    sha256 cellar: :any, ventura:       "d34d3d101c467d2540680136c07c2fedcd656fcf85636eb13e1ba1165ed18f96"
-    sha256               x86_64_linux:  "30329404910c7b0ef020ed777e36b5de9203b9f53d691f7cc823bcd080014550"
+    sha256 cellar: :any, arm64_sonoma:  "ddbd41d93a8ec41a3b90362e78cb5dbd4b4fc765c7a3cfc923fd1bde868d751d"
+    sha256 cellar: :any, arm64_ventura: "52c7e1c2de332f5f05142abe54478d9df7cb4486e6ddf158dac98041bd8d7c1e"
+    sha256 cellar: :any, sonoma:        "8c9574c74916a091156430c03af2b0c7db54e5dd81b5182a430904139699c75a"
+    sha256 cellar: :any, ventura:       "51caedd84c339cf7d26af6de8b3f53cc08d556a6594ceda076c388b31690a372"
+    sha256               x86_64_linux:  "e8351513613c0a76c39648b03be86f02b8e2437990f9d4f705335a73c3dec394"
   end
 
   head do
@@ -27,11 +27,13 @@ class Mkvtoolnix < Formula
   end
 
   depends_on "docbook-xsl" => :build
-  depends_on "pkg-config" => :build
+  depends_on "gettext" => :build
+  depends_on "nlohmann-json" => :build
+  depends_on "pkgconf" => :build
+  depends_on "utf8cpp" => :build
   depends_on "boost"
   depends_on "flac"
   depends_on "fmt"
-  depends_on "gettext"
   depends_on "gmp"
   depends_on "libebml"
   depends_on "libmatroska"
@@ -39,19 +41,23 @@ class Mkvtoolnix < Formula
   depends_on "libvorbis"
   # https://mkvtoolnix.download/downloads.html#macosx
   depends_on macos: :catalina # C++17
-  depends_on "nlohmann-json"
   depends_on "pugixml"
   depends_on "qt"
-  depends_on "utf8cpp"
 
   uses_from_macos "libxslt" => :build
   uses_from_macos "ruby" => :build
   uses_from_macos "zlib"
 
-  fails_with gcc: "5"
+  on_macos do
+    depends_on "gettext"
+  end
 
   def install
-    ENV.cxx11
+    # Remove bundled libraries
+    rm_r(buildpath.glob("lib/*") - buildpath.glob("lib/{avilib,librmff}*"))
+
+    # Boost Math needs at least C++14, Qt needs at least C++17
+    ENV.append "CXXFLAGS", "-std=c++17"
 
     features = %w[flac gmp libebml libmatroska libogg libvorbis]
     extra_includes = ""
@@ -65,13 +71,12 @@ class Mkvtoolnix < Formula
     extra_libs.chop!
 
     system "./autogen.sh" if build.head?
-    system "./configure", "--disable-debug",
-                          "--prefix=#{prefix}",
-                          "--with-boost=#{Formula["boost"].opt_prefix}",
+    system "./configure", "--with-boost=#{Formula["boost"].opt_prefix}",
                           "--with-docbook-xsl-root=#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl",
                           "--with-extra-includes=#{extra_includes}",
                           "--with-extra-libs=#{extra_libs}",
-                          "--disable-gui"
+                          "--disable-gui",
+                          *std_configure_args
     system "rake", "-j#{ENV.make_jobs}"
     system "rake", "install"
   end

@@ -1,8 +1,8 @@
 class Clarinet < Formula
   desc "Command-line tool and runtime for the Clarity smart contract language"
   homepage "https://www.hiro.so/clarinet"
-  url "https://github.com/hirosystems/clarinet/archive/refs/tags/v2.11.2.tar.gz"
-  sha256 "e1bd51d80dec29b67c144761d1afbd99f1289a822a60bd86c1e8489147dcc404"
+  url "https://github.com/hirosystems/clarinet/archive/refs/tags/v2.13.0.tar.gz"
+  sha256 "2a38ec8ec0bac13cfa0c5b6e16716692cf30c5e47ba47f38462f06b08cdf16d0"
   license "GPL-3.0-only"
   head "https://github.com/hirosystems/clarinet.git", branch: "main"
 
@@ -12,12 +12,12 @@ class Clarinet < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2a3c79e89409ff0022f5839aeb8353699a99d30d147670c021e8065ebe63f2d8"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "575448cc006e65fe36e6344ac6c7b73c68127b595cb5b5c22fbc372c0cf0d624"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "2f74491e32e150828e35841184bce68c3389c8dce18daa18e91dd4a59e82170a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c15fe3d0138789be0bd529d21d2b32d1c6407f40a35a9f9bd1b2024deb416014"
-    sha256 cellar: :any_skip_relocation, ventura:       "06a889b767424c97b100e57890fcd0229f6be7450bf7ac8e760d12a960cb0116"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bf62976b0fd58db62e452f689bbc377a1d9a7ce42eb5369d02f053677f1db986"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ba8738c0fe7c0492f0eb33e421d0d277ec2a071c501fb90256851abd79859703"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ab22e4f92cd1771e01c2b8c7d9abf8b2d8b75dc9dbff9b234b35b849cdb6b2dc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1f37b08419a6495b0808886f8908770f3409f3f39bbc93db49ce54cc03b2653c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8afebd168cca4826581d5a5ed902ca376e744ba0b26d44b4f21290aa9c013f5b"
+    sha256 cellar: :any_skip_relocation, ventura:       "e5e63ffdabb79318b378a8a113f622db604a04576f26635a5c2fa711f7ddc71d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2133b174aaab46204545a43e3f3ba306c67093c705410556b57c9555a52d48da"
   end
 
   depends_on "rust" => :build

@@ -1,8 +1,8 @@
 class AwsIamAuthenticator < Formula
   desc "Use AWS IAM credentials to authenticate to Kubernetes"
   homepage "https://github.com/kubernetes-sigs/aws-iam-authenticator"
-  url "https://github.com/kubernetes-sigs/aws-iam-authenticator/archive/refs/tags/v0.6.27.tar.gz"
-  sha256 "86af19ee071736bd9f58d2f2ffdb6b0cc1f1c0b565e90d6e16435deb71871e9a"
+  url "https://github.com/kubernetes-sigs/aws-iam-authenticator/archive/refs/tags/v0.6.30.tar.gz"
+  sha256 "58fa10087b795a8bb3da06ab8739a4709b09d53d8ea55b48994b4f34a3c61220"
   license "Apache-2.0"
   head "https://github.com/kubernetes-sigs/aws-iam-authenticator.git", branch: "master"
 
@@ -16,12 +16,12 @@ class AwsIamAuthenticator < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c2d6576911249d810960e1846953a103b06afd33deea65d323d3bc814b834f51"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c2d6576911249d810960e1846953a103b06afd33deea65d323d3bc814b834f51"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "c2d6576911249d810960e1846953a103b06afd33deea65d323d3bc814b834f51"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e4fe9d8a754f05f6383ce8dbc9a7b20e21dc1e5f9a996fd90e119c716432c26d"
-    sha256 cellar: :any_skip_relocation, ventura:       "e4fe9d8a754f05f6383ce8dbc9a7b20e21dc1e5f9a996fd90e119c716432c26d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8ebcc9928b06971965f9efaec89a91d678a356528c80f0e2b04fcd5b921b44e8"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4e6e54fc32061abee0d25db3ba1b1db5519ee2cbb0a62e111e338b2667d407f2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4e6e54fc32061abee0d25db3ba1b1db5519ee2cbb0a62e111e338b2667d407f2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4e6e54fc32061abee0d25db3ba1b1db5519ee2cbb0a62e111e338b2667d407f2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e37f280e8045997d0b067ad2f7eedd032edc22f801eeb43d471beae221409941"
+    sha256 cellar: :any_skip_relocation, ventura:       "e37f280e8045997d0b067ad2f7eedd032edc22f801eeb43d471beae221409941"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a3817dfb8c2208837d7f06817a91a88ae848c210348aa9768f781d20de389f53"
   end
 
   depends_on "go" => :build

@@ -3,23 +3,25 @@ class LanggraphCli < Formula
 
   desc "Command-line interface for deploying apps to the LangGraph platform"
   homepage "https://www.github.com/langchain-ai/langgraph"
-  url "https://files.pythonhosted.org/packages/af/27/76ee700f482148c64bc86df53822b262fa6129027e7232b4cab4ad22296a/langgraph_cli-0.1.53.tar.gz"
-  sha256 "683774a0cacc658c77de0cf719ffbe5d9b024f33792244230df24a3aa7b2cc33"
+  url "https://files.pythonhosted.org/packages/66/29/39bab9dc5edcd6ea26a05855fe4eb64618b5795817136aae8f7447d5726a/langgraph_cli-0.1.71.tar.gz"
+  sha256 "8d6b84abe50f664f0a16ed130e1a0ac3f25f87d1b3dd56a2853cea2ee3d3b3a4"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "fb9b138d625365fc491310952fa72fd45fa8a6514590766f5b2c408d57a186cd"
+    sha256 cellar: :any_skip_relocation, all: "765eeec549cd0ff63811c39ecd32c8e8f261fd865f5422d9c144c5b413d18d7a"
   end
 
   depends_on "python@3.13"
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz"
-    sha256 "ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"
+    url "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz"
+    sha256 "ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"
   end
 
   def install
     virtualenv_install_with_resources
+
+    generate_completions_from_executable(bin/"langgraph", shells: [:fish, :zsh], shell_parameter_format: :click)
   end
 
   test do

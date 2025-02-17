@@ -1,21 +1,18 @@
 class UutilsCoreutils < Formula
   desc "Cross-platform Rust rewrite of the GNU coreutils"
   homepage "https://github.com/uutils/coreutils"
-  url "https://github.com/uutils/coreutils/archive/refs/tags/0.0.27.tar.gz"
-  sha256 "3076543a373c8e727018bd547cc74133f4a6538849e4990388f2bbea9a9aff6b"
+  url "https://github.com/uutils/coreutils/archive/refs/tags/0.0.29.tar.gz"
+  sha256 "e1904ed6e5b8b441bedcba5afa7e8e8c744ef701f6d392de8c8dcc2ea17a34e2"
   license "MIT"
   head "https://github.com/uutils/coreutils.git", branch: "main"
 
   bottle do
-    rebuild 2
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "6e7b4849bad915292ca0915d2f014be85866240aa4d2be2fa1022b0a03cf6751"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "fe7f3acfd38d03324688992a9d772ee73b20ce6fb4c0f822b19b8644edee717d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1a5d5a1a16401ff96a7aecc0c71fb2c1612e350de3c9ca98eac368bf3060ee9c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e37c96f80334ce66be4aa8fbd1c7bb9537a7c0693bbd7b7a8731c8ae1293ca1d"
-    sha256 cellar: :any_skip_relocation, sonoma:         "79b54832494706587f5b9545690ee91e857d4d4ac86da00dfa35ae200997ca49"
-    sha256 cellar: :any_skip_relocation, ventura:        "b0d1e609f322dfd1cd054640308216fbebd310e20ab8c10039ea136386ba3775"
-    sha256 cellar: :any_skip_relocation, monterey:       "fde4e6ddbb70db21ae8bd91446cd7e6e278dd78645e7a9a5119b417fd7ce5d30"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8ba63b4c38b3041f81d0340345f6929e395d490f67816851a148f413f586a42a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "739eef468c041b9846714c0db9dc0ff44d6a399b0fce3406a156dd3269dec126"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "eb279f00c47c399ea7841e8f917aedd8b68a23ca0e286fb09a5ccb4d41ef1ced"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "93744e1afcd2218f6775584055a2f8e6246fab4f6e98ca71cc00c85c2f311a60"
+    sha256 cellar: :any_skip_relocation, sonoma:        "0e152be33e45f3fedc7b4a17d5f132e539b02abbca73a7935a076ef07493b2c0"
+    sha256 cellar: :any_skip_relocation, ventura:       "4d6dc55cf589c1eb1ea1de4ae9be84a59e9521ef67daf12636811ca5c0d2e031"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "75273d2a035762393bb3a75f5747cf51b21ed124013c51323ebc949fbee7999b"
   end
 
   depends_on "make" => :build
@@ -24,7 +21,6 @@ class UutilsCoreutils < Formula
 
   on_macos do
     conflicts_with "coreutils", because: "uutils-coreutils and coreutils install the same binaries"
-    conflicts_with "aardvark_shell_utils", because: "both install `realpath` binaries"
   end
 
   conflicts_with "unp", because: "both install `ucat` binaries"

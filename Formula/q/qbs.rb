@@ -1,8 +1,8 @@
 class Qbs < Formula
   desc "Build tool for developing projects across multiple platforms"
   homepage "https://wiki.qt.io/Qbs"
-  url "https://download.qt.io/official_releases/qbs/2.4.2/qbs-src-2.4.2.tar.gz"
-  sha256 "0e158433c57c8089e1bc15497eb121d3010f6bdbf5210c1f5cff5018da0e86d1"
+  url "https://download.qt.io/official_releases/qbs/2.5.1/qbs-src-2.5.1.tar.gz"
+  sha256 "1a13d0d1d1349a83d386ffbe155325603f849c2ad8b148b4aa7f7dfccf506576"
   license all_of: [
     { any_of: ["LGPL-3.0-only", "GPL-2.0-only"] },
     { any_of: ["LGPL-3.0-only", "LGPL-2.1-only" => { with: "Qt-LGPL-exception-1.1" }] },
@@ -16,24 +16,27 @@ class Qbs < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "26987b0e86070deca3db4e55df1a8b418ef7050c4c2bdeb158efb9976d31f703"
-    sha256 cellar: :any,                 arm64_ventura: "6f0c88768def1926f8e026c4ffd759d5957074a4b9f0568a086383bfc7dba4cd"
-    sha256 cellar: :any,                 sonoma:        "e60a59eb73bc02915636c432a153f8814b97f04e56c7a6ae47ba72ab9cce8945"
-    sha256 cellar: :any,                 ventura:       "9a2f889778f555a90dd79b66e838b7fdfaebaa32ae772668efdf18368bd13a9e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e2be0ba3a5ffb4e999c405f68956cfc6aaa1934f24e986d81b4549738bdd0d2f"
+    sha256 cellar: :any,                 arm64_sonoma:  "eea32037b439e083b77ad5ab7bf432377509109c01bf83048be9d5fbc3017b06"
+    sha256 cellar: :any,                 arm64_ventura: "38ea1b19469dc7d00a63ea7ee25b1c9c7e7d9e148a2f08c3e8a96c661fbd7978"
+    sha256 cellar: :any,                 sonoma:        "85b8fd07fe6c14739ba23038cd97f79aa6dec68e6a3a400a9580c699dcb9d3de"
+    sha256 cellar: :any,                 ventura:       "a5d95d351b47662f1338467d2b650a5e0511d0f91304ea4c2d1c53fcd30c3fe0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3a5531d639d29e1d52a0cc75c510dd1527d67d77d2eb233be9f9c4be7de06a2e"
   end
 
   depends_on "cmake" => :build
   depends_on "qt"
 
-  fails_with gcc: "5"
-
   def install
-    qt = Formula["qt"].opt_prefix
-    system "cmake", ".", "-DQt6_DIR=#{qt}/lib/cmake/Qt6", "-DQBS_ENABLE_RPATH=NO",
-                         *std_cmake_args
-    system "cmake", "--build", "."
-    system "cmake", "--install", "."
+    qt_dir = Formula["qt"].opt_lib/"cmake/Qt6"
+
+    args = %W[
+      -DQt6_DIR=#{qt_dir}
+      -DQBS_ENABLE_RPATH=NO
+    ]
+
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do

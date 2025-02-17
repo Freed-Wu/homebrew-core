@@ -6,23 +6,23 @@ class Vineyard < Formula
   url "https://github.com/v6d-io/v6d/releases/download/v0.23.2/v6d-0.23.2.tar.gz"
   sha256 "2a2788ed77b9459477b3e90767a910e77e2035a34f33c29c25b9876568683fd4"
   license "Apache-2.0"
-  revision 7
+  revision 10
 
   bottle do
-    sha256                               arm64_sequoia: "3c7b80e5d4a10b1959f58e07559912fcb5409a8af0310bcc55eca1d454b63f44"
-    sha256                               arm64_sonoma:  "9147bfe09b2bf5a95315c1d246e720edd9a622328bc9129a0d3315af9e358eed"
-    sha256                               arm64_ventura: "c22ca2f9f668afb52fc0a55dcc7b7d3992e5773a75e9f32a03b6548efced52f9"
-    sha256                               sonoma:        "3f41a0c77c59b56b2b3ddcbc5ded05d822b640745ca679fa198ccffa457c9560"
-    sha256                               ventura:       "7f06a0e3861833753ca3c7f24945eb21a4198908b4bb6f05d63646b20e1d6c75"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0abba297a363d852cd1d6c0fb5b100cb2d1cfa498844e07e943eeb82541ecdd8"
+    sha256                               arm64_sequoia: "c3eac575a2aaff6fa96d52a20fca63c835bff98df7f13d447ace337a1a3d0362"
+    sha256                               arm64_sonoma:  "81608d820bef177151e05aea0a83e5ca0bb60e9ce98e23272e3d372290786479"
+    sha256                               arm64_ventura: "c88adc7468177d4dbf1d7a8ce91b778b7765f4890cbec7f66325aa51da2f22d7"
+    sha256                               sonoma:        "7ada9613504c73c05a6c351a74f862dced728305d7bb0183887475cf3ed461f4"
+    sha256                               ventura:       "15e8735681e8606f09140dd09fd3cd30d6b8db759068903860e7bd1dd199c85e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6818be9d20995171e1f209bb615be7fac5380fe64ba17e644d971acbb170fa31"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "llvm" => :build # for clang Python bindings
   depends_on "openssl@3" => :build # indirect (not linked) but CMakeLists.txt checks for it
-  depends_on "python@3.12" => :build
+  depends_on "python@3.13" => :build
   depends_on "apache-arrow"
-  depends_on "boost"
+  depends_on "boost@1.85"
   depends_on "cpprestsdk"
   depends_on "etcd"
   depends_on "etcd-cpp-apiv3"
@@ -37,7 +37,7 @@ class Vineyard < Formula
   end
 
   def install
-    python3 = "python3.12"
+    python3 = "python3.13"
     venv = virtualenv_create(buildpath/"venv", python3)
     venv.pip_install resources
     # LLVM is keg-only.

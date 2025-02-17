@@ -27,12 +27,12 @@ class Btpd < Formula
   depends_on "openssl@3"
 
   def install
-    system "autoreconf", "-fiv"
+    system "autoreconf", "--force", "--install", "--verbose"
     system "./configure", *std_configure_args
     system "make", "install"
   end
 
   test do
-    assert_match "Torrents can be specified", pipe_output("#{bin}/btcli --help 2>&1")
+    assert_match "Torrents can be specified", shell_output("#{bin}/btcli --help 2>&1", 1)
   end
 end

@@ -1,17 +1,17 @@
 class DartSdk < Formula
   desc "Dart Language SDK, including the VM, dart2js, core libraries, and more"
   homepage "https://dart.dev"
-  url "https://github.com/dart-lang/sdk/archive/refs/tags/3.5.4.tar.gz"
-  sha256 "c6bdf7591d3ba8d353dfaa0b10af58918610e65a1de9f3c9a644e7f3aecab16c"
+  url "https://github.com/dart-lang/sdk/archive/refs/tags/3.7.0.tar.gz"
+  sha256 "274b66d7aaafc8f1a1e9252551fd9efbf4902b6a8ad791d0145e601712bcc129"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0f2a56ec4b2d5b27bcd00d78d0340022d2858a5038aec37b306deb7876a07c70"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "9fc2373a8cbeb791c5f222b93f92ffc468f398d600393d12ad270f242396183b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e0e7fb133d077e1b18c0fb2f15b4979ee88003b828e357ea93895ccc1abfc73d"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3ddbb564a8c47661d3b2417380b728a7c44c8a28e6d45076265b7d49f7636a1f"
-    sha256 cellar: :any_skip_relocation, ventura:       "283de9b8ed745c6fc4d4fc81ef2d9464a23112af17ddc0f8975ca08bae25d76b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "35604178437c7d8a51e4ae3b3bfc1705625c5916e17893bc1f780d76d020e669"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "20b6744036913ec6dd820abedb0b4a755b419914e06c9d1495dc87d9a0016565"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0f7ed886d606032a301e9786061030aaac3485e7d451f6ab96ba6d251e3967ed"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "751a71a1b0d59cd15c552ab56a5a0bd1fc39a3389a059995eb047a9287892665"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b2113a0748dcc215b54a1da889f6fded9c26e55fcaafd8aba9acb80e6032178b"
+    sha256 cellar: :any_skip_relocation, ventura:       "4d1d69a88392b78ddb4897ff948b96d0597fa3b15b4924fd09ad1170cda189bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "31518f94214661f811288849d8db5d8749e54377bf2385c02a5cb81c8fd066e7"
   end
 
   depends_on "ninja" => :build
@@ -24,7 +24,7 @@ class DartSdk < Formula
   # always pull the latest commit from https://chromium.googlesource.com/chromium/tools/depot_tools.git/+/refs/heads/main
   resource "depot-tools" do
     url "https://chromium.googlesource.com/chromium/tools/depot_tools.git",
-        revision: "c4d75a151973a872ec74e33afb90acde64c48644"
+        revision: "a155deff4221b4d125858076fb5115b1dbd530c6"
   end
 
   def install

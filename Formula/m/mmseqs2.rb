@@ -1,21 +1,19 @@
 class Mmseqs2 < Formula
   desc "Software suite for very fast sequence search and clustering"
   homepage "https://mmseqs.com/"
-  url "https://github.com/soedinglab/MMseqs2/archive/refs/tags/15-6f452.tar.gz"
-  version "15-6f452"
-  sha256 "7115ac5a7e2a49229466806aaa760d00204bb08c870e3c231b00e525c77531dc"
-  license "GPL-3.0-or-later"
+  url "https://github.com/soedinglab/MMseqs2/archive/refs/tags/17-b804f.tar.gz"
+  version "17-b804f"
+  sha256 "300ebd14bf4e007b339037e5f73d8ff9c4e34f8495204c4a8c59c7672b689db2"
+  license "MIT"
   head "https://github.com/soedinglab/MMseqs2.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "aba00dd8dbc099db31639822589c2a289436f78f47415c9bbb52da46c333f53f"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c88e8b511aedbf0abab55d03e24ce5a0d55c0430030cd31e0c147c98bfa535bd"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "512741ad23baa4dce0feb17bae9d4b191ae0ddade26612dba3c1efdf3c72dcb1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f88414971f7399d1993419af08bbd06d4ab82abc001e9f78ccde868b844f6a65"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a3e04a294a1db787b11ec79f3f6b7a7b4369c696760d87e7c398b3eee668fb4d"
-    sha256 cellar: :any_skip_relocation, ventura:        "4b5c561f19f57c6daa8dac8a9f00d44c7ea38fb85c55831461fbe8ead7700e89"
-    sha256 cellar: :any_skip_relocation, monterey:       "9c1d25760313d5aa0f70ced3d98118124c6e5512cb612dc37e56cb169bc611c3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "204d92d9cfc945c5e4d4cdf665afca20f0236b4a33942f242b759f0238827d03"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c8daf8dbec7c29c1d3eea5a0121219586ed24ea957d12e00acadb2e290fb96b3"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1896588e7c11aecd04b53c19c6ab529f3800ad15f8f4ec7d95d007b486a009eb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "e677b94b349b48bfd2d2840db79407fc00055c4780690cd8434b94bf1f288f41"
+    sha256 cellar: :any_skip_relocation, sonoma:        "a4fa462c8bb251cdd7076cc6afe8a25484f676fde45d45e4ce8637e742063e97"
+    sha256 cellar: :any_skip_relocation, ventura:       "137d46f6776eeff0b856cf2eca03c972b49a50238ce083d0f7c7782e2f1eb6d9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9f75c259b582cc4cf86ee97be763e59f9590e58d4f67a43b5e213bcc8a283401"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -32,15 +30,19 @@ class Mmseqs2 < Formula
     depends_on "gawk"
   end
 
-  # check revision with https://github.com/soedinglab/MMseqs2/wiki/Home/_history
+  # `git ls-remote https://github.com/soedinglab/MMseqs2.wiki.git HEAD`
   resource "documentation" do
     url "https://github.com/soedinglab/MMseqs2.wiki.git",
-        revision: "1ea9a93cb31d6c8cc25ef963311bcdddb95ff58d"
+        revision: "b1ccffcaf6be0f857e37670a260311f2416b6794"
   end
 
   def install
-    args = *std_cmake_args << "-DHAVE_TESTS=0" << "-DHAVE_MPI=0"
-    args << "-DVERSION_OVERRIDE=#{version}"
+    args = %W[
+      -DHAVE_TESTS=0
+      -DHAVE_MPI=0
+      -DVERSION_OVERRIDE=#{version}
+    ]
+
     args << if Hardware::CPU.arm?
       "-DHAVE_ARM8=1"
     else
@@ -56,8 +58,9 @@ class Mmseqs2 < Formula
       args << "-DOpenMP_omp_LIBRARY=#{libomp.opt_lib}/libomp.a"
     end
 
-    system "cmake", ".", *args
-    system "make", "install"
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     resource("documentation").stage { doc.install Dir["*"] }
     pkgshare.install "examples"

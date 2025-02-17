@@ -1,19 +1,18 @@
 class Swiftdraw < Formula
   desc "Convert SVG into PDF, PNG, JPEG or SF Symbol"
   homepage "https://github.com/swhitty/SwiftDraw"
-  url "https://github.com/swhitty/SwiftDraw/archive/refs/tags/0.18.0.tar.gz"
-  sha256 "f29bfb19f1c89f1aa5b7eb15debd392d73f5617689c4acfba90b836eef5fa490"
+  url "https://github.com/swhitty/SwiftDraw/archive/refs/tags/0.18.3.tar.gz"
+  sha256 "a85c9fbd600f97a23055a41a258c6600338c7ac8e817ad03e0567f7d572587c5"
   license "Zlib"
-  revision 1
   head "https://github.com/swhitty/SwiftDraw.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1b1af94f7194c5bce47b32f14116166e56c2368f2f37e3c78cd85f2b0a6d94bc"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a1c3e7efbdd631764ac744a02931b78727e5dd60659a645f88d7b8d02e7da030"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6df270e63f5d958adc405d2ca4faeace9550626af82720a1d2ee99ef9a83de10"
-    sha256 cellar: :any_skip_relocation, sonoma:        "4ddbd6b2b672551caf1fe9102decf996b83313aa3503ed0f7a0f1d691c719e91"
-    sha256 cellar: :any_skip_relocation, ventura:       "3391d8f1906ff7cbf57e7a60d5cfb2a79f678c1ec31f74c5705a27242f1157aa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a453b6d2bcba450f9e31d702a0847164f2470b9277a850e535ecd8312077e8ac"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "28b4b8e8323745eb9629303bca2eb0c502eca6d4dcf3aad503d157c4628d3a5b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1584d9f0e9bfaeccc1d679f0921404fa9ec3c0c9ef2301dddeaef9b5f2a05a74"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d3deb6e040c72346e1ac3a615b5a39845681c4db6c45f34008ea23fa38fe1788"
+    sha256 cellar: :any_skip_relocation, sonoma:        "f48b633a9da7e29150895f1932e58dd86a7a9eebdfb09b5f86b024d48c25c3a4"
+    sha256 cellar: :any_skip_relocation, ventura:       "e487e85a5d23cfb226428695dffabfcff50aa672d0596574a45e71ddf28f365c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "60b286666af63c8d2568b2caa2692b10da28723268307dae7dbb6bebe480d34d"
   end
 
   depends_on xcode: ["14.0", :build]
@@ -28,7 +27,7 @@ class Swiftdraw < Formula
       ["--static-swift-stdlib"]
     end
     system "swift", "build", *args, "--configuration", "release"
-    bin.install ".build/release/swiftdraw"
+    bin.install ".build/release/swiftdrawcli" => "swiftdraw"
   end
 
   test do

@@ -1,10 +1,9 @@
 class Poppler < Formula
   desc "PDF rendering library (based on the xpdf-3.0 code base)"
   homepage "https://poppler.freedesktop.org/"
-  url "https://poppler.freedesktop.org/poppler-24.04.0.tar.xz"
-  sha256 "1e804ec565acf7126eb2e9bb3b56422ab2039f7e05863a5dfabdd1ffd1bb77a7"
+  url "https://poppler.freedesktop.org/poppler-25.02.0.tar.xz"
+  sha256 "21234cb2a9647d73c752ce4031e65a79d11a511a835f2798284c2497b8701dee"
   license "GPL-2.0-only"
-  revision 1
   head "https://gitlab.freedesktop.org/poppler/poppler.git", branch: "master"
 
   livecheck do
@@ -13,19 +12,17 @@ class Poppler < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia:  "5d74f29c70add1be6fb3c7c3a9abbec589a6ca2f6df7e7676bb7fcee3ffdd50f"
-    sha256 arm64_sonoma:   "8b487935981de358c8be92fbf3325279d37f4ea15f5e00a1c061e7b534dbda12"
-    sha256 arm64_ventura:  "dad153bde1d968931cdce8acf850519bfb124053e14b7320a7bcfb71e42122e4"
-    sha256 arm64_monterey: "aa50112c89e22500caf026bbc4a6dfd4bf4073cd21e6ec1d8fcda3f3d3fc175d"
-    sha256 sonoma:         "9bb5a73485ce08ad41882c384b403b041e69aa18cda57ad9cc0557c724e2d3c4"
-    sha256 ventura:        "d3aa8c09cd2a5848ee99ff138814553f3d6206a0c96ad216fb55e6968918422c"
-    sha256 monterey:       "c5e2890d19c2c3d42b951ea067fc5186d348f6c8c1862ba4e6f120fe96a4312d"
-    sha256 x86_64_linux:   "7b73544fa9db0d4264fb2a3c2816f50eac61c33a7a1a060ff92dfcbc7fd4783d"
+    sha256 arm64_sequoia: "d9a1daf341535d4d22e53d3d344220638266c80179aa5b0c0421ed36bcdab3ee"
+    sha256 arm64_sonoma:  "b12fad076d5e6894f9879b0d9a1a77052b1f945a43017855db34996dcd6b92a1"
+    sha256 arm64_ventura: "935eb87587648fa18f8df33496c855b907987e6e1dc068811ddcd5bd2f3992d0"
+    sha256 sonoma:        "cafa48fb81f1bbeb1454f10ac40b3b0c5e893ac249aff410c996b85dd886cfe8"
+    sha256 ventura:       "9c1fc0d33802e48e7f31c580c335878158466bd8396ffe98210f279aa4ccec41"
+    sha256 x86_64_linux:  "580154ac394ae3c1f9a04dede7eb3343c186a38d20c6a2254a5201de6b7f8f68"
   end
 
   depends_on "cmake" => :build
   depends_on "gobject-introspection" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "cairo"
   depends_on "fontconfig"
@@ -51,8 +48,6 @@ class Poppler < Formula
 
   conflicts_with "pdftohtml", "pdf2image", "xpdf",
     because: "poppler, pdftohtml, pdf2image, and xpdf install conflicting executables"
-
-  fails_with gcc: "5"
 
   resource "font-data" do
     url "https://poppler.freedesktop.org/poppler-data-0.4.12.tar.gz"

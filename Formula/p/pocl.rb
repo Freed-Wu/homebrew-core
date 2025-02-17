@@ -1,11 +1,16 @@
 class Pocl < Formula
   desc "Portable Computing Language"
   homepage "https://portablecl.org/"
-  url "https://github.com/pocl/pocl/archive/refs/tags/v6.0.tar.gz"
-  sha256 "de9710223fc1855f833dbbf42ea2681e06aa8ec0464f0201104dc80a74dfd1f2"
   license "MIT"
   revision 1
-  head "https://github.com/pocl/pocl.git", branch: "main"
+
+  stable do
+    # TODO: Update to newer LLVM on next release
+    url "https://github.com/pocl/pocl/archive/refs/tags/v6.0.tar.gz"
+    sha256 "de9710223fc1855f833dbbf42ea2681e06aa8ec0464f0201104dc80a74dfd1f2"
+
+    depends_on "llvm@18" # LLVM 19: https://github.com/pocl/pocl/commit/802d347bd09921d5e6333ad9dd2c99c35004f398
+  end
 
   livecheck do
     url :stable
@@ -21,15 +26,18 @@ class Pocl < Formula
     sha256 x86_64_linux:  "5eb94f47dc4e2c6a34259afa0fb0ac297ee9b985c1934f8fc3e25d48ce009b14"
   end
 
+  head do
+    url "https://github.com/pocl/pocl.git", branch: "main"
+
+    depends_on "llvm"
+  end
+
   depends_on "cmake" => :build
   depends_on "opencl-headers" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "hwloc"
-  depends_on "llvm@18"
   depends_on "opencl-icd-loader"
   uses_from_macos "python" => :build
-
-  fails_with gcc: "5" # LLVM is built with GCC
 
   def llvm
     deps.map(&:to_formula).find { |f| f.name.match?(/^llvm(@\d+)?$/) }
@@ -67,8 +75,8 @@ class Pocl < Formula
     ENV["OCL_ICD_VENDORS"] = "#{opt_prefix}/etc/OpenCL/vendors" # Ignore any other ICD that may be installed
     cp pkgshare/"examples/poclcc/poclcc.cl", testpath
     system bin/"poclcc", "-o", "poclcc.cl.pocl", "poclcc.cl"
-    assert_predicate testpath/"poclcc.cl.pocl", :exist?
+    assert_path_exists testpath/"poclcc.cl.pocl"
     # Make sure that CMake found our OpenCL headers and didn't install a copy
-    refute_predicate include/"OpenCL", :exist?
+    refute_path_exists include/"OpenCL"
   end
 end

@@ -1,18 +1,17 @@
 class Xgboost < Formula
   desc "Scalable, Portable and Distributed Gradient Boosting Library"
   homepage "https://xgboost.ai/"
-  url "https://github.com/dmlc/xgboost.git",
-      tag:      "v2.1.2",
-      revision: "f1990391e0eb401bc1aa1309dd9f86085749c4a3"
+  url "https://github.com/dmlc/xgboost/releases/download/v2.1.4/xgboost-2.1.4.tar.gz"
+  sha256 "b6ce5870d03cc1233cad5ff8460f670a2aff78625adfb578c0b9eec3b8b88406"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "5c969ebbf56727606f05b267d02a1a01ed57ec811eb3b7bbe1ab2752a6a94854"
-    sha256 cellar: :any,                 arm64_sonoma:  "4ee24eb50a4f2d2a0135748be4f7de1b85ac657e5f6816ee5fbb448299647a3e"
-    sha256 cellar: :any,                 arm64_ventura: "a8bb2e604fd5d54825316c60d1d18653a99ccce326c94a55a47e1f0b3af4c393"
-    sha256 cellar: :any,                 sonoma:        "b23c0bd2480f5a6a93961ebd344799d19ebf68b2da51d1f6a5db37ac22a44f2a"
-    sha256 cellar: :any,                 ventura:       "2bf119825fdeed1068fb89919d5d0c34ba1b404d1a9fbab8405ab830541c3704"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2d992b9261cafd1d2a087b9049e2230c75c1bcfeb7826fbd85a403ba834527ad"
+    sha256 cellar: :any,                 arm64_sequoia: "45584408cfb5974a7a160c856b552731244033f599c6abe43757a11cf59d52cd"
+    sha256 cellar: :any,                 arm64_sonoma:  "d8fe6f0f5b263fbacec037d1759b2bbf153e349d7c3794c795420db6f1ebdd1c"
+    sha256 cellar: :any,                 arm64_ventura: "0149c8754df7b50ea90da45e83a0ec5987b20e47fc0e4520bd3ceb794071577b"
+    sha256 cellar: :any,                 sonoma:        "2e10271e89bc9acb501934f1de692333a7b97f41b68774a33230ff4d0fd6e9f2"
+    sha256 cellar: :any,                 ventura:       "2af882c2b535c533107bcb2b8115613f08c0fcb15c1d462242c75ef7200dc44a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6aff5f14417875de40f9acadd0c7bfbb142b1a503aa34de719dda5efae28df60"
   end
 
   depends_on "cmake" => :build
@@ -24,18 +23,12 @@ class Xgboost < Formula
 
   fails_with :clang do
     build 1100
-    cause <<-EOS
+    cause <<~EOS
       clang: error: unable to execute command: Segmentation fault: 11
       clang: error: clang frontend command failed due to signal (use -v to see invocation)
       make[2]: *** [src/CMakeFiles/objxgboost.dir/tree/updater_quantile_hist.cc.o] Error 254
     EOS
   end
-
-  # Starting in XGBoost 1.6.0, compiling with GCC 5.4.0 results in:
-  # src/linear/coordinate_common.h:414:35: internal compiler error: in tsubst_copy, at cp/pt.c:13039
-  # This compiler bug is fixed in more recent versions of GCC: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=80543
-  # Upstream issue filed at https://github.com/dmlc/xgboost/issues/7820
-  fails_with gcc: "5"
 
   def install
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)
@@ -49,7 +42,7 @@ class Xgboost < Formula
   test do
     cp_r (pkgshare/"demo"), testpath
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <xgboost/c_api.h>
       #include <iostream>
 
@@ -97,7 +90,7 @@ class Xgboost < Formula
         std::cout << "Test completed successfully" << std::endl;
         return 0;
       }
-    EOS
+    CPP
 
     system ENV.cxx, "test.cpp", "-I#{include}", "-L#{lib}", "-lxgboost", "-o", "test"
     system "./test"

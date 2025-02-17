@@ -1,8 +1,8 @@
 class Monit < Formula
   desc "Manage and monitor processes, files, directories, and devices"
   homepage "https://mmonit.com/monit/"
-  url "https://mmonit.com/monit/dist/monit-5.34.2.tar.gz"
-  sha256 "291ca3d898e9b425b6d0c1768728fecd6c1cf4c268c79db15fda26285ad5b832"
+  url "https://mmonit.com/monit/dist/monit-5.34.4.tar.gz"
+  sha256 "ef607cfaabfd3767d40b9b9e32032f748beebc4d686831f6111e0e68fbd1b469"
   license "AGPL-3.0-or-later"
 
   livecheck do
@@ -11,12 +11,12 @@ class Monit < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "b91e194ede0be9a2584b3bd74f990554f7c4f3c13909ad96d2820c2533349eac"
-    sha256 cellar: :any,                 arm64_sonoma:  "43e8978a21db2203454c7a0b35d251e6afc78b947b48b0375b1905911ba8e9b5"
-    sha256 cellar: :any,                 arm64_ventura: "c47816dd7ca0feddd533a116461cd1142cc1cd0a3e15898dc6daf2757d967d66"
-    sha256 cellar: :any,                 sonoma:        "e948b9050bb2f6586341e6bf94c20a8c9d66afbeea0e0673830a2e44286bd6a0"
-    sha256 cellar: :any,                 ventura:       "73c91c695045ef18b460914ca1e2fc4f37a7ea52abe6ec01736f259c9b79b220"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b19b0d3a596836603972a16747d01f522c0b242c30e919511205d2427fc12859"
+    sha256 cellar: :any,                 arm64_sequoia: "45c8e33967d63464d0fc1a303a99cca51ec505d50973421ca8a25bf864d1d131"
+    sha256 cellar: :any,                 arm64_sonoma:  "43f559f52994cd676c7ad6c6db73bb6c32c71e016d6022ddfe564251c8aabb5c"
+    sha256 cellar: :any,                 arm64_ventura: "b9085185857fcba7fd28b284c57b0f8cf5c26e321fa9d8b635b380fe82444d41"
+    sha256 cellar: :any,                 sonoma:        "6bc6afa5aa1226ba246f97e48f0f6aaeccb59b212447ce324f8bc3131699d56f"
+    sha256 cellar: :any,                 ventura:       "0dde553c672aefd0e8161b94ad4967b2ddf4034bcd416693b9f341021c3e2821"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "15257eac795a5b31142356b36d13e8d2bbb1dd8acba5831d2d5dde5761a62c57"
   end
 
   depends_on "openssl@3"

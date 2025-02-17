@@ -1,18 +1,26 @@
 class Qsv < Formula
   desc "Ultra-fast CSV data-wrangling toolkit"
-  homepage "https://github.com/jqnatividad/qsv"
-  url "https://github.com/jqnatividad/qsv/archive/refs/tags/0.138.0.tar.gz"
-  sha256 "c53299dc56dbf7776a86d3802e928a8dc44a922b1bdaa1f1903d0ab8bb457201"
+  homepage "https://github.com/dathere/qsv"
+  url "https://github.com/dathere/qsv/archive/refs/tags/3.0.0.tar.gz"
+  sha256 "25d2fec81e027682c3a67b5d3088082df77a899c946fff423b0f969353b7968b"
   license any_of: ["MIT", "Unlicense"]
-  head "https://github.com/jqnatividad/qsv.git", branch: "master"
+  head "https://github.com/dathere/qsv.git", branch: "master"
+
+  # There can be a notable gap between when a version is tagged and a
+  # corresponding release is created, so we check the "latest" release instead
+  # of the Git tags.
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d56c8970528f50a4398845eb53cab377f6fd0439d98b14df83fdf288fa94a13c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fd153b282502bbd20966b7847e5bba50db797e98c156e9e6a65fc01313fb5e7f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e81c99fcb0b10ac5080db96e0b10095931ecb363c52d92d6fd756879d2b27225"
-    sha256 cellar: :any_skip_relocation, sonoma:        "331e8f2eee4d80be9bea99ce0ab8ae63324d0d329d995b86355147600b5162c0"
-    sha256 cellar: :any_skip_relocation, ventura:       "0d14e68b4d1c8c176ea9c8bc9e2c23a58c0861e37a251d3c76797b7fd073eec8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0f124c350f63133eb4b7f75adb577beafe131662eb162d99d75ba2dd17a79ef0"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ad4431438657d829e177424596a30297a62a04f62ceea84c3f263d2ee060ec99"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "fa49f312daae64ad05689c7039a8848832d450d8f21b4e74320afe870bd017ac"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4e611bd114d48eceee0ddc4215aea7286c719a1a7fbe5623a185cd146a9f60d6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "34d4a7c27c3fc9adfd2efe194ee94e5a589e56a769b5adfe3f8a8c709ff7ead4"
+    sha256 cellar: :any_skip_relocation, ventura:       "6f7154741c4f1af077f87df4eead798018d08cc19e443455f2187cec1c10092c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9b123f993a9d9990368fa962c29d9c76f519d86e857ab43ddaceca97c391ab72"
   end
 
   depends_on "rust" => :build
@@ -31,9 +39,13 @@ class Qsv < Formula
   test do
     (testpath/"test.csv").write("first header,second header")
     assert_equal <<~EOS, shell_output("#{bin}/qsv stats test.csv")
-      field,type,is_ascii,sum,min,max,range,sort_order,min_length,max_length,sum_length,avg_length,mean,sem,stddev,variance,cv,nullcount,max_precision,sparsity
-      first header,NULL,,,,,,,,,,,,,,,,0,,
-      second header,NULL,,,,,,,,,,,,,,,,0,,
+      field,type,is_ascii,sum,min,max,range,sort_order,sortiness,min_length,max_length,sum_length,avg_length,stddev_length,variance_length,cv_length,mean,sem,geometric_mean,harmonic_mean,stddev,variance,cv,nullcount,max_precision,sparsity,qsv__value
+      first header,NULL,,,,,,,,,,,,,,,,,,,,,,0,,,
+      second header,NULL,,,,,,,,,,,,,,,,,,,,,,0,,,
+      qsv__rowcount,,,,,,,,,,,,,,,,,,,,,,,,,,0
+      qsv__columncount,,,,,,,,,,,,,,,,,,,,,,,,,,2
+      qsv__filesize_bytes,,,,,,,,,,,,,,,,,,,,,,,,,,26
+      qsv__fingerprint_hash,,,,,,,,,,,,,,,,,,,,,,,,,,589aa48c29e0a4abf207a0ff266da0903608c1281478acd75457c8f8ccea455a
     EOS
   end
 end

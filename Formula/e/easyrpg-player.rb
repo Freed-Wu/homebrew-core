@@ -7,7 +7,8 @@ class EasyrpgPlayer < Formula
   revision 6
 
   livecheck do
-    url "https://github.com/EasyRPG/Player.git"
+    url "https://easyrpg.org/player/downloads/"
+    regex(/href=.*?easyrpg-player[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
@@ -42,11 +43,9 @@ class EasyrpgPlayer < Formula
   end
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "alsa-lib"
   end
-
-  fails_with gcc: "5"
 
   # Add support for fmt 10
   patch do

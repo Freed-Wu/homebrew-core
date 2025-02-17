@@ -3,10 +3,10 @@ class Nginx < Formula
   homepage "https://nginx.org/"
   # Use "mainline" releases only (odd minor version number), not "stable"
   # See https://www.nginx.com/blog/nginx-1-12-1-13-released/ for why
-  url "https://nginx.org/download/nginx-1.27.2.tar.gz"
-  sha256 "a91ecfc3a0b3a2c1413afca627bd886d76e0414b81cad0fb7872a9655a1b25fa"
+  url "https://nginx.org/download/nginx-1.27.4.tar.gz"
+  sha256 "294816f879b300e621fa4edd5353dd1ec00badb056399eceb30de7db64b753b2"
   license "BSD-2-Clause"
-  head "https://github.com/nginx/nginx", branch: "master"
+  head "https://github.com/nginx/nginx.git", branch: "master"
 
   livecheck do
     url :homepage
@@ -14,12 +14,12 @@ class Nginx < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "d5e80aefff48c009ca920fb1e8be81bcca5967f107fb8d1befb6f31704081400"
-    sha256 arm64_sonoma:  "4cd44c5c19b408fedc5320cb818a409b8feed69d5c7718e5c7e4d5f938195edd"
-    sha256 arm64_ventura: "ecb96d24c1b05dbab9abb93e13d5c1ba680db8f449fb010503071bb21f08fa8e"
-    sha256 sonoma:        "f1df5bbf17b5eb428c654a3f2d7b50f2812c6aa3b1330d7fd9fb48a3b19290e7"
-    sha256 ventura:       "245119831db751477cf5e364391b034f3fd7e3620bd8b60f3a297ffd3f6d01fd"
-    sha256 x86_64_linux:  "5bee5b903dcb0622e6ed07632458384c77005303c444ded02c4c0778d0225201"
+    sha256 arm64_sequoia: "8f204c0e74708663afe086aff63df82f5fa9860dfd8c8ce75f2cbc58973219f8"
+    sha256 arm64_sonoma:  "6c37abbd7f5deb7ac94bf203a4aaea0201a1da56047f2be18d81a7a5722dc94a"
+    sha256 arm64_ventura: "74e2108ad301b817950f3bba0a5bbeae4d0e73d66ff14d9e5de38429809c01d6"
+    sha256 sonoma:        "e47e60d2b09fd7ee3a591b0ea110b40e375759842861d33b6ea2dfe36503f16c"
+    sha256 ventura:       "f20cb5d189ed2f7b3feb77da7d8454e41284cff17c8604bb2053476c5b8e10fe"
+    sha256 x86_64_linux:  "24fdaebb46cf0741b946c57e789e672d3555697d887013b39a74071597f5a170"
   end
 
   depends_on "openssl@3"
@@ -152,7 +152,7 @@ class Nginx < Formula
   end
 
   test do
-    (testpath/"nginx.conf").write <<~EOS
+    (testpath/"nginx.conf").write <<~NGINX
       worker_processes 4;
       error_log #{testpath}/error.log;
       pid #{testpath}/nginx.pid;
@@ -175,7 +175,7 @@ class Nginx < Formula
           error_log #{testpath}/error.log;
         }
       }
-    EOS
+    NGINX
     system bin/"nginx", "-t", "-c", testpath/"nginx.conf"
   end
 end

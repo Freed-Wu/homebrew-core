@@ -20,14 +20,20 @@ class Omniorb < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "4c9e139a01ab68b128a4cb5ca256ffb4c7f022542cc300e225483675b2a3aed3"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "openssl@3"
   depends_on "python@3.13"
+  depends_on "zstd"
+
   uses_from_macos "zlib"
 
   resource "bindings" do
     url "https://downloads.sourceforge.net/project/omniorb/omniORBpy/omniORBpy-4.3.2/omniORBpy-4.3.2.tar.bz2"
     sha256 "cb5717d412a101baf430f598cac7d69231884dae4372d8e2adf3ddeebc5f7ebb"
+
+    livecheck do
+      formula :parent
+    end
   end
 
   def install

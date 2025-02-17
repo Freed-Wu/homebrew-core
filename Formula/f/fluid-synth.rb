@@ -1,22 +1,22 @@
 class FluidSynth < Formula
   desc "Real-time software synthesizer based on the SoundFont 2 specs"
   homepage "https://www.fluidsynth.org"
-  url "https://github.com/FluidSynth/fluidsynth/archive/refs/tags/v2.4.0.tar.gz"
-  sha256 "fd4d216a3030abc56a339985ab0506328660cd77b2d71dd98c240c58c03d8f7f"
+  url "https://github.com/FluidSynth/fluidsynth/archive/refs/tags/v2.4.3.tar.gz"
+  sha256 "a92aa83d2ff09a1a6d6186e81d8182bd2958947dffca77a6490ffd41b3ec9dc7"
   license "LGPL-2.1-or-later"
   head "https://github.com/FluidSynth/fluidsynth.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "5872180e75e90bb83e4929c10f64639fddcc341a8e1f5516589c2b7803baba7c"
-    sha256 cellar: :any,                 arm64_sonoma:  "99d675800c64673ba3f77fe7c5ae89ed149e053d18ccd38f6facde7eaffb9cbc"
-    sha256 cellar: :any,                 arm64_ventura: "1b14f8eac778e1601baa6534df6aacc3db1e84c150c34c1542eedce9402afcf2"
-    sha256 cellar: :any,                 sonoma:        "421f8fea695b9891048becefa4036bb1c8ddda017c4187d91071890213bb82ee"
-    sha256 cellar: :any,                 ventura:       "2773618749ec8705a63a2f60d0ba35c2c4b448d5d32722a7b6704db2390c06d1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ae6257f67ab94ff5a3f830a55b0c0cc76623bad2c1130593df13c06e12f98aa3"
+    sha256 cellar: :any,                 arm64_sequoia: "ca0e89ab8223d7a37e6d6f5538eeabe4615f1df94e390032278b2e196f4dc4e6"
+    sha256 cellar: :any,                 arm64_sonoma:  "15d461b0410cb395d0ccb051e9db5ea79b0b38e503827203f8f1895432009cec"
+    sha256 cellar: :any,                 arm64_ventura: "e08b206eed9b700843df57984420c8636bc8017e1f2cd89f4ad56706cf65b9ee"
+    sha256 cellar: :any,                 sonoma:        "a137d7f1f15cf2584df01217bf7749f8ac70d2574c50cee9f3b7d1c3bb1731e1"
+    sha256 cellar: :any,                 ventura:       "f53c13346fe1175fe87f557d03545906ebc34d3c6b68a1bbc91661e00a2819c9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "78ec2add2a2da93a50d09b9fe74da36e6f56b01d46b050716e69fa68f47c33b8"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "glib"
   depends_on "libsndfile"
   depends_on "portaudio"
@@ -101,9 +101,9 @@ class FluidSynth < Formula
     resource("homebrew-test").stage testpath
     wavout = testpath/"Drum_sample.wav"
     system bin/"fluidsynth", "-F", wavout, pkgshare/"sf2/VintageDreamsWaves-v2.sf2", testpath/"Drum_sample.mid"
-    assert_predicate wavout, :exist?
+    assert_path_exists wavout
 
     # Check the pkg-config module
-    system "pkg-config", "--cflags", "--libs", "--static", lib/"pkgconfig/fluidsynth.pc"
+    system "pkgconf", "--cflags", "--libs", "--static", lib/"pkgconfig/fluidsynth.pc"
   end
 end

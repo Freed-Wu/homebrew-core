@@ -1,23 +1,23 @@
 class NodeAT18 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v18.20.4/node-v18.20.4.tar.xz"
-  sha256 "a76c7ea1b96aeb6963a158806260c8094b6244d64a696529d020547b9a95ca2a"
+  url "https://nodejs.org/dist/v18.20.6/node-v18.20.6.tar.xz"
+  sha256 "c669b48b632fa6797d4f5fa7bbd2b476ec961120957864402226cc9fd8ebbc0e"
   license "MIT"
-  revision 2
 
+  # Remove livecheck on 2025-04-30
   livecheck do
     url "https://nodejs.org/dist/"
     regex(%r{href=["']?v?(18(?:\.\d+)+)/?["' >]}i)
   end
 
   bottle do
-    sha256 arm64_sequoia: "1d2ce510cf574da66f4e5c5cf3a8a901b3a01e97698a14f8c01cec83023e0c5d"
-    sha256 arm64_sonoma:  "9aaf06ffb456a0771faee9b25b1c46a80480b0b477266bd5068ad884b857cee3"
-    sha256 arm64_ventura: "491354ee9860881f2a405278366ddd146509bddcd8962dd4424ccc0afd03c251"
-    sha256 sonoma:        "fde7c1f991598524bddeb6097f8ea88b589470fd20bdca34a464dd7f43f1f0f2"
-    sha256 ventura:       "1e1d2c42641ab1d6ccecc41d4022cec588edcdcba560ed211c41219ca2bce7a4"
-    sha256 x86_64_linux:  "5918442ca75b8961191a876348a16db2686e4668d457c8b7d9e5309d04d2fd02"
+    sha256 arm64_sequoia: "95098e2169ced4c7a10c82e5d6498cd026f9c77e45d3d52c909f0a1cb7fa38d5"
+    sha256 arm64_sonoma:  "cb791bbb1638b9e44bc4de1be987188882aaa2f4b49600f04c94f3c6f5c7edb3"
+    sha256 arm64_ventura: "e80432c0519aef69de96fa6754ab48ab178fb348e0af9ad756d49ed3bac59e76"
+    sha256 sonoma:        "85ad8475d3138d2e290cf3e4894dd56130fdfbe8ef4ae389aa091339f4480481"
+    sha256 ventura:       "794f43f616dd58625f8f8987ff76c6a4f84f15b8563f777c0a196cdd17d2d5dc"
+    sha256 x86_64_linux:  "7562facda8bfe5c8cc515134648fa3df1345c991f205f999aa4e932366719b23"
   end
 
   keg_only :versioned_formula
@@ -26,7 +26,7 @@ class NodeAT18 < Formula
   # disable! date: "2025-04-30", because: :unsupported
   deprecate! date: "2024-10-29", because: :unsupported
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python-setuptools" => :build
   depends_on "python@3.13" => :build
   depends_on "brotli"
@@ -40,7 +40,7 @@ class NodeAT18 < Formula
   uses_from_macos "zlib"
 
   on_macos do
-    depends_on "llvm" => [:build, :test] if DevelopmentTools.clang_build_version <= 1100
+    depends_on "llvm" => :build if DevelopmentTools.clang_build_version <= 1100
   end
 
   fails_with :clang do
@@ -49,8 +49,6 @@ class NodeAT18 < Formula
       error: calling a private constructor of class 'v8::internal::(anonymous namespace)::RegExpParserImpl<uint8_t>'
     EOS
   end
-
-  fails_with gcc: "5"
 
   # Backport support for ICU 76+
   patch do

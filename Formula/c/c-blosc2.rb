@@ -1,20 +1,18 @@
 class CBlosc2 < Formula
   desc "Fast, compressed, persistent binary data store library for C"
   homepage "https://www.blosc.org"
-  url "https://github.com/Blosc/c-blosc2/archive/refs/tags/v2.15.1.tar.gz"
-  sha256 "6cf32fcfc615542b9ba35e021635c8ab9fd3d328fd99d5bf04b7eebc80f1fae2"
+  url "https://github.com/Blosc/c-blosc2/archive/refs/tags/v2.16.0.tar.gz"
+  sha256 "9c2d4a92b43414239120cedf757cbdfbe1e5d9ba21c8779396c553fc0c883f3a"
   license "BSD-3-Clause"
   head "https://github.com/Blosc/c-blosc2.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "ff4b9e620ac8c3868a02992900d258da285e5c65e4714e4173eadf1d41eb943c"
-    sha256 cellar: :any,                 arm64_sonoma:   "5d440c0387d36f545f09143f59023708b4ec96da4ea84de9c0dfff352248c502"
-    sha256 cellar: :any,                 arm64_ventura:  "b9b8358baf3faefaafe868ad7a59ddb74cc91fc01c066a50b6a8041dc9a2bd2d"
-    sha256 cellar: :any,                 arm64_monterey: "e98864e2ef2539f9f5bec107060bf634ba477500a38dfb0212b2f52334a18014"
-    sha256 cellar: :any,                 sonoma:         "6f74b99625f4f2fc0be7d03e1c9151fe85f5ba49b66e9bdf61fbc19fba663d02"
-    sha256 cellar: :any,                 ventura:        "1d7569f624fb6d64eabbaaa51fa1295765b4e35a976664f76428af30a182c154"
-    sha256 cellar: :any,                 monterey:       "28fa7e8e970f9ea616003ca89415c831a6e0b38d5d312883ea0995370aeb9ad0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6bdf2ec943b72f4e357a7f339265a5adea7802101835796a17ec8429ee0d28f9"
+    sha256 cellar: :any,                 arm64_sequoia: "5bf2771df920dd70388d5425663d557f44094acd499dd4252e4bee5f1be225ac"
+    sha256 cellar: :any,                 arm64_sonoma:  "583b4af01cc5c4ca9b11d7e773c6917b7c7408916601da1e0bdeed91d5538494"
+    sha256 cellar: :any,                 arm64_ventura: "5783e022aec98664d5739374c51c4f5ad19c6f980182d7cc060396b5541e4ec1"
+    sha256 cellar: :any,                 sonoma:        "8094ba7ac79c4d159ac7c65ae907c21e675e02c8d6150c7b0deafe5f84d062f8"
+    sha256 cellar: :any,                 ventura:       "76acd6f4c6a352302ed31bfa708653a28218c241253322e59bd173dc33516544"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f5b7dc4fc8845a7e127372bcf62420a33a18f65c7294e2dd6760739e2dc39411"
   end
 
   depends_on "cmake" => :build

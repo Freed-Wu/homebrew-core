@@ -1,8 +1,8 @@
 class Doltgres < Formula
   desc "Dolt for Postgres"
   homepage "https://github.com/dolthub/doltgresql"
-  url "https://github.com/dolthub/doltgresql/archive/refs/tags/v0.12.0.tar.gz"
-  sha256 "d2a3b96a6b6a0f44d95f89371727b7da378fcd446f74c81daae7c52ea1bba2a3"
+  url "https://github.com/dolthub/doltgresql/archive/refs/tags/v0.17.0.tar.gz"
+  sha256 "27d597099a640ef8deb069ba1cd67f0fcc8bd4989f75a8446a0b2f9171a4676f"
   license "Apache-2.0"
 
   # Upstream creates releases that use a stable tag (e.g., `v1.2.3`) but are
@@ -14,12 +14,12 @@ class Doltgres < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "784fa9e3ac1ab2f09b3fa89c0da92cbfb6655f3b15e6ad8f879396a283a63348"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2c81fd3f2431912fb59fc3d4435d3ea5f8433eb1c80b7717dac8e446f1127f46"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "5ffccfbf8bbcb288f3846dabbe140eb64499dc4ec117507a5191fc36aa2a2382"
-    sha256 cellar: :any_skip_relocation, sonoma:        "942f8a6bac5fa1a900042067954318c1a744a55e9cf790a6b30af302e14951ab"
-    sha256 cellar: :any_skip_relocation, ventura:       "4ac3b95b24a88d4ebb6b69872eb6e81a09427f82a4488cb1e5cda85c7ff65437"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "52f1afc798fa7e0ecfbd6cadfc4a32142ddfc9ce14089518c120ab7288a3f89c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "48dad9326f83273d51cb56b777f7b6293e148d4f0a78afc162187fce9b60c455"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5e4c8d934be57acb30880313954a977f518af9c252bbfcb49bef1f2ec5bd65a1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6c06486489e16b270c09845aa4132fb7f505ee9bb67e11671681161f4fd4a2e1"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b0efa4f0ff5d210f64c3275988942fea91cf712a8ba699f94c79df52ab1c1128"
+    sha256 cellar: :any_skip_relocation, ventura:       "9f6c1fb482a089047b97bcd3425f816f798ddb514c41e8a6c602664e4afa47c6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fa58ba6f655369b92af413c89a2ebcbd87c43e3d1c5a202979d0216082feb241"
   end
 
   depends_on "go" => :build
@@ -33,22 +33,20 @@ class Doltgres < Formula
   test do
     port = free_port
 
-    (testpath/"config.yaml").write <<~EOS
+    (testpath/"config.yaml").write <<~YAML
+      log_level: debug
+
       behavior:
         read_only: false
         disable_client_multi_statements: false
         dolt_transaction_commit: false
-
-      user:
-        name: "doltgres"
-        password: "password"
 
       listener:
         host: localhost
         port: #{port}
         read_timeout_millis: 28800000
         write_timeout_millis: 28800000
-    EOS
+    YAML
 
     fork do
       exec bin/"doltgres", "--config", testpath/"config.yaml"
@@ -56,7 +54,8 @@ class Doltgres < Formula
     sleep 5
 
     psql = Formula["libpq"].opt_bin/"psql"
-    output = shell_output("#{psql} -h 127.0.0.1 -p #{port} -U doltgres -c 'SELECT DATABASE()' 2>&1")
-    assert_match "database \n----------\n doltgres\n(1 row)", output
+    connection_string = "postgresql://postgres:password@localhost:#{port}"
+    output = shell_output("#{psql} #{connection_string} -c 'SELECT DATABASE()' 2>&1")
+    assert_match "database \n----------\n postgres\n(1 row)", output
   end
 end

@@ -17,7 +17,7 @@ class UutilsFindutils < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "1960b1bfa82f3b45f2df7580e15e9114a04503da577ec1cc76a02c3e2191bb7d"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "oniguruma"
 
@@ -49,15 +49,9 @@ class UutilsFindutils < Formula
     EOS
   end
 
-  def check_binary_linkage(binary, library)
-    binary.dynamically_linked_libraries.any? do |dll|
-      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
-
-      File.realpath(dll) == File.realpath(library)
-    end
-  end
-
   test do
+    require "utils/linkage"
+
     touch "HOMEBREW"
     assert_match "HOMEBREW", shell_output("#{bin}/ufind .")
     assert_match "HOMEBREW", shell_output("#{opt_libexec}/uubin/find .")
@@ -73,7 +67,7 @@ class UutilsFindutils < Formula
     missing_linkage = []
     expected_linkage.each do |binary, dylibs|
       dylibs.each do |dylib|
-        next if check_binary_linkage(binary, dylib)
+        next if Utils.binary_linked_to_library?(binary, dylib)
 
         missing_linkage << "#{binary} => #{dylib}"
       end

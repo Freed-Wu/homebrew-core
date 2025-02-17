@@ -1,23 +1,22 @@
 class Sdl2 < Formula
   desc "Low-level access to audio, keyboard, mouse, joystick, and graphics"
   homepage "https://www.libsdl.org/"
-  url "https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-2.30.9.tar.gz"
-  sha256 "24b574f71c87a763f50704bbb630cbe38298d544a1f890f099a4696b1d6beba4"
+  url "https://github.com/libsdl-org/SDL/releases/download/release-2.32.0/SDL2-2.32.0.tar.gz"
+  sha256 "f5c2b52498785858f3de1e2996eba3c1b805d08fe168a47ea527c7fc339072d0"
   license "Zlib"
 
   livecheck do
     url :stable
-    regex(/release[._-](\d+(?:\.\d+)+)/i)
-    strategy :github_latest
+    regex(/release[._-](2(?:\.\d+)+)/i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "cbff6c079fb44cb4b568dddb0a69c5da08b396fe6f6a4c90618f2fe8486456ea"
-    sha256 cellar: :any,                 arm64_sonoma:  "84704c6ab26482890a172d9da912fbe51656de29caea75e46e287397f60461e0"
-    sha256 cellar: :any,                 arm64_ventura: "a8168508bbddc2439d5434b85b3fd4fec4f8b5cbbfeb11dc4c4b33faadaaabff"
-    sha256 cellar: :any,                 sonoma:        "e0e36f68524a09d5f0b9318b8ce905a4d3a87408eea94a238084075e55bd1176"
-    sha256 cellar: :any,                 ventura:       "7726275e371a832296395ce5e0d3988ccca358d1ddba82d384be5a9dbdc4c23b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ebc21173917029b88754e65099236a393bf42e5f3b07f100977140ba4b7f71cf"
+    sha256 cellar: :any,                 arm64_sequoia: "19b6d2acc8b60e698e2eef31fd76ce9cada73e592056719a7ba726fabd51d59b"
+    sha256 cellar: :any,                 arm64_sonoma:  "d060098946a48523b21a2ad7b53d4dd588ac710556062c9bcd5d41ab26971424"
+    sha256 cellar: :any,                 arm64_ventura: "92b207b50e62d25468d9a4d8a2d66cb5b2b3803f6900f7b8c08059567b97be2e"
+    sha256 cellar: :any,                 sonoma:        "c0e52e23ce85c9aac1616b9f8f29e60ee8ec68569c5d4a4e85df74508aacc736"
+    sha256 cellar: :any,                 ventura:       "7f216df6be986bb8f21bea1a76f582d999ed2e0c67b2d877add461c50bc5b097"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ab39f7028ca5c300cd58ed4cd1c9f404a5a906a457f26f2ab984edf5801a026"
   end
 
   head do
@@ -29,7 +28,7 @@ class Sdl2 < Formula
   end
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "libice"
     depends_on "libxcursor"
     depends_on "libxscrnsaver"

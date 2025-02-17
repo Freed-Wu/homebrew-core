@@ -4,6 +4,7 @@ class Dynare < Formula
   url "https://www.dynare.org/release/source/dynare-6.2.tar.xz"
   sha256 "312a3358bb0735f09b13f996e2d32cfd297292201897c1075c399554398862d9"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://git.dynare.org/Dynare/dynare.git", branch: "master"
 
   livecheck do
@@ -12,11 +13,11 @@ class Dynare < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:  "671126f94d857b02545ac86704022beeabbc0c4fd2157ddd79c5460dcb6211e1"
-    sha256 cellar: :any, arm64_ventura: "0b12dc3e5e8d91e682298603296284c4c063d48cc661b99b26c950dd906c15d2"
-    sha256 cellar: :any, sonoma:        "863bd394606e7a19c734de48986bfc76e6cc6c43a7d31191ad0e9304fa44c8bd"
-    sha256 cellar: :any, ventura:       "f562fcaedbd71d2f38f6ba7edbad86f0a624b5780585a42381a40c8233882d34"
-    sha256               x86_64_linux:  "576424c0f8bad1fffd803bd071e4cbefb405699599f95bccb65d566a2df69b48"
+    sha256 cellar: :any, arm64_sonoma:  "8b5388cca3b98fd344e0346e8fcc9ed41700e7b6f5dcd671c6705641bd91ec15"
+    sha256 cellar: :any, arm64_ventura: "da223cdcbae0ec6218cf040e5aa197ff297ee1bf80160262b7b3dd23433908ac"
+    sha256 cellar: :any, sonoma:        "85920bdde7805b5e59ad1cf24aa62311e1e7877ba60fcde2f7ac5d97820b5c3a"
+    sha256 cellar: :any, ventura:       "618ce3ccc9d9642c654ce9a0e8f9c0766820e45a5086f4ed8202e8d391983c82"
+    sha256               x86_64_linux:  "548e872a386bfb6cb4ffccea9a1f223aeb22643ba89f773cc8dff575aa40e705"
   end
 
   depends_on "bison" => :build
@@ -25,7 +26,7 @@ class Dynare < Formula
   depends_on "flex" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "fftw"
   depends_on "gcc"
   depends_on "gsl"
@@ -102,12 +103,12 @@ class Dynare < Formula
 
     # Replace `makeinfo` with dummy command `true` to prevent generating docs
     # that are not useful to the test.
-    (testpath/"dyn_test.m").write <<~EOS
+    (testpath/"dyn_test.m").write <<~MATLAB
       makeinfo_program true
       pkg prefix #{testpath}/octave
       pkg install statistics-release-#{statistics.version}.tar.gz
       dynare bkk.mod console
-    EOS
+    MATLAB
 
     system Formula["octave"].opt_bin/"octave", "--no-gui",
            "--no-history", "--path", "#{lib}/dynare/matlab", "dyn_test.m"

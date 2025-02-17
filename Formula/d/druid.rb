@@ -1,9 +1,9 @@
 class Druid < Formula
   desc "High-performance, column-oriented, distributed data store"
   homepage "https://druid.apache.org/"
-  url "https://dlcdn.apache.org/druid/31.0.0/apache-druid-31.0.0-bin.tar.gz"
-  mirror "https://archive.apache.org/dist/druid/31.0.0/apache-druid-31.0.0-bin.tar.gz"
-  sha256 "c69a40a0a352fea07c59533004fc711db3b2e6e0c6977231ac2595d53f984241"
+  url "https://dlcdn.apache.org/druid/32.0.0/apache-druid-32.0.0-bin.tar.gz"
+  mirror "https://archive.apache.org/dist/druid/32.0.0/apache-druid-32.0.0-bin.tar.gz"
+  sha256 "25e1e6ada58e40d8da558ca16107ac06bc0b1c0aa7aac106ea2b7aaae8f72b72"
   license "Apache-2.0"
 
   livecheck do
@@ -12,16 +12,15 @@ class Druid < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, all: "346b09e24e2b3ac175a00f03b67490df9d30a58086e39e447198d851ded2a96a"
+    sha256 cellar: :any_skip_relocation, all: "2c80d8148805b7ff4a344419fd59e698d985d31445fff14e749e4339b7080c00"
   end
 
   depends_on "zookeeper" => :test
   depends_on "openjdk@11"
 
   resource "mysql-connector-java" do
-    url "https://search.maven.org/remotecontent?filepath=mysql/mysql-connector-java/5.1.49/mysql-connector-java-5.1.49.jar"
-    sha256 "5bba9ff50e5e637a0996a730619dee19ccae274883a4d28c890d945252bb0e12"
+    url "https://search.maven.org/remotecontent?filepath=com/mysql/mysql-connector-j/8.2.0/mysql-connector-j-8.2.0.jar"
+    sha256 "06f14fbd664d0e382347489e66495ca27ab7e6c2e1d9969a496931736197465f"
   end
 
   def install

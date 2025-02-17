@@ -17,6 +17,10 @@ class ProtobufAT21 < Formula
 
   keg_only :versioned_formula
 
+  # Support for protoc 21.x (protobuf C++ 3.21.x) ended on 2024-03-31
+  # Ref: https://protobuf.dev/support/version-support/#cpp
+  deprecate! date: "2025-01-08", because: :versioned_formula
+
   depends_on "cmake" => :build
   depends_on "python@3.12" => [:build, :test]
   depends_on "python@3.13" => [:build, :test]
@@ -74,7 +78,7 @@ class ProtobufAT21 < Formula
   end
 
   test do
-    testdata = <<~EOS
+    testdata = <<~PROTO
       syntax = "proto3";
       package test;
       message TestCase {
@@ -83,7 +87,7 @@ class ProtobufAT21 < Formula
       message Test {
         repeated TestCase case = 1;
       }
-    EOS
+    PROTO
     (testpath/"test.proto").write testdata
     system bin/"protoc", "test.proto", "--cpp_out=."
 

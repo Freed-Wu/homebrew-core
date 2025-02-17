@@ -1,24 +1,25 @@
 class Eslint < Formula
   desc "AST-based pattern checker for JavaScript"
   homepage "https://eslint.org"
-  url "https://registry.npmjs.org/eslint/-/eslint-9.14.0.tgz"
-  sha256 "9f9db5976b508c2ece3a3563d6cc2c0d7fad81b0a18661cf3d007b29a1df6893"
+  url "https://registry.npmjs.org/eslint/-/eslint-9.20.1.tgz"
+  sha256 "8ed03bd6d1684ab8698abb71de1bdadc6f39640fbe866936be95d684bb662a6d"
   license "MIT"
+  head "https://github.com/eslint/eslint.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8a07a065da9c9c3ce5d5c499783782316059578d891267d4a628681214d7451e"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8a07a065da9c9c3ce5d5c499783782316059578d891267d4a628681214d7451e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "8a07a065da9c9c3ce5d5c499783782316059578d891267d4a628681214d7451e"
-    sha256 cellar: :any_skip_relocation, sonoma:        "3e1aa93c665ca2089baec9d51d2758bc6d36f05bf8db47d408cc32d2795132e5"
-    sha256 cellar: :any_skip_relocation, ventura:       "3e1aa93c665ca2089baec9d51d2758bc6d36f05bf8db47d408cc32d2795132e5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a07a065da9c9c3ce5d5c499783782316059578d891267d4a628681214d7451e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b9a5ecbee0cfa89d1ed627a4dac0fa732915827fc1761f0b365afb3a97e87f01"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b9a5ecbee0cfa89d1ed627a4dac0fa732915827fc1761f0b365afb3a97e87f01"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b9a5ecbee0cfa89d1ed627a4dac0fa732915827fc1761f0b365afb3a97e87f01"
+    sha256 cellar: :any_skip_relocation, sonoma:        "de4afef07487dd8314ca8cab73c79c93c42701e2ef4ee86a13011892d522b5bf"
+    sha256 cellar: :any_skip_relocation, ventura:       "de4afef07487dd8314ca8cab73c79c93c42701e2ef4ee86a13011892d522b5bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b9a5ecbee0cfa89d1ed627a4dac0fa732915827fc1761f0b365afb3a97e87f01"
   end
 
   depends_on "node"
 
   def install
     system "npm", "install", *std_npm_args
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+    bin.install_symlink libexec.glob("bin/*")
   end
 
   test do

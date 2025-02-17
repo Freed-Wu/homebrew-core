@@ -1,18 +1,18 @@
 class SwaggerCodegen < Formula
   desc "Generate clients, server stubs, and docs from an OpenAPI spec"
   homepage "https://swagger.io/tools/swagger-codegen/"
-  url "https://github.com/swagger-api/swagger-codegen/archive/refs/tags/v3.0.63.tar.gz"
-  sha256 "dcc3f38baa8c13a2ea7c7ccd77f035d79574a79633f3986a6dfae00ee10f3b22"
+  url "https://github.com/swagger-api/swagger-codegen/archive/refs/tags/v3.0.67.tar.gz"
+  sha256 "be23dde48a656cfb54cd204380660ec4dd8b5ddd484d62670fa909941869e040"
   license "Apache-2.0"
   head "https://github.com/swagger-api/swagger-codegen.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "30fa318e2ef4cf0cc46c3edf48ebe779560039d514a8cc26b6ebdd37ecf1e017"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e664848f93a98481af6565b78888e43b56b97720bbc4a0ebdb8e705ea6b7c96c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "5206873b3c0d3f49a174552cd04329d1af542dfc821366812442092b8892b49b"
-    sha256 cellar: :any_skip_relocation, sonoma:        "9d22dc2965d66dcacb745183f29e869c24cd9289ed7ef8d5740d8ce8a37f7d44"
-    sha256 cellar: :any_skip_relocation, ventura:       "630418f3917a26b6602f19d09c30fdfc953bba23f9208029f00bfc892fb06d0c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d03e72f8ce24d8ba86833148a511897763c82468713449ce5d500970f71af996"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0b97712aef7f57c1bdf7ad4ead964891cbfb6727e5918983bd698d177b978b65"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ce2fba4d20ebab08913079c654841c4d5d7ad61a9f7b53291b4a84a1f833b190"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "2367f19743b586b7070f0cd4b3880a9989b65974a117837329fc9bfd885bf112"
+    sha256 cellar: :any_skip_relocation, sonoma:        "046fe981e1efb50358e9b4010d6c2dda7e7eb179af90b9bd9556ff77202d3afa"
+    sha256 cellar: :any_skip_relocation, ventura:       "f32049f0c08c1f0e79413cb50bfc3fb0712936592081b558c0951c51e3608611"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7be501c8580aa14e1c85cb21a708d38489fb57f7f73cb7086d27c720c1069b93"
   end
 
   depends_on "maven" => :build
@@ -28,7 +28,7 @@ class SwaggerCodegen < Formula
   end
 
   test do
-    (testpath/"minimal.yaml").write <<~EOS
+    (testpath/"minimal.yaml").write <<~YAML
       ---
       openapi: 3.0.0
       info:
@@ -40,7 +40,7 @@ class SwaggerCodegen < Formula
             responses:
               200:
                 description: OK
-    EOS
+    YAML
     system bin/"swagger-codegen", "generate", "-i", "minimal.yaml", "-l", "html"
     assert_includes File.read(testpath/"index.html"), "<h1>Simple API</h1>"
   end

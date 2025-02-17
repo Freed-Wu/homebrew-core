@@ -1,8 +1,8 @@
 class Gtk4 < Formula
   desc "Toolkit for creating graphical user interfaces"
   homepage "https://gtk.org/"
-  url "https://download.gnome.org/sources/gtk/4.16/gtk-4.16.5.tar.xz"
-  sha256 "302d6813fbed95c419fb3ab67c5da5e214882b6a645c3eab9028dfb91ab418a4"
+  url "https://download.gnome.org/sources/gtk/4.16/gtk-4.16.12.tar.xz"
+  sha256 "ef31bdbd6f082c4401634a20c850b0050c9bf252ef1e079764ee95a2a0c4c95a"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -11,12 +11,12 @@ class Gtk4 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "d09b632449c02e758422d1b02b9afcb0a6090e3669017b8aa0336cf59de4ca7a"
-    sha256 arm64_sonoma:  "9ee780effa65ac8aeb5a0e3d4352ac4a2fb164207e6bce98f906f45fe9f1651a"
-    sha256 arm64_ventura: "0bb7950f030ccaa97288b910371563db7efbe98f5fd9f05fde24f7be1a806d5d"
-    sha256 sonoma:        "8fe9f40d3f90344b3cb57e59d6355019da76f0c9f90414a960dcf8899a4c7dde"
-    sha256 ventura:       "23ff5a36956d5d8ec4906ed59f74f1d1e75b5b12a1c0f54713940371fafbf2c3"
-    sha256 x86_64_linux:  "36d41dcc66b975324ad8de49dc20ac481723ffb2bfb8427d40b5445ef86d006c"
+    sha256 arm64_sequoia: "41927c8eda8ffe7883de26a245bb45e16c3efa69c75350accbb3ceef3908586e"
+    sha256 arm64_sonoma:  "b28359848d13494d26fe49990796515dbe75cc1317b2543fb967b0d63105c613"
+    sha256 arm64_ventura: "10f4423b3c7636741cfdb683eedd76fd43ef79f256f973653f81b83933d71545"
+    sha256 sonoma:        "81dccc54f5f2216bcea0951ec002bd1905221e80dfda6d9dbfe597f25d054e55"
+    sha256 ventura:       "9455340542c00136dc2089f3a73c74378d44668898745bacf3690ef8f6dcf353"
+    sha256 x86_64_linux:  "975d2e579c066dfad351367872ba6db80b787c9f6c2ec5da46b55e390c830fd1"
   end
 
   depends_on "docbook" => :build
@@ -26,7 +26,7 @@ class Gtk4 < Formula
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "sassc" => :build
   depends_on "cairo"
   depends_on "fontconfig"
@@ -108,7 +108,7 @@ class Gtk4 < Formula
       }
     C
 
-    flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs gtk4").strip.split
+    flags = shell_output("#{Formula["pkgconf"].opt_bin}/pkgconf --cflags --libs gtk4").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
     # include a version check for the pkg-config files

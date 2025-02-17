@@ -1,8 +1,8 @@
 class Steampipe < Formula
   desc "Use SQL to instantly query your cloud services"
   homepage "https://steampipe.io/"
-  url "https://github.com/turbot/steampipe/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "1db1dd5a05b15fefeb51cd2e5b8c4f9d56dc95a25b10a7821497a728ef253274"
+  url "https://github.com/turbot/steampipe/archive/refs/tags/v1.0.3.tar.gz"
+  sha256 "da82252d369c41509e251e9f914cd922e24977026449982d612a37d81b620bb4"
   license "AGPL-3.0-only"
   head "https://github.com/turbot/steampipe.git", branch: "main"
 
@@ -12,12 +12,12 @@ class Steampipe < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1013bdbdf24ebc49c278ba9da23061c9f5cbd82a2a9901aa51564f8a7c77c900"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "241fdf7f6f9b1686690ab62e4dc616e1a40b549b2a7699d282aab81121fcf1e2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "45f87c63fb74ff4747e04e96bbd31722acaf47232b5b19708e540199d9221ebc"
-    sha256 cellar: :any_skip_relocation, sonoma:        "aa5c27bab5c0c6fa0cbc5fa3e63c20d0272639f758966fef7f23026356e85f4c"
-    sha256 cellar: :any_skip_relocation, ventura:       "05e5a00cd598c406d95dab448b9d004b1800fc9d7bf979b32f399ee037964ee6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ed65f2f4b0605ccb4f4b1e27cebdeec31fda08805942ca91fe98c635795b3643"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3e8a373e8c218ffe31961fbf998e7692fc5e7fb7ca3e1d1c7e9e1a68f05d75b8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "61f0f404166368f989263ec0a16e905bbbc3e45a26bdfcab1ea627a9e5fdbb29"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "6e8afedda979db3575a560b978443ed3e5027da5e3549016b1d722e66121a588"
+    sha256 cellar: :any_skip_relocation, sonoma:        "6e43970da6d2187b20e49929f43eb829beda6f57b9e7757b83905ee4a6113c9b"
+    sha256 cellar: :any_skip_relocation, ventura:       "2cb16729f527169cddedcd8d6a70238d39940e2f7ae4c4bea168bfbae661123b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "33ae7e4f171908ad3688f3950c2cddbd80684f245c6fbbf87bfd3710f04c8e3e"
   end
 
   depends_on "go" => :build

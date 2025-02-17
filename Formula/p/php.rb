@@ -2,11 +2,10 @@ class Php < Formula
   desc "General-purpose scripting language"
   homepage "https://www.php.net/"
   # Should only be updated if the new version is announced on the homepage, https://www.php.net/
-  url "https://www.php.net/distributions/php-8.3.13.tar.xz"
-  mirror "https://fossies.org/linux/www/php-8.3.13.tar.xz"
-  sha256 "89adb978cca209124fe53fd6327bc4966ca21213a7fa2e9504f854e340873018"
+  url "https://www.php.net/distributions/php-8.4.4.tar.xz"
+  mirror "https://fossies.org/linux/www/php-8.4.4.tar.xz"
+  sha256 "05a6c9a2cc894dd8be719ecab221b311886d5e0c02cb6fac648dd9b3459681ac"
   license "PHP-3.01"
-  revision 1
 
   livecheck do
     url "https://www.php.net/downloads"
@@ -14,12 +13,12 @@ class Php < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "15c560986b678304b096290de5943d82819c070fd10f2dd5d17de80dac9e21f3"
-    sha256 arm64_sonoma:  "4302da5c442fc94e48ebe38b5ddaa3f10cbed2ee7814c943cf7b5c551363e5bc"
-    sha256 arm64_ventura: "6aaa841763fb70aa5bc6ecd1d7438fb572aa84c962845b1cfd45913456835a11"
-    sha256 sonoma:        "89a4a8786d7f0e896918383e22b5f35c8ad6d9e09fe85323d782f031eb6ab191"
-    sha256 ventura:       "39f80dbed8b83782b872be7f035921a70d33de3040e8786b20209bfa6d2c8841"
-    sha256 x86_64_linux:  "c85a942302bbddf5d33dff3037084118599407bad7b6ccff5e9b2cc150e9e082"
+    sha256 arm64_sequoia: "30a7bc2ec95f2ffb7a287559abcca0f37c60b27b3f64a0ffefd6b1b65cac5bb2"
+    sha256 arm64_sonoma:  "a156ded680aa0bb8098e7fe4a6e834c9c267e82b94eb64f3e9f001dddb1c82a1"
+    sha256 arm64_ventura: "e2eed92db813b5b2db3df20bf346489ada862daee8e0ea6b898307a9522544b0"
+    sha256 sonoma:        "07e7322691d90a49e78a93fccb7fd4d3701160afbe822ce03a79f0d10c73c526"
+    sha256 ventura:       "a8bbc2fb814cc2ed16d211ee81438c02fe1b6ca4ac20f37301c8fa8bdbe78f17"
+    sha256 x86_64_linux:  "b7f3a7adaeb3280a278201e45d7a3adf410b3a5267e8b29b123786f23744a96e"
   end
 
   head do
@@ -30,11 +29,10 @@ class Php < Formula
   end
 
   depends_on "httpd" => [:build, :test]
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "apr"
   depends_on "apr-util"
   depends_on "argon2"
-  depends_on "aspell"
   depends_on "autoconf"
   depends_on "curl"
   depends_on "freetds"
@@ -46,6 +44,7 @@ class Php < Formula
   depends_on "libpq"
   depends_on "libsodium"
   depends_on "libzip"
+  depends_on "net-snmp"
   depends_on "oniguruma"
   depends_on "openldap"
   depends_on "openssl@3"
@@ -73,11 +72,11 @@ class Php < Formula
     system "./buildconf", "--force"
 
     inreplace "configure" do |s|
-      s.gsub! "APACHE_THREADED_MPM=`$APXS_HTTPD -V 2>/dev/null | grep 'threaded:.*yes'`",
-              "APACHE_THREADED_MPM="
-      s.gsub! "APXS_LIBEXECDIR='$(INSTALL_ROOT)'`$APXS -q LIBEXECDIR`",
+      s.gsub! "$APXS_HTTPD -V 2>/dev/null | grep 'threaded:.*yes' >/dev/null 2>&1",
+              "false"
+      s.gsub! "APXS_LIBEXECDIR='$(INSTALL_ROOT)'$($APXS -q LIBEXECDIR)",
               "APXS_LIBEXECDIR='$(INSTALL_ROOT)#{lib}/httpd/modules'"
-      s.gsub! "-z `$APXS -q SYSCONFDIR`",
+      s.gsub! "-z $($APXS -q SYSCONFDIR)",
               "-z ''"
     end
 
@@ -100,6 +99,9 @@ class Php < Formula
 
     # Prevent homebrew from hardcoding path to sed shim in phpize script
     ENV["lt_cv_path_SED"] = "sed"
+
+    # Identify build provider in php -v output and phpinfo()
+    ENV["PHP_BUILD_PROVIDER"] = tap.user
 
     # system pkg-config missing
     ENV["KERBEROS_CFLAGS"] = " "
@@ -158,7 +160,6 @@ class Php < Formula
       --with-gettext=#{Formula["gettext"].opt_prefix}
       --with-gmp=#{Formula["gmp"].opt_prefix}
       --with-iconv#{headers_path}
-      --with-kerberos
       --with-layout=GNU
       --with-ldap=#{Formula["openldap"].opt_prefix}
       --with-libxml
@@ -176,7 +177,7 @@ class Php < Formula
       --with-pdo-sqlite
       --with-pgsql=#{Formula["libpq"].opt_prefix}
       --with-pic
-      --with-pspell=#{Formula["aspell"].opt_prefix}
+      --with-snmp=#{Formula["net-snmp"].opt_prefix}
       --with-sodium
       --with-sqlite3
       --with-tidy=#{Formula["tidy-html5"].opt_prefix}
@@ -339,19 +340,18 @@ class Php < Formula
     system "#{sbin}/php-fpm", "-t"
     system bin/"phpdbg", "-V"
     system bin/"php-cgi", "-m"
-    # Prevent SNMP extension to be added
-    refute_match(/^snmp$/, shell_output("#{bin}/php -m"),
-      "SNMP extension doesn't work reliably with Homebrew on High Sierra")
     begin
       port = free_port
       port_fpm = free_port
 
       expected_output = /^Hello world!$/
-      (testpath/"index.php").write <<~EOS
+      (testpath/"index.php").write <<~PHP
         <?php
         echo 'Hello world!' . PHP_EOL;
         var_dump(ldap_connect());
-      EOS
+        $session = new SNMP(SNMP::VERSION_1, '127.0.0.1', 'public');
+        var_dump(@$session->get('sysDescr.0'));
+      PHP
       main_config = <<~EOS
         Listen #{port}
         ServerName localhost:#{port}
@@ -430,10 +430,10 @@ end
 
 __END__
 diff --git a/build/php.m4 b/build/php.m4
-index 3624a33a8e..d17a635c2c 100644
+index e45b22b7..4624b390 100644
 --- a/build/php.m4
 +++ b/build/php.m4
-@@ -425,7 +425,7 @@ dnl
+@@ -429,7 +429,7 @@ dnl
  dnl Adds a path to linkpath/runpath (LDFLAGS).
  dnl
  AC_DEFUN([PHP_ADD_LIBPATH],[
@@ -442,15 +442,15 @@ index 3624a33a8e..d17a635c2c 100644
      PHP_EXPAND_PATH($1, ai_p)
      ifelse([$2],,[
        _PHP_ADD_LIBPATH_GLOBAL([$ai_p])
-@@ -470,7 +470,7 @@ dnl
- dnl Add an include path. If before is 1, add in the beginning of INCLUDES.
+@@ -476,7 +476,7 @@ dnl paths are prepended to the beginning of INCLUDES.
  dnl
- AC_DEFUN([PHP_ADD_INCLUDE],[
--  if test "$1" != "/usr/include"; then
-+  if test "$1" != "$PHP_OS_SDKPATH/usr/include"; then
-     PHP_EXPAND_PATH($1, ai_p)
-     PHP_RUN_ONCE(INCLUDEPATH, $ai_p, [
-       if test "$2"; then
+ AC_DEFUN([PHP_ADD_INCLUDE], [
+ for include_path in m4_normalize(m4_expand([$1])); do
+-  AS_IF([test "$include_path" != "/usr/include"], [
++  AS_IF([test "$include_path" != "$PHP_OS_SDKPATH/usr/include"], [
+     PHP_EXPAND_PATH([$include_path], [ai_p])
+     PHP_RUN_ONCE([INCLUDEPATH], [$ai_p], [m4_ifnblank([$2],
+       [INCLUDES="-I$ai_p $INCLUDES"],
 diff --git a/configure.ac b/configure.ac
 index 36c6e5e3e2..71b1a16607 100644
 --- a/configure.ac

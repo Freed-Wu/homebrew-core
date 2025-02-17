@@ -1,8 +1,8 @@
 class WasiRuntimes < Formula
   desc "Compiler-RT and libc++ runtimes for WASI"
   homepage "https://wasi.dev"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.3/llvm-project-19.1.3.src.tar.xz"
-  sha256 "324d483ff0b714c8ce7819a1b679dd9e4706cf91c6caf7336dc4ac0c1d3bf636"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-19.1.7/llvm-project-19.1.7.src.tar.xz"
+  sha256 "82401fea7b79d0078043f7598b835284d6650a75b93e64b6f761ea7b63097501"
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
@@ -11,19 +11,18 @@ class WasiRuntimes < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6a416ceb547e428f6fa7ba55c1f955889504dc92ad62ad0c23d3e52c0aca4dff"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "827a14dab71af9ca068ebe22e3e5a8cefb87f3f69f93011d9e9c4feb36d054b2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "10a1a47517183e7b2e92f45dffae7142b261332a2a187c37677690684d69c30a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ada587bb34d56e564ad457584c1e100ae5b505dc16d79e9e22840353106234ff"
-    sha256 cellar: :any_skip_relocation, ventura:       "17bb1834271dbed6588418961a23891cd2682b3f717bb1d82157dbaf87fc4519"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cf2e167df3de25498aca9b287f2880d99a0b20de5e2710166063a8dd4ad5912f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "a636d634bbd46a100b3c3a7d895133e690d06f06aff206419c44e9a9f56c8b94"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "37889e175dd91764890713a9a0e8d0051c41bf92e79dc21606c2861f1d60dc0d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b9c10a7fc6e7bedb24dcd47fcbabad34cc088852bb00fa90d8b168428a51d461"
+    sha256 cellar: :any_skip_relocation, sonoma:        "addd5cf4cce8781352cd08afecf44ae3b949def0de067a92125ba154797f2f44"
+    sha256 cellar: :any_skip_relocation, ventura:       "2203da4d16fbadaeb036274ff4d52f8fc8c0b0d530c1e4a9eb9bde0fdb4a8399"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "15cf07fa0c1ae6e4c99d12dd1be002b6d443fd2c26ad9238f04b29ca0680995f"
   end
 
   depends_on "cmake" => :build
-  depends_on "lld" => [:build, :test]
   depends_on "wasi-libc" => [:build, :test]
-  depends_on "wasm-component-ld" => [:build, :test]
+  depends_on "lld" => :test
+  depends_on "wasm-component-ld" => :test
   depends_on "wasmtime" => :test
   depends_on "llvm"
 
@@ -55,6 +54,7 @@ class WasiRuntimes < Formula
       -DCMAKE_C_COMPILER_WORKS=ON
       -DCMAKE_CXX_COMPILER_WORKS=ON
       -DCMAKE_SYSROOT=#{wasi_libc.opt_share}/wasi-sysroot
+      -DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY
       -DCMAKE_FIND_FRAMEWORK=NEVER
       -DCMAKE_VERBOSE_MAKEFILE=ON
       -DCMAKE_PROJECT_TOP_LEVEL_INCLUDES=#{HOMEBREW_LIBRARY_PATH}/cmake/trap_fetchcontent_provider.cmake
@@ -208,7 +208,8 @@ class WasiRuntimes < Formula
       system clang, "--target=#{target}", "-v", "test.c", "-o", "test-#{target}"
       assert_equal "the answer is 42", shell_output("wasmtime #{testpath}/test-#{target}")
 
-      system "#{clang}++", "--target=#{target}", "-v", "test.cc", "-o", "test-cxx-#{target}"
+      pthread_flags = target.end_with?("-threads") ? ["-pthread"] : []
+      system "#{clang}++", "--target=#{target}", "-v", "test.cc", "-o", "test-cxx-#{target}", *pthread_flags
       assert_equal "hello from C++ main with cout!", shell_output("wasmtime #{testpath}/test-cxx-#{target}").chomp
     end
   end

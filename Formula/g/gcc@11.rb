@@ -1,6 +1,7 @@
 class GccAT11 < Formula
   desc "GNU compiler collection"
   homepage "https://gcc.gnu.org/"
+  # TODO: Remove maximum_macos if Xcode 16 support is added to https://github.com/iains/gcc-11-branch
   url "https://ftp.gnu.org/gnu/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz"
   mirror "https://ftpmirror.gnu.org/gcc/gcc-11.5.0/gcc-11.5.0.tar.xz"
   sha256 "a6e21868ead545cf87f0c01f84276e4b5281d672098591c1c896241f09363478"
@@ -25,6 +26,7 @@ class GccAT11 < Formula
   # out of the box on Xcode-only systems due to an incorrect sysroot.
   pour_bottle? only_if: :clt_installed
 
+  depends_on maximum_macos: [:ventura, :build] # Xcode < 16
   depends_on "gmp"
   depends_on "isl"
   depends_on "libmpc"
@@ -103,6 +105,7 @@ class GccAT11 < Formula
       # Change the default directory name for 64-bit libraries to `lib`
       # https://stackoverflow.com/a/54038769
       inreplace "gcc/config/i386/t-linux64", "m64=../lib64", "m64="
+      inreplace "gcc/config/aarch64/t-aarch64-linux", "lp64=../lib64", "lp64="
     end
 
     mkdir "build" do
@@ -262,14 +265,14 @@ class GccAT11 < Formula
 
     return unless Hardware::CPU.intel?
 
-    (testpath/"hello_d.d").write <<~EOS
+    (testpath/"hello_d.d").write <<~D
       import std.stdio;
       int main()
       {
         writeln("Hello, world!");
         return 0;
       }
-    EOS
+    D
     system bin/"gdc-#{version.major}", "-o", "hello-d", "hello_d.d"
     assert_equal "Hello, world!\n", shell_output("./hello-d")
   end

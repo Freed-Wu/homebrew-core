@@ -1,31 +1,46 @@
 class Fselect < Formula
   desc "Find files with SQL-like queries"
   homepage "https://github.com/jhspetersson/fselect"
-  url "https://github.com/jhspetersson/fselect/archive/refs/tags/0.8.6.tar.gz"
-  sha256 "4b7a6dc5f6f3da39c3242856a1c78734c7b14bd801dc4d7e32bc6f5a1809bc63"
+  url "https://github.com/jhspetersson/fselect/archive/refs/tags/0.8.9.tar.gz"
+  sha256 "08a903e2bd7d68dff004a6552dc5823989c74ce20a96416601ce7002f6b51a7b"
   license any_of: ["Apache-2.0", "MIT"]
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "1c3e8e52608993681362fa617f524a63d45684a4f7fa29f01b1a39a81598de74"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3171b8c25d69f276f61be0c7cce9ab905e54ea4011a484e0ba9330a996352563"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "de126c3169480e0d90144eaad355ed031b62aa2b8149a8a02c917414a0fc9f73"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f57d8cd7e8e943e316f3c143e11c76bc0263db43f756b6fcc1d1a15e556ca80e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "80b7ebca9ea3f802c5d0b489e7bcbc756e0c49d1894fc615c0fb7b71bc460caa"
-    sha256 cellar: :any_skip_relocation, ventura:        "4f1fb5fea01dbec1ffef839f7f62ccfa99392dd079c69c561d2a04cc0f4d530b"
-    sha256 cellar: :any_skip_relocation, monterey:       "9766a8bb7449d7ecacabcae13c0d780792323c435ee1852077d2249527b3d1e0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b1d2aa5853dadf6a50d4942b8258b50b7605ae4ad1d0d7b213d52c890128cc3b"
+    sha256 cellar: :any,                 arm64_sequoia: "c1785ec66f4e55b795503170aaf43b4ab897b2da4852acc072f8eedd0c3cc7f3"
+    sha256 cellar: :any,                 arm64_sonoma:  "726d35a261fe7fbe30c4c4f2ddd145d23ff33075fa646e322b1f9d41daaf731f"
+    sha256 cellar: :any,                 arm64_ventura: "43bba5700b6a79fbef7f60189e63357cc3baa01e52d0ae56d4a5d4c531a11fdc"
+    sha256 cellar: :any,                 sonoma:        "d5e29d73d836e83477d197bb6154435c058c50c672ba46b0b113620609109063"
+    sha256 cellar: :any,                 ventura:       "b087b27e909dc500699ac7e775d3d0b8971ab27670024bcb443a2358b8525c68"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "121d50a814277f56cb8b684746e81ac02f79cbd14efdc8259dbf85749ec9728b"
   end
 
   depends_on "cmake" => :build # for libz-ng-sys
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
 
+  depends_on "libgit2"
+
+  uses_from_macos "bzip2"
+
   def install
+    ENV["LIBGIT2_NO_VENDOR"] = "1"
+
     system "cargo", "install", *std_cargo_args
   end
 
   test do
+    require "utils/linkage"
+
     touch testpath/"test.txt"
     cmd = "#{bin}/fselect name from . where name = '*.txt'"
     assert_match "test.txt", shell_output(cmd).chomp
+
+    linked_libraries = [
+      Formula["libgit2"].opt_lib/shared_library("libgit2"),
+    ]
+    linked_libraries.each do |library|
+      assert Utils.binary_linked_to_library?(bin/"fselect", library),
+             "No linkage with #{library.basename}! Cargo is likely using a vendored version."
+    end
   end
 end

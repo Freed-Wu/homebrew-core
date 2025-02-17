@@ -1,17 +1,17 @@
 class MarpCli < Formula
   desc "Easily convert Marp Markdown files into static HTML/CSS, PDF, PPT and images"
   homepage "https://github.com/marp-team/marp-cli"
-  url "https://registry.npmjs.org/@marp-team/marp-cli/-/marp-cli-4.0.2.tgz"
-  sha256 "68fc87f159b13e2a4c0910ccb2d7abea08028e6738fa3da709fd1d78c9699f10"
+  url "https://registry.npmjs.org/@marp-team/marp-cli/-/marp-cli-4.1.1.tgz"
+  sha256 "f2ccd943378f35f1a685a9de3f7da699dac84c46a0db429b495fdc26d77785f8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "788931577204e4306d5a4e8bab09f4721bc31047c0cfd5642ebde3b4e200484e"
-    sha256 cellar: :any,                 arm64_sonoma:  "788931577204e4306d5a4e8bab09f4721bc31047c0cfd5642ebde3b4e200484e"
-    sha256 cellar: :any,                 arm64_ventura: "788931577204e4306d5a4e8bab09f4721bc31047c0cfd5642ebde3b4e200484e"
-    sha256 cellar: :any,                 sonoma:        "a4a03073eb3ccdcf3fa66d46b148ccbdd6d74f1d114a72f7afe98fbf19e418d4"
-    sha256 cellar: :any,                 ventura:       "a4a03073eb3ccdcf3fa66d46b148ccbdd6d74f1d114a72f7afe98fbf19e418d4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ea6efbf23c20809bfdd5c625af00533ae9168d98bb321b2445cd0649540a4064"
+    sha256 cellar: :any,                 arm64_sequoia: "acd7c96dad6d22f298ca016028293b6fcabab0d0065964f7f7231f6df42b9b28"
+    sha256 cellar: :any,                 arm64_sonoma:  "acd7c96dad6d22f298ca016028293b6fcabab0d0065964f7f7231f6df42b9b28"
+    sha256 cellar: :any,                 arm64_ventura: "acd7c96dad6d22f298ca016028293b6fcabab0d0065964f7f7231f6df42b9b28"
+    sha256 cellar: :any,                 sonoma:        "ba901f13419206ed36a60be1a087edd59ddfb0806015aff209e8f183a4e9d927"
+    sha256 cellar: :any,                 ventura:       "ba901f13419206ed36a60be1a087edd59ddfb0806015aff209e8f183a4e9d927"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "065ba330ba0cfb7103d31c25e1316187a5ebc40d8b564c58d220048671f1d8af"
   end
 
   depends_on "node"
@@ -29,7 +29,7 @@ class MarpCli < Formula
   end
 
   test do
-    (testpath/"deck.md").write <<~EOS
+    (testpath/"deck.md").write <<~MARKDOWN
       ---
       theme: uncover
       ---
@@ -41,7 +41,7 @@ class MarpCli < Formula
       <!-- backgroundColor: blue -->
 
       # <!--fit--> :+1:
-    EOS
+    MARKDOWN
 
     system bin/"marp", testpath/"deck.md", "-o", testpath/"deck.html"
     assert_predicate testpath/"deck.html", :exist?

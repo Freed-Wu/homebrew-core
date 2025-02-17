@@ -1,8 +1,8 @@
 class Efl < Formula
   desc "Enlightenment Foundation Libraries"
   homepage "https://www.enlightenment.org"
-  url "https://download.enlightenment.org/rel/libs/efl/efl-1.27.0.tar.xz"
-  sha256 "3dfb99fbcc268c0bc797e2f83e8c503ef9de66284f40b381bb597a08185c00f4"
+  url "https://download.enlightenment.org/rel/libs/efl/efl-1.28.0.tar.xz"
+  sha256 "f09a43d6b4861be06cc0e2849c53296413d4e52c8e31f52fc95e9ea5f1c59a36"
   license all_of: ["GPL-2.0-only", "LGPL-2.1-only", "BSD-2-Clause", "FTL", "zlib-acknowledgement"]
 
   livecheck do
@@ -11,19 +11,17 @@ class Efl < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia:  "aeac256a77af8f1445ac750fffbc05ec0248ed81a4cdff7c98baba1a54d7ff95"
-    sha256 arm64_sonoma:   "6d15f7f09291ed56ba192bd80c7fda195154865485893579db152e113999bf4e"
-    sha256 arm64_ventura:  "6bc9494f01ea7397644b6c77085e634dc48c5f557ef82d3fb598671cd66a9984"
-    sha256 arm64_monterey: "7c5a8ca44000ef1f51c60d165baaaee3d12ffe75fc6eb317e8f7be590a46e5a7"
-    sha256 sonoma:         "904885617ad5f8629101266eb5ceb70634192e3933d4577f7126fc2c2dd14df9"
-    sha256 ventura:        "32d3ab7c6f32f5291c394022051146fc8fb980afaa1226a2602436d3e2df5c78"
-    sha256 monterey:       "b48ff5fc791cad44d0276a5910d10a216daaa7e2d5db286517000f1e3b6801e4"
-    sha256 x86_64_linux:   "1d265348e67f8f8691f74219ba1b7b03a6ad1fcc8b99663225cca5a49b3d5ecc"
+    sha256 arm64_sequoia: "52e1c14889beb8e104642a6a7a90a7ecaf1e2c85d70b4219c41c5c58917196cb"
+    sha256 arm64_sonoma:  "63e0fa887690552686006288dcc59edc142506264be82314f86af1749a14199e"
+    sha256 arm64_ventura: "58cd3ad1e0e2567bca68fe51393f3e5b4865309108349a9d52edd77aed0d7201"
+    sha256 sonoma:        "85bc7950175355934a3f79909422539f820d62319e10ac6bd5bfc8b10174a68a"
+    sha256 ventura:       "8ccce784eb26129322a704a342e20d5966431be6516c99da5022338f426e877c"
+    sha256 x86_64_linux:  "c8ef1ff2e5034d4a3af28e7875c1ae2e6538ce6a9ecf5d56d8e27e3756ad6dcb"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "bullet"
   depends_on "cairo"
   depends_on "dbus"
@@ -81,6 +79,7 @@ class Efl < Formula
       -Dsystemd=false
       -Dv4l2=false
       -Dx11=false
+      -Dlua-interpreter=luajit
     ]
     args << "-Dcocoa=true" if OS.mac?
 

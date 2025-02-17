@@ -1,24 +1,24 @@
 class Gocloc < Formula
   desc "Little fast LoC counter"
   homepage "https://github.com/hhatto/gocloc"
-  url "https://github.com/hhatto/gocloc/archive/refs/tags/v0.5.3.tar.gz"
-  sha256 "d5f875df523bb8cc884d9e118de609f0b8eca50a3c6f6c220ad01118da3387ce"
+  url "https://github.com/hhatto/gocloc/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "f75b9b086488c03422af273fbf98507417850895ed40ffaa0e745c627c7b2f3a"
   license "MIT"
   head "https://github.com/hhatto/gocloc.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b9f4dc85c3ddc43c31527fd3f6df113617dd112aa22bca294e3355baa4b90d08"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b9f4dc85c3ddc43c31527fd3f6df113617dd112aa22bca294e3355baa4b90d08"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "b9f4dc85c3ddc43c31527fd3f6df113617dd112aa22bca294e3355baa4b90d08"
-    sha256 cellar: :any_skip_relocation, sonoma:        "bf63923a441b475a1978069a8cc40370ab978ea02b793c7c63c1ede93c140ffe"
-    sha256 cellar: :any_skip_relocation, ventura:       "bf63923a441b475a1978069a8cc40370ab978ea02b793c7c63c1ede93c140ffe"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c7ca7a047ee079c90fa7dd1e53b51057ef72641bc296e1d3d2d043eae5ef32ce"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0e61208963fc60ab3653ad04d87dc8632c4b7561451277670109b8ece15371be"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0e61208963fc60ab3653ad04d87dc8632c4b7561451277670109b8ece15371be"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0e61208963fc60ab3653ad04d87dc8632c4b7561451277670109b8ece15371be"
+    sha256 cellar: :any_skip_relocation, sonoma:        "9db335d92dd572edfb9cfa35d295670c6933d76e8075af3a17b3ad062a0f090b"
+    sha256 cellar: :any_skip_relocation, ventura:       "9db335d92dd572edfb9cfa35d295670c6933d76e8075af3a17b3ad062a0f090b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "81cea40130aee4a6572e5477ffcfc374c528d1586066770d6c5337b29d1bd616"
   end
 
   depends_on "go" => :build
 
   def install
-    system "go", "build", *std_go_args, "./cmd/gocloc"
+    system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/gocloc"
   end
 
   test do

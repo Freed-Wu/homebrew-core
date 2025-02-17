@@ -1,10 +1,9 @@
 class Qmmp < Formula
   desc "Qt-based Multimedia Player"
   homepage "https://qmmp.ylsoftware.com/"
-  url "https://qmmp.ylsoftware.com/files/qmmp/2.1/qmmp-2.1.9.tar.bz2"
-  sha256 "b59f7a378b521d4a6d2b5c9e37a35c3494528bf0db85b24caddf3e1a1c9c3a37"
+  url "https://qmmp.ylsoftware.com/files/qmmp/2.2/qmmp-2.2.3.tar.bz2"
+  sha256 "993e57d8e11b083bb6f246738505edf35d498ffe82a1936f3129b8bb09eab244"
   license "GPL-2.0-or-later"
-  revision 1
 
   livecheck do
     url "https://qmmp.ylsoftware.com/downloads.php"
@@ -12,17 +11,15 @@ class Qmmp < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "5fdf9499f3a80c471492e03df8a755be67e31799abced5e32542e6a67ef19a78"
-    sha256 arm64_ventura:  "6d75b373d7825e6a97716f97a274608920ff7aa81f50973446e8cc5b82bba137"
-    sha256 arm64_monterey: "df531f89e2a5b959a6637041378e9da53c0a8f38a6bd2e1bbdb04c073eef4d6c"
-    sha256 sonoma:         "c0c251c58bfb213e98db5ab335cc245ac2c253239461753b361da1e1100c597f"
-    sha256 ventura:        "28648897ea50fcc6ef3a119e2c351b6f44e8c503a9906512f6902e2d5c4e2949"
-    sha256 monterey:       "48fd7d7f632424e93665d9d894b4c1734aae1d109eb12e8180053d5fecd77c33"
-    sha256 x86_64_linux:   "abd12bd0ae508464ea099d7ea64f0813f15e388396cfdcca23e152a5168efbe3"
+    sha256 cellar: :any,                 arm64_sonoma:  "a2ff29655ff5f287fd593ce0469383ac0477142b02ace28e0c13ba4d5309fc8d"
+    sha256 cellar: :any,                 arm64_ventura: "f9c0e7082b9e8565698adc371eca5741bbdf09232ddc5d749af348e2b5fcc93b"
+    sha256 cellar: :any,                 sonoma:        "1afad9f18c8dcfb942297b90db0ed315141cee9373be78ed921712f73478e643"
+    sha256 cellar: :any,                 ventura:       "f834e4fa8c3d29b1fb8758536b2c9b3f914964f1ab8e70b265b038acf9002733"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7c8b97066683785b963190ad8e9a2a75a2ad8a901a8f1567ecb8d24c85b2905e"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   # TODO: on linux: pipewire
   depends_on "faad2"
@@ -66,30 +63,19 @@ class Qmmp < Formula
     depends_on "musepack"
   end
 
-  on_sonoma :or_newer do
-    # Support Sonoma (BSD iconv) as qmmp has an incompatible typedef:
-    # /tmp/qmmp-20240828-19582-sf4k85/qmmp-2.1.9/src/qmmp/qmmptextcodec.h:28:15:
-    # error: typedef redefinition with different types ('void *' vs 'struct __tag_iconv_t *')
-    #
-    # Issue ref: https://sourceforge.net/p/qmmp-dev/tickets/1167/
-    patch :DATA
-  end
-
   on_linux do
     depends_on "alsa-lib"
     depends_on "libx11"
     depends_on "mesa"
   end
 
-  fails_with gcc: "5" # ffmpeg is compiled with GCC
-
   resource "qmmp-plugin-pack" do
-    url "https://qmmp.ylsoftware.com/files/qmmp-plugin-pack/2.1/qmmp-plugin-pack-2.1.2.tar.bz2"
-    sha256 "fb5b7381a7f11a31e686fb7c76213d42dfa5df1ec61ac2c7afccd8697730c84b"
+    url "https://qmmp.ylsoftware.com/files/qmmp-plugin-pack/2.2/qmmp-plugin-pack-2.2.1.tar.bz2"
+    sha256 "bfb19dfc657a3b2d882bb1cf4069551488352ae920d8efac391d218c00770682"
   end
 
   def install
-    cmake_args = std_cmake_args + %W[
+    cmake_args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
       -DCMAKE_STAGING_PREFIX=#{prefix}
       -DUSE_SKINNED=ON
@@ -102,15 +88,19 @@ class Qmmp < Formula
       cmake_args << "-DCMAKE_MODULE_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup"
     end
 
-    system "cmake", "-S", ".", *cmake_args
-    system "cmake", "--build", "."
-    system "cmake", "--install", "."
+    # Fix to recognize x11
+    # Issue ref: https://sourceforge.net/p/qmmp-dev/tickets/1177/
+    inreplace "src/plugins/Ui/skinned/CMakeLists.txt", "PkgConfig::X11", "${X11_LDFLAGS}"
+
+    system "cmake", "-S", ".", "-B", "build", *cmake_args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     ENV.append_path "PKG_CONFIG_PATH", lib/"pkgconfig"
     resource("qmmp-plugin-pack").stage do
-      system "cmake", ".", *std_cmake_args, "-DCMAKE_INSTALL_RPATH=#{rpath}"
-      system "cmake", "--build", "."
-      system "cmake", "--install", "."
+      system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *std_cmake_args
+      system "cmake", "--build", "build"
+      system "cmake", "--install", "build"
     end
   end
 
@@ -120,23 +110,3 @@ class Qmmp < Formula
     system bin/"qmmp", "--version"
   end
 end
-
-__END__
-diff --git a/src/qmmp/qmmptextcodec.h b/src/qmmp/qmmptextcodec.h
-index 5242c33..7399c54 100644
---- a/src/qmmp/qmmptextcodec.h
-+++ b/src/qmmp/qmmptextcodec.h
-@@ -21,12 +21,11 @@
- #ifndef QMMPTEXTCODEC_H
- #define QMMPTEXTCODEC_H
-
-+#include <iconv.h>
- #include <QByteArray>
- #include <QStringList>
- #include "qmmp_export.h"
-
--typedef void *iconv_t;
--
- class QMMP_EXPORT QmmpTextCodec
- {
- public:

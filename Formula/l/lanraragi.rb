@@ -1,43 +1,33 @@
 class Lanraragi < Formula
   desc "Web application for archival and reading of manga/doujinshi"
   homepage "https://github.com/Difegue/LANraragi"
-  url "https://github.com/Difegue/LANraragi/archive/refs/tags/v.0.9.22.tar.gz"
-  sha256 "979b819994fdf4260a19bf276aef407da9c1d9d294bee44fc7a1f600c1ce5696"
+  url "https://github.com/Difegue/LANraragi/archive/refs/tags/v.0.9.31.tar.gz"
+  sha256 "a104d84d491d00b27b04edbd05016605ab1a6114c076d9a01cdca1496715804d"
   license "MIT"
   head "https://github.com/Difegue/LANraragi.git", branch: "dev"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "e6ad4eba79b3e0aae64d01aaeb64fcdfd5bf6b32f899665fb3c78b61e7568a9d"
-    sha256 cellar: :any,                 arm64_sonoma:  "a6fc59bb74de453bfca634f0eb8005aa8d6734bfa0f9e07bb54ce12d122ec570"
-    sha256 cellar: :any,                 arm64_ventura: "01c666e8b8eb423b602d9aca72ac34367627f1a1b5efacbcb4c96723cbd1ccb8"
-    sha256 cellar: :any,                 sonoma:        "b3f00435e72d7ceee48e0191999f50c2e644d003c25490688426bb118600e585"
-    sha256 cellar: :any,                 ventura:       "f316475978784dbb9829ed69d81a45f0eb1273bbce78a77c18bea25043215b99"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c0c201a1a56fc38f517d2e4388dc81571f2f25283ce7a97e6a2677c079085df8"
+    sha256 cellar: :any,                 arm64_sequoia: "6930cd3f45769b577aca6001119535a83d0eed7f767ba5bd98cd6b54ce129da1"
+    sha256 cellar: :any,                 arm64_sonoma:  "2aa2238d17e5b008c0a381e8ae60ea90cc5f9a7787285e154b0a8975d5f36aba"
+    sha256 cellar: :any,                 arm64_ventura: "8ab0ce5030db23398a998f5e35e9a831799c3887659301fab36d2d35c42c6f18"
+    sha256 cellar: :any,                 sonoma:        "30589b6799023584f70e4e9657e44ba1d5a2849e00179f0e1990e7147599b0ab"
+    sha256 cellar: :any,                 ventura:       "1d111e3daa8782677e1281fe4eea7d60c41abff332e42901b1b56702c0ab77c5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dc0106b15f6ff7d2fa785a5bd749679900079800399732b846709ca4a7fce8a6"
   end
 
-  depends_on "nettle" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "cpanminus"
   depends_on "ghostscript"
-  depends_on "giflib"
   depends_on "imagemagick"
-  depends_on "jpeg-turbo"
   depends_on "libarchive"
-  depends_on "libpng"
   depends_on "node"
   depends_on "openssl@3"
   depends_on "perl"
-  depends_on "redis"
+  depends_on "redis" # TODO: migrate to `valkey`
   depends_on "zstd"
 
   uses_from_macos "libffi"
-
-  on_macos do
-    depends_on "libb2"
-    depends_on "lz4"
-    depends_on "lzo"
-  end
 
   resource "Image::Magick" do
     url "https://cpan.metacpan.org/authors/id/J/JC/JCRISTY/Image-Magick-7.1.1-28.tar.gz"
@@ -46,16 +36,15 @@ class Lanraragi < Formula
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
-    ENV.prepend_path "PERL5LIB", libexec/"lib"
-    ENV.append_to_cflags "-I#{Formula["libarchive"].opt_include}"
     ENV["OPENSSL_PREFIX"] = Formula["openssl@3"].opt_prefix
+    ENV["ARCHIVE_LIBARCHIVE_LIB_DLL"] = Formula["libarchive"].opt_lib/shared_library("libarchive")
+    ENV["ALIEN_INSTALL_TYPE"] = "system"
 
     imagemagick = Formula["imagemagick"]
     resource("Image::Magick").stage do
-      inreplace "Makefile.PL" do |s|
-        s.gsub! "/usr/local/include/ImageMagick-#{imagemagick.version.major}",
+      inreplace "Makefile.PL",
+                "/usr/local/include/ImageMagick-#{imagemagick.version.major}",
                 "#{imagemagick.opt_include}/ImageMagick-#{imagemagick.version.major}"
-      end
 
       system "perl", "Makefile.PL", "INSTALL_BASE=#{libexec}"
       system "make"
@@ -66,21 +55,17 @@ class Lanraragi < Formula
     system "npm", "install", *std_npm_args(prefix: false)
     system "perl", "./tools/install.pl", "install-full"
 
-    prefix.install "README.md"
+    # Modify Archive::Libarchive to help find brew `libarchive`. Although environment
+    # variables like `ARCHIVE_LIBARCHIVE_LIB_DLL` and `FFI_CHECKLIB_PATH` exist,
+    # it is difficult to guarantee every way of running (like `npm start`) uses them.
+    inreplace libexec/"lib/perl5/Archive/Libarchive/Lib.pm",
+              "$ENV{ARCHIVE_LIBARCHIVE_LIB_DLL}",
+              "'#{ENV["ARCHIVE_LIBARCHIVE_LIB_DLL"]}'"
+
     (libexec/"lib").install Dir["lib/*"]
-    libexec.install "script", "package.json", "public", "templates", "tests", "lrr.conf"
-    cd "tools/build/homebrew" do
-      bin.install "lanraragi"
-      libexec.install "redis.conf"
-    end
-
-    return if OS.linux? || Hardware::CPU.intel?
-
-    # FIXME: This installs its own `libarchive`, but we should use our own to begin with.
-    #        As a workaround, install symlinks to our `libarchive` instead of the downloaded ones.
-    libarchive_install_dir = libexec/"lib/perl5/darwin-thread-multi-2level/auto/share/dist/Alien-Libarchive3/dynamic"
-    libarchive_install_dir.children.map(&:unlink)
-    ln_sf Formula["libarchive"].opt_lib.children, libarchive_install_dir
+    libexec.install "script", "package.json", "public", "locales", "templates", "tests", "lrr.conf"
+    libexec.install "tools/build/homebrew/redis.conf"
+    bin.install "tools/build/homebrew/lanraragi"
   end
 
   test do

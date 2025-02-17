@@ -1,24 +1,23 @@
 class Libspelling < Formula
   desc "Spellcheck library for GTK 4"
   homepage "https://gitlab.gnome.org/GNOME/libspelling"
-  url "https://gitlab.gnome.org/GNOME/libspelling/-/archive/0.4.4/libspelling-0.4.4.tar.bz2"
-  sha256 "9b2adc84b7cb964588ee55f70a8c61fea942f894a89f41af9a186c7b17abbc5a"
+  url "https://gitlab.gnome.org/GNOME/libspelling/-/archive/0.4.6/libspelling-0.4.6.tar.bz2"
+  sha256 "5625bbb3db35e8163c71c66ae29308244543316d0aeb8489d942fab9afd9222d"
   license "LGPL-2.1-or-later"
-  revision 1
 
   bottle do
-    sha256 arm64_sequoia: "544f99d7226d07a24a0b5c878f057f3d38f5d24ecf32a7f724be39e0ed58e2d2"
-    sha256 arm64_sonoma:  "7dc5d4e683e46fd2f960ed171b9748611fce54d0921f3cdf7cb206f662bed35c"
-    sha256 arm64_ventura: "6fed5f819f45aa5de2ce58bd899a551a34f264de0f36401d7103c54556c42894"
-    sha256 sonoma:        "ba9c7208ff52fa9c14a33a3f25a392d9d6c423ef84b13feb04176e4e1ff6faf3"
-    sha256 ventura:       "f7f40f4b3530a5e7b6fae7cf7538dbd36c25a2ad577862d372d0d0e0e2f7ddba"
-    sha256 x86_64_linux:  "42e881b76bb593fd772dff4a53a348469d6bf653e274209fef15820917c1773a"
+    sha256 arm64_sequoia: "d56030a9c7df0a6df906f7968a6dddd1e9c780fec38d8342fa494bf964732c14"
+    sha256 arm64_sonoma:  "517e048a0a042c793b29b11a800b73b6da5cb5aa6e66c16f289803429121dcbd"
+    sha256 arm64_ventura: "fab7ad25343dbae5c38502466e58630787440ee1b8c80767da0c663aadd852ef"
+    sha256 sonoma:        "9ce0b5fbdcb283c2088ba270a72a73f6ad07b05660cba58a1aa7740f1d6ef039"
+    sha256 ventura:       "ebbcd4610964540e55a939258ab130f899925249699e956b5d17ec6f38d77119"
+    sha256 x86_64_linux:  "86c87524dd02462c5e0f0e26e02f3145acfcdb51f8548274e86698b75df7b834"
   end
 
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "vala" => :build
 
   depends_on "enchant"
@@ -56,8 +55,8 @@ class Libspelling < Formula
       }
     C
 
-    pkg_config_cflags = shell_output("pkg-config --cflags --libs libspelling-1").chomp.split
-    system ENV.cc, "test.c", *pkg_config_cflags, "-o", "test"
+    flags = shell_output("pkgconf --cflags --libs libspelling-1").chomp.split
+    system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
   end
 end

@@ -1,16 +1,16 @@
 class Qxmpp < Formula
   desc "Cross-platform C++ XMPP client and server library"
   homepage "https://github.com/qxmpp-project/qxmpp/"
-  url "https://github.com/qxmpp-project/qxmpp/archive/refs/tags/v1.8.3.tar.gz"
-  sha256 "0696376eb2e9c601bd4835da8b3c45a01cab622fa47aea5bf937a7969254da40"
+  url "https://github.com/qxmpp-project/qxmpp/archive/refs/tags/v1.9.4.tar.gz"
+  sha256 "4403e43a0e8b6afa68f6e1e986e4ec19a08a6bf0db539ab7934a58afa1ddc532"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "eeca58f81377863e9744f18789d9b998df9ad3f48757f1d27e956a4fd3f3d67f"
-    sha256 cellar: :any,                 arm64_ventura: "c3245ea7e580105d0e8d49a878cb5e700662873ec0160756b68885438ede16a5"
-    sha256 cellar: :any,                 sonoma:        "7d393e56a8f75517696459a8d6778e5768781435fec954506177643e9c6fe2d9"
-    sha256 cellar: :any,                 ventura:       "0edf0f9ad1ae2ea5c7147a7d5c472966d00f4e56c9eaf4b35175917f53fba5b9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "012003d5061b6160bf8158e30962aee6d0457d1060d4cc4d51b654cef561ed2d"
+    sha256 cellar: :any,                 arm64_sonoma:  "6b3c9dd9b4af0ecdd96a1528d3f2adde025d100d20071d99e7cc0665fdf9066e"
+    sha256 cellar: :any,                 arm64_ventura: "e7f604cdb295218699911f6fed7a314b585729fc558ab0ee949b9411385ae226"
+    sha256 cellar: :any,                 sonoma:        "dde69f86178c792344f834841ea9fc9adc677289d96b297b2684936f4375cf41"
+    sha256 cellar: :any,                 ventura:       "8788539b96ad29ff2bf810dfa5de989547ca189fec89f1cb18b032fe60e4036b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b6a4aca609d1779b62673475e67e19105c5bab36a2360a38f13cea46a9555c43"
   end
 
   depends_on "cmake" => :build
@@ -54,13 +54,13 @@ class Qxmpp < Formula
       QMAKE_RPATHDIR += #{lib}
     EOS
 
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <QXmppQt6/QXmppClient.h>
       int main() {
         QXmppClient client;
         return 0;
       }
-    EOS
+    CPP
 
     system "#{Formula["qt"].bin}/qmake", "test.pro"
     system "make"

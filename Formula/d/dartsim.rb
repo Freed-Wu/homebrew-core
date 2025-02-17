@@ -1,23 +1,22 @@
 class Dartsim < Formula
   desc "Dynamic Animation and Robotics Toolkit"
   homepage "https://dartsim.github.io/"
-  url "https://github.com/dartsim/dart/archive/refs/tags/v6.14.5.tar.gz"
-  sha256 "eb89cc01f4f48c399b055d462d8ecd2a3f846f825a35ffc67f259186b362e136"
+  url "https://github.com/dartsim/dart/archive/refs/tags/v6.15.0.tar.gz"
+  sha256 "bbf954e283f464f6d0a8a5ab43ce92fd49ced357ccdd986c7cb4c29152df8692"
   license "BSD-2-Clause"
+  revision 1
 
   bottle do
-    sha256                               arm64_sequoia:  "324071ed085c1271aadf3888188dbc191ffddf7826dcba046cde62852a079818"
-    sha256                               arm64_sonoma:   "c678fa87d190dce71e5ec19caeb042172a4c1eefd6312814942381a907d8015f"
-    sha256                               arm64_ventura:  "8df0a41bfac187753b2d80c375fb40f8b9a95362a5ed2748184e27ffe0d38bc2"
-    sha256                               arm64_monterey: "8d33767ef55aab5b8c02a41ffa78a720b99e5bfc4dfec20bd7de3afd6635e93c"
-    sha256                               sonoma:         "d19c0f8573569a152c5471758cdaac3250879ded991bef01cb6db03fc512e41b"
-    sha256                               ventura:        "17bb38e1f132ebf5a05dc2a12e73d649d7cf598b46c03c0f8d544fba97e9d825"
-    sha256                               monterey:       "f53b33790e3b73a7f272bac4074eb0a1f77d65e3d312764fe5891263c79373e7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6fdb43f54568034d5f8ae62e172a11102b6147c877ad430b986a74fb8a1db990"
+    sha256                               arm64_sequoia: "1ed8e40ca64229dad1401fb93200a56bae92e35afae5ba15094f82cbcf847da8"
+    sha256                               arm64_sonoma:  "a8d4b9548c86cbd6977b25d4efa23d6a7a06e7c65b5de78d0825f74063652bf6"
+    sha256                               arm64_ventura: "9568155ae97f84ef84876c9aa469aee5de98bf6ab5767d8db5c2e3d2ff12e68d"
+    sha256                               sonoma:        "1c9274a2fdc91aa6831e3f8a5762cf5a3e98020c2ada27173725c94044824f32"
+    sha256                               ventura:       "bcbba9622135dc3aed69dc4cbfdbd959a8cd4e86c81b006a03e16169b7136bc9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d646739948bde97fd409c8c89d34a321bdd1ca8876ddefb66f4ff98aaac996b4"
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "assimp"
   depends_on "bullet"
@@ -41,10 +40,12 @@ class Dartsim < Formula
     depends_on "mesa"
   end
 
-  fails_with gcc: "5"
-
   def install
-    args = std_cmake_args
+    args = %W[
+      -DCMAKE_INSTALL_RPATH=#{rpath}
+      -DDART_BUILD_DARTPY=OFF
+      -DDART_ENABLE_SIMD=OFF
+    ]
 
     if OS.mac?
       # Force to link to system GLUT (see: https://cmake.org/Bug/view.php?id=16045)
@@ -52,11 +53,7 @@ class Dartsim < Formula
       args << "-DGLUT_glut_LIBRARY=#{glut_lib}"
     end
 
-    args << "-DBUILD_TESTING=OFF"
-    args << "-DDART_BUILD_DARTPY=OFF"
-    args << "-DDART_ENABLE_SIMD=OFF"
-
-    system "cmake", "-S", ".", "-B", "build", "-DCMAKE_INSTALL_RPATH=#{rpath}", *args
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
@@ -76,7 +73,6 @@ class Dartsim < Formula
     system ENV.cxx, "test.cpp", "-I#{Formula["eigen"].include}/eigen3",
                     "-I#{include}", "-L#{lib}", "-ldart",
                     "-L#{Formula["assimp"].opt_lib}", "-lassimp",
-                    "-L#{Formula["boost"].opt_lib}", "-lboost_system",
                     "-L#{Formula["libccd"].opt_lib}", "-lccd",
                     "-L#{Formula["fcl"].opt_lib}", "-lfcl",
                     "-std=c++17", "-o", "test"

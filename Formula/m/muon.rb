@@ -1,28 +1,41 @@
 class Muon < Formula
   desc "Meson-compatible build system"
   homepage "https://muon.build"
-  url "https://git.sr.ht/~lattis/muon/archive/0.3.1.tar.gz"
-  sha256 "14b175b29c4390a69c1d9b5758b4689f0456c749822476af67511f007be2e503"
+  url "https://git.sr.ht/~lattis/muon/archive/0.4.0.tar.gz"
+  sha256 "c2ce8302e886b2d3534ec38896a824dc83f43698d085d57bb19a751611d94e86"
   license "GPL-3.0-only"
   head "https://git.sr.ht/~lattis/muon", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "7a4100679212be30e2177fa7dfde83b4de7c4d6132910325a83700560c205062"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d5b98c4004f09fef13532ee958bbcd06f90e9394a90efffff3b4507c794e2c93"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6c9e647228c6ce31f0157f2d13a9bf241519d2c05c1c206edfd401b2b2ac1415"
-    sha256 cellar: :any_skip_relocation, sonoma:        "cc3fb8dc981789a92fc2006950159fc6e21c0ff9d78a5718048e15808c7b800c"
-    sha256 cellar: :any_skip_relocation, ventura:       "6d11e6856f94e6d16b9208378613e155dadaaa062355347c6fb107e24c49f35f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "df1c8f87d4401ac11a86c00d8e17f8088c12a6654bbc31fea1ac15fd76e50d0f"
+    sha256 cellar: :any, arm64_sequoia: "b2b8c6d772f66d4c71e3724687de62b2f714375ea0bcc75f4e3a1d11eb8bbccb"
+    sha256 cellar: :any, arm64_sonoma:  "1d1d98fa14817ffcd261bd64fd32eac654246264fdba18539f4b73d99c532cdb"
+    sha256 cellar: :any, arm64_ventura: "c271f60c94867a291d56da52874dd7c8541922bbc8d34739cf97854a36f6d725"
+    sha256 cellar: :any, sonoma:        "790f382df5f4d1d906e575e56a51074936a3a983383895346f3f5bfac782f4d4"
+    sha256 cellar: :any, ventura:       "cdbb9dcb25b3a7f3609737f28677a443aaca43507440f6230f856d566422442d"
+    sha256               x86_64_linux:  "e57306fc3cb90ee4c9b65558c2fb867d45dbd1a13a060cdbce93167cc17b2def"
   end
 
+  depends_on "meson" => :build
+  depends_on "libarchive"
   depends_on "ninja"
-  depends_on "pkg-config"
+  depends_on "pkgconf"
+
+  uses_from_macos "curl"
 
   def install
-    system "./bootstrap.sh", "build"
-    system "./build/muon", "setup", "-Dprefix=#{prefix}", "build"
-    system "ninja", "-C", "build"
-    system "./build/muon", "-C", "build", "install"
+    args = %w[
+      -Ddocs=disabled
+      -Dlibarchive=enabled
+      -Dlibcurl=enabled
+      -Dlibpkgconf=enabled
+      -Dsamurai=disabled
+      -Dtracy=disabled
+      --force-fallback-for=tinyjson
+    ]
+
+    system "meson", "setup", "build", *args, *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
   end
 
   test do
@@ -33,10 +46,10 @@ class Muon < Formula
         return 0;
       }
     C
-    (testpath/"meson.build").write <<~EOS
+    (testpath/"meson.build").write <<~MESON
       project('hello', 'c')
       executable('hello', 'helloworld.c')
-    EOS
+    MESON
 
     system bin/"muon", "setup", "build"
     assert_predicate testpath/"build/build.ninja", :exist?

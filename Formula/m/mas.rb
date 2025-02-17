@@ -2,30 +2,26 @@ class Mas < Formula
   desc "Mac App Store command-line interface"
   homepage "https://github.com/mas-cli/mas"
   url "https://github.com/mas-cli/mas.git",
-      tag:      "v1.8.7",
-      revision: "4405807010987802c0967bbf349c08808062b824"
+      tag:      "v1.9.0",
+      revision: "a5a928a2e6a28a5c751bca7f63f26b06cede8197"
   license "MIT"
   head "https://github.com/mas-cli/mas.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "5f79bc1592e59900e5f876a255259a0aed774069109e2b608ffcac46bac66b52"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5bae1f14f8522dc16f69b00371ae12221b6550456dd12ed0238df72cdd68f20e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e3a4df50b78219917927a482dfde491edc3524d41211fea9e507ac7a47700b1c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7915e683c7579d8289934b4eb162997b74ab0cf0ad8378dd6158872965f07cdf"
-    sha256 cellar: :any_skip_relocation, ventura:       "a7862ed579d42f662bbb41d4611452444e3cecfe747c09774a2cbdfd844c448a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4c42193085126b4fb2b7cf12db3dc4e128e801a6bd51d7e6ff5fa08cf7bccd5b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cc915a5c1f1c4183306991ac04c7c5a020501f77c33d6e6ac0422ab83dbb5d53"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "81fcb5149110626ae1c4c17cf2667bb8242b222f1672fdf407b5024e889e0259"
+    sha256 cellar: :any_skip_relocation, sonoma:        "212dd3f4603d6459943d141cc979fcb6dd5b49a3f9a09a195de240c4b5c9fd83"
+    sha256 cellar: :any_skip_relocation, ventura:       "40e8e55cbe67c93baff9c3013136d6ddb90ac868a9f31f034f808f74d75ba92a"
   end
 
+  depends_on xcode: ["14.2", :build]
   depends_on :macos
-  on_arm do
-    depends_on xcode: ["12.2", :build]
-  end
-  on_intel do
-    depends_on xcode: ["12.0", :build]
-  end
 
   def install
-    system "script/build"
-    system "script/install", prefix
+    ENV["MAS_DIRTY_INDICATOR"] = ""
+    system "script/build", "homebrew/core/mas", "--disable-sandbox"
+    bin.install ".build/release/mas"
 
     bash_completion.install "contrib/completion/mas-completion.bash" => "mas"
     fish_completion.install "contrib/completion/mas.fish"

@@ -1,6 +1,6 @@
 class PangommAT246 < Formula
   desc "C++ interface to Pango"
-  homepage "https://pango.gnome.org"
+  homepage "https://www.gtk.org/docs/architecture/pango"
   url "https://download.gnome.org/sources/pangomm/2.46/pangomm-2.46.4.tar.xz"
   sha256 "b92016661526424de4b9377f1512f59781f41fb16c9c0267d6133ba1cd68db22"
   license "LGPL-2.1-only"
@@ -22,7 +22,7 @@ class PangommAT246 < Formula
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "cairomm@1.14"
   depends_on "glib"
   depends_on "glibmm@2.66"
@@ -44,8 +44,8 @@ class PangommAT246 < Formula
       }
     CPP
 
-    pkg_config_cflags = shell_output("pkg-config --cflags --libs pangomm-1.4").chomp.split
-    system ENV.cxx, "-std=c++11", "test.cpp", *pkg_config_cflags, "-o", "test"
+    pkgconf_flags = shell_output("pkgconf --cflags --libs pangomm-1.4").chomp.split
+    system ENV.cxx, "-std=c++11", "test.cpp", *pkgconf_flags, "-o", "test"
     system "./test"
   end
 end

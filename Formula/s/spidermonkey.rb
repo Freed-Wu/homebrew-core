@@ -1,11 +1,10 @@
 class Spidermonkey < Formula
   desc "JavaScript-C Engine"
   homepage "https://spidermonkey.dev"
-  url "https://archive.mozilla.org/pub/firefox/releases/128.4.0esr/source/firefox-128.4.0esr.source.tar.xz"
-  version "128.4.0"
-  sha256 "074014e1c26144e10707b12a271176a4b6b67021e91444b613edae38d188febc"
+  url "https://archive.mozilla.org/pub/firefox/releases/128.7.0esr/source/firefox-128.7.0esr.source.tar.xz"
+  version "128.7.0"
+  sha256 "e0a7bf4eddfa33cbc8797d68ecea8fb4e6404ca197d3b2242cbc8daed03794f7"
   license "MPL-2.0"
-  revision 1
   head "https://hg.mozilla.org/mozilla-central", using: :hg
 
   # Spidermonkey versions use the same versions as Firefox, so we simply check
@@ -16,16 +15,16 @@ class Spidermonkey < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "61b7051e96d04b5b6ddacc8ee0800b243b4ea2453bd795c07980958f93f4d174"
-    sha256 cellar: :any, arm64_sonoma:  "88ab4784c34102c8fb93c8915cdcbd1ac7496460ffe84b5a30bea713d29be343"
-    sha256 cellar: :any, arm64_ventura: "ec7e958ab256a5962f4ba60c12b368dc8609d0f156ddf23657bb54612db09287"
-    sha256 cellar: :any, sonoma:        "88c0d75a9e74c2979b9e7afe93d4e615032508fa92c4ebd3b0ca26e2436b9f69"
-    sha256 cellar: :any, ventura:       "be20966c58859beea2f86f730aed999e4adb9222a2ff4350b94952e0adcd8c0e"
-    sha256               x86_64_linux:  "d0664eeb42fb30dceab87318b21513762cc47dda62a91b21e1870421fc08ad81"
+    sha256 cellar: :any, arm64_sequoia: "87c699d9331e223c485ac64795c43c3495b359cec431d2f9c94499f73cc67761"
+    sha256 cellar: :any, arm64_sonoma:  "4a0e35f532e855103703602ee8ad19a58ac023da175587ed2bf4582eb16fcd42"
+    sha256 cellar: :any, arm64_ventura: "756b9562dfdfe1c5f0428fc89cc9cb55bd652b053b2575e9b7667db97748226e"
+    sha256 cellar: :any, sonoma:        "bc72ec9d8810c132861d4159bd59af740dcd84c216892a01688201d78d855a62"
+    sha256 cellar: :any, ventura:       "d38acf1650334e54c9399871c66a0998da05b50535fe5905a0450e5d3e2d9a50"
+    sha256               x86_64_linux:  "5400ba52fb2299ddd49cbe3ed52dcbbce7a3d0b94ff9a023b8e71abaf1cc5ab9"
   end
 
   depends_on "cbindgen" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python@3.13" => :build
   depends_on "rust" => :build
   depends_on "icu4c@76"
@@ -35,8 +34,6 @@ class Spidermonkey < Formula
   uses_from_macos "llvm" => :build # for llvm-objdump
   uses_from_macos "m4" => :build
   uses_from_macos "zlib"
-
-  conflicts_with "narwhal", because: "both install a js binary"
 
   # From python/mozbuild/mozbuild/test/configure/test_toolchain_configure.py
   fails_with :gcc do

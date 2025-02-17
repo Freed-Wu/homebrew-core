@@ -1,8 +1,8 @@
 class Yazi < Formula
   desc "Blazing fast terminal file manager written in Rust, based on async I/O"
   homepage "https://github.com/sxyazi/yazi"
-  url "https://github.com/sxyazi/yazi/archive/refs/tags/v0.3.3.tar.gz"
-  sha256 "fe2a458808334fe20eff1ab0145c78d684d8736c9715e4c51bce54038607dc4e"
+  url "https://github.com/sxyazi/yazi/archive/refs/tags/v25.2.11.tar.gz"
+  sha256 "d3879b85465e036abfd69c53488e9bc90c9ad52a31080511a0fcd1b11f81f10b"
   license "MIT"
   head "https://github.com/sxyazi/yazi.git", branch: "main"
 
@@ -15,14 +15,12 @@ class Yazi < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "01246c17c55a8e1a84628bf5449bd6688e475119f2fd05e4f79cb29111502ff4"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1e084de5f54b67158697799d3acd9cefea19e4ae9f4ffcaba799a81859abf7c7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c6a5c5c8a3e95943d5eb81317a0e49067f79b4f5456c07aea888a05ba79e3593"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf217fde03079cf5e098cccc87d9151e1f4cf682ea77d330a8ae76b57e387338"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1d9b66561784d040c7642ae94d5251df9ea6b7d74ad6b26e4e462391751d9d71"
-    sha256 cellar: :any_skip_relocation, ventura:        "8ce84306248d65237e28ea71abef99b259c32a40787e2ed61d878665c1d1ea86"
-    sha256 cellar: :any_skip_relocation, monterey:       "769594d0ef084f3086066498968c98611b746660d6bc8d634d732e8509c07252"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b71c80ca7a280bc0594b803403217712b1b53a8f7ce2a98cbfd458342c555a19"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9d571bca833d1939f5175d44fd82e12916febacbb9dd556cf865016ee4b40584"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "513291f863e16f702e65b45370f8042348b0b4900c7ae5f851da6c07b9b58bc1"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "06c7ead29db712de1bca78ad1d00262a230201b2516dc8d720e5a3f5dda501b6"
+    sha256 cellar: :any_skip_relocation, sonoma:        "788fa0204b13d072af4b1431e424373fedb84a92aa5fe0d25fda32644cc483b7"
+    sha256 cellar: :any_skip_relocation, ventura:       "7d2e683f3ef04866188bba0625cfd04fca10fa1741b0affc7f8e4534752f9aa8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "89f9aa23e9d02cd8c89e632a93872d9b4a5b6786b0a07785fba9554f9f86b280"
   end
 
   depends_on "rust" => :build

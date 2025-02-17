@@ -1,9 +1,8 @@
 class Dive < Formula
   desc "Tool for exploring each layer in a docker image"
   homepage "https://github.com/wagoodman/dive"
-  url "https://github.com/wagoodman/dive.git",
-      tag:      "v0.12.0",
-      revision: "925cdd86482edec42185794620a1e616b79bbee5"
+  url "https://github.com/wagoodman/dive/archive/refs/tags/v0.12.0.tar.gz"
+  sha256 "2b69b8d28220c66e2575a782a370a0c05077936ae3ce69180525412fcca09230"
   license "MIT"
 
   bottle do
@@ -21,7 +20,7 @@ class Dive < Formula
 
   on_linux do
     depends_on "gpgme" => :build
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "device-mapper"
   end
 
@@ -30,11 +29,11 @@ class Dive < Formula
   end
 
   test do
-    (testpath/"Dockerfile").write <<~EOS
+    (testpath/"Dockerfile").write <<~DOCKERFILE
       FROM alpine
       ENV test=homebrew-core
       RUN echo "hello"
-    EOS
+    DOCKERFILE
 
     assert_match "dive #{version}", shell_output("#{bin}/dive version")
     assert_match "Building image", shell_output("CI=true #{bin}/dive build .", 1)

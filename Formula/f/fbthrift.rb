@@ -1,18 +1,18 @@
 class Fbthrift < Formula
   desc "Facebook's branch of Apache Thrift, including a new C++ server"
   homepage "https://github.com/facebook/fbthrift"
-  url "https://github.com/facebook/fbthrift/archive/refs/tags/v2024.11.04.00.tar.gz"
-  sha256 "489a1fa8c8655828d379e6ea5026c8638c0240969402423f68276dfdde8cf1e4"
+  url "https://github.com/facebook/fbthrift/archive/refs/tags/v2025.02.10.00.tar.gz"
+  sha256 "27703284abca7bd35d340529152c5890a37d840e3f9c5b2d89c125936260ac25"
   license "Apache-2.0"
   head "https://github.com/facebook/fbthrift.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "bfd5e3caf3c51a00a57265b86d73eb00fa2737fe917664b0878d99bba43088d7"
-    sha256 cellar: :any,                 arm64_sonoma:  "46ad5590f62e3584028a0cd1891d26fbeb70b4c8346952a5ebf81d0c8e8cef14"
-    sha256 cellar: :any,                 arm64_ventura: "a523d0c3b67d41b63388fc091c2c01adf7ed54879c99781091d205ad699ed110"
-    sha256 cellar: :any,                 sonoma:        "1a779377e20981d95f962914c3cafe108b79211963093ac62229833eccfbf447"
-    sha256 cellar: :any,                 ventura:       "b41e73392674fc1fe4fdb2aa8797e09b7255409f8a38ae8f30549361cfe7a85d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0182799c29e2279138dd8993533039db003dae4db9f61fbd0ae4e82e880d737a"
+    sha256 cellar: :any,                 arm64_sequoia: "41e51619ac04b6d9988e828e98afabab5437de487389c650e8ee5057e7b95dc5"
+    sha256 cellar: :any,                 arm64_sonoma:  "a8bd74b2cd0c87155902407627c77d8262d4b34865a77357d0873041094b7f14"
+    sha256 cellar: :any,                 arm64_ventura: "67c83880a38aea09d68aab0f30fef303317a3378b1862623e463e555c056be3d"
+    sha256 cellar: :any,                 sonoma:        "2062e2b95f816c08857123b41be051e47fda6e7562479daf706a8c93719a987a"
+    sha256 cellar: :any,                 ventura:       "b4b29afcd55bd481e225289086864354ef7e4b050d1d62e2ec764370c41d89bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7bd05126d75623d09a53519d891cf555377dae0cc709833268f57a331574de46"
   end
 
   depends_on "bison" => :build # Needs Bison 3.1+
@@ -43,12 +43,8 @@ class Fbthrift < Formula
 
   fails_with :clang do
     build 1100
-    cause <<~EOS
-      error: 'asm goto' constructs are not supported yet
-    EOS
+    cause "error: 'asm goto' constructs are not supported yet"
   end
-
-  fails_with gcc: "5" # C++ 17
 
   def install
     # Work around build failure with Xcode 16
@@ -63,11 +59,16 @@ class Fbthrift < Formula
     # to include them, make sure `bin/thrift1` links with the dynamic libraries
     # instead of the static ones (e.g. `libcompiler_base`, `libcompiler_lib`, etc.)
     shared_args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}", "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"]
-    shared_args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup -Wl,-dead_strip_dylibs" if OS.mac?
+    if OS.mac?
+      shared_args << "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-undefined,dynamic_lookup -Wl,-dead_strip_dylibs"
+      shared_args << "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-dead_strip_dylibs"
+    end
 
-    system "cmake", "-S", ".", "-B", "build/shared", *shared_args, *std_cmake_args
-    system "cmake", "--build", "build/shared"
-    system "cmake", "--install", "build/shared"
+    # We build in-source to avoid an error from thrift/lib/cpp2/test:
+    # Output path .../build/shared/thrift/lib/cpp2/test/../../../conformance/if is unusable or not a directory
+    system "cmake", "-S", ".", "-B", ".", *shared_args, *std_cmake_args
+    system "cmake", "--build", "."
+    system "cmake", "--install", "."
 
     elisp.install "thrift/contrib/thrift.el"
     (share/"vim/vimfiles/syntax").install "thrift/contrib/thrift.vim"
@@ -102,7 +103,8 @@ class Fbthrift < Formula
       add_executable(test test.cpp)
       target_link_libraries(test FBThrift::transport)
     CMAKE
-    system "cmake", ".", *std_cmake_args
-    system "cmake", "--build", "."
+
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args
+    system "cmake", "--build", "build"
   end
 end

@@ -12,10 +12,10 @@ class S3fs < Formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "curl"
   depends_on "gnutls"
-  depends_on "libfuse@2"
+  depends_on "libfuse@2" # FUSE 3 issue: https://github.com/s3fs-fuse/s3fs-fuse/issues/1159
   depends_on "libgcrypt"
   depends_on "libxml2"
   depends_on :linux # on macOS, requires closed-source macFUSE
@@ -23,7 +23,7 @@ class S3fs < Formula
 
   def install
     system "./autogen.sh"
-    system "./configure", "--disable-dependency-tracking", "--with-gnutls", "--prefix=#{prefix}"
+    system "./configure", "--with-gnutls", *std_configure_args
     system "make", "install"
   end
 

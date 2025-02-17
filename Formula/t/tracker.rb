@@ -1,20 +1,12 @@
 class Tracker < Formula
   desc "Library and daemon that is an efficient search engine and triplestore"
-  homepage "https://gnome.pages.gitlab.gnome.org/tracker/"
+  homepage "https://gitlab.gnome.org/GNOME/tinysparql"
   # pull from git tag to get submodules
-  url "https://gitlab.gnome.org/GNOME/tracker.git",
+  url "https://gitlab.gnome.org/GNOME/tinysparql.git",
       tag:      "3.6.0",
       revision: "624ef729966f2d9cf748321bd7bac822489fa8ed"
   license all_of: ["LGPL-2.1-or-later", "GPL-2.0-or-later"]
   revision 3
-
-  # Tracker doesn't follow GNOME's "even-numbered minor is stable" version
-  # scheme but they do appear to use 90+ minor/patch versions, which may
-  # indicate unstable versions (e.g., 1.99.0, 2.2.99.0, etc.).
-  livecheck do
-    url :stable
-    regex(/^v?(\d+(?:(?!\.9\d)\.\d+)+)$/i)
-  end
 
   bottle do
     sha256 arm64_sequoia: "7bc9ae43638dc877591fddf360e63423faca1c263a80eaec7016c56c526c7891"
@@ -28,7 +20,7 @@ class Tracker < Formula
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on "pygobject3" => :build
   depends_on "vala" => :build
 
@@ -43,11 +35,20 @@ class Tracker < Formula
   uses_from_macos "libxml2"
 
   on_macos do
+    deprecate! date: "2025-01-18", because: "does not build on macOS for recent releases (3.7.0+)"
     depends_on "gettext"
   end
 
+  on_linux do
+    deprecate! date:        "2025-01-18",
+               because:     "was renamed but we cannot formula rename due to macOS build failure",
+               replacement: "tinysparql"
+  end
+
+  conflicts_with "tinysparql", because: "both install the same libraries"
+
   def install
-    args = std_meson_args + %w[
+    args = %w[
       -Dman=false
       -Ddocs=false
       -Dsystemd_user_services=false
@@ -58,13 +59,13 @@ class Tracker < Formula
 
     ENV["DESTDIR"] = "/"
 
-    system "meson", "setup", "build", *args
+    system "meson", "setup", "build", *args, *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
 
   def post_install
-    system "#{Formula["glib"].opt_bin}/glib-compile-schemas", "#{HOMEBREW_PREFIX}/share/glib-2.0/schemas"
+    system Formula["glib"].opt_bin/"glib-compile-schemas", HOMEBREW_PREFIX/"share/glib-2.0/schemas"
   end
 
   test do
@@ -114,7 +115,7 @@ class Tracker < Formula
     icu4c = deps.find { |dep| dep.name.match?(/^icu4c(@\d+)?$/) }
                 .to_formula
     ENV.prepend_path "PKG_CONFIG_PATH", icu4c.opt_lib/"pkgconfig"
-    flags = shell_output("pkg-config --cflags --libs tracker-sparql-3.0").chomp.split
+    flags = shell_output("pkgconf --cflags --libs tracker-sparql-3.0").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
   end

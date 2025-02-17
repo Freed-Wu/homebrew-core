@@ -5,15 +5,15 @@ class Ruby < Formula
   head "https://github.com/ruby/ruby.git", branch: "master"
 
   stable do
-    url "https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.6.tar.gz"
-    sha256 "8dc48fffaf270f86f1019053f28e51e4da4cce32a36760a0603a9aee67d7fd8d"
+    url "https://cache.ruby-lang.org/pub/ruby/3.4/ruby-3.4.2.tar.gz"
+    sha256 "41328ac21f2bfdd7de6b3565ef4f0dd7543354d37e96f157a1552a6bd0eb364b"
 
     # Should be updated only when Ruby is updated (if an update is available).
     # The exception is Rubygem security fixes, which mandate updating this
     # formula & the versioned equivalents and bumping the revisions.
     resource "rubygems" do
-      url "https://rubygems.org/rubygems/rubygems-3.5.23.tgz"
-      sha256 "3d277bf0b12ff46834d89b283fc451d130dbe6428d00d7ace4664c449c3ef28c"
+      url "https://rubygems.org/rubygems/rubygems-3.6.3.tgz"
+      sha256 "ed284c404da69a5fdb43c9d37b86e56f3c3f43a7bee85ac47cf2fb3a136f00ea"
 
       livecheck do
         url "https://rubygems.org/pages/download"
@@ -28,18 +28,18 @@ class Ruby < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "d1077f441bf54d6e59bdac468cd44013d218843dea36add546b8946464bc7b59"
-    sha256 arm64_sonoma:  "1d1be63045a004474d7d2f0e0607af710ef04999e70b455a7e1be7df289cc024"
-    sha256 arm64_ventura: "78f11b6782faa869e8422cf2531be7bf21447f86a563e8eae6d57d148ef2b6a7"
-    sha256 sonoma:        "9102cb5755913c088cb4fb5a9afe0188cdcf2f6b733586a3deb492b6869e8906"
-    sha256 ventura:       "f82fad313fa6e653d9d453ce21a56e16bfe6df4cd8539e883704fc1e08c680ea"
-    sha256 x86_64_linux:  "8784b621019d8580a50a588341ea83ceafded9a1f750f5ae47680a6bad89f909"
+    sha256 arm64_sequoia: "37026bde9ce9799a7078f59defa17eb765d77a85c752334f742d495fd09e2d5f"
+    sha256 arm64_sonoma:  "f54fd158d0a3f20b1b35c5fd6cdacea908e3a997115837f4561b2121fae229a2"
+    sha256 arm64_ventura: "d8d41acd1e42fbd7fc1db9ab3a993d784bf379abb35aad5eb8df5c70399c424e"
+    sha256 sonoma:        "aa415950c0d00aebde364dbb9e6d2857d4d9056b6954a583863815c9a4d172a4"
+    sha256 ventura:       "d8477d22a9673b16e47e61317a4191e35bf7cf6ad57d7949b8df2e23f5ae946d"
+    sha256 x86_64_linux:  "cb470878f6ac0aef89b8efb32fbbff282d1419b3f1df40cea409a0dfa823e2de"
   end
 
   keg_only :provided_by_macos
 
   depends_on "autoconf" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "libyaml"
   depends_on "openssl@3"
@@ -118,6 +118,19 @@ class Ruby < Formula
     # A newer version of ruby-mode.el is shipped with Emacs
     elisp.install Dir["misc/*.el"].reject { |f| f == "misc/ruby-mode.el" }
 
+    if OS.linux?
+      arch = Utils.safe_popen_read(
+        bin/"ruby", "-rrbconfig", "-e", 'print RbConfig::CONFIG["arch"]'
+      ).chomp
+      # Don't restrict to a specific GCC compiler binary we used (e.g. gcc-5).
+      inreplace lib/"ruby/#{api_version}/#{arch}/rbconfig.rb" do |s|
+        s.gsub! ENV.cxx, "c++"
+        s.gsub! ENV.cc, "cc"
+        # Change e.g. `CONFIG["AR"] = "gcc-ar-11"` to `CONFIG["AR"] = "ar"`
+        s.gsub!(/(CONFIG\[".+"\] = )"(?:gcc|g\+\+)-(.*)-\d+"/, '\\1"\\2"')
+      end
+    end
+
     return if build.head? # Use bundled RubyGems for --HEAD (will be newer)
 
     # This is easier than trying to keep both current & versioned Ruby
@@ -175,7 +188,7 @@ class Ruby < Formula
   end
 
   def rubygems_config(api_version)
-    <<~EOS
+    <<~RUBY
       module Gem
         class << self
           alias :old_default_dir :default_dir
@@ -244,7 +257,7 @@ class Ruby < Formula
           File.join(Gem.old_default_dir, "specifications", "default")
         end
       end
-    EOS
+    RUBY
   end
 
   def caveats
@@ -271,6 +284,6 @@ class Ruby < Formula
     EOS
     system bin/"bundle", "exec", "ls" # https://github.com/Homebrew/homebrew-core/issues/53247
     system bin/"bundle", "install", "--binstubs=#{testpath}/bin"
-    assert_predicate testpath/"bin/github-markup", :exist?, "github-markup is not installed in #{testpath}/bin"
+    assert_path_exists testpath/"bin/github-markup", "github-markup is not installed in #{testpath}/bin"
   end
 end

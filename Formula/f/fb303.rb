@@ -1,18 +1,18 @@
 class Fb303 < Formula
   desc "Thrift functions for querying information from a service"
   homepage "https://github.com/facebook/fb303"
-  url "https://github.com/facebook/fb303/archive/refs/tags/v2024.11.04.00.tar.gz"
-  sha256 "6003d61f184a41dbac3642870d9479d7d43152b68d44758a478ce8da3f1dcea5"
+  url "https://github.com/facebook/fb303/archive/refs/tags/v2025.02.10.00.tar.gz"
+  sha256 "7409cb710adb1fe21db4c70641f601a72068ce432f5eb13657171004cbf1e503"
   license "Apache-2.0"
   head "https://github.com/facebook/fb303.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "e64f8d3a5b54f6a2f89bbe0033a99c0dfc03b85f8feb1e78ae5abca349621996"
-    sha256 cellar: :any,                 arm64_sonoma:  "681ccda630f51b0bff1c7ac59fb08618bb9fc5f2010f0b3674a4a82a163ef949"
-    sha256 cellar: :any,                 arm64_ventura: "e3ae77b115810589015057816163789960f3dd22a25d4ad675213663d45ba51c"
-    sha256 cellar: :any,                 sonoma:        "8c183b421130e8f93101382a2be1d27bb59b1e4791ed4f9d3f3d41fcfdaea147"
-    sha256 cellar: :any,                 ventura:       "9eb95608e761d2d9b6f862fbb27a43b625a781f2f0446f3143771ff6799faf56"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fb8152557db35c7bb5332916eddea7216cdb2a93cf8e39e364e3284ec4817f0b"
+    sha256 cellar: :any,                 arm64_sequoia: "68dd96beab44c4f232986d6e705b2fa6337fcf50c6a41ee7122a10f19d80e323"
+    sha256 cellar: :any,                 arm64_sonoma:  "9aff2133fec20560e7912d0b43352472876d443f59534f3bde0c767cc0e0dc4b"
+    sha256 cellar: :any,                 arm64_ventura: "c36fb049782e86c28050e0899f85592ca127df79e7535800a14c6273b692a4ee"
+    sha256 cellar: :any,                 sonoma:        "5fb65b2369fa5f99f5397316cf43dba1b1ee8ae7b25002d64d72dafe1502f6f5"
+    sha256 cellar: :any,                 ventura:       "4e4b7acbd07162ece2802fc2172739d67e7d7da88267c87ad6070d193cbfb878"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f71e5268efbe8a7e713cc750ab77a5d341dbae60eeae3c49cc35267ba076a8fd"
   end
 
   depends_on "cmake" => :build
@@ -23,8 +23,6 @@ class Fb303 < Formula
   depends_on "gflags"
   depends_on "glog"
   depends_on "openssl@3"
-
-  fails_with gcc: "5" # C++17
 
   def install
     shared_args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]

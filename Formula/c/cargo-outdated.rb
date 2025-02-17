@@ -6,37 +6,28 @@ class CargoOutdated < Formula
   # pulls same source from crates.io. v0.15.0+ is needed to avoid an older unsupported libgit2.
   # We can switch back to GitHub releases when upstream decides to upload.
   # Issue ref: https://github.com/kbknapp/cargo-outdated/issues/388
-  url "https://static.crates.io/crates/cargo-outdated/cargo-outdated-0.15.0.crate"
-  sha256 "0641d14a828fe7dcf73e6df54d31ce19d4def4654d6fa8ec709961e561658a4d"
+  url "https://static.crates.io/crates/cargo-outdated/cargo-outdated-0.16.0.crate"
+  sha256 "965d39dfcc7afd39a0f2b01e282525fc2211f6e8acc85f1ee27f704420930678"
   license "MIT"
   revision 1
   head "https://github.com/kbknapp/cargo-outdated.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia:  "86b57b5f303ed5b7244fa35577ab22e976c93d156c98cab15fce93fa8ac3bed3"
-    sha256 cellar: :any,                 arm64_sonoma:   "bd1d9196b5442029200c34d51c23175f61c899ac4e9cc95ebbe7ff4f3641d177"
-    sha256 cellar: :any,                 arm64_ventura:  "d75a6a4ab730f471c3cebea7e2993f09454e14d9faf2162175a02bdbb1424339"
-    sha256 cellar: :any,                 arm64_monterey: "9cc2cc42be17e9f3c89c8389f4df8191e2d4eb60f9036ca79ab2e70c67bb1e51"
-    sha256 cellar: :any,                 sonoma:         "1fbf19e465ae01e3de9156a71da3a9c31a958bc81793ca981688ccee6e03b1e8"
-    sha256 cellar: :any,                 ventura:        "66736cba56267d3a8fa366e8caa54b4f327864561a984d74592a4f7cdff9997e"
-    sha256 cellar: :any,                 monterey:       "393cc224deb953a44ec760626f335df0e5fac89aac7e1a74defb7c572c27bc91"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0bb39e0bca108a5dfb5b579d31d17986faa32ea3b7d8ae486a21199de3e591b0"
+    sha256 cellar: :any,                 arm64_sequoia: "6049f49c035ed7bb3e593d48821239c93b03643ef60aacb847d86db52037c8a0"
+    sha256 cellar: :any,                 arm64_sonoma:  "d702cdb138bab9eb25da3782caaeaad6702bc604e0f99551472ac0b926557d87"
+    sha256 cellar: :any,                 arm64_ventura: "1060e9672f0ced9f9e2f62f3140c79a9561062ab24439a3c1ea669244bf323a6"
+    sha256 cellar: :any,                 sonoma:        "61985936a86ff5a4848bd6fe7c9fec1346065ec0ef16dad3ae6b880a86cd50cc"
+    sha256 cellar: :any,                 ventura:       "aea8615845515169d44ee3cbdb4cc8b29b591a0530f5142a8eaef64ee1bf5fe9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "23c83b573ccf7c64e862557f2bd62a398476ee426fb91826746f68114f0335ee"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "rustup" => :test
-  depends_on "libgit2@1.7"
+  depends_on "libgit2@1.8" # needs https://github.com/rust-lang/git2-rs/issues/1109 to support libgit2 1.9
   depends_on "openssl@3"
 
   uses_from_macos "zlib"
-
-  # rust 1.80 build patch, upstream pr ref, https://github.com/kbknapp/cargo-outdated/pull/397
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/c17b2163d305f02e8b63639bfa50fc98a74cf72b/cargo-outdated/rust-1.80.patch"
-    sha256 "6e014843621fa897952ea0ff35c44693156109db60e344190157a7805ace60c5"
-  end
 
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"
@@ -45,15 +36,9 @@ class CargoOutdated < Formula
     system "cargo", "install", *std_cargo_args
   end
 
-  def check_binary_linkage(binary, library)
-    binary.dynamically_linked_libraries.any? do |dll|
-      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
-
-      File.realpath(dll) == File.realpath(library)
-    end
-  end
-
   test do
+    require "utils/linkage"
+
     # Show that we can use a different toolchain than the one provided by the `rust` formula.
     # https://github.com/Homebrew/homebrew-core/pull/134074#pullrequestreview-1484979359
     ENV.prepend_path "PATH", Formula["rustup"].bin
@@ -82,11 +67,11 @@ class CargoOutdated < Formula
     end
 
     [
-      Formula["libgit2@1.7"].opt_lib/shared_library("libgit2"),
+      Formula["libgit2@1.8"].opt_lib/shared_library("libgit2"),
       Formula["openssl@3"].opt_lib/shared_library("libssl"),
       Formula["openssl@3"].opt_lib/shared_library("libcrypto"),
     ].each do |library|
-      assert check_binary_linkage(bin/"cargo-outdated", library),
+      assert Utils.binary_linked_to_library?(bin/"cargo-outdated", library),
              "No linkage with #{library.basename}! Cargo is likely using a vendored version."
     end
   end

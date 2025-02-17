@@ -1,18 +1,18 @@
 class BoshCli < Formula
   desc "Cloud Foundry BOSH CLI v2"
   homepage "https://bosh.io/docs/cli-v2/"
-  url "https://github.com/cloudfoundry/bosh-cli/archive/refs/tags/v7.8.2.tar.gz"
-  sha256 "bbd395478d243aef57215c963a4fd74a6e5730f8ed9d2dc966b5deae8470946a"
+  url "https://github.com/cloudfoundry/bosh-cli/archive/refs/tags/v7.9.3.tar.gz"
+  sha256 "e876b71513db424b8607333b6c87ef4880225d68fc285e8260c6b2c93cdd376e"
   license "Apache-2.0"
   head "https://github.com/cloudfoundry/bosh-cli.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f3143f60fbd320dbcf2e317b4c3192a0a2a0cfbab604442a2a3fbcdc5606daea"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f3143f60fbd320dbcf2e317b4c3192a0a2a0cfbab604442a2a3fbcdc5606daea"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "f3143f60fbd320dbcf2e317b4c3192a0a2a0cfbab604442a2a3fbcdc5606daea"
-    sha256 cellar: :any_skip_relocation, sonoma:        "0d472f83d779ac73a7917ec885ec6dfe304261fdfefeb06cde2be5aee019b95d"
-    sha256 cellar: :any_skip_relocation, ventura:       "0d472f83d779ac73a7917ec885ec6dfe304261fdfefeb06cde2be5aee019b95d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "275d03492946540082ddb79b4d1f5d0030232ca02f95fa32241d9e9cd8773690"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4628193bc6444af1905d6415ae44e212303fc1285d207d8bea9baed0551386de"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4628193bc6444af1905d6415ae44e212303fc1285d207d8bea9baed0551386de"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4628193bc6444af1905d6415ae44e212303fc1285d207d8bea9baed0551386de"
+    sha256 cellar: :any_skip_relocation, sonoma:        "53774c3322fa45478842a8614ca4f0004a0685dead6a396970951bd2baa99652"
+    sha256 cellar: :any_skip_relocation, ventura:       "53774c3322fa45478842a8614ca4f0004a0685dead6a396970951bd2baa99652"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "770d70ca708ab7bce0ee6cdc497ae74026f7e82f6b518981b4569e197aaa8240"
   end
 
   depends_on "go" => :build
@@ -25,8 +25,7 @@ class BoshCli < Formula
 
   test do
     system bin/"bosh-cli", "generate-job", "brew-test"
-    assert_equal 0, $CHILD_STATUS.exitstatus
-    assert_predicate testpath/"jobs/brew-test", :exist?
+    assert_path_exists testpath/"jobs/brew-test"
 
     assert_match version.to_s, shell_output("#{bin}/bosh-cli --version")
   end

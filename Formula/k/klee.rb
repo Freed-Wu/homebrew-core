@@ -23,7 +23,7 @@ class Klee < Formula
   depends_on "cmake" => :build
 
   depends_on "gperftools"
-  depends_on "llvm@16"
+  depends_on "llvm@16" # LLVM 17+ issue: https://github.com/klee/klee/issues/1754
   depends_on "python@3.13"
   depends_on "sqlite"
   depends_on "stp"
@@ -36,8 +36,6 @@ class Klee < Formula
     depends_on "cryptominisat"
     depends_on "minisat"
   end
-
-  fails_with gcc: "5"
 
   # klee needs a version of libc++ compiled with wllvm
   resource "libcxx" do

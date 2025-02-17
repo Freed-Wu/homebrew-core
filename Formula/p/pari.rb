@@ -1,8 +1,8 @@
 class Pari < Formula
   desc "Computer algebra system designed for fast computations in number theory"
   homepage "https://pari.math.u-bordeaux.fr/"
-  url "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.17.0.tar.gz"
-  sha256 "e723e7cef18d08c6ece2283af9a9b4d56077c22b4fce998faaa588d389b1aea8"
+  url "https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.17.1.tar.gz"
+  sha256 "67ba6f3071233725258541e4f174b5efbc64c65ae5115bade9edfc45f1fde5dc"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,18 +11,24 @@ class Pari < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "a872743b47cdc2fb07705883dd40165dca85b678d0175f90906a5e014b195ca2"
-    sha256 cellar: :any,                 arm64_sonoma:  "302862e50bd4b8364d3c37bcf605dec272524b3d8a8c3c58bf3ebb90fd2ac884"
-    sha256 cellar: :any,                 arm64_ventura: "4a5dfa16dbc234c37111d09dd4afa1d1ed83b7e263042192480066c4895c5194"
-    sha256 cellar: :any,                 sonoma:        "135c26329c52480015f9691ad86e23ee95c1998ca6bb2341d339f61c81e738c8"
-    sha256 cellar: :any,                 ventura:       "edc23f635ae0befedff9317806d862e35739f852627a5992905f4897caf76e94"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "66c539100e883305cc73cb26f21640ddd85ed78451f8bf678f1ef9f98b8a6396"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sequoia: "5d60799a5a3fe3f5b610669487587e5d341645cf4c245b8fe7522e8749dbf51c"
+    sha256 cellar: :any,                 arm64_sonoma:  "d2391b33541e3f214238fd4da4fb98be3c55c065c851e9d17a61572505fe792e"
+    sha256 cellar: :any,                 arm64_ventura: "f58bc25546277fb6993b81518243d50db1c8903d1e18c8d2b3919e0e8c0d4018"
+    sha256 cellar: :any,                 sonoma:        "2f948ff9f4bca45282200bfd756bcea0e5cbe811962a255ef9ed61f39c54358a"
+    sha256 cellar: :any,                 ventura:       "9a60e13d8c13559ef68a75add3000375ec0dddc160878b4546d5df873aa00804"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7eb4ac08a4b34cc4eda8cc2daff5378545447afb4c954e0c2929a4b34c93d580"
   end
 
   depends_on "gmp"
   depends_on "readline"
 
   def install
+    # Work around for optimization bug causing corrupted last_tmp_file
+    # Ref: https://github.com/Homebrew/homebrew-core/issues/207722
+    # Ref: https://pari.math.u-bordeaux.fr/cgi-bin/bugreport.cgi?bug=2608
+    ENV.O1 if ENV.compiler == :clang
+
     readline = Formula["readline"].opt_prefix
     gmp = Formula["gmp"].opt_prefix
     system "./Configure", "--prefix=#{prefix}",
@@ -54,5 +60,13 @@ class Pari < Formula
   test do
     (testpath/"math.tex").write "$k_{n+1} = n^2 + k_n^2 - k_{n-1}$"
     system bin/"tex2mail", testpath/"math.tex"
+
+    (testpath/"test.gp").write <<~GP
+      default(parisize,"1G");
+      default(realprecision,10);
+      dist(a,b) = sqrt(a^2+b^2);
+      print(dist(1,2));
+    GP
+    assert_equal "2.236067977\n", pipe_output("#{bin}/gp --quiet test.gp", "", 0)
   end
 end

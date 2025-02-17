@@ -1,25 +1,21 @@
 class Zizmor < Formula
   desc "Find security issues in GitHub Actions setups"
   homepage "https://github.com/woodruffw/zizmor"
-  url "https://github.com/woodruffw/zizmor/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "d65714a8d5b321d14306959ab90b22414e73b2e3aad613cd466fdb525ad2f393"
+  url "https://github.com/woodruffw/zizmor/archive/refs/tags/v1.3.1.tar.gz"
+  sha256 "a8ed1b318de38ffa2e1847ae4b66cd44324030cd0fe7239e82430341b39c16ee"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0a5a3d7bd1a5399dd0717abbc31f6c23690011c0ff3cd38fd2c16b4fb1e25d6e"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5896b65c21113a82667d6361e6b04855419fb00ac1b2d38c461b228b8a57f44d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6fea5d160c98864a1dd0d7d15231e8dd5c14c85b1a1d4b29993c2aa6b4143f0c"
-    sha256 cellar: :any_skip_relocation, sonoma:        "8dd5b886855c835244ddcef9c9a6ba049f5b390ba49f87a5440a4c4ce75786f0"
-    sha256 cellar: :any_skip_relocation, ventura:       "3bddb8c3c8b46c16d845120b4591312c8b3ad95121bab834fa07bad1cefcc671"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bc2fd4e9c39c18a645d4ef4e654f3b4b12d7a9c95fcba2f1a1791378eae6d5ea"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3781699e1c0d3d128d83cd57cd4b58894eb6ca30bec7a8fab8d7411b8cee3ac6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "1aa08421eed2afe360c33923b95522201544170e27d74ddf08024485b9a63c53"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "65ddcac82437f43fffc6db4e35ba83901c2967484c15e382c3661f829ab6533b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3d12a0b9562129e2bda19721f4dec83c040483a22120d873545715bd7291fa1e"
+    sha256 cellar: :any_skip_relocation, ventura:       "041e0b61d392fa2de3d747fea36e1ca0bdfe200b8e73c72f393ff0115c3d94f3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0ab9f69abb5c4681eda409c3c8fb84f50a8d21d1d93fd438e66ab5a1a425b797"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
-
-  on_linux do
-    depends_on "openssl@3"
-  end
 
   def install
     system "cargo", "install", *std_cargo_args
@@ -36,7 +32,7 @@ class Zizmor < Formula
               uses: actions/checkout@v4
     YAML
 
-    output = shell_output("#{bin}/zizmor --format plain #{testpath}/action.yaml")
+    output = shell_output("#{bin}/zizmor --format plain #{testpath}/action.yaml", 13)
     assert_match "does not set persist-credentials: false", output
   end
 end

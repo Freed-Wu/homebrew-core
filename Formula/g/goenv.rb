@@ -1,8 +1,8 @@
 class Goenv < Formula
   desc "Go version management"
   homepage "https://github.com/go-nv/goenv"
-  url "https://github.com/go-nv/goenv/archive/refs/tags/2.2.8.tar.gz"
-  sha256 "61cb8e4db4196cb0b11afba1169c3b2bd904023716b6377039efdd52e787a8be"
+  url "https://github.com/go-nv/goenv/archive/refs/tags/2.2.20.tar.gz"
+  sha256 "19d5891d8540e2c451ab654ea37981a41411fb7dae95fdfe41f8483838b79c4a"
   license "MIT"
   version_scheme 1
   head "https://github.com/go-nv/goenv.git", branch: "master"
@@ -13,12 +13,12 @@ class Goenv < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "d4e7d2b0c81ebe284d7a930bcc30545362dca29826cd0174afbc9c657f0a8bd3"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d4e7d2b0c81ebe284d7a930bcc30545362dca29826cd0174afbc9c657f0a8bd3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "d4e7d2b0c81ebe284d7a930bcc30545362dca29826cd0174afbc9c657f0a8bd3"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ed3fb8093f81c40839a24d1570ad63e6bf29a74cc3a12c39e6f64d869d15b0de"
-    sha256 cellar: :any_skip_relocation, ventura:       "ed3fb8093f81c40839a24d1570ad63e6bf29a74cc3a12c39e6f64d869d15b0de"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d4e7d2b0c81ebe284d7a930bcc30545362dca29826cd0174afbc9c657f0a8bd3"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c1ae31004a1d84b4f15af508db0b8d0e8ffb6e9b06480619b0ffe9ca0edee734"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "c1ae31004a1d84b4f15af508db0b8d0e8ffb6e9b06480619b0ffe9ca0edee734"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c1ae31004a1d84b4f15af508db0b8d0e8ffb6e9b06480619b0ffe9ca0edee734"
+    sha256 cellar: :any_skip_relocation, sonoma:        "51e229e4eb39cc0c857ec5dc5a4d3427e8ffdcc1da27ca7e7e5c4716f46006bd"
+    sha256 cellar: :any_skip_relocation, ventura:       "51e229e4eb39cc0c857ec5dc5a4d3427e8ffdcc1da27ca7e7e5c4716f46006bd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c1ae31004a1d84b4f15af508db0b8d0e8ffb6e9b06480619b0ffe9ca0edee734"
   end
 
   def install

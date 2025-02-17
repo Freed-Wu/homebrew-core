@@ -2,15 +2,14 @@ class Crystal < Formula
   desc "Fast and statically typed, compiled language with Ruby-like syntax"
   homepage "https://crystal-lang.org/"
   license "Apache-2.0"
-  revision 1
 
   stable do
-    url "https://github.com/crystal-lang/crystal/archive/refs/tags/1.14.0.tar.gz"
-    sha256 "85c74d8654a0e111e2eaec6de38470bc9cb6762bc5b799dd3693d18cce4bc807"
+    url "https://github.com/crystal-lang/crystal/archive/refs/tags/1.15.1.tar.gz"
+    sha256 "72b32f2da09059ca96331be124cf611d3c6bd6da80f52cd551df59bfe14e6ebd"
 
     resource "shards" do
-      url "https://github.com/crystal-lang/shards/archive/refs/tags/v0.18.0.tar.gz"
-      sha256 "46a830afd929280735d765e59d8c27ac9ba92eddde9647ae7d3fc85addc38cc5"
+      url "https://github.com/crystal-lang/shards/archive/refs/tags/v0.19.1.tar.gz"
+      sha256 "2a49e7ffa4025e0b3e8774620fa8dbc227d3d1e476211fefa2e8166dcabf82b5"
     end
   end
 
@@ -20,12 +19,12 @@ class Crystal < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "fb7272be811f1eabb551caec4311b46dbaeba5917748d83fd147a41756862de1"
-    sha256 cellar: :any,                 arm64_sonoma:  "325bbb0ee0956f7174440413476586ba7408eef5abffc07299d0d1f97150276a"
-    sha256 cellar: :any,                 arm64_ventura: "166764cd60dc9c7069e14996b5e12f79e64c928e83aad31c277c8e630a203e81"
-    sha256 cellar: :any,                 sonoma:        "23b3cae36e3456ce7d43f5dd07f950415d262daff9eba5f196e5fdfe54850cd7"
-    sha256 cellar: :any,                 ventura:       "fbc3f8bc752de8924efedb52d1521cb78002bae4af1adb4998a97f6f98b5c71d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "75e33889ed0b21da2aedad0649d92cb01d13cd51defacd9ebfea60e8cce49b4f"
+    sha256 cellar: :any,                 arm64_sequoia: "48d0c40f34fe8a56b4b9be12be92e07ca77febf8161f5ca935598369b08d77bc"
+    sha256 cellar: :any,                 arm64_sonoma:  "984846d9b3147d3ab0a541dd77133b440f35befded818d01a1d52472b67b78b7"
+    sha256 cellar: :any,                 arm64_ventura: "fb23a172caa2d2344a2b532b0534de7eff7cd7e6b76a63ad5c97e4fe879cdffe"
+    sha256 cellar: :any,                 sonoma:        "f1bee61902000836204198f5de56958e77debc7ecfed1a40001fe3e1a41fc22c"
+    sha256 cellar: :any,                 ventura:       "6429ca72f367d24837091ae59ccf014cbf053c9bacf20413df6092c29bcac607"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3fc4a30c4b4ba306b238d7de1ad46fdf65c4a3b53714c5697853c88333c3f6cf"
   end
 
   head do
@@ -43,11 +42,9 @@ class Crystal < Formula
   depends_on "llvm"
   depends_on "openssl@3" # std uses it but it's not linked
   depends_on "pcre2"
-  depends_on "pkg-config" # @[Link] will use pkg-config if available
+  depends_on "pkgconf" # @[Link] will use pkg-config if available
 
   uses_from_macos "libffi" # for the interpreter
-
-  fails_with gcc: "5"
 
   # It used to be the case that every new crystal release was built from a
   # previous release, except patches. Crystal is updating its policy to
@@ -84,8 +81,7 @@ class Crystal < Formula
   def install
     llvm = deps.find { |dep| dep.name.match?(/^llvm(@\d+)?$/) }
                .to_formula
-    non_keg_only_runtime_deps = deps.reject(&:build?)
-                                    .map(&:to_formula)
+    non_keg_only_runtime_deps = deps.filter_map { |dep| dep.to_formula unless dep.build? }
                                     .reject(&:keg_only?)
 
     resource("boot").stage "boot"

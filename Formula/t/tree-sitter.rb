@@ -1,8 +1,8 @@
 class TreeSitter < Formula
   desc "Parser generator tool and incremental parsing library"
   homepage "https://tree-sitter.github.io/"
-  url "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.24.3.tar.gz"
-  sha256 "0a8d0cf8e09caba22ed0d8439f7fa1e3d8453800038e43ccad1f34ef29537da1"
+  url "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.24.7.tar.gz"
+  sha256 "7cbc13c974d6abe978cafc9da12d1e79e07e365c42af75e43ec1b5cdc03ed447"
   license "MIT"
   head "https://github.com/tree-sitter/tree-sitter.git", branch: "master"
 
@@ -12,12 +12,12 @@ class TreeSitter < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "2a00912caca6753ad531eee46172ed9335587bacabf405cc8deb8091f1918941"
-    sha256 cellar: :any,                 arm64_sonoma:  "5bea44eda513618e12b7bf69ca1689a4d754a4f973c261ca0d4ffbc95c0f3050"
-    sha256 cellar: :any,                 arm64_ventura: "eab336b8be8cebf8aa0b47fac7c7524d3409148294ede2a372595e797e5049e5"
-    sha256 cellar: :any,                 sonoma:        "cb196846cb0c0bf1a2168112a5e171d7c61a872805348accdf38d878d2a51fa7"
-    sha256 cellar: :any,                 ventura:       "f95045d2e440439f0f2c2b7f467b20172e053be1048ec5439cbc7c7ca3bf0c0e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b3bb5e922d600521bf862ad5a83bff9215888e513f626f40bf87b0136b1407d8"
+    sha256 cellar: :any,                 arm64_sequoia: "f4106bcc8502ff2f3870340dfa9ea26a4060093916583097354c901eff3b2eee"
+    sha256 cellar: :any,                 arm64_sonoma:  "bd0b04c188211e4782d91b83afea6a9b9ebcd94eb088378003c4fcf9ba83438b"
+    sha256 cellar: :any,                 arm64_ventura: "9af3c03251e979b2f2a7249d44c94b681bd5caa68e4ca8eb4f11daa756f9e241"
+    sha256 cellar: :any,                 sonoma:        "af544600e90d4bfaf5b8ce3a0fcfb7b7734dfe3b453f619149e20ba2e5c33460"
+    sha256 cellar: :any,                 ventura:       "8b61956fff7f096d7fa467e8ee819567865fada20e0355e8ff8676a43d7d331c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1a397158b17f5a842ee334a97882ca4b9d669e8f4949191b54cc02ee248da2d8"
   end
 
   depends_on "rust" => :build
@@ -33,14 +33,14 @@ class TreeSitter < Formula
     assert_equal "tree-sitter #{version}", shell_output("#{bin}/tree-sitter --version").strip
 
     # test `tree-sitter generate`
-    (testpath/"grammar.js").write <<~EOS
+    (testpath/"grammar.js").write <<~JS
       module.exports = grammar({
         name: 'YOUR_LANGUAGE_NAME',
         rules: {
           source_file: $ => 'hello'
         }
       });
-    EOS
+    JS
     system bin/"tree-sitter", "generate", "--abi=latest"
 
     # test `tree-sitter parse`

@@ -1,19 +1,18 @@
 class Passenger < Formula
   desc "Server for Ruby, Python, and Node.js apps via Apache/NGINX"
   homepage "https://www.phusionpassenger.com/"
-  url "https://github.com/phusion/passenger/releases/download/release-6.0.23/passenger-6.0.23.tar.gz"
-  sha256 "897555224fb11340677780d929b5099da62303b1ae15f2e7c65cd3f6d3e7920c"
+  url "https://github.com/phusion/passenger/releases/download/release-6.0.25/passenger-6.0.25.tar.gz"
+  sha256 "fc5c1639f8be38343c4499b384eca9000bad39fde73ac600f3581490a2f2bdb5"
   license "MIT"
-  revision 2
   head "https://github.com/phusion/passenger.git", branch: "stable-6.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "6b4a53e0cec6621e270a47a540b90727410e81d35e446833276ae9c53c14f7d6"
-    sha256 cellar: :any,                 arm64_sonoma:  "bc55ba6287c3c632bfdaaa28c6ad2207ff412d7ac1a04dc871694ec66e7d1a6a"
-    sha256 cellar: :any,                 arm64_ventura: "48e9dd0839da3cb00b7276537bdf23eb2e7ecb8085f40897ebd9c46be9036ef8"
-    sha256 cellar: :any,                 sonoma:        "7875187776fae1b4406c82eeed49469ff4b017bbe24c7049c87cab0bd2310a00"
-    sha256 cellar: :any,                 ventura:       "80b1159b94170d94d8b9295638e6a2a02afb4a688f4e5c36b1b6624d403ad30e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6ea1b714e9b7b31d1e3771af4c5b90c7ccb811a0ada09bd779fc460f632b2d37"
+    sha256 cellar: :any,                 arm64_sequoia: "098ce7a828297b6b84944a21219b26dfe4cc25940572ac9de0e1156ec1633e94"
+    sha256 cellar: :any,                 arm64_sonoma:  "5de93a67b69cd3cd833b607f284d94cfb996106fa9cffd15f444bd6bac01318c"
+    sha256 cellar: :any,                 arm64_ventura: "5d82d9b8cc32eaa9d3a634fcb1c939282c72e3c07c5a23ea69b8e7d968797d15"
+    sha256 cellar: :any,                 sonoma:        "648c0ca288db01b18ed9a525490eccb4a65a9bab24e5366d66a633ef1e2d2106"
+    sha256 cellar: :any,                 ventura:       "4a5487674d1bb126d0ff754820f2ded939073c5c00675a9e82aee41e66a4a764"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "027cbd9468b1eca546e479993ee36181cc4add34ce135c518d2ae6c49630324c"
   end
 
   depends_on "httpd" => :build # to build the apache2 module
@@ -21,7 +20,6 @@ class Passenger < Formula
   depends_on "apr"
   depends_on "apr-util"
   depends_on "openssl@3"
-  depends_on "pcre"
   depends_on "pcre2"
 
   uses_from_macos "xz" => :build
@@ -102,9 +100,6 @@ class Passenger < Formula
 
     man1.install Dir["man/*.1"]
     man8.install Dir["man/*.8"]
-
-    # See https://github.com/Homebrew/homebrew-core/pull/84379#issuecomment-910179525
-    deuniversalize_machos
   end
 
   def caveats

@@ -1,18 +1,18 @@
 class Nuclei < Formula
   desc "HTTP/DNS scanner configurable via YAML templates"
-  homepage "https://nuclei.projectdiscovery.io/"
-  url "https://github.com/projectdiscovery/nuclei/archive/refs/tags/v3.3.5.tar.gz"
-  sha256 "aafdfd00a65c72bf1414934cc932b262316f167838835e619b7c079db825b569"
+  homepage "https://docs.projectdiscovery.io/tools/nuclei/overview"
+  url "https://github.com/projectdiscovery/nuclei/archive/refs/tags/v3.3.9.tar.gz"
+  sha256 "2eedcb04b82e8ce973eced74a2e900ab778ddb67c8f7e970b79003271a3db0c0"
   license "MIT"
   head "https://github.com/projectdiscovery/nuclei.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "03059d453a8806eed3ccd6b024ffdcc0d7e9970a6681e330bed8a5b107c9b567"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "27856237769ec57db669925a7d55f7fbf5f448f94bb65d0769f1c3bf8151d49b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a47312817cbb44e2d585837822a314705a4b88b14213db4599659f2af8001226"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5548a3a87be18a653320073ae69a520dc95edf6ce554b91cb429043391075065"
-    sha256 cellar: :any_skip_relocation, ventura:       "ab84c5f7d1261c4b8dfd7e6f58cb402a4ade469b12985293f7bdcc3685bbd063"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a46e011e0711006ad425b94d4cf4252f5688071b1bb979b4bab6e14c2880aab1"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "50af5bdc870cf0e00ff137d6d03854011b7744a74e18f6322aec6b70b6cca002"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "15529e294de392646bbf0d8f38b8ed793c45b7a743d4a9cf5cd0c758cf271cb8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c0fd4af54c44f291500882acf77e44cbc8f2f526da643dd45c1d0c02bdf71b5c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "fefff501cca7e5b099a6867b00f127940b3a1c3b26d8c10f001ac0f9f2b98934"
+    sha256 cellar: :any_skip_relocation, ventura:       "7e3787c98ef6a43e218f5e97da7a9da26a917fa4da1bb0b53f7246ac9970f0d4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c46ab40cf44f322a521e8bdbb1fa81f09e99388828c55e9f801feef300b10dd3"
   end
 
   depends_on "go" => :build

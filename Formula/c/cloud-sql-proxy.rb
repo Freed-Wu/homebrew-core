@@ -1,18 +1,18 @@
 class CloudSqlProxy < Formula
   desc "Utility for connecting securely to your Cloud SQL instances"
   homepage "https://github.com/GoogleCloudPlatform/cloud-sql-proxy"
-  url "https://github.com/GoogleCloudPlatform/cloud-sql-proxy/archive/refs/tags/v2.14.0.tar.gz"
-  sha256 "6e70f740d97ec5362f86b1e67a124524d84ea96ef942da00eb72813e8a3ed5d1"
+  url "https://github.com/GoogleCloudPlatform/cloud-sql-proxy/archive/refs/tags/v2.15.0.tar.gz"
+  sha256 "9d4d24c5e513ddef79fa0ffefa4e6a16478e8e638c560975c2ddc35dd34524dd"
   license "Apache-2.0"
   head "https://github.com/GoogleCloudPlatform/cloud-sql-proxy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0d595a8116bd7d4e23ced223d6c855cc63ebbfd7919e137852ef2bb17d04a208"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0d595a8116bd7d4e23ced223d6c855cc63ebbfd7919e137852ef2bb17d04a208"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "0d595a8116bd7d4e23ced223d6c855cc63ebbfd7919e137852ef2bb17d04a208"
-    sha256 cellar: :any_skip_relocation, sonoma:        "c02ec89449183e593641cc31905051c32111920fabdcca3585a13e2406956a44"
-    sha256 cellar: :any_skip_relocation, ventura:       "c02ec89449183e593641cc31905051c32111920fabdcca3585a13e2406956a44"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2dad6d3f3e52104da80f5395a8621fdd2435641f975c2efece2c27ccc419f9b9"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4a4030daf174cd141a365c304468402db1190e36fec4e28a05eb8d2102d3ada2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4a4030daf174cd141a365c304468402db1190e36fec4e28a05eb8d2102d3ada2"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4a4030daf174cd141a365c304468402db1190e36fec4e28a05eb8d2102d3ada2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ce0655850233742274d6087d6d2b5bd9e75ef2b1a4bdaa646aa009b20a559bea"
+    sha256 cellar: :any_skip_relocation, ventura:       "ce0655850233742274d6087d6d2b5bd9e75ef2b1a4bdaa646aa009b20a559bea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "82a720bd54521c51958d216bf99efb96e676994e84cc3fa985badd2ef4614816"
   end
 
   depends_on "go" => :build

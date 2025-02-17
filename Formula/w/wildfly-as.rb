@@ -1,8 +1,8 @@
 class WildflyAs < Formula
   desc "Managed application runtime for building applications"
   homepage "https://www.wildfly.org/"
-  url "https://github.com/wildfly/wildfly/releases/download/34.0.0.Final/wildfly-34.0.0.Final.tar.gz"
-  sha256 "374254a534cac6455897e72716d078bd58b1aa604db9e52e151279dc3626c35b"
+  url "https://github.com/wildfly/wildfly/releases/download/35.0.1.Final/wildfly-35.0.1.Final.tar.gz"
+  sha256 "45444ac28f33ee17101cf80b9eff7994f6fd0f2c8fbb4749627d9cec1cbdbc2e"
   license "Apache-2.0"
 
   livecheck do
@@ -11,11 +11,11 @@ class WildflyAs < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "6e1df42a0d83b0a82c9b0d8af053c36730269eaff6098d961a0d5c9ff5ec0dfb"
-    sha256 cellar: :any, arm64_sonoma:  "6e1df42a0d83b0a82c9b0d8af053c36730269eaff6098d961a0d5c9ff5ec0dfb"
-    sha256 cellar: :any, arm64_ventura: "6e1df42a0d83b0a82c9b0d8af053c36730269eaff6098d961a0d5c9ff5ec0dfb"
-    sha256 cellar: :any, sonoma:        "dbb39676d9e867b2c0cc3c7bdd1f045b49634337fda21d9d321740e3615bd308"
-    sha256 cellar: :any, ventura:       "dbb39676d9e867b2c0cc3c7bdd1f045b49634337fda21d9d321740e3615bd308"
+    sha256 cellar: :any, arm64_sequoia: "cfabdb1ace8a1b6622d062e99999d60561d613840e175f7e8941ecde7374300f"
+    sha256 cellar: :any, arm64_sonoma:  "cfabdb1ace8a1b6622d062e99999d60561d613840e175f7e8941ecde7374300f"
+    sha256 cellar: :any, arm64_ventura: "cfabdb1ace8a1b6622d062e99999d60561d613840e175f7e8941ecde7374300f"
+    sha256 cellar: :any, sonoma:        "afcd4c3a1465274e945bd884bfa4c5e00207eeafe3be66ed52152cc218b141df"
+    sha256 cellar: :any, ventura:       "afcd4c3a1465274e945bd884bfa4c5e00207eeafe3be66ed52152cc218b141df"
   end
 
   # Installs a pre-built `libartemis-native-64.so` file with linkage to libaio.so.1
@@ -77,6 +77,7 @@ class WildflyAs < Formula
                                             "-Djboss.server.base.dir=#{testpath}/standalone"
     end
     sleep 10
+    sleep 10 if Hardware::CPU.intel?
 
     begin
       system "curl", "-X", "GET", "localhost:#{port}/"

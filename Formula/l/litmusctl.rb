@@ -1,18 +1,18 @@
 class Litmusctl < Formula
   desc "Command-line interface for interacting with LitmusChaos"
   homepage "https://litmuschaos.io"
-  url "https://github.com/litmuschaos/litmusctl/archive/refs/tags/1.11.0.tar.gz"
-  sha256 "b982343f69196071df3cad8ad20a0397d3e64edb424d2d77b6b8f7b050e3ab6e"
+  url "https://github.com/litmuschaos/litmusctl/archive/refs/tags/1.14.0.tar.gz"
+  sha256 "a1cf50378e83cd256e96157fe86dbe3cd6ba8a5084606b90b765d17c74545ca3"
   license "Apache-2.0"
   head "https://github.com/litmuschaos/litmusctl.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4f7b88154fbee3d2fe381914d658b4d5ff8a994d9cd7bd4a57e076089db4dad7"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4f7b88154fbee3d2fe381914d658b4d5ff8a994d9cd7bd4a57e076089db4dad7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4f7b88154fbee3d2fe381914d658b4d5ff8a994d9cd7bd4a57e076089db4dad7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "0eb826d0b2be3ef79885e6073a39238f25f58b697ab863bd7dc395e64e6fef25"
-    sha256 cellar: :any_skip_relocation, ventura:       "0eb826d0b2be3ef79885e6073a39238f25f58b697ab863bd7dc395e64e6fef25"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "44ffb4fcda2e41f5c5d8b68443bc83fbce68b56a7cf5cc085d5b77d0f6bbb82a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "90fb9bef26fbb9806799163a424df6b782a3a2a6aabe25fecd46f1e71dc56bf8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "90fb9bef26fbb9806799163a424df6b782a3a2a6aabe25fecd46f1e71dc56bf8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "90fb9bef26fbb9806799163a424df6b782a3a2a6aabe25fecd46f1e71dc56bf8"
+    sha256 cellar: :any_skip_relocation, sonoma:        "08ce60980771acf45114ad7638bf71362ab6915aac532cb558da91b404d0bae3"
+    sha256 cellar: :any_skip_relocation, ventura:       "08ce60980771acf45114ad7638bf71362ab6915aac532cb558da91b404d0bae3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "56e20b89e4d92a491e12404ece0a0726f9fa5afd0e4741923473c2e8b1aed3fe"
   end
 
   depends_on "go" => :build
@@ -20,6 +20,8 @@ class Litmusctl < Formula
   def install
     ldflags = "-s -w -X main.CLIVersion=#{version}"
     system "go", "build", *std_go_args(ldflags:)
+
+    generate_completions_from_executable(bin/"litmusctl", "completion")
   end
 
   test do

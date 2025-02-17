@@ -1,9 +1,9 @@
 class Mame < Formula
   desc "Multiple Arcade Machine Emulator"
   homepage "https://mamedev.org/"
-  url "https://github.com/mamedev/mame/archive/refs/tags/mame0271.tar.gz"
-  version "0.271"
-  sha256 "79960f4c57715b2d08c3eba12933d04dd91ad1d95b0c1059306a75bf07fd6027"
+  url "https://github.com/mamedev/mame/archive/refs/tags/mame0274.tar.gz"
+  version "0.274"
+  sha256 "f8112eb0b175935cf6db93f708186dcaeec5a89400ecf3d5782fd2c0b94907c8"
   license "GPL-2.0-or-later"
   head "https://github.com/mamedev/mame.git", branch: "master"
 
@@ -19,17 +19,17 @@ class Mame < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "4c06ec92104a1def0cc5fbf66be4fc05f716971ecaa7605329352838f42a1dee"
-    sha256 cellar: :any,                 arm64_sonoma:  "438c3eb0bcfa3854e63159c2df4b1f91f7ab9b85ba618d12adddcc4a3bb2e810"
-    sha256 cellar: :any,                 arm64_ventura: "03013bf23127e61c9b9ed0383c5755f7fe2d5013f1fc58250e06f0be38a3b8c7"
-    sha256 cellar: :any,                 sonoma:        "8ae26a6e52af24a80d89be9bc8190dfcd2d5f1518bce7cf70d6f56e0b5af2670"
-    sha256 cellar: :any,                 ventura:       "39423f7dd71ff42d89f0ee44389f157f85e1b4c87e682255eead6fb2a490f8ca"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "daa53875a6cb637119d6ef09ee23908d7a01acd2006b4ffd2cfd850e687b3a8b"
+    sha256 cellar: :any,                 arm64_sequoia: "e268028e7aef29387ac172773a2ee5d03cd3403f5b8a97cce4579ae006bec5b4"
+    sha256 cellar: :any,                 arm64_sonoma:  "3eada365005eade9fedfd9cc5c53c7c49abd24fea1170de23056ecad0dd19f09"
+    sha256 cellar: :any,                 arm64_ventura: "dbd9341a1cc2c188815c5bab660a28b7adae9e17aab1fe9ebafbb1c5eafb6f57"
+    sha256 cellar: :any,                 sonoma:        "049d0b2de47e41ab350aeb1de2bf6eeb892e73be613e65e8d74df82519131724"
+    sha256 cellar: :any,                 ventura:       "896825ca6de93af5f44aef0853593db98ef6dc069e99a208df9ac93440f5907d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "07339b35fea1846d8357a57bee12eb3a454b38d465fcd88fa29c429f80e49c9e"
   end
 
   depends_on "asio" => :build
   depends_on "glm" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rapidjson" => :build
   depends_on "sphinx-doc" => :build
   depends_on "flac"

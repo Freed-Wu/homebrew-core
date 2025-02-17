@@ -1,21 +1,20 @@
 class JoplinCli < Formula
   desc "Note taking and to-do application with synchronization capabilities"
   homepage "https://joplinapp.org/"
-  url "https://registry.npmjs.org/joplin/-/joplin-3.0.1.tgz"
-  sha256 "86217bd4b98a6a9e6b31ee3c716f6f83e2b90ff600bc436b47a428842494b5d4"
+  url "https://registry.npmjs.org/joplin/-/joplin-3.2.3.tgz"
+  sha256 "7dffd1f21357f306958eed02a79ac1223e69b847ae55ddbd613fb1564f9cf2b4"
   license "MIT"
 
   bottle do
-    rebuild 2
-    sha256                               arm64_sequoia: "ef52961768cf19e1ae2b2fe9ae69e0d45e55fd06eae126e3cedfb19bc8f8ddf1"
-    sha256                               arm64_sonoma:  "87e1f9bd03fa1eca5a6680739cd6cbd76872750194dca1bdba2593e3e8addf52"
-    sha256                               arm64_ventura: "25fc7404867f2ea85f84a37ce14bb81eee7d3f4e4eabfd0db0be60e3b1a6910d"
-    sha256                               sonoma:        "dd3f5f4c75acb229cd3145a733ede897363144e029845b3a50193e460012e1ff"
-    sha256                               ventura:       "cb4c150b0a7ec1fecc06804fe287d863d9f80e6ad734a914258f4d7fd9a1b6be"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7b1f734064440c1e742dbeb9bc55c4f633c1393783b70fc88deec51a990abeeb"
+    sha256                               arm64_sequoia: "3a0fb70e37cfacdd16fc7133f4a0339be831a945fed530e5ade41f622c7a8a21"
+    sha256                               arm64_sonoma:  "b9ba88cdbbd8809006f2b8bf0a61d8cb89703213a03b3799ccb9b0b92b99990b"
+    sha256                               arm64_ventura: "8dc693cfcfd51ee835358b03a1fa11db7497689aec6a8e6373b81601c15481fb"
+    sha256                               sonoma:        "e31ded0565672883780bda90b5af4e0a09ade984ec18896d648d411d234719df"
+    sha256                               ventura:       "e14c0abb59664e2e479cc0b98f54706702f3cc52a9ca9854991424c7abc48a58"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1d985598b03af1e5f55f80e87931e9d3b9e1d48f153c14693a20f25d7967c53b"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "python-setuptools" => :build # for node-gyp
   depends_on "python@3.13" => :build
   depends_on "glib"

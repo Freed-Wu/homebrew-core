@@ -1,20 +1,22 @@
 class Cdxgen < Formula
   desc "Creates CycloneDX Software Bill-of-Materials (SBOM) for projects"
   homepage "https://github.com/CycloneDX/cdxgen"
-  url "https://registry.npmjs.org/@cyclonedx/cdxgen/-/cdxgen-10.11.0.tgz"
-  sha256 "c63f10b072d669885701ce7cb2d9afecfe4e402a8f8b12dd84ba7644f8d53199"
+  url "https://registry.npmjs.org/@cyclonedx/cdxgen/-/cdxgen-11.1.8.tgz"
+  sha256 "14fac344f709b5a8e065b6074f7cca196cc650dea40499cc290fd816e699429e"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "95ebc17376f786ebb230bbfab82e0eda301ca849ecb2e612ec7f3141613e319d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "0b31fab867e9cfc9a86b2106806f88640992cb077ac2fdf43e0f1d4f3c2d8476"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "93e87f1c3225af1bb06361a421a5efb32191c3cb85db3e19740bdcef5a288b37"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b8f8a024139914e8acb42da8f737f1ed5fd53b652d473b809c4f8425f6442f35"
-    sha256 cellar: :any_skip_relocation, ventura:       "bac4be1539f11545c74e1c089e7577128bd7396a13ad8c27a66e2f127faabcbd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9f2a3bc9ff05d623e53a72fa1a3d01de40a6ab48164647f80033f564f63f73cc"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "04b77b5697a8430d3b3e82e6b67d044fec8893b6fb43b3bd5a45b8f42cf894dc"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "391b1c3d71d5833c62b8230e433527819204768b26e38a64ec2df53f7748f7c5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "05da96bdc0a223b39d7bc127b5e676c3f048d31bd190166c097d751a725c305d"
+    sha256 cellar: :any_skip_relocation, sonoma:        "26af843d5197aba53928a6e97622275e4285dec03415c9fba6581c52324819ea"
+    sha256 cellar: :any_skip_relocation, ventura:       "b6d7f07c3335839b222391e25f7b14a3c3c69f01dd3d76e2fd25156f503503d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0fc711d2fe1b77cd9883f464b17606cfae8d7e9df26189e1475c8c5c1021e077"
   end
 
   depends_on "node"
+
+  uses_from_macos "ruby"
 
   def install
     system "npm", "install", *std_npm_args
@@ -30,6 +32,10 @@ class Cdxgen < Formula
 
       rm f
     end
+
+    # Remove pre-built osquery plugins for macOS arm builds
+    osquery_plugins = node_modules/"@cyclonedx/cdxgen-plugins-bin-darwin-arm64/plugins/osquery"
+    rm_r(osquery_plugins) if OS.mac? && Hardware::CPU.arm?
   end
 
   test do

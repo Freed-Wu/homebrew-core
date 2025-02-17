@@ -1,17 +1,18 @@
 class Rye < Formula
-  desc "Experimental Package Management Solution for Python"
-  homepage "https://rye-up.com/"
-  url "https://github.com/astral-sh/rye/archive/refs/tags/0.42.0.tar.gz"
-  sha256 "71b61b8ef6b2aa1c9633b18e72d2f2b06fd3f47264cf276bc7f65e4ec0b1c7af"
+  desc "Package Management Solution for Python (consider the successor \"uv\" instead)"
+  homepage "https://rye.astral.sh/"
+  url "https://github.com/astral-sh/rye/archive/refs/tags/0.43.0.tar.gz"
+  sha256 "e4106514141a2369802852346ad652f9b10d30b42e89d2e8e6c4a1dcbc65db6b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "2a2a41e057e4b94d62ac68b66a166db48b27cf62ea26dbbe8e3eb6b9e0d56121"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "6ccbeec24953d010cb0871a4a38d3edd59459fc67ce8564ea16946af84e154f6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a6d2e9e9101a5e7c2012fab9839e89e2a13fe5cfebdcc163fd2209dd398911c4"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b80c7bfd8057edd00512624295a85981998c3fca20dc979dfff9c0ac37c3ff69"
-    sha256 cellar: :any_skip_relocation, ventura:       "c38f22278fdb7573997f955a56f5d507f9d6d6b4e9959946bfbfa671346d3c08"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d9c176fb98283e386f377e1fa2e2a39bd0597572daecbd27098f2ff387aa9fc1"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8738dbbddc915bc6f23f256396423e4a9f723eef7925b30457ba0a35e1ba65d0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "af7fa020f3f928eba9626f7561ba901415e8aaac93a1e1a20004cb504474134b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "efc7b793ab8ee7beb7b37c8b29b1d4d6f79d97bd64dbfe00af85ef9130ed97f5"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d0c3950c924c3a54493a32aa22aae2d87e7d01bd8460a10b9461051edd0a75f2"
+    sha256 cellar: :any_skip_relocation, ventura:       "99aeeaac2232d2888854bdd2a12ffcf90fb23c2837fdc64d4c679a77ad80be38"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c848dd8dda2193696a7f30ffcfa6aa8de93ec4b549968ec38d254781752ab46a"
   end
 
   depends_on "rust" => :build
@@ -20,9 +21,11 @@ class Rye < Formula
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "openssl@3"
   end
+
+  conflicts_with "ryelang", because: "both install `rye` binaries"
 
   def install
     system "cargo", "install", *std_cargo_args(path: "rye")

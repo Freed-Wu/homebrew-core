@@ -1,8 +1,8 @@
 class Kdoctools < Formula
   desc "Create documentation from DocBook"
   homepage "https://api.kde.org/frameworks/kdoctools/html/index.html"
-  url "https://download.kde.org/stable/frameworks/6.7/kdoctools-6.7.0.tar.xz"
-  sha256 "9fe539dffed01836940fa4f06f953ac4ed0cd4fb5f0232fe5b66c22364c1692f"
+  url "https://download.kde.org/stable/frameworks/6.11/kdoctools-6.11.0.tar.xz"
+  sha256 "dfcdc6a0258f5cc2e55d248f616cc7c6224e1b06140deb687e401b537959fc08"
   license all_of: [
     "BSD-3-Clause",
     "GPL-2.0-or-later",
@@ -17,11 +17,11 @@ class Kdoctools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "fc66c06f743698ba7cb97a25c398ce02669a58b0498401f79c43d0edd5f86a5c"
-    sha256 cellar: :any,                 arm64_ventura: "28c1e4e9fa096faeb03913530217df5dfa31070624bbe437bc5e8d648eb8dc66"
-    sha256 cellar: :any,                 sonoma:        "3c24ed05f491c6e894e3616960ca2038c6e77e6313ccdaa0164750652489eb31"
-    sha256 cellar: :any,                 ventura:       "be379ac737146c4c78e1825311704110e26f153d6d2d7914bb1ffa7d70efc085"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "dc208862a9e5bca6f648b859c3734add271f1b587e6fe5a1453912c1896c0fa9"
+    sha256 cellar: :any,                 arm64_sonoma:  "f0d0f0bae06e221503bc427eacc6093ce3ba17c6c7edaec96f2db5a5a8feb110"
+    sha256 cellar: :any,                 arm64_ventura: "fcc434ad7c622725754ecbdff9f57245d7fdc0248fc66ef49c5a172d8e3f8b7d"
+    sha256 cellar: :any,                 sonoma:        "0c51d065f88ab1974a5a51ad8e638183781485f1ce4fec635c648ba252d0a5d6"
+    sha256 cellar: :any,                 ventura:       "937cabed4605e87414e999865d60cafe8c20d69fb11454e57a1a6cd91a0397a7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "06d91da95cde53f5bf4b8136078b3d2c7ddd7315ad6e0de9716e902adbca2fd0"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -36,8 +36,6 @@ class Kdoctools < Formula
   uses_from_macos "libxml2"
   uses_from_macos "libxslt"
   uses_from_macos "perl"
-
-  fails_with gcc: "5"
 
   resource "URI::Escape" do
     on_linux do

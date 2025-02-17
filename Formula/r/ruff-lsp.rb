@@ -3,20 +3,22 @@ class RuffLsp < Formula
 
   desc "Language Server Protocol implementation for Ruff"
   homepage "https://github.com/astral-sh/ruff-lsp"
-  url "https://files.pythonhosted.org/packages/0d/3b/d77cba8ed4c92732d540f5384afdbcf08e742d14ad9c2e93c1c5d4764a9c/ruff_lsp-0.0.58.tar.gz"
-  sha256 "378db39955b32260473602b531dc6333d6686d1d8956673ef1c5203e08132032"
+  url "https://files.pythonhosted.org/packages/8c/36/d1dae5ae5cc7b9da0d4aebb0f579dc9154f588e76280dbbe51141f1ffdfc/ruff_lsp-0.0.61.tar.gz"
+  sha256 "4a1704dc96dc1353557b5edd0733768f3948cfc92042fd332927648e080754bc"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "b3f636d714bec4633fc10c36ffc6adfd56919a5c1211cc069e6eb0f52d3ea679"
+    sha256 cellar: :any_skip_relocation, all: "9923bd6918b8ee785e265492ded1e3422e9e2f4ea2dfcbed11801acde3a3751c"
   end
+
+  deprecate! date: "2025-02-06", because: :deprecated_upstream, replacement: "ruff"
 
   depends_on "python@3.13"
   depends_on "ruff"
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/fc/0f/aafca9af9315aee06a89ffde799a10a582fe8de76c563ee80bbcdc08b3fb/attrs-24.2.0.tar.gz"
-    sha256 "5cfb1b9148b5b086569baec03f20d7b6bf3bcacc9a42bebf87ffaaca362f6346"
+    url "https://files.pythonhosted.org/packages/49/7c/fdf464bcc51d23881d110abd74b512a42b3d5d376a55a831b44c603ae17f/attrs-25.1.0.tar.gz"
+    sha256 "1c97078a80c814273a76b2a298a932eb681c87415c11dee0a6921de7f1b02c3e"
   end
 
   resource "cattrs" do
@@ -30,8 +32,8 @@ class RuffLsp < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pygls" do

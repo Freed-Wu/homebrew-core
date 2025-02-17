@@ -3,20 +3,18 @@ class Cf2tf < Formula
 
   desc "Cloudformation templates to Terraform HCL converter"
   homepage "https://github.com/DontShaveTheYak/cf2tf"
-  url "https://files.pythonhosted.org/packages/52/00/94c12acc1ed644df1c3ee658068929c33863fccfdd2f8ab9236d58eb4496/cf2tf-0.8.0.tar.gz"
-  sha256 "f36bbf5abacdf70baeb12529a7ae4ba1c5f748112c240bef4a5ed0e0e654f44c"
+  url "https://files.pythonhosted.org/packages/ba/c4/cd7ddd8c942b71a2db200c42e9ed8c336111db94e2399d3903db6e77eef2/cf2tf-0.9.1.tar.gz"
+  sha256 "cc334b8373412745b3790bed9db71e02d4c41e274e1774b3b23626bdd78bf357"
   license "GPL-3.0-only"
-  revision 2
   head "https://github.com/DontShaveTheYak/cf2tf.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia: "fdf7e3468b13c630f1800649353a4ed8b78ce1c595b9acc748e2d63bbca67c84"
-    sha256 cellar: :any,                 arm64_sonoma:  "62f2649d42fe4e42597d6f8135aa3f5cc851d59d477240724c034286ffdb211d"
-    sha256 cellar: :any,                 arm64_ventura: "2f4439a21605763fd2e9fe7d8c283d5d13b467dc060f409673d6fd5b8e0aa942"
-    sha256 cellar: :any,                 sonoma:        "bdd998c6cf8fdc351cb65918f8eb45b72da43026dddd3b54dc5a18c93a71e2a6"
-    sha256 cellar: :any,                 ventura:       "97e99e2dc3b98b3da83c1a881385649be0cf326a06b1bf0967c2dea50641a163"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0bc8b1c28a76c27344d84ea60cd25611eea17143634864f2f54de5f2511c0cc7"
+    sha256 cellar: :any,                 arm64_sequoia: "a7f3e07e109017529ba8ecedc9b33222576154a17cf777e4eff48b1feedee56f"
+    sha256 cellar: :any,                 arm64_sonoma:  "7d0f05caa33598ec57622a5b62de2edddc863d73cef3b825eb6e8d246993529e"
+    sha256 cellar: :any,                 arm64_ventura: "81b665a7756eb719629819634b44a24989cfcc62e0d7c04578eddbfdd940a3d0"
+    sha256 cellar: :any,                 sonoma:        "36d96d9198905f6ca8c46b79f6167be43be6ec405bbde1f2d0fab2cf713af9e6"
+    sha256 cellar: :any,                 ventura:       "05763dae150a03507944088c2b638ec92d8e16cce8f3f7d39de05f651cee5044"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8bcc59e926687dbdb01fb502547651bc46ff42657513ebdb726db020fc7dce30"
   end
 
   depends_on "cmake" => :build
@@ -30,13 +28,13 @@ class Cf2tf < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/f2/4f/e1808dc01273379acc506d18f1504eb2d299bd4131743b9fc54d7be4df1e/charset_normalizer-3.4.0.tar.gz"
-    sha256 "223217c3d4f82c3ac5e29032b3f1c2eb0fb591b72161f86d93f5719079dae93e"
+    url "https://files.pythonhosted.org/packages/16/b0/572805e227f01586461c80e0fd25d65a2115599cc9dad142fee4b747c357/charset_normalizer-3.4.1.tar.gz"
+    sha256 "44251f18cd68a75b56585dd00dae26183e102cd5e0f9f1466e6df5da2ed64ea3"
   end
 
   resource "click" do
-    url "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz"
-    sha256 "ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"
+    url "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz"
+    sha256 "ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a"
   end
 
   resource "click-log" do
@@ -45,13 +43,13 @@ class Cf2tf < Formula
   end
 
   resource "gitdb" do
-    url "https://files.pythonhosted.org/packages/19/0d/bbb5b5ee188dec84647a4664f3e11b06ade2bde568dbd489d9d64adef8ed/gitdb-4.0.11.tar.gz"
-    sha256 "bf5421126136d6d0af55bc1e7c1af1c397a34f5b7bd79e776cd3e89785c2b04b"
+    url "https://files.pythonhosted.org/packages/72/94/63b0fc47eb32792c7ba1fe1b694daec9a63620db1e313033d18140c2320a/gitdb-4.0.12.tar.gz"
+    sha256 "5ef71f855d191a3326fcfbc0d5da835f26b13fbcba60c32c21091c349ffdb571"
   end
 
   resource "gitpython" do
-    url "https://files.pythonhosted.org/packages/b6/a1/106fd9fa2dd989b6fb36e5893961f82992cf676381707253e0bf93eb1662/GitPython-3.1.43.tar.gz"
-    sha256 "35f314a9f878467f5453cc1fee295c3e18e52f1b99f10f6cf5b1682e968a9e7c"
+    url "https://files.pythonhosted.org/packages/c0/89/37df0b71473153574a5cdef8f242de422a0f5d26d7a9e231e6f169b4ad14/gitpython-3.1.44.tar.gz"
+    sha256 "c87e30b26253bf5418b01b0660f818967f3c503193838337fe5e573331249269"
   end
 
   resource "idna" do
@@ -65,8 +63,8 @@ class Cf2tf < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
-    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
+    url "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz"
+    sha256 "c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"
   end
 
   resource "pluggy" do
@@ -75,8 +73,8 @@ class Cf2tf < Formula
   end
 
   resource "pytest" do
-    url "https://files.pythonhosted.org/packages/8b/6c/62bbd536103af674e227c41a8f3dcd022d591f6eed5facb5a0f31ee33bbc/pytest-8.3.3.tar.gz"
-    sha256 "70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181"
+    url "https://files.pythonhosted.org/packages/05/35/30e0d83068951d90a01852cb1cef56e5d8a09d20c7f511634cc2f7e0372a/pytest-8.3.4.tar.gz"
+    sha256 "965370d062bce11e73868e0335abac31b4d3de0e82f4007408d242b4f8610761"
   end
 
   resource "pyyaml" do
@@ -85,8 +83,8 @@ class Cf2tf < Formula
   end
 
   resource "rapidfuzz" do
-    url "https://files.pythonhosted.org/packages/81/43/ce16df67029b8e4f528fd1b3fbe5e9fcfc6fcc16823c66349260dd93750e/rapidfuzz-3.10.0.tar.gz"
-    sha256 "6b62af27e65bb39276a66533655a2fa3c60a487b03935721c45b7809527979be"
+    url "https://files.pythonhosted.org/packages/c9/df/c300ead8c2962f54ad87872e6372a6836f0181a7f20b433c987bd106bfce/rapidfuzz-3.12.1.tar.gz"
+    sha256 "6a98bbca18b4a37adddf2d8201856441c26e9c981d8895491b5bc857b5f780eb"
   end
 
   resource "requests" do
@@ -95,13 +93,13 @@ class Cf2tf < Formula
   end
 
   resource "six" do
-    url "https://files.pythonhosted.org/packages/71/39/171f1c67cd00715f190ba0b100d606d440a28c93c7714febeca8b79af85e/six-1.16.0.tar.gz"
-    sha256 "1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"
+    url "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz"
+    sha256 "ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"
   end
 
   resource "smmap" do
-    url "https://files.pythonhosted.org/packages/88/04/b5bf6d21dc4041000ccba7eb17dd3055feb237e7ffc2c20d3fae3af62baa/smmap-5.0.1.tar.gz"
-    sha256 "dceeb6c0028fdb6734471eb07c0cd2aae706ccaecab45965ee83f11c8d3b1f62"
+    url "https://files.pythonhosted.org/packages/44/cd/a040c4b3119bbe532e5b0732286f805445375489fceaec1f48306068ee3b/smmap-5.0.2.tar.gz"
+    sha256 "26ea65a03958fa0c8a1c7e8c7a58fdc77221b8910f6be2131affade476898ad5"
   end
 
   resource "thefuzz" do
@@ -110,8 +108,8 @@ class Cf2tf < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/ed/63/22ba4ebfe7430b76388e7cd448d5478814d3032121827c12a2cc287e2260/urllib3-2.2.3.tar.gz"
-    sha256 "e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9"
+    url "https://files.pythonhosted.org/packages/aa/63/e53da845320b757bf29ef6a9062f5c669fe997973f966045cb019c3f4b66/urllib3-2.3.0.tar.gz"
+    sha256 "f8c5449b3cf0861679ce7e0503c7b44b5ec981bec0d1d3795a07f1ba96f0204d"
   end
 
   def install
@@ -121,7 +119,7 @@ class Cf2tf < Formula
   end
 
   test do
-    (testpath/"test.yaml").write <<~EOS
+    (testpath/"test.yaml").write <<~YAML
       AWSTemplateFormatVersion: '2010-09-09'
       Description: 'Hello World S3 Bucket CloudFormation Stack'
       Resources:
@@ -130,14 +128,14 @@ class Cf2tf < Formula
           Properties:
             BucketName: hello-world-s3-bucket
             AccessControl: PublicRead
-    EOS
+    YAML
 
-    expected = <<~EOS
+    expected = <<~HCL
       resource "aws_s3_bucket" "hello_world_s3_bucket" {
         bucket = "hello-world-s3-bucket"
         acl = "public-read"
       }
-    EOS
+    HCL
 
     system bin/"cf2tf", "test.yaml", "-o", testpath
     assert_match expected, (testpath/"resource.tf").read

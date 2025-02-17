@@ -1,6 +1,6 @@
 class Ifuse < Formula
   desc "FUSE module for iOS devices"
-  homepage "https://www.libimobiledevice.org/"
+  homepage "https://libimobiledevice.org/"
   url "https://github.com/libimobiledevice/ifuse/archive/refs/tags/1.1.4.tar.gz"
   sha256 "2a00769e8f1d8bad50898b9d00baf12c8ae1cda2d19ff49eaa9bf580e5dbe78c"
   license "LGPL-2.1-or-later"
@@ -15,7 +15,7 @@ class Ifuse < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "libfuse@2"
   depends_on "libimobiledevice"

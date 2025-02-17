@@ -1,24 +1,22 @@
 class Stgit < Formula
   desc "Manage Git commits as a stack of patches"
   homepage "https://stacked-git.github.io"
-  url "https://github.com/stacked-git/stgit/releases/download/v2.4.12/stgit-2.4.12.tar.gz"
-  sha256 "78e57becdf234bf3396f4271b32e9c2e44ef03204ad1b2494ee347b22f34f786"
+  url "https://github.com/stacked-git/stgit/releases/download/v2.5.2/stgit-2.5.2.tar.gz"
+  sha256 "3938154a9c3a7be958e2d747bc6a232029156d051b72aaa3f02a86fe6349db35"
   license "GPL-2.0-only"
   head "https://github.com/stacked-git/stgit.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "ed27903a4ea3cd3095848af457761a8036b35c8f15547fe34ea9ede13608ca97"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "98635dcc816c2edb4f918c6636dc5972b0e2479090e469cc754201576fe65af5"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b75458852972d1216ffc523044d16ce37838f345fd46ed09a8270f825f8d9e2d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "48ab6b54cbb091457fe22323ea8da1dc81beb270df8afc63da609c8447d7c845"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0eded4fff5e0349d544b686bba62cb7138d7cad49856707acd2c45b86417d377"
-    sha256 cellar: :any_skip_relocation, ventura:        "8d1de537506841b95835671c19fa5d284c29c0bf53beb32110e146c7c370b917"
-    sha256 cellar: :any_skip_relocation, monterey:       "1430445be35828b0c38c68365969e77b070d5486db42b809dcd5fa070570e7ef"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9b0257d2ec41199c32d8f2c3701994732bfabfbec92fbdf9138e169d03306d7a"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1d348a4dbc0124bcf66a6446da477e5c81532b9a1cc90db647084f19cb4689a9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "05fc5caa533922709b44a460a7fc9a036e488ff6e8532eb90349493843f8564b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "93792cc59797ce9ac4d7300c90de0eb3aae9f6ebb028bc10566fcdb51ad6795e"
+    sha256 cellar: :any_skip_relocation, sonoma:        "fd23c619fc7593a7eb3e7c881f4b241277b79c965de2a6db7d4bee77215cd683"
+    sha256 cellar: :any_skip_relocation, ventura:       "4dfd6a143eeb5a749fa31dab4d1cc264609b003ff2722826c0bc6fa7a01c3449"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "0d5fc1698a8a666c48688099a109df8b189a899862cfc1194328bd8a949274c6"
   end
 
   depends_on "asciidoc" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "xmlto" => :build
   depends_on "git"

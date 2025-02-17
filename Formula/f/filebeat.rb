@@ -2,45 +2,44 @@ class Filebeat < Formula
   desc "File harvester to ship log files to Elasticsearch or Logstash"
   homepage "https://www.elastic.co/products/beats/filebeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v8.15.3",
-      revision: "bbed3ae55602e83f57c62de85b57a3593aa49efa"
+      tag:      "v8.17.2",
+      revision: "cf5c18e080581711e9189290187fbd721e962fac"
   # Outside of the "x-pack" folder, source code in a given file is licensed
   # under the Apache License Version 2.0
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b79751cafb036a6e40836d35a788d3e9401aef9e95e388011e96f984d18c09e6"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "33af33cf02e034a06050c0e0d2beefa48ed2bed144ceea7b27ca23ae077c1cd3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "a02b939ebf5a129ab1cef3342c7cb6146ce52118d5ffc66bc0257478764b1646"
-    sha256 cellar: :any_skip_relocation, sonoma:        "7cbffe0aab79f276e53990a86882dcadd829f2bb97ec018a7e5c6736b2d317d4"
-    sha256 cellar: :any_skip_relocation, ventura:       "8d4df125b1704af1b950bbc2beb756af809a477ef8d7b2970fe43e5d61752803"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8bb3a9f4c6c1ee3097485fffe4a63ee19a255ec62e05f2b7bc5be57d34f64a83"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "65517e375bdd1bb38fc0d9c522ebf0af3b38376d49b79ea998c37cb167eacc7f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ed7282aa83d5035155c5d531ba9700ef8563de2e61462d3203b87055c23d491f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "316176559d9ae3ba623b8044b8ee5e427f45f3aded3ffea688f08827df6f48de"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1ea41f227260b578f8c820791b6b97621418d7440685783bda743b1977e65215"
+    sha256 cellar: :any_skip_relocation, ventura:       "40c66f58a9295c25d976e6a260b38924b8d884b1041705ddc81473107778fb2d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ac5e3dfb878687794bf4d8596f3cd0d02d2e46b0a53e8ff7f1f900b91311a0b9"
   end
 
   depends_on "go" => :build
   depends_on "mage" => :build
-  depends_on "python@3.12" => :build
-
-  uses_from_macos "rsync" => :build
 
   def install
     # remove non open source files
     rm_r("x-pack")
 
+    # remove requirements.txt files so that build fails if venv is used.
+    # currently only needed by docs/tests
+    rm buildpath.glob("**/requirements.txt")
+
     cd "filebeat" do
       # don't build docs because it would fail creating the combined OSS/x-pack
       # docs and we aren't installing them anyway
-      inreplace "magefile.go", "mg.SerialDeps(Fields, Dashboards, Config, GenerateModuleIncludeListGo, fieldDocs,",
-                               "mg.SerialDeps(Fields, Dashboards, Config, GenerateModuleIncludeListGo,"
+      inreplace "magefile.go", /GenerateModuleIncludeListGo, fieldDocs,\s*filebeat\.CollectDocs,/,
+                               "GenerateModuleIncludeListGo,"
 
-      # prevent downloading binary wheels during python setup
-      system "make", "PIP_INSTALL_PARAMS=--no-binary :all", "python-env"
       system "mage", "-v", "build"
       system "mage", "-v", "update"
 
-      (etc/"filebeat").install Dir["filebeat.*", "fields.yml", "modules.d"]
-      (etc/"filebeat"/"module").install Dir["build/package/modules/*"]
+      pkgetc.install Dir["filebeat.*"], "fields.yml", "modules.d"
+      (pkgetc/"module").install Dir["build/package/modules/*"]
       (libexec/"bin").install "filebeat"
       prefix.install "build/kibana"
     end
@@ -67,7 +66,7 @@ class Filebeat < Formula
     log_file = testpath/"test.log"
     touch log_file
 
-    (testpath/"filebeat.yml").write <<~EOS
+    (testpath/"filebeat.yml").write <<~YAML
       filebeat:
         inputs:
           -
@@ -77,18 +76,16 @@ class Filebeat < Formula
       output:
         file:
           path: #{testpath}
-    EOS
+    YAML
 
     (testpath/"log").mkpath
     (testpath/"data").mkpath
 
-    fork do
-      exec bin/"filebeat", "-c", "#{testpath}/filebeat.yml",
-           "-path.config", "#{testpath}/filebeat",
-           "-path.home=#{testpath}",
-           "-path.logs", "#{testpath}/log",
-           "-path.data", testpath
-    end
+    pid = spawn bin/"filebeat", "-c", "#{testpath}/filebeat.yml",
+                                "--path.config", "#{testpath}/filebeat",
+                                "--path.home=#{testpath}",
+                                "--path.logs", "#{testpath}/log",
+                                "--path.data", testpath
 
     sleep 1
     log_file.append_lines "foo bar baz"
@@ -96,5 +93,8 @@ class Filebeat < Formula
 
     assert_predicate testpath/"meta.json", :exist?
     assert_predicate testpath/"registry/filebeat", :exist?
+  ensure
+    Process.kill("TERM", pid)
+    Process.wait(pid)
   end
 end

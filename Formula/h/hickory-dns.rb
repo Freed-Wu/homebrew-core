@@ -1,30 +1,18 @@
 class HickoryDns < Formula
   desc "Rust based DNS client, server, and resolver"
   homepage "https://github.com/hickory-dns/hickory-dns"
+  url "https://github.com/hickory-dns/hickory-dns/archive/refs/tags/v0.24.3.tar.gz"
+  sha256 "820dc9ccc2db9d87ebe2e7e07aedbae45dfe40a9d5b00388ba691645f3bd2a34"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/hickory-dns/hickory-dns.git", branch: "main"
 
-  stable do
-    url "https://github.com/hickory-dns/hickory-dns/archive/refs/tags/v0.24.1.tar.gz"
-    sha256 "6659acf5fedb1f3efcfe64242c28898dd18fbd5fbc0cba1ee86185f672ca0b53"
-
-    # rust 1.80 build patch, upstream pr ref, https://github.com/hickory-dns/hickory-dns/pull/2218
-    patch do
-      url "https://raw.githubusercontent.com/Homebrew/formula-patches/bdae5218473025d6768eb6ef27bd65149ea2844e/hickory-dns/rust-1.80.patch"
-      sha256 "7b201d057b4adf1bc2e916d13ffa7436b86fb7224cd080165f55dcc6e80d64a5"
-    end
-  end
-
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "9cf8eee974c0813048ef68970bfbd33cad00de13d5e242b0a9cbaed625a795e1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d6efdf02a50da5b06ca7c17e84cfdbb5dfc3a9aa751ce9ef3ca416577ab03bea"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b5b6c4828dec09e01583940c9816fcd087fb38400235e65a0a3434156e17afa8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5476abbdfa937cf8e2547ec9de0a0b5696742d5466a33ae1e31e731e6a5132ac"
-    sha256 cellar: :any_skip_relocation, sonoma:         "53ccf15cbc699bd3c12ef3f7db08593a603b22b77ff58c9af4f048f1abd97cdb"
-    sha256 cellar: :any_skip_relocation, ventura:        "c10f20649661dbe775b0df4dbcf29a08762e06172b92aa1b2e50a6b58bc6ef21"
-    sha256 cellar: :any_skip_relocation, monterey:       "b153715697da34235176eb60f41b53b3e115472c2c94a9cd3ef49b00b62df6c2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bad28144b264cb5633d8c321a64c0d0f047ee67a2a09ba0a00ffceeb43733d81"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "561f39a09766baa59ee07df7c27b13f15fbd1d211beefdb252a9dfbc78e83d57"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "8a65ceb83811f948e9e58e83e0f4f1c49693bdc8a45807bf6a3ed37dcc517ddb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "1a680a774c82806e190820e5da8d76ca34253abbb1ce7a1a133e6e1b8d82442b"
+    sha256 cellar: :any_skip_relocation, sonoma:        "5732cf2e944a8ff05834a4e2e53b3d977d06ce3cece855b8e5f39f4ba74c509d"
+    sha256 cellar: :any_skip_relocation, ventura:       "0cf9737c1bfa932acb278eecafd7d55db7cd8cf776c32dc7c4e1e5ee9ccef52d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1037d4944f860d50d2fe9fc4df0c90ef37abcf10196502e9310de665e1b0fb1e"
   end
 
   depends_on "rust" => :build

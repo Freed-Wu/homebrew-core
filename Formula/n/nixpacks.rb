@@ -1,18 +1,18 @@
 class Nixpacks < Formula
   desc "App source + Nix packages + Docker = Image"
   homepage "https://nixpacks.com/"
-  url "https://github.com/railwayapp/nixpacks/archive/refs/tags/v1.29.0.tar.gz"
-  sha256 "87f4589f0fc79f0035b993f3a8d01b63216e24b526f0a00a677c8607e8ba342f"
+  url "https://github.com/railwayapp/nixpacks/archive/refs/tags/v1.33.0.tar.gz"
+  sha256 "1c43110571f2624084e709d466f42a67c688a34120cc61842f4542b4095f74a1"
   license "MIT"
   head "https://github.com/railwayapp/nixpacks.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "42dc1d0a9fc119a543854845762b2c37fdcd4fd871bbbab5a7a2031dd9bdbfb1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5499786fdc884da9402e8b1a544b637b640957e63fc71d74294584cc80d2b11e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "afd17ac18b50da2d358c0b3a035862e41bee0c0507984e5b15ff754338592ef7"
-    sha256 cellar: :any_skip_relocation, sonoma:        "f0eed4d6b82de58a7b348e18490cb105ad47718a6d3968ed741d55b8fa6efb60"
-    sha256 cellar: :any_skip_relocation, ventura:       "6ed56913ba2ee5cdfe03902f85d232a63946b89ca597e8f098a20ea46881732a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4f37cfc472fa48b5611923f01371bf871e874b97a3c811d9f0f76c620d2a7708"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "dcb17f699e637fa086063b08bbfdc5ba83bc2df90f57ff0e9051ecff1f82e2fd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "430f72fdf19b28b72d40218230a51083133e0d4e6c57aef99ca129f8e8f605dc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b6945d7b9c29dbcf0deab777151686763fc6db38970497bf2a7ef4eb93353972"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3e4d12e67a78d8c93a14f29964a3b1bd522ff5459d62b208292c61eff8773918"
+    sha256 cellar: :any_skip_relocation, ventura:       "759086a75988b48b88cb16e27fac834c1186383fb0b4690c11011dbf283bfeb2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fe1deef00dae16ca2076abe695f6bf88c4d60c5e8f7e4e0fd96c6238ab33506e"
   end
 
   depends_on "rust" => :build

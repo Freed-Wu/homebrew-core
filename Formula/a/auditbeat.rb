@@ -1,24 +1,23 @@
 class Auditbeat < Formula
   desc "Lightweight Shipper for Audit Data"
-  homepage "https://www.elastic.co/products/beats/auditbeat"
+  homepage "https://www.elastic.co/beats/auditbeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v8.15.3",
-      revision: "bbed3ae55602e83f57c62de85b57a3593aa49efa"
+      tag:      "v8.17.2",
+      revision: "cf5c18e080581711e9189290187fbd721e962fac"
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "bf71c056f84059d3f8770a52feb4f8d8b56a8d933c7e713f3e0875e79a7bbd7d"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b93c1be047de0e7921ac73e79344e719a7fa3f8300d99332aadaaf449d250035"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6e4227e4e1a59c03c297b3264648d93db6d398acb8aa422529655e131856c7cb"
-    sha256 cellar: :any_skip_relocation, sonoma:        "49139426b7e93a007b9d3595270febb7d9e6fe38ca7d4dce7687bb1b5be208e1"
-    sha256 cellar: :any_skip_relocation, ventura:       "7b292873c0d7348cce2bcfa3696cae42fa71d865d54808255f84cc6bc70141d8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ab74b033b8f57c315da79962edb67c41b0535a3831c46d64992826c956808925"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "75de96a08d310e29cfc9b4ee13df28d64ac92699eb466ebd3d204c76171b67fe"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "cb5760b9ad3bf80ad747c96964929bfca5c720a883771f35d44a151bce3f18c7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "0af343470d0d9fe3f9dbc304ff68dd7bdc618865f6c0980bf0836d6a85c0b7c1"
+    sha256 cellar: :any_skip_relocation, sonoma:        "17a9ed4701c29583a9e95e40b27e8a488c41d1c364c8d594a37a15645c56a009"
+    sha256 cellar: :any_skip_relocation, ventura:       "204f851567811c0e9b2535e3c5d706386f0be39b88cbc51b59c464b57cfbb2ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5b50b6489fa93a366c2d64203bdf22dbd2e2b086af35fa35ef85d386a1a57fe"
   end
 
   depends_on "go" => :build
   depends_on "mage" => :build
-  depends_on "python@3.12" => :build
 
   def install
     # remove non open source files
@@ -30,17 +29,15 @@ class Auditbeat < Formula
       inreplace "magefile.go", "devtools.GenerateModuleIncludeListGo, Docs)",
                                "devtools.GenerateModuleIncludeListGo)"
 
-      # prevent downloading binary wheels during python setup
-      system "make", "PIP_INSTALL_PARAMS=--no-binary :all", "python-env"
       system "mage", "-v", "build"
       system "mage", "-v", "update"
 
-      (etc/"auditbeat").install Dir["auditbeat.*", "fields.yml"]
+      pkgetc.install Dir["auditbeat.*", "fields.yml"]
       (libexec/"bin").install "auditbeat"
       prefix.install "build/kibana"
     end
 
-    (bin/"auditbeat").write <<~EOS
+    (bin/"auditbeat").write <<~SHELL
       #!/bin/sh
       exec #{libexec}/bin/auditbeat \
         --path.config #{etc}/auditbeat \
@@ -48,7 +45,7 @@ class Auditbeat < Formula
         --path.home #{prefix} \
         --path.logs #{var}/log/auditbeat \
         "$@"
-    EOS
+    SHELL
 
     chmod 0555, bin/"auditbeat"
     generate_completions_from_executable(bin/"auditbeat", "completion", shells: [:bash, :zsh])
@@ -65,7 +62,7 @@ class Auditbeat < Formula
 
   test do
     (testpath/"files").mkpath
-    (testpath/"config/auditbeat.yml").write <<~EOS
+    (testpath/"config/auditbeat.yml").write <<~YAML
       auditbeat.modules:
       - module: file_integrity
         paths:
@@ -73,18 +70,20 @@ class Auditbeat < Formula
       output.file:
         path: "#{testpath}/auditbeat"
         filename: auditbeat
-    EOS
-    fork do
-      exec bin/"auditbeat", "-path.config", testpath/"config", "-path.data", testpath/"data"
-    end
+    YAML
+
+    pid = spawn bin/"auditbeat", "--path.config", testpath/"config", "--path.data", testpath/"data"
     sleep 5
     touch testpath/"files/touch"
+    sleep 10
+    sleep 20 if OS.mac? && Hardware::CPU.intel?
 
-    sleep 30
-
-    assert_predicate testpath/"data/beat.db", :exist?
+    assert_path_exists testpath/"data/beat.db"
 
     output = JSON.parse((testpath/"data/meta.json").read)
     assert_includes output, "first_start"
+  ensure
+    Process.kill("TERM", pid)
+    Process.wait(pid)
   end
 end

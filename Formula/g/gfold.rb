@@ -1,26 +1,33 @@
 class Gfold < Formula
   desc "Help keep track of your Git repositories, written in Rust"
   homepage "https://github.com/nickgerace/gfold"
-  url "https://github.com/nickgerace/gfold/archive/refs/tags/4.5.0.tar.gz"
-  sha256 "ba5afe509ef17f5cdde8540cfd9321001cbb10d49dd6324f22562d65dbae8738"
   license "Apache-2.0"
-  revision 1
+  revision 2
   head "https://github.com/nickgerace/gfold.git", branch: "main"
 
-  bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "9c1e32de1fb5c0b0519676f8fa0fc580e49e5e6bb38c5fa58f183dc9e8364a82"
-    sha256 cellar: :any,                 arm64_sonoma:   "0d109f301a6394c733cd864995e29d6df6bb3b4030486d0550eb55d834d77d1d"
-    sha256 cellar: :any,                 arm64_ventura:  "9088a4563e6ceba052130a219e850a586b74675d1a6c294eb5e9495422f4e5ec"
-    sha256 cellar: :any,                 arm64_monterey: "f9dd5818d8c8940160aa3764d1f48da7619d15aef6fb85c8c9132f5e2cf8853f"
-    sha256 cellar: :any,                 sonoma:         "5d59da37a6aa405fc8d34ca9ada77e3cbaa275aeccecc55c604ee6caebe7854d"
-    sha256 cellar: :any,                 ventura:        "168ebebd1ae9754b2e06fa9865d1728cb22da5b07610a467e20951e6e705423b"
-    sha256 cellar: :any,                 monterey:       "7b58c51fac765551a1e364f7c78fe87e1a9da6b923c0f974272f24999384eff9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3179fe94817048eb453d9d6750cb5eb946ed207277fbce5424e6dade6b6f04af"
+  stable do
+    url "https://github.com/nickgerace/gfold/archive/refs/tags/4.6.0.tar.gz"
+    sha256 "f965daa340349b04bd9d29b5013dcb3006d2f5333cdbae1f1e3901a685e7bf7d"
+
+    # libgit2 1.9 build patch
+    patch do
+      url "https://github.com/nickgerace/gfold/commit/9dd050617adefa5776d6056892b3ca7c5fda8b2d.patch?full_index=1"
+      sha256 "bbb38a7419c82e5b33fe261dd1790d7d87a03d4930e801d0421287530dcf978d"
+    end
   end
 
-  depends_on "pkg-config" => :build
+  bottle do
+    sha256 cellar: :any,                 arm64_sequoia: "c8fb05b44e4e1463813e968cd143c5e75058a3bc68a21be4d6000a70181ab721"
+    sha256 cellar: :any,                 arm64_sonoma:  "e5a04e5a6969aa68a5d91e9205a93910a84317d5570a41e1115f26a23bdf62e8"
+    sha256 cellar: :any,                 arm64_ventura: "71d2cf8716fc3e10d1fce289ae2f10c7c533775a27f1e0eace914d525fcf7a4d"
+    sha256 cellar: :any,                 sonoma:        "cd2484f7a149a5cac2708ae97de755e25f85f776bde43b3fc77bf88480bb2c38"
+    sha256 cellar: :any,                 ventura:       "f2cd2b75deb9e7194a9c6e7b0f1cc2e83095d629fe257e0f9f2f8b5e1430effb"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ec6098aad7b88db6c94eb6773a5c2a1e67d08e60d44736ab5af143ca8734f6f8"
+  end
+
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
-  depends_on "libgit2@1.7"
+  depends_on "libgit2"
 
   uses_from_macos "zlib"
 
@@ -29,14 +36,14 @@ class Gfold < Formula
   def install
     ENV["LIBGIT2_NO_VENDOR"] = "1"
 
-    system "cargo", "install", *std_cargo_args(path: "bin/gfold")
+    system "cargo", "install", *std_cargo_args
   end
 
   test do
     mkdir "test" do
       system "git", "config", "--global", "init.defaultBranch", "master"
       system "git", "init"
-      (Pathname.pwd/"README").write "Testing"
+      Pathname("README").write "Testing"
       system "git", "add", "README"
       system "git", "commit", "-m", "init"
     end
@@ -48,7 +55,7 @@ class Gfold < Formula
     linkage_with_libgit2 = (bin/"gfold").dynamically_linked_libraries.any? do |dll|
       next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
 
-      File.realpath(dll) == (Formula["libgit2@1.7"].opt_lib/shared_library("libgit2")).realpath.to_s
+      File.realpath(dll) == (Formula["libgit2"].opt_lib/shared_library("libgit2")).realpath.to_s
     end
 
     assert linkage_with_libgit2, "No linkage with libgit2! Cargo is likely using a vendored version."

@@ -1,8 +1,8 @@
 class Imagemagick < Formula
   desc "Tools and libraries to manipulate images in many formats"
   homepage "https://imagemagick.org/index.php"
-  url "https://imagemagick.org/archive/releases/ImageMagick-7.1.1-39.tar.xz"
-  sha256 "b5a18ed9eb0db1e5e1fde26fc95f38bd7d71d9de05dde8b23c238debe332fada"
+  url "https://imagemagick.org/archive/releases/ImageMagick-7.1.1-43.tar.xz"
+  sha256 "fa79401342b409b9b7f7d3146bd6595787373811e72be1669c39b58d1489da4f"
   license "ImageMagick"
   head "https://github.com/ImageMagick/ImageMagick.git", branch: "main"
 
@@ -12,15 +12,15 @@ class Imagemagick < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "02a8c6ae7372c4f5cc51ffc5e2fc4749b4c501894af464e1035db1aacd7fe866"
-    sha256 arm64_sonoma:  "229eeda945ce7538ecafe9c4f38c5b29d69cd56bb6b35a43f4f41d086b0c64f2"
-    sha256 arm64_ventura: "979676dad505398dcf3b1b8fe6f541693c4ee430867d430b8fb3b22e5582351d"
-    sha256 sonoma:        "5e196809365dee76b5cb3a5e1021531c54110e1789389b1b45506125013cd308"
-    sha256 ventura:       "dc080e41b2e97ec8f4b7bef1521df6cc5a2f3bbd6a55b0a89cd838c52c6add99"
-    sha256 x86_64_linux:  "458f31a11e99c0f9c4ec5eb913c863864fed44aed5196703177aadc228c52c82"
+    sha256 arm64_sequoia: "ea562dba64a57da0d95fe2c361ff88768f6909950d0685fc228a440f4c345c8b"
+    sha256 arm64_sonoma:  "f713f0e8aa18acc8614d06b4213b1001487f38618ff2d61c6a9f1a3a7669b626"
+    sha256 arm64_ventura: "e18c49b40f4ca961a0b070d283ac82ed56649ead0ec99cea0e8e5650f7f67284"
+    sha256 sonoma:        "6229daea5b9b91ed5a62e568883bd8ab132bd5f2224024b36845d598565c4536"
+    sha256 ventura:       "5a9c1e94e3280f65ae5addaa961768836db68d97e002015dbb793eb31106d749"
+    sha256 x86_64_linux:  "30e617977216fe9175f0c04b49ebd136fe03a309f8a8fb41c34d290b194408f6"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "fontconfig"
   depends_on "freetype"
   depends_on "ghostscript"
@@ -95,7 +95,7 @@ class Imagemagick < Formula
       ]
     end
 
-    system "./configure", *std_configure_args, *args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
   end
 

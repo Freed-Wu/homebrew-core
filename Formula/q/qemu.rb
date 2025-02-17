@@ -1,8 +1,8 @@
 class Qemu < Formula
   desc "Generic machine emulator and virtualizer"
   homepage "https://www.qemu.org/"
-  url "https://download.qemu.org/qemu-9.1.1.tar.xz"
-  sha256 "7dc0f9da5491ff449500f3310063a36b619f236ee45706fd0846eb37d4bba889"
+  url "https://download.qemu.org/qemu-9.2.1.tar.xz"
+  sha256 "b7b0782ead63a5373fdfe08e084d3949a9395ec196180286b841f78a464d169c"
   license "GPL-2.0-only"
   head "https://gitlab.com/qemu-project/qemu.git", branch: "master"
 
@@ -12,18 +12,18 @@ class Qemu < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "4164411ddffba25e2640b896ee5c0c9d02dd17cd99b5488a992413f060dd6f26"
-    sha256 arm64_sonoma:  "0f3764292c3cf30b0f5b2c8636768feade7c733a8b61beea8109fa1ef7df86cd"
-    sha256 arm64_ventura: "ce0c8e9515e633976b053008d81d6bc00a2d414ce8b4db9f09a1334e292dd8e0"
-    sha256 sonoma:        "5a27f6e005e2628477cb4a3e6814d9af0f39acb7715c300a7d9e1e6b06fac255"
-    sha256 ventura:       "9a9dcb188db0e6706d5a200df9a76411f09fe4bf445da54512010d15de3527f1"
-    sha256 x86_64_linux:  "f123c277c416078a5373541fd1e1ead3fbf54e1dded03f32b27682da75821d3d"
+    sha256 arm64_sequoia: "b65387b48681bc20751269372dcc6931459640b0728890da0ca694a2b83ce793"
+    sha256 arm64_sonoma:  "6751e9638006829999e808867a9144235d7a022cabc7b49900bf4853f07c1471"
+    sha256 arm64_ventura: "f3c8560620f8c1c05412fb5e70ec5c9f65fe6315fcca56429031a6b8732e4a1c"
+    sha256 sonoma:        "87e021219cc804c37af00948724a5ae4b0be2c5a1be4a445aa48c701296790f2"
+    sha256 ventura:       "9cf5e4231e9854ccc56f1dc06eaea9bb59ab746f1928e3edac26142dd2ef210f"
+    sha256 x86_64_linux:  "4cfa44b2c75a734b62677826b21d8f5c09e644efca7e2734f410c45bcd5ef062"
   end
 
   depends_on "libtool" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "spice-protocol" => :build
 
   depends_on "capstone"
@@ -61,8 +61,6 @@ class Qemu < Formula
     depends_on "mesa"
     depends_on "systemd"
   end
-
-  fails_with gcc: "5"
 
   def install
     ENV["LIBTOOL"] = "glibtool"
@@ -110,7 +108,7 @@ class Qemu < Formula
     end
 
     archs = %w[
-      aarch64 alpha arm avr cris hppa i386 loongarch64 m68k microblaze microblazeel mips
+      aarch64 alpha arm avr hppa i386 loongarch64 m68k microblaze microblazeel mips
       mips64 mips64el mipsel or1k ppc ppc64 riscv32 riscv64 rx
       s390x sh4 sh4eb sparc sparc64 tricore x86_64 xtensa xtensaeb
     ]

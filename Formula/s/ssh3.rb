@@ -1,12 +1,10 @@
 class Ssh3 < Formula
   desc "Faster and richer secure shell using HTTP/3"
   homepage "https://github.com/francoismichel/ssh3"
-  url "https://github.com/francoismichel/ssh3.git",
-      tag:      "v0.1.7",
-      revision: "31f8242cf30b675c25b981b862f36e73f9fa1d9d"
+  url "https://github.com/francoismichel/ssh3/archive/refs/tags/v0.1.7.tar.gz"
+  sha256 "23a88d0d7f54f80d752c22ee5f879fa1daf8c320ece364287209c58b3e98b6b5"
   license "Apache-2.0"
-  head "https://github.com/francoismichel/ssh3.git",
-       branch: "main"
+  head "https://github.com/francoismichel/ssh3.git", branch: "main"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sequoia:  "0f4b007d021b93cfb0c17d853b9ad0f8e8d9112402a7acbbb466f90517e20a12"
@@ -23,13 +21,9 @@ class Ssh3 < Formula
   uses_from_macos "libxcrypt"
 
   def install
-    system "go", "build",
-           *std_go_args(output: bin/"ssh3", ldflags: "-s -w"),
-           "cmd/ssh3/main.go"
-    ENV["CGO_ENABLED"] = "1"
-    system "go", "build",
-           *std_go_args(output: bin/"ssh3-server", ldflags: "-s -w"),
-           "cmd/ssh3-server/main.go"
+    ldflags = "-s -w"
+    system "go", "build", *std_go_args(ldflags:, output: bin/"ssh3"), "./cmd/ssh3"
+    system "go", "build", *std_go_args(ldflags:, output: bin/"ssh3-server"), "./cmd/ssh3-server"
   end
 
   test do

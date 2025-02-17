@@ -1,27 +1,21 @@
 class Opensearch < Formula
   desc "Open source distributed and RESTful search engine"
   homepage "https://github.com/opensearch-project/OpenSearch"
-  url "https://github.com/opensearch-project/OpenSearch/archive/refs/tags/2.17.1.tar.gz"
-  sha256 "d0b358b2aa30dae87babe67a9e352d7a2ab0e18ef3e9b7e025a6b9cb7fa752a7"
+  url "https://github.com/opensearch-project/OpenSearch/archive/refs/tags/2.19.0.tar.gz"
+  sha256 "c94e9f793393aa6ff4eb00f0ed0dd18a9f3502d2e1c84f947dad6d5c64f1fe31"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "6c5650170106a9b883b64fbef245b45590a9d2e16ea0afc92ff154bcb0b6e0dc"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "a7da75f92ea413daf858b25b5d0f123fa522200ed99cc2c23ad37013daa6b46d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "dbb7b4a04e46661f0f2e86e0e3407ebab9623d927170687dc3f6e33da082b154"
-    sha256 cellar: :any_skip_relocation, sonoma:        "5efcdddef2a82de7435681c57f5c4ed68cf3aecc478474e6c8ba12d7dc803e0d"
-    sha256 cellar: :any_skip_relocation, ventura:       "8c0d4f6fec1486659231b6efd854f40c2a704edad7f14382e0b1dd4cbd6f2acd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "010f979f4837d8582827dba336cf1effddc385dbc0e131bc90aed3b67fb01b35"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "8d9bc85686873309e2c833c02b55bbf5e63b089dbcaee566ffd84b10262e1954"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "bfd6cf96d7dba6abaf0cd69917e9311a8740b04330e243c3f87aec20e48416ab"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "debb7647524b1ca23c9cb4fa0d5a1431e49035baa80f243131154c3b165b8b0f"
+    sha256 cellar: :any_skip_relocation, sonoma:        "e77aa0a76c1b17743a4be02964eb0d264f9d98b359d9c8e839832cebb1ec14ed"
+    sha256 cellar: :any_skip_relocation, ventura:       "18331d741ec1f4db20654bd6d8afe8d047ad22273b83a1c8f856433ef097235e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "4aa5a2d8dc6ac88a1543047d88c4823d512d5de672ed48dd0d22484bfcdb97fe"
   end
 
   depends_on "gradle" => :build
   depends_on "openjdk"
-
-  # Support JDK-23 (build time and runtime) --- may be removed in the next release v2.17.2
-  patch do
-    url "https://github.com/opensearch-project/OpenSearch/commit/1e7f6df79c7845ba04ecc4a05979db27965342c7.patch?full_index=1"
-    sha256 "03076625edb55ad0f6f36f8721cb41709fbd732fcb6294f20f1481a6bcc64534"
-  end
 
   def install
     platform = OS.kernel_name.downcase

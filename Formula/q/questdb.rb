@@ -1,8 +1,8 @@
 class Questdb < Formula
   desc "Time Series Database"
   homepage "https://questdb.io"
-  url "https://github.com/questdb/questdb/releases/download/8.1.4/questdb-8.1.4-no-jre-bin.tar.gz"
-  sha256 "82deacb49b625dc475ad4d7aa5e5851e730499cf96c02a7595d79df7ad56b996"
+  url "https://github.com/questdb/questdb/releases/download/8.2.2/questdb-8.2.2-no-jre-bin.tar.gz"
+  sha256 "2f3dc06ce1b03ea4d5da06da71aa61301f585c8bae30d77cdac6f575747befb0"
   license "Apache-2.0"
 
   livecheck do
@@ -11,7 +11,7 @@ class Questdb < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "20971276238d965b16d8fcae1a24588e09c1d99b0d785c74ec202b29e925d3a3"
+    sha256 cellar: :any_skip_relocation, all: "eecfb37dd9affa215bfad29529bbfb153640b008eaf5bd0e96c9f7690c579051"
   end
 
   depends_on "openjdk"
@@ -48,7 +48,7 @@ class Questdb < Formula
       end
       sleep 30
       output = shell_output("curl -Is localhost:9000/index.html")
-      sleep 4
+      sleep 8
       assert_match "questDB", output
     ensure
       system bin/"questdb", "stop"

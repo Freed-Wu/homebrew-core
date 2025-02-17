@@ -2,9 +2,9 @@ class Minio < Formula
   desc "High Performance, Kubernetes Native Object Storage"
   homepage "https://min.io"
   url "https://github.com/minio/minio.git",
-      tag:      "RELEASE.2024-10-29T16-01-48Z",
-      revision: "c4239ced225b9fead5f6b44e3665c5ccd7eacc89"
-  version "20241029160148"
+      tag:      "RELEASE.2025-02-07T23-21-09Z",
+      revision: "703f51164d3d0c44af41b0d86075a1f61e4779e7"
+  version "20250207232109"
   license "AGPL-3.0-or-later"
   head "https://github.com/minio/minio.git", branch: "master"
 
@@ -17,12 +17,12 @@ class Minio < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "90965ac115d253e8bbb1084a1ac73d52a81e36fed14e15a0aac03b3cc570a54c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "5c839283ea2743a7d552466f346b4fa40b128bcf280695d6c8b766c2c3704b05"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "33cbe6703e00c3b0df9d5c2a95fec32b8b6caf04513d5c0002ce40cdf0aa9e29"
-    sha256 cellar: :any_skip_relocation, sonoma:        "2b32ac3bba226b7202cdd19530050b3f2d31610155e0d2169ddb8d7cfdcac72a"
-    sha256 cellar: :any_skip_relocation, ventura:       "7a50b969d63c0d64af689bfabae1368b84526f36d439d6a0e95d454e631c6b41"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a55bfd768fec5ddc2fe1ce8a2b6e51145632b52d6b0e7f5216bae9cbd56a32ca"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "612320fb7e941b1d4728e5b46a3e12658086adcff7568906d1548d0dd8794ccd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2eb5b8fe88cf0e56e7497ab6991789eaa29cccb3d2851df739c3756adcf2c173"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8d43f412a63de31a671514f59c448a57909c28ef89434ea9187b2de54124e4aa"
+    sha256 cellar: :any_skip_relocation, sonoma:        "3934ce2bafee939a744093ace83878fd806bef37b4e70a4bd2e9593a38608b30"
+    sha256 cellar: :any_skip_relocation, ventura:       "ed38d61226779d059833de3031d56e00e8b54072daba0b96ee27c01a3c8581a3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "913c42eab9d2518f34a80b726a5c24a30453697bfa6feb83a37c20c124a1ff5e"
   end
 
   depends_on "go" => :build
@@ -31,7 +31,7 @@ class Minio < Formula
     if build.head?
       system "go", "build", *std_go_args
     else
-      release = `git tag --points-at HEAD`.chomp
+      release = stable.specs[:tag]
       version = release.gsub("RELEASE.", "").chomp.gsub(/T(\d+)-(\d+)-(\d+)Z/, 'T\1:\2:\3Z')
 
       ldflags = %W[

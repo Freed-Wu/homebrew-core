@@ -1,8 +1,8 @@
 class Inspircd < Formula
   desc "Modular C++ Internet Relay Chat daemon"
   homepage "https://www.inspircd.org/"
-  url "https://github.com/inspircd/inspircd/archive/refs/tags/v4.4.0.tar.gz"
-  sha256 "9f24615b1663ca6ed611f39c3f74da291656fc88df18991ab67f1becbab40aaa"
+  url "https://github.com/inspircd/inspircd/archive/refs/tags/v4.5.0.tar.gz"
+  sha256 "ad73fcf46665cba5d1639d3bae79766991ac4bbb2665b976c5819126c15ce6c7"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,27 +11,21 @@ class Inspircd < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "28f069a1b674d8e03a8154683aefc77d896e4258a7a21d186ef5ace5cab7124d"
-    sha256 arm64_sonoma:  "f9dd92b838062f2277d763eccb241bab501308ef23dfa0c1adb31b4745196990"
-    sha256 arm64_ventura: "2d21c7a26b916078525e054672348147be3992c7c64e70a3a3af03d8bac660f6"
-    sha256 sonoma:        "fc8d3695a948848029f5c877b694ad21c2c8ddb42dc8c75a5ab24c4894305db8"
-    sha256 ventura:       "411dc2f7092da05e7cf3dfe7cd1460c790c82dcc1bc184a37a1714b412e01b79"
-    sha256 x86_64_linux:  "bd90281f9e1711c5cad355d8fdad5f35f660b346246b42809545ad25ddf46bda"
+    sha256 arm64_sequoia: "4eb8e506c3e13b004309247ca0f3c36b88072d0ec9a51508b7517adfad249d3a"
+    sha256 arm64_sonoma:  "e765ec5221f4f108d5b1d70b80928e0bd8e9488bd212ed6a7ec2be25a7b9da43"
+    sha256 arm64_ventura: "7fa69834c6e562eb7fc1662f92af8ef224adb9184c5b2a68eaa6fe2373d38932"
+    sha256 sonoma:        "0b3103560cc59c20b1b779fd53461c22e3da78e7328456b33a1f948523172bda"
+    sha256 ventura:       "f66b6fc658dddd53a9bb51ab7c00d2a2c2a6fc8539b7faf064282cafd6eed4a6"
+    sha256 x86_64_linux:  "4548d53c55c691f04dabea6ac958458a88d02b2d78bb25a066a900405ef4061d"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "argon2"
   depends_on "gnutls"
   depends_on "libpq"
-  depends_on "mysql-client"
+  depends_on "mariadb-connector-c"
 
   uses_from_macos "openldap"
-
-  on_macos do
-    depends_on "openssl@3"
-    depends_on "zlib"
-    depends_on "zstd"
-  end
 
   skip_clean "data"
   skip_clean "logs"

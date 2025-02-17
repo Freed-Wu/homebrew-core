@@ -1,17 +1,17 @@
 class Libjuice < Formula
   desc "UDP Interactive Connectivity Establishment (ICE) library"
   homepage "https://github.com/paullouisageneau/libjuice"
-  url "https://github.com/paullouisageneau/libjuice/archive/refs/tags/v1.5.7.tar.gz"
-  sha256 "6385c574f3c33f766ed25cddf919625b0ae8ca0d76871f70301e5a0cf2c93dc8"
+  url "https://github.com/paullouisageneau/libjuice/archive/refs/tags/v1.5.9.tar.gz"
+  sha256 "952c9ae86491e1b7920e034281759a16158525e56e3dfa07060aac2532c77c6f"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "ed571298e95ec58f065403da6205544d42aec68ab14cf745d392ad495c098141"
-    sha256 cellar: :any,                 arm64_sonoma:  "a3a260330d564ac730c45bfe88dac8c7da620a5034284d5dd1d64c1ef816afc7"
-    sha256 cellar: :any,                 arm64_ventura: "72aa40c4dc361fe718e9afaf0af55e38b54e172832e13a115d36536013929b7d"
-    sha256 cellar: :any,                 sonoma:        "7951d8fbcb03390b5d593a29b2539d561a943b15f6ba559078a2d5055e09010f"
-    sha256 cellar: :any,                 ventura:       "bca10dda1797aafd614735076d368ceedc76bdbeca7c3d658ddc958104f3608c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fc82c641d66d92d7688058d4401d4b4e0e105ff1baee5181ff9e665fdb519a79"
+    sha256 cellar: :any,                 arm64_sequoia: "841d199a73da93f066285b3795d984badc69b0e12981caed84228af28a2cb126"
+    sha256 cellar: :any,                 arm64_sonoma:  "aafc3541a80281ee7eb230c3ca08a30bdf306f17f204e0e9a6d2163b7930c403"
+    sha256 cellar: :any,                 arm64_ventura: "b95c9ed61269bd48ebb7ed28b1cd9c4a0a92d52f2e9272d22f55f7b04fbdff51"
+    sha256 cellar: :any,                 sonoma:        "fd0d5f8183ef6793008759d51fc7213c7318a372635f7588d0e893904ff72064"
+    sha256 cellar: :any,                 ventura:       "4352bd91de5dd4450da0e2f3edacecd0ade28479ed54d37a7bdea9366d4939ac"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "cd63688db47b13c70f4de6e006c86df8e856cb78b8cc5a55042d3e7d237a62f3"
   end
 
   depends_on "cmake" => :build

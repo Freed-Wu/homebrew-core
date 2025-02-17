@@ -1,10 +1,9 @@
 class PythonAT313 < Formula
   desc "Interpreted, interactive, object-oriented programming language"
   homepage "https://www.python.org/"
-  url "https://www.python.org/ftp/python/3.13.0/Python-3.13.0.tgz"
-  sha256 "12445c7b3db3126c41190bfdc1c8239c39c719404e844babbd015a1bc3fafcd4"
+  url "https://www.python.org/ftp/python/3.13.2/Python-3.13.2.tgz"
+  sha256 "b8d79530e3b7c96a5cb2d40d431ddb512af4a563e863728d8713039aa50203f9"
   license "Python-2.0"
-  revision 1
 
   livecheck do
     url "https://www.python.org/ftp/python/"
@@ -12,37 +11,31 @@ class PythonAT313 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "56d325c239b860c2f2be6dcf255021142aeb1ba4d1abbc44fc9832726b9ae71e"
-    sha256 arm64_sonoma:  "59cb6d9a33e96f12b1c03e3931062b413ed05749b57921b5438bf59f465fb869"
-    sha256 arm64_ventura: "9d839b31f2728276cec2d4af27954a0202645d50f47e3768105cc263cbb2efc5"
-    sha256 sonoma:        "44239bd5b2e23ac4e3537925d16695931e34cedb93648ac63e15ce05fa66926d"
-    sha256 ventura:       "d5257cc367cea5fb1003646077cdb644e8eb181045e2815255738242e05f8af2"
-    sha256 x86_64_linux:  "856c9c245e10cac940a6bf36af6ecf1a321ad82cbbcca2ea38136d3605bea9b2"
+    sha256 arm64_sequoia: "166ed4ffa110e57196cade5512bd7f5d27ce5c2c386c8abd416b8fcf3f0e1683"
+    sha256 arm64_sonoma:  "2b7e405b9fc4cde6ccd5ecd94f4fb511fa063e41d6334c663d6e42271c37da13"
+    sha256 arm64_ventura: "ed78343ecae2c1880e2d2c29f171ccd6df6b681a77b5d6f435cc529ef3957fa2"
+    sha256 sequoia:       "f5590bc156e48a3ae4c1e73098c1c800beec3f27f4747af2cb6b9bad4b50bb4a"
+    sha256 sonoma:        "80bc6fa7aa500fc462edecdc6839a54071a6e6c79e155d77b7d9d32c0c9be452"
+    sha256 ventura:       "6cd37a46af6b079b8b93c54c8c25c6b7254aed009f9e429b3949aa064bd21589"
+    sha256 x86_64_linux:  "1d36bb0df2bf2fee8f000459fdbfdf74ac33c6537d51329a62b8b37225cc21b3"
   end
 
-  # setuptools remembers the build flags python is built with and uses them to
-  # build packages later. Xcode-only systems need different flags.
-  pour_bottle? only_if: :clt_installed
-
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "mpdecimal"
   depends_on "openssl@3"
   depends_on "sqlite"
   depends_on "xz"
 
   uses_from_macos "bzip2"
-  uses_from_macos "expat"
+  uses_from_macos "expat", since: :sequoia
   uses_from_macos "libedit"
   uses_from_macos "libffi", since: :catalina
-  uses_from_macos "libxcrypt"
   uses_from_macos "ncurses"
   uses_from_macos "unzip"
   uses_from_macos "zlib"
 
   on_linux do
     depends_on "berkeley-db@5"
-    depends_on "libnsl"
-    depends_on "libtirpc"
   end
 
   link_overwrite "bin/2to3"
@@ -63,23 +56,23 @@ class PythonAT313 < Formula
 
   # Always update to latest release
   resource "flit-core" do
-    url "https://files.pythonhosted.org/packages/c4/e6/c1ac50fe3eebb38a155155711e6e864e254ce4b6e17fe2429b4c4d5b9e80/flit_core-3.9.0.tar.gz"
-    sha256 "72ad266176c4a3fcfab5f2930d76896059851240570ce9a98733b658cb786eba"
+    url "https://files.pythonhosted.org/packages/d5/ae/09427bea9227a33ec834ed5461432752fd5d02b14f93dd68406c91684622/flit_core-3.10.1.tar.gz"
+    sha256 "66e5b87874a0d6e39691f0e22f09306736b633548670ad3c09ec9db03c5662f7"
   end
 
   resource "pip" do
-    url "https://files.pythonhosted.org/packages/4d/87/fb90046e096a03aeab235e139436b3fe804cdd447ed2093b0d70eba3f7f8/pip-24.2.tar.gz"
-    sha256 "5b5e490b5e9cb275c879595064adce9ebd31b854e3e803740b72f9ccf34a45b8"
+    url "https://files.pythonhosted.org/packages/47/3e/68beeeeb306ea20ffd30b3ed993f531d16cd884ec4f60c9b1e238f69f2af/pip-25.0.tar.gz"
+    sha256 "8e0a97f7b4c47ae4a494560da84775e9e2f671d415d8d828e052efefb206b30b"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/27/b8/f21073fde99492b33ca357876430822e4800cdf522011f18041351dfa74b/setuptools-75.1.0.tar.gz"
-    sha256 "d59a21b17a275fb872a9c3dae73963160ae079f1049ed956880cd7c09b120538"
+    url "https://files.pythonhosted.org/packages/92/ec/089608b791d210aec4e7f97488e67ab0d33add3efccb83a056cbafe3a2a6/setuptools-75.8.0.tar.gz"
+    sha256 "c5afc8f407c626b8313a86e10311dd3f661c6cd9c09d4bf8c15c0e11f9f2b0e6"
   end
 
   resource "wheel" do
-    url "https://files.pythonhosted.org/packages/b7/a0/95e9e962c5fd9da11c1e28aa4c0d8210ab277b1ada951d2aee336b505813/wheel-0.44.0.tar.gz"
-    sha256 "a29c3f2817e95ab89aa4660681ad547c0e9547f20e75b0562fe7723c9a2a9d49"
+    url "https://files.pythonhosted.org/packages/8a/98/2d9906746cdc6a6ef809ae6338005b3f21bb568bea3165cfc6a243fdc25c/wheel-0.45.1.tar.gz"
+    sha256 "661e1abd9198507b1409a20c02106d9670b2576e916d58f520316666abca6729"
   end
 
   # Modify default sysconfig to match the brew install layout.
@@ -156,13 +149,6 @@ class PythonAT313 < Formula
     cppflags       = ["-I#{HOMEBREW_PREFIX}/include"]
 
     if OS.mac?
-      if MacOS.sdk_path_if_needed
-        # Help Python's build system (setuptools/pip) to build things on SDK-based systems
-        # The setup.py looks at "-isysroot" to get the sysroot (and not at --sysroot)
-        cflags  << "-isysroot #{MacOS.sdk_path}"
-        ldflags << "-isysroot #{MacOS.sdk_path}"
-      end
-
       # Enabling LTO on Linux makes libpython3.*.a unusable for anyone whose GCC
       # install does not match the one in CI _exactly_ (major and minor version).
       # https://github.com/orgs/Homebrew/discussions/3734
@@ -195,7 +181,7 @@ class PythonAT313 < Formula
 
     # Disabled modules - provided in separate formulae
     args += %w[
-      py_cv_module__tkinter=disabled
+      py_cv_module__tkinter=n/a
     ]
 
     system "./configure", *args
@@ -369,7 +355,7 @@ class PythonAT313 < Formula
     # Mark Homebrew python as externally managed: https://peps.python.org/pep-0668/#marking-an-interpreter-as-using-an-external-package-manager
     # Placed after ensurepip since it invokes pip in isolated mode, meaning
     # we can't pass --break-system-packages.
-    (lib_cellar/"EXTERNALLY-MANAGED").write <<~EOS
+    (lib_cellar/"EXTERNALLY-MANAGED").write <<~INI
       [externally-managed]
       Error=To install Python packages system-wide, try brew install
        xyz, where xyz is the package you are trying to
@@ -398,11 +384,11 @@ class PythonAT313 < Formula
        file. Failure to do this can result in a broken Homebrew installation.
 
        Read more about this behavior here: <https://peps.python.org/pep-0668/>
-    EOS
+    INI
   end
 
   def sitecustomize
-    <<~EOS
+    <<~PYTHON
       # This file is created by Homebrew and is executed on each python startup.
       # Don't print from here, or else python command line scripts may fail!
       # <https://docs.brew.sh/Homebrew-and-Python>
@@ -455,7 +441,7 @@ class PythonAT313 < Formula
           split_prefix = f"#{HOMEBREW_PREFIX}/opt/python-{split_module}@#{version.major_minor}/libexec"
           if os.path.isdir(split_prefix):
               sys.path.append(split_prefix)
-    EOS
+    PYTHON
   end
 
   def caveats
@@ -497,7 +483,7 @@ class PythonAT313 < Formula
                  shell_output("#{python3} -Sc 'import dbm.gnu' 2>&1", 1)
 
     # Verify that the selected DBM interface works
-    (testpath/"dbm_test.py").write <<~EOS
+    (testpath/"dbm_test.py").write <<~PYTHON
       import dbm
 
       with dbm.ndbm.open("test", "c") as db:
@@ -506,7 +492,7 @@ class PythonAT313 < Formula
           assert list(db.keys()) == [b"foo \\xbd"]
           assert b"foo \\xbd" in db
           assert db[b"foo \\xbd"] == b"bar \\xbd"
-    EOS
+    PYTHON
     system python3, "dbm_test.py"
 
     system bin/"pip#{version.major_minor}", "list", "--format=columns"

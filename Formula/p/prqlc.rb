@@ -1,27 +1,31 @@
 class Prqlc < Formula
   desc "Simple, powerful, pipelined SQL replacement"
   homepage "https://prql-lang.org"
-  url "https://github.com/PRQL/prql/archive/refs/tags/0.13.2.tar.gz"
-  sha256 "ee6b683a674d64c4a12893a6c926127e98481767ccb385a0f563dcc862bd199a"
+  url "https://github.com/PRQL/prql/archive/refs/tags/0.13.3.tar.gz"
+  sha256 "f64c22933ba0d4f5664bacbd2278de41baf74cef3a20e86b718dbd6348fc369f"
   license "Apache-2.0"
   head "https://github.com/prql/prql.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "0504c5363097ca60b2387ea9d9fdd3bff87e38042df06e38d02ab98c303132da"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "01af361385a984959e1c993035eb745aaaf2b339c1393ee76422b4e7484514e5"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "dabb929e4199fc379047d6a999d16343cc8fcc61716dc3ce9fe282b8bc9b0fbc"
-    sha256 cellar: :any_skip_relocation, sonoma:        "ec6af8e56f8e59e8d22e413a6c55b8fc2a86b9086ab6f6cced108212bb197d14"
-    sha256 cellar: :any_skip_relocation, ventura:       "ba0f1ff20ac87ee362ec15e860730c03cd410730e038da03ee13f661364e5939"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f3c279867650e9820cf28d8709a5a5f4f79d2bcd3292f38baffedef498bc6e57"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "9285a7b88adc1b1f13b178024f3257298d187996ece4854e012859cdf7c35a8e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4eb5b818c6636a2a6643db9f4998199fda78a0b3c337ea9b533acab6d388334e"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "f24dd39877c07926ac0fe9d08aa4d243d4440cac2ec0ddd61c1cde7ab89842db"
+    sha256 cellar: :any_skip_relocation, sonoma:        "b1fdd340538cbc8bc12b8742c0c1ab3d12ceae1c6c397503d42b31b2a00ac520"
+    sha256 cellar: :any_skip_relocation, ventura:       "fabdcd16ff792aac004bd45025385cead0fc73cb3210299b850b734b05e76335"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "160d2f6e949c8e8de1e0e2f897b4fe5cd33515b1fbb7346bd1a55f312164ac7d"
   end
 
   depends_on "rust" => :build
 
   def install
     system "cargo", "install", "prqlc", *std_cargo_args(path: "prqlc/prqlc")
+
+    generate_completions_from_executable(bin/"prqlc", "shell-completion")
   end
 
   test do
+    assert_match version.to_s, shell_output("#{bin}/prqlc --version")
+
     stdin = "from employees | filter has_dog | select salary"
     stdout = pipe_output("#{bin}/prqlc compile", stdin)
     assert_match "SELECT", stdout

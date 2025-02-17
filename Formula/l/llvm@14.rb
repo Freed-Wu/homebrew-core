@@ -32,33 +32,31 @@ class LlvmAT14 < Formula
   depends_on "cmake" => :build
   # sanitizer_mac.cpp:621:15: error: constexpr function never produces a constant expression [-Winvalid-constexpr]
   # constexpr u16 GetOSMajorKernelOffset() {
-  depends_on maximum_macos: [:sonoma, :build]
-  depends_on "python@3.12" => :build
+  depends_on maximum_macos: [:ventura, :build]
+  depends_on "python@3.12" => [:build, :test]
 
-  uses_from_macos "python" => :test
   uses_from_macos "libedit"
   uses_from_macos "libffi", since: :catalina
   uses_from_macos "ncurses"
   uses_from_macos "zlib"
 
   on_linux do
-    depends_on "pkg-config" => :build
+    depends_on "pkgconf" => :build
     depends_on "python-setuptools" => :build
     depends_on "binutils" # needed for gold
     depends_on "elfutils" # openmp requires <gelf.h>
   end
-
-  # Fails at building LLDB
-  fails_with gcc: "5"
 
   # Fix build with Xcode 15
   # https://github.com/spack/spack/issues/40158
   # Backport of https://reviews.llvm.org/D130060
   patch :DATA
 
-  def install
-    python3 = "python3.12"
+  def python3
+    "python3.12"
+  end
 
+  def install
     # The clang bindings need a little help finding our libclang.
     inreplace "clang/bindings/python/clang/cindex.py",
               /^(\s*library_path\s*=\s*)None$/,
@@ -449,11 +447,11 @@ class LlvmAT14 < Formula
     end
 
     # Testing mlir
-    (testpath/"test.mlir").write <<~EOS
+    (testpath/"test.mlir").write <<~MLIR
       func @bad_branch() {
         br ^missing  // expected-error {{reference to an undefined block}}
       }
-    EOS
+    MLIR
     system bin/"mlir-opt", "--verify-diagnostics", "test.mlir"
 
     (testpath/"clangformattest.c").write <<~C
@@ -464,32 +462,32 @@ class LlvmAT14 < Formula
       shell_output("#{bin}/clang-format -style=google clangformattest.c")
 
     # This will fail if the clang bindings cannot find `libclang`.
-    # We explicitly call `"python3"` instead of the method to be able to do
-    # `uses_from_macos "python" => :test`.
-    with_env(PYTHONPATH: prefix/Language::Python.site_packages("python3")) do
-      system "python3", "-c", <<~EOS
+    with_env(PYTHONPATH: prefix/Language::Python.site_packages(python3)) do
+      system python3, "-c", <<~PYTHON
         from clang import cindex
         cindex.Config().get_cindex_library()
-      EOS
+      PYTHON
     end
 
     # Ensure LLVM did not regress output of `llvm-config --system-libs` which for a time
     # was known to output incorrect linker flags; e.g., `-llibxml2.tbd` instead of `-lxml2`.
     # On the other hand, note that a fully qualified path to `dylib` or `tbd` is OK, e.g.,
     # `/usr/local/lib/libxml2.tbd` or `/usr/local/lib/libxml2.dylib`.
+    abs_path_exts = [".tbd", ".dylib"]
     shell_output("#{bin}/llvm-config --system-libs").chomp.strip.split.each do |lib|
       if lib.start_with?("-l")
         assert !lib.end_with?(".tbd"), "expected abs path when lib reported as .tbd"
         assert !lib.end_with?(".dylib"), "expected abs path when lib reported as .dylib"
       else
         p = Pathname.new(lib)
-        if p.extname == ".tbd" || p.extname == ".dylib"
+        if abs_path_exts.include?(p.extname)
           assert p.absolute?, "expected abs path when lib reported as .tbd or .dylib"
         end
       end
     end
   end
 end
+
 __END__
 --- a/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp
 +++ b/compiler-rt/lib/sanitizer_common/sanitizer_platform_limits_posix.cpp

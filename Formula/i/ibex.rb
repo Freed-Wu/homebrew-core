@@ -23,7 +23,7 @@ class Ibex < Formula
   depends_on "bison" => :build
   depends_on "cmake" => :build
   depends_on "flex" => :build
-  depends_on "pkg-config" => [:build, :test]
+  depends_on "pkgconf" => [:build, :test]
   depends_on arch: :x86_64
 
   uses_from_macos "zlib"
@@ -31,11 +31,9 @@ class Ibex < Formula
   def install
     ENV.cxx11
 
-    mkdir "build" do
-      system "cmake", "..", *std_cmake_args.reject { |s| s["CMAKE_INSTALL_LIBDIR"] }
-      system "make", "SHARED=true"
-      system "make", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args.reject { |s| s["CMAKE_INSTALL_LIBDIR"] }
+    system "cmake", "--build", "build", "--", "SHARED=true"
+    system "cmake", "--install", "build"
 
     pkgshare.install %w[examples benchs/solver]
     (pkgshare/"examples/symb01.txt").write <<~EOS

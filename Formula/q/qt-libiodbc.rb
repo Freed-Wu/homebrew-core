@@ -1,8 +1,8 @@
 class QtLibiodbc < Formula
   desc "Qt SQL Database Driver"
   homepage "https://www.qt.io/"
-  url "https://download.qt.io/official_releases/qt/6.7/6.7.2/submodules/qtbase-everywhere-src-6.7.2.tar.xz"
-  sha256 "c5f22a5e10fb162895ded7de0963328e7307611c688487b5d152c9ee64767599"
+  url "https://download.qt.io/official_releases/qt/6.8/6.8.2/submodules/qtbase-everywhere-src-6.8.2.tar.xz"
+  sha256 "012043ce6d411e6e8a91fdc4e05e6bedcfa10fcb1347d3c33908f7fdd10dfe05"
   license any_of: ["GPL-2.0-only", "GPL-3.0-only", "LGPL-3.0-only"]
 
   livecheck do
@@ -10,11 +10,11 @@ class QtLibiodbc < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:  "8f43f74f2a0aa0bf7e22e5ea226e1272b833df73c6f0ee604fb4c3efa8a29eaa"
-    sha256 cellar: :any,                 arm64_ventura: "e2259483c959add5aee6d48f889f22d2cd2e7185e84c9f0883e7414f02950ad3"
-    sha256 cellar: :any,                 sonoma:        "7d2a660380d9e2e4fe89e5de6f5f79a434ee7c15ab735755900bc5a7a76917a7"
-    sha256 cellar: :any,                 ventura:       "9bb661d5c4c68e93a95065ce3f0e823bcd18fad2de24b41ad281523302049555"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "b71297703d3021e2780190faa15b5503473dd0fa5c2de26ebbb9af311d4a3378"
+    sha256 cellar: :any,                 arm64_sonoma:  "68ded867458c9f80cc2307701c17a05d6b0eaee148c0a0e5a07f6ebb33b1ebb7"
+    sha256 cellar: :any,                 arm64_ventura: "9d1949a20e305fa356e57c0624ed2a0bfb3bfd28880811ca80a54e1ce4ea61fd"
+    sha256 cellar: :any,                 sonoma:        "1a264a8968a0f4183118b74e2ef7650758e2ad25c7ed803e3040c090e7390260"
+    sha256 cellar: :any,                 ventura:       "435c09d5c0e70ef93d9a0cdcfd96177a860cdb9d99f357d9ca36a8d03e03a91e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a58356b0c18f649bef94b7f6c50bf36952d9078c0862a337fa05110f647a1002"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -25,8 +25,6 @@ class QtLibiodbc < Formula
   conflicts_with "qt-unixodbc",
     because: "qt-unixodbc and qt-libiodbc install the same binaries"
 
-  fails_with gcc: "5"
-
   def install
     args = %W[
       -DCMAKE_STAGING_PREFIX=#{prefix}
@@ -36,6 +34,7 @@ class QtLibiodbc < Formula
       -DFEATURE_sql_odbc=ON
       -DFEATURE_sql_psql=OFF
       -DFEATURE_sql_sqlite=OFF
+      -DQT_GENERATE_SBOM=OFF
     ]
 
     system "cmake", "-S", "src/plugins/sqldrivers", "-B", "build", *args, *std_cmake_args

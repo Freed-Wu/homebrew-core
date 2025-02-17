@@ -1,8 +1,8 @@
 class SpirvCross < Formula
   desc "Performing reflection and disassembling SPIR-V"
   homepage "https://github.com/KhronosGroup/SPIRV-Cross"
-  url "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-1.3.296.0.tar.gz"
-  sha256 "4f7f9a8a643e6694f155712016b9b572c13a9444e65b3f43b27bb464c0ab76e0"
+  url "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-1.4.304.1.tar.gz"
+  sha256 "bd3614abfc83a52760e667536c945b6e136ab013efca72918f222403da081cab"
   license all_of: [
     "Apache-2.0",
     "MIT",
@@ -18,12 +18,12 @@ class SpirvCross < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "94d2fa1830967dcf20e19901f13518fbe51c0625f29fc9509813b5200ebdcee9"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "afbd2b3aca191e95c3205df6d234c06f67c9505faebd78090cf466ee857fc98a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "6f614f93680d87ee7c48124d01f4a9bc731b655199ed588d41a193d43caa621e"
-    sha256 cellar: :any_skip_relocation, sonoma:        "1848ddb46b8c90a582d6369ad7fae6d4c3f8decd78372b82fff1f8dcdf5160f5"
-    sha256 cellar: :any_skip_relocation, ventura:       "3eedd1eb6700688cd58ab559a078251308a15a98cdcda8dc041c02c2829edf34"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fcb20807bc4ee7b77f5c240c758d2f2085873b0a52c3f6b535b24c6ca184c0d5"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "c09e921570c21f9d34ff782c2a5c203958897a0963363e7b58ad2195d5888c2d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "24683268ca72de5814e9a122db22058f137967a7c4bf78c315e02dc4441b750f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4d0e14a534aabe9618e4faef2a44e936da5a594a65c7578d438378f5cb01cfc2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1a44ef9edc6b634db26328b94ca92edb715cdc365b463fdff01deea15d8d656d"
+    sha256 cellar: :any_skip_relocation, ventura:       "befb13c3a6ba0da979f3b9b4cb931096f7c16f9356d32e7ffa3aa5f495b065ae"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "90d7a7aba16b32ce6f15e4123dcee81df72659f0aedd83b8151f599d8dc40c71"
   end
 
   depends_on "cmake" => :build

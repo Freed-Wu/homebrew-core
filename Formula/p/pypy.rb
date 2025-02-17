@@ -1,8 +1,8 @@
 class Pypy < Formula
   desc "Highly performant implementation of Python 2 in Python"
   homepage "https://pypy.org/"
-  url "https://downloads.python.org/pypy/pypy2.7-v7.3.17-src.tar.bz2"
-  sha256 "50e06840f4bbde91448080a4118068a89b8fbcae25ff8da1e2bb1402dc9a0346"
+  url "https://downloads.python.org/pypy/pypy2.7-v7.3.18-src.tar.bz2"
+  sha256 "737435ddfc5afa5b97a7209c87d70d5f1062426c053b9bb8b99a0347cb4891fa"
   license "MIT"
   head "https://github.com/pypy/pypy.git", branch: "main"
 
@@ -12,21 +12,19 @@ class Pypy < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "b2301fc69139f089a77227a002b737b14afa0c99619dfa7d6200d38e6ca831e0"
-    sha256 cellar: :any,                 arm64_sonoma:   "e9e1692654a5a54459c12935d7d76db83e7989e1e0053060352568c463186f41"
-    sha256 cellar: :any,                 arm64_ventura:  "257f74a40fdcab7bb8e7108e8194b7fa9a88b365679a3c7fa45966a6874612c3"
-    sha256 cellar: :any,                 arm64_monterey: "64714ae5428b2af013f92ce9f4480de7a71dbfa670a2913bb2fc7f08bb50cf8b"
-    sha256 cellar: :any,                 sonoma:         "6627476c297b9029617c8cb58c813c486f75a992971996a49e4aef963acf3243"
-    sha256 cellar: :any,                 ventura:        "e2d4ff49951bf76f28213309cded300c955787c8563ffa4789ea71ff315f8674"
-    sha256 cellar: :any,                 monterey:       "a0309fa68cbbf79b6daab43676f848d9ff2a83222e7a6d72c9f2577715b94d3c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f6c8401527975c32039611ee2f7f54ef68cb3317e56df56f64dde5c73232dbc5"
+    sha256 cellar: :any,                 arm64_sequoia: "09b0a361e84c58a690a246f94c0f577b16203d6ae0c85f4d904cb7db3244e33a"
+    sha256 cellar: :any,                 arm64_sonoma:  "dbb2e87968e8f93a0154e2c9fa552f6bd9937c86fac8e2bcbb3dcc53b1f5fbcf"
+    sha256 cellar: :any,                 arm64_ventura: "fa95b16aa1a1f5e90b1b37cdf96f2e1b0ed5a15cc041fa08f4f9d4559d468efa"
+    sha256 cellar: :any,                 sonoma:        "074caca2fea633d1e7dc10531e67f45de0ec1eb885c300aea99db85a7ce85776"
+    sha256 cellar: :any,                 ventura:       "6e0cd5fc75060a6fb1a4e310e0ae382e3c51de81458257ab59a0a14cc951e23f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d50a0aa4c456336f1b37cc8274d2bd924483f454b466b9d1e1b4b3fa49b10759"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "gdbm"
   depends_on "openssl@3"
   depends_on "sqlite"
-  depends_on "tcl-tk"
+  depends_on "tcl-tk@8"
 
   uses_from_macos "bzip2"
   uses_from_macos "expat"
@@ -47,8 +45,14 @@ class Pypy < Formula
       end
     end
     on_linux do
-      url "https://downloads.python.org/pypy/pypy2.7-v7.3.11-linux64.tar.bz2"
-      sha256 "ba8ed958a905c0735a4cfff2875c25089954dc020e087d982b0ffa5b9da316cd"
+      on_arm do
+        url "https://downloads.python.org/pypy/pypy2.7-v7.3.11-aarch64.tar.bz2"
+        sha256 "ea924da1defe9325ef760e288b04f984614e405580f5321eb6a5c8f539bd415a"
+      end
+      on_intel do
+        url "https://downloads.python.org/pypy/pypy2.7-v7.3.11-linux64.tar.bz2"
+        sha256 "ba8ed958a905c0735a4cfff2875c25089954dc020e087d982b0ffa5b9da316cd"
+      end
     end
   end
 
@@ -76,10 +80,15 @@ class Pypy < Formula
     # upstream bug report, https://github.com/pypy/pypy/issues/4931
     ENV.append_to_cflags "-Wno-incompatible-function-pointer-types" if DevelopmentTools.clang_build_version >= 1500
 
+    # Avoid statically linking to libffi
+    inreplace "rpython/rlib/clibffi.py", '"libffi.a"', "\"#{shared_library("libffi")}\""
+
     # The `tcl-tk` library paths are hardcoded and need to be modified for non-/usr/local prefix
+    tcltk = Formula["tcl-tk@8"]
     inreplace "lib_pypy/_tkinter/tklib_build.py" do |s|
-      s.gsub! "/usr/local/opt/tcl-tk/", Formula["tcl-tk"].opt_prefix/""
-      s.gsub! "/include'", "/include/tcl-tk'"
+      s.gsub! "['/usr/local/opt/tcl-tk/include']", "[]"
+      s.gsub! "(homebrew + '/include')", "('#{tcltk.opt_include}/tcl-tk')"
+      s.gsub! "(homebrew + '/opt/tcl-tk/lib')", "('#{tcltk.opt_lib}')"
     end
 
     if OS.mac?
@@ -143,10 +152,10 @@ class Pypy < Formula
 
     # Tell distutils-based installers where to put scripts
     scripts_folder.mkpath
-    (distutils/"distutils.cfg").atomic_write <<~EOS
+    (distutils/"distutils.cfg").atomic_write <<~INI
       [install]
       install-scripts=#{scripts_folder}
-    EOS
+    INI
 
     %w[setuptools pip].each do |pkg|
       resource(pkg).stage do

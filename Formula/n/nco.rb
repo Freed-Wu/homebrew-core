@@ -1,17 +1,17 @@
 class Nco < Formula
   desc "Command-line operators for netCDF and HDF files"
   homepage "https://nco.sourceforge.net/"
-  url "https://github.com/nco/nco/archive/refs/tags/5.2.9.tar.gz"
-  sha256 "6245886e2a18a4821b0fb768cf9906de09aeb47c303462c8e85f0d1a4f34956d"
+  url "https://github.com/nco/nco/archive/refs/tags/5.3.2.tar.gz"
+  sha256 "645179433e0f54e7e6fefa9fcc74c1866ad55dd69f0fccbc262c550fcc186385"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "36fee2dba418873c6b8f70ce3910b72f6233d46c7d694e7a6bef71f99cc640e9"
-    sha256 cellar: :any,                 arm64_sonoma:  "f8a925356271dd53ebba184d5eaf0d8d267842c03cdccfad97862285ff6487c3"
-    sha256 cellar: :any,                 arm64_ventura: "d9f36db0f341909aac90ae55611edfd1f5dd5315e8674d1d43df8af981263576"
-    sha256 cellar: :any,                 sonoma:        "433adbbea94d7eed23c146af84bb3e88b6026d131d4e2068f6d0cb941eb63f74"
-    sha256 cellar: :any,                 ventura:       "6fdafffb41b987c8f1bfb74b3f0073e9acb12cd7f356f26c6af978e00ba5ef7e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a60e8035abed7f02a875ab4b21cb55b2792c148a8462dce0b0cff94b8120c9d"
+    sha256 cellar: :any,                 arm64_sequoia: "7a574a0bc89064c2dd7deab62f89345bb4daa66b44542d9c57e6cd685761dd05"
+    sha256 cellar: :any,                 arm64_sonoma:  "3d40c36eca8a9c7d62af0dcb71bea75853ccd4e39e40b9b52fb1f2eb33163aae"
+    sha256 cellar: :any,                 arm64_ventura: "9a4b445ec682dface0628879a438ebba386e4317ce6f2e668c6f45c0dd2aa3bc"
+    sha256 cellar: :any,                 sonoma:        "b5497609c3cd7b5d4d2a75c1be1b46f9da428cec1ef99bbe0b234e84c30f1061"
+    sha256 cellar: :any,                 ventura:       "b577c88fa6a214118000e181761c61da233bf10a4d552240800531d690071070"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3e7630a379735f70e2760eb79d0bc75fdd21e8e90699309b4d9a2cf1b8dba471"
   end
 
   head do
@@ -45,10 +45,10 @@ class Nco < Formula
       (buildpath/"include").install "lib/cpp/antlr"
       (buildpath/"lib").install "lib/cpp/src/libantlr.a"
 
-      (buildpath/"bin/antlr").write <<~EOS
+      (buildpath/"bin/antlr").write <<~SH
         #!/bin/sh
         exec "#{Formula["openjdk"].opt_bin}/java" -classpath "#{buildpath}/libexec/antlr.jar" antlr.Tool "$@"
-      EOS
+      SH
 
       chmod 0755, buildpath/"bin/antlr"
     end

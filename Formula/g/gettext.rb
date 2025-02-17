@@ -1,20 +1,19 @@
 class Gettext < Formula
   desc "GNU internationalization (i18n) and localization (l10n) library"
   homepage "https://www.gnu.org/software/gettext/"
-  url "https://ftp.gnu.org/gnu/gettext/gettext-0.22.5.tar.gz"
-  mirror "https://ftpmirror.gnu.org/gettext/gettext-0.22.5.tar.gz"
-  mirror "http://ftp.gnu.org/gnu/gettext/gettext-0.22.5.tar.gz"
-  sha256 "ec1705b1e969b83a9f073144ec806151db88127f5e40fe5a94cb6c8fa48996a0"
+  url "https://ftp.gnu.org/gnu/gettext/gettext-0.23.1.tar.gz"
+  mirror "https://ftpmirror.gnu.org/gettext/gettext-0.23.1.tar.gz"
+  mirror "http://ftp.gnu.org/gnu/gettext/gettext-0.23.1.tar.gz"
+  sha256 "52a578960fe308742367d75cd1dff8552c5797bd0beba7639e12bdcda28c0e49"
   license "GPL-3.0-or-later"
 
   bottle do
-    rebuild 1
-    sha256 arm64_sequoia: "9ad2a8e2fff717a18460818d086c02b8ed9f4c42a853f41a88c6f9b601b36615"
-    sha256 arm64_sonoma:  "7cf6084ae306256b1df18c8d75ba63abeccd5c605cfc8406dab8c09d98815bc1"
-    sha256 arm64_ventura: "3ead4ac2832bf1fbf02a5d1e8cdac9f0b46957615215d42382a85c4cf0f32aa0"
-    sha256 sonoma:        "1bb442e6a65a0d7930a5cfcee44e8e3c4a41ff99351535cce6101b32ce723706"
-    sha256 ventura:       "668023b6002ad5f2aca0e78a0d33ec8a24a660f82149b95cd42d14008dd59d2a"
-    sha256 x86_64_linux:  "c1a3a97412d28be6552c4b4191c174ce145329b165599c280b550f9a54bed9b8"
+    sha256 arm64_sequoia: "9179f473099573a8c4a42f70e39f1a36376914d6b634e0975b5cb514dcecb4ee"
+    sha256 arm64_sonoma:  "f3b350830a3da3a44f3981838651accad39c14a3bd0ceac8d4a3c94eb7b24c02"
+    sha256 arm64_ventura: "2e98d7dae6dce086135060db70e767c5bfb0bcb8d190eea5f0a4c192315f2b0f"
+    sha256 sonoma:        "89b1b668765938504ce64f991cf6b81fc96765f5dec84bbf64c007c3d811b8fe"
+    sha256 ventura:       "fffb8da1a3258ca710829d0b9cf048d2a3434625e3fc202d845b0238ccc16d0f"
+    sha256 x86_64_linux:  "a3f66e4195312f949e9b94b12de4d888945150b3e4dccfcb67403fde034ed073"
   end
 
   depends_on "libunistring"
@@ -27,6 +26,11 @@ class Gettext < Formula
   end
 
   def install
+    # macOS iconv implementation is slightly broken since Sonoma.
+    # This is also why we skip `make check`.
+    # upstream bug report, https://savannah.gnu.org/bugs/index.php?66541
+    ENV["am_cv_func_iconv_works"] = "yes" if OS.mac? && MacOS.version == :sequoia
+
     args = [
       "--with-libunistring-prefix=#{Formula["libunistring"].opt_prefix}",
       "--disable-silent-rules",

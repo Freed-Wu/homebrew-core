@@ -1,17 +1,17 @@
 class VideoCompare < Formula
   desc "Split screen video comparison tool using FFmpeg and SDL2"
   homepage "https://github.com/pixop/video-compare"
-  url "https://github.com/pixop/video-compare/archive/refs/tags/20241025.tar.gz"
-  sha256 "95a14ae51f714f72ff3c863f8045ad16ffc5294adad9537083421f37938e395d"
+  url "https://github.com/pixop/video-compare/archive/refs/tags/20250215.tar.gz"
+  sha256 "8d63c6ae9a2d27c772205b4f9bf9a9b3d85685bd78ba322202ed41a380cba0eb"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "2ba7e9478c19ad39a26da60ba902d350a7ef849c005a6ccba1fe1701e4b02dbe"
-    sha256 cellar: :any,                 arm64_sonoma:  "a00b35a2210acbce7f6c5927bfd4ffbd92eeb2f097e5951eea23411f50d57a5d"
-    sha256 cellar: :any,                 arm64_ventura: "2d274294ee9842f7d85c3ddcc3874fc308741e14d7967d5d5bc41641bf25b8e4"
-    sha256 cellar: :any,                 sonoma:        "eb0155b5af9e11388d726fbbe4a10ef1ce96f764d1610e6cfef71f66a7c23164"
-    sha256 cellar: :any,                 ventura:       "d9e1293e19acfed4a2f4d0fc025d5e3e9f2e1acd58cacaec0be9353e659b8fa7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "923ad632e895c63dc533ef01c55b6fa3c793289dedd328dd351ae930f44e8525"
+    sha256 cellar: :any,                 arm64_sequoia: "7a5ed19005b7010247e820650a31c80d7192c1b8c1082ea20f2b317562da4115"
+    sha256 cellar: :any,                 arm64_sonoma:  "8c1abd9bf9e0295ec7ad615d84fd34d7a19e811e81c184fd02235e859194adef"
+    sha256 cellar: :any,                 arm64_ventura: "a4b536e8e826d33be54b43effcb4d9982edd755a9ee4701abb0a39f73e8da280"
+    sha256 cellar: :any,                 sonoma:        "a5ba9c7308ad5d0a8df76624a375a397462b7c976b5f8b1cf8f2f2ef6231a142"
+    sha256 cellar: :any,                 ventura:       "6d0ff966a92ffd466bfc4f7edaeced6f12b7e8d7f06918f707d7bc3a9ed42d67"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "06f784460c9cc5e5b17e57470e6d0d3515e5d82f70aa9ff7b8ecc1be1618bc04"
   end
 
   depends_on "ffmpeg"

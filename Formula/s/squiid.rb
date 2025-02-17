@@ -1,54 +1,27 @@
 class Squiid < Formula
   desc "Do advanced algebraic and RPN calculations"
   homepage "https://imaginaryinfinity.net/projects/squiid/"
-  url "https://gitlab.com/ImaginaryInfinity/squiid-calculator/squiid/-/archive/1.1.3/squiid-1.1.3.tar.gz"
-  sha256 "3944faeff6787e52bb045a0353c72a29acff919abfa41b275add7189355c01c9"
+  url "https://gitlab.com/ImaginaryInfinity/squiid-calculator/squiid/-/archive/1.2.2/squiid-1.2.2.tar.gz"
+  sha256 "75b2ac5526878aa49aa97c63f7041796768fcfc3a7c63e3692fa65648ea5ebfc"
   license "GPL-3.0-or-later"
 
-  livecheck do
-    url :stable
-    regex(/^v?(\d+(?:\.\d+)+)$/i)
-  end
-
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "315fbbb4a9553ca75652610cb44c2b9f39e87e6a803f9d4d24a64f618f32a682"
-    sha256 cellar: :any,                 arm64_sonoma:  "8176fc788c278875b94cb0d8b85cb6523c4912d63ef781c84bebeb370de57087"
-    sha256 cellar: :any,                 arm64_ventura: "71372763b97920cf07b0ea356fc6decdc89017814ca85b5273b0cab7b18d4469"
-    sha256 cellar: :any,                 sonoma:        "1c29ed2240f777e20a2e0c15a9897e89e3c3b3236ad7829fdf172e8767be4cec"
-    sha256 cellar: :any,                 ventura:       "4922877ef98b6d49f4f3de8dca3f5e5af4583d78c46b499c1ffc96f359e3f230"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "352d0187529dad2da4cfd5aa015592956e142969769772683a3b3ad4b87bd3cd"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4980cdb46fcc13a66bfebd3bb71b629872ac9b7017a04f643034cfa4140918ae"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "af984d37f42aff9d81eec6bc4fa03261c4eff91dc0414696796c79ce8230e74d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "8258de8e85577ce62b5fd983e76a17be11b648f96ef1e4c4c395fe95c5cee972"
+    sha256 cellar: :any_skip_relocation, sonoma:        "8e11ef4bde72599945c4ed5b969e78d7cec2fde57342b5cd9c9c52e8fba9d419"
+    sha256 cellar: :any_skip_relocation, ventura:       "cb1dda1359f08c4c26f20a9a6a8413610a8c4e95ca4f7b0754636358ff41813c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "f1b8f6f2d75f0b92ca66d8e1e2382dfce20e43155f4237a87fa244edce89bdc2"
   end
 
   depends_on "rust" => :build
-  depends_on "nng"
 
   def install
-    # Avoid vendoring `nng`.
-    # "build-nng" is the `nng` crate's only default feature. To check:
-    # https://gitlab.com/neachdainn/nng-rs/-/blob/v#{nng_crate_version}/Cargo.toml
-    inreplace "Cargo.toml",
-              /^nng = "(.+)"$/,
-              'nng = { version = "\\1", default-features = false }'
-    inreplace "squiid-engine/Cargo.toml",
-              /^nng = { version = "(.+)", optional = true }$/,
-              'nng = { version = "\\1", optional = true, default-features = false }'
-
     system "cargo", "install", *std_cargo_args
-  end
-
-  def check_binary_linkage(binary, library)
-    binary.dynamically_linked_libraries.any? do |dll|
-      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
-
-      File.realpath(dll) == File.realpath(library)
-    end
   end
 
   test do
     # squiid is a TUI app
     assert_match version.to_s, shell_output("#{bin}/squiid --version")
-
-    assert check_binary_linkage(bin/"squiid", Formula["nng"].opt_lib/shared_library("libnng")),
-      "No linkage with libnng! Cargo is likely using a vendored version."
   end
 end

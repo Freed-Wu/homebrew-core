@@ -20,10 +20,12 @@ class Binwalk < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:  "9bad450fef7ba5832e71804dc11fcb87d817fabbbf735c2b1dc9fa6c508a1090"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
   depends_on "p7zip"
   depends_on "xz"
+
+  uses_from_macos "bzip2"
 
   on_linux do
     depends_on "fontconfig"

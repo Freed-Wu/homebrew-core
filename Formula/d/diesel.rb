@@ -1,26 +1,23 @@
 class Diesel < Formula
   desc "Command-line tool for Rust ORM Diesel"
   homepage "https://diesel.rs"
-  url "https://github.com/diesel-rs/diesel/archive/refs/tags/v2.2.4.tar.gz"
-  sha256 "519e761055dea9abf6172b8ec15c0fd0da53c859e6b6809daeb104bbecd6fe57"
+  url "https://github.com/diesel-rs/diesel/archive/refs/tags/v2.2.7.tar.gz"
+  sha256 "8125fe5dc1aa24e823a182ed721eaa3a8340bff094ec3a3339fbdf3e59749eae"
   license any_of: ["Apache-2.0", "MIT"]
   head "https://github.com/diesel-rs/diesel.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia:  "31e2374ec71891eeed4e6ac413aaf878e86fd5abf9a801fc8391ad3a5279ca63"
-    sha256 cellar: :any,                 arm64_sonoma:   "d75cce8c52f8c343cbcc9a94b03705e99aa480ebbcf678d612cd2fdbd98d8b9d"
-    sha256 cellar: :any,                 arm64_ventura:  "4eb44dec232aa975d392b48a41ea5cf9f5e1b548e85113175cedb354ee224c0b"
-    sha256 cellar: :any,                 arm64_monterey: "e0cc0f7623c8188e032e57a5ac1b6cb2329dfd2dfe76101a7cd9abf66c0fcf73"
-    sha256 cellar: :any,                 sonoma:         "36b15705649d70cc7a8d6f53751c9e8c5d49140c8e594639b037288768d97119"
-    sha256 cellar: :any,                 ventura:        "43ee571371293e18488964b71636a3101898f365709af26ed6cf47522e065710"
-    sha256 cellar: :any,                 monterey:       "d80e8fadf7f528f081c7591f46641530269b031e0b96e4ad6dd0d4552057d64c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "dea99a1c98fc0d9376737db7737606f1a79b427dca5deced0c5b498e81f4a79f"
+    sha256 cellar: :any,                 arm64_sequoia: "6ece9b7b589213b1e5d76f9d00a0efc5094feb28b4b9c4004820c257b6e2d33d"
+    sha256 cellar: :any,                 arm64_sonoma:  "079f2bed063bb953f1ee5f88d5759c90cc06527a1bd385784121f0197698d0c3"
+    sha256 cellar: :any,                 arm64_ventura: "ac3a404e0ae39de2a9dcac3cc06b7a66694f2ff6fc6218ead26fb3e7fe7e2ecf"
+    sha256 cellar: :any,                 sonoma:        "df9470055cff5d8540411d61eee2190b6f3b3da396e5299cfd5661c5657fb724"
+    sha256 cellar: :any,                 ventura:       "73a0b69b180cc97f4709f1c998a41fb076d3cd968380a34468ae1d7b028015b8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e259d42212cccc6fb862813936ee4c40b1144dee31bba5c3cf2083b8ab82fc33"
   end
 
   depends_on "rust" => [:build, :test]
   depends_on "libpq"
-  depends_on "mysql-client"
+  depends_on "mariadb-connector-c"
 
   uses_from_macos "sqlite"
 

@@ -1,9 +1,9 @@
 class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
-  homepage "https://argoproj.github.io/cd"
+  homepage "https://argoproj.github.io/cd/"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v2.13.0",
-      revision: "347f221adba5599ef4d5f12ee572b2c17d01db4d"
+      tag:      "v2.14.2",
+      revision: "ad2724661b66ede607db9b5bd4c3c26491f5be67"
   license "Apache-2.0"
 
   # There can be a notable gap between when a version is tagged and a
@@ -18,12 +18,12 @@ class Argocd < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f38f81021195a99a879966f3706e81d4fc5e3feae621e1510a10d1ba5b98ae6e"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "075ac92c7373a90459803d5b0e98840e61a081cb25c74dcc61bb5df69de1a39f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "8124afce24dd171f5d8c4ceba2eea9ac503b76e9f969d7978241602faa7611e4"
-    sha256 cellar: :any_skip_relocation, sonoma:        "cc7ccb8efda2d62085ec83f601d3ad4c7a436c7b4330290d95864e054d7081e0"
-    sha256 cellar: :any_skip_relocation, ventura:       "9e3c60189a6cc4f2e3f842ef71401282e68e145f51bc5b01e94cde3aedd10d8f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2531de98a1bd34d83e9b10566d935c26d585fa142f2ae0720e9024e537164a9f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "14dd2461403d6f3f9004519ce5a5158e0f33ab76413a40b8e6a424f2b1844036"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ca03ca2d83362b1d544e1b3149a40fa30bbbc39e68d2e03f19b2a2a26ca73ef3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ba0c124a5ce45de455d53da6ef6c0d90a5c1701125ee62f4394f937280472c45"
+    sha256 cellar: :any_skip_relocation, sonoma:        "37770907d50d528d75435d11770b15462d5af6edfb853f871ba02b3064f1e0ff"
+    sha256 cellar: :any_skip_relocation, ventura:       "420391a8605212d4a0926e5e158547ae6aa2a2367b8dfd2a669ea07073fc9a4c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "2c8c54804ee4ff01c074f9531975a3b876cea888ace455300a08a2243bf59c1d"
   end
 
   depends_on "go" => :build

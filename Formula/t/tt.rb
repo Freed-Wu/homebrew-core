@@ -1,22 +1,22 @@
 class Tt < Formula
   desc "Command-line utility to manage Tarantool applications"
   homepage "https://github.com/tarantool/tt"
-  url "https://github.com/tarantool/tt/releases/download/v2.5.1/tt-2.5.1-complete.tar.gz"
-  sha256 "1668f7842dfbc158486a6fa6f2d0b96cfcacfdfe38d2356d18c74c01d39f6631"
+  url "https://github.com/tarantool/tt/releases/download/v2.7.0/tt-2.7.0-complete.tar.gz"
+  sha256 "05afbe400da1459ccac218750d354f7f2c362e995b65f771d537ccb21abdeac3"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "c5ac88f957377efdcafdc2a444f2f87434f60b2579817b44379da3c2a11cc29b"
-    sha256 cellar: :any,                 arm64_sonoma:  "a8a979f07948f545c2cea8511d1f869af7de6dc0a74f06028541309b31f7be6d"
-    sha256 cellar: :any,                 arm64_ventura: "51d4cf4016a5b94cbb5767b62a3a155b577dc880036cefedc2dea5d7a534883a"
-    sha256                               sonoma:        "76f2b6df86f033e64eb71cc6b606ca1b339a8b39b3b077e0062d1bc32c107467"
-    sha256                               ventura:       "6554678c3b83c011df6efbb35e1b4c2dd3a3718db87eb6422166f8cea92fd7a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7517f26fa7dfead01987fbb093e3b4bfe8e2869af74dba0c984b87deb18901ef"
+    sha256 cellar: :any,                 arm64_sequoia: "26ed5dbb8e03e8bfc9e7a08351554c814afcd7388c28ee623a45b901f2f16328"
+    sha256 cellar: :any,                 arm64_sonoma:  "348a4e516cfb09283edace39503219a8bf84bc109808df76149d30472bf154bf"
+    sha256 cellar: :any,                 arm64_ventura: "3349d4003dd186905a14b65864e7715328486ff40ec5076fec6047fa5488142d"
+    sha256                               sonoma:        "4678e3aa80b432beb59db63f818f6138ac2fb1d6366fa81a38eb2e64ec2ca056"
+    sha256                               ventura:       "b1b73a7bbe06c999e8dfa98fba773b150d6d23a1d2d7111bf8e73837c8efc7e7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3feed242b0fa7b383135ac27668051ec9a40858a990692b786be43eea3c975ae"
   end
 
   depends_on "go" => :build
   depends_on "mage" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "openssl@3"
 
   uses_from_macos "curl"

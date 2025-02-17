@@ -1,8 +1,8 @@
 class LibvirtPython < Formula
   desc "Libvirt virtualization API python binding"
   homepage "https://www.libvirt.org/"
-  url "https://download.libvirt.org/python/libvirt-python-10.9.0.tar.gz"
-  sha256 "44833fc6017fc88e43586a78c028a89fa1e1c1bae5089160c62356308ac9a37a"
+  url "https://download.libvirt.org/python/libvirt-python-11.0.0.tar.gz"
+  sha256 "cee825a53c6438c5bc84b4250b35493a8e504d5d8075d3d2069ffaf7090846f8"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -11,15 +11,15 @@ class LibvirtPython < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "265ee75ccfc21afcbbe6d42833ee4a5e325a0c7d2a28554ed2f2c8153de646cd"
-    sha256 cellar: :any,                 arm64_sonoma:  "0280c0041fcc1803c3aaee9aa656ac8083f2ab12a262fdb2d06826ea0f2a2958"
-    sha256 cellar: :any,                 arm64_ventura: "b6a289ec7937206de11591a9378d194ba9d355cd3cbf41d72aa978b5eb8a2913"
-    sha256 cellar: :any,                 sonoma:        "62dd88bf8a1bb4c88f42c356e6e792aa7455b505e5a4d5d7a30455dd107d29e8"
-    sha256 cellar: :any,                 ventura:       "1bcbf2671d75df950d68f23419158d425f6859296780235e01e21b9c8f7386ec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "083260eab1d2a1223373b8512eb0cdb79c33b70c9331908a75aa2c382473c4fa"
+    sha256 cellar: :any,                 arm64_sequoia: "995696e9d6f959e8cb4508cf0d894f6661dc163f1ec2d8f7efe28bfa0cf7e26b"
+    sha256 cellar: :any,                 arm64_sonoma:  "4d46dd6ee4055036cc7706186c0e5d009be871ff0c5737f1ab2c5cc50e7b1f4e"
+    sha256 cellar: :any,                 arm64_ventura: "26d724127bd63bae989345b3ce9c4d918cd80d216c4e347a8e2cd49c8c83ea8c"
+    sha256 cellar: :any,                 sonoma:        "14523ca3bce0f2cf90b678a159606524f10f96a71c1f36ff21367d5782ad174d"
+    sha256 cellar: :any,                 ventura:       "1dbb930e5618fb54caf38e0a408772635930680dd58e779bbb151a59b9d6364b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8a6aa720d8df55740a0230c8f1211365bb7b030e9111ab0657f14fdfb6b66d5c"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "libvirt"
   depends_on "python@3.13"
 

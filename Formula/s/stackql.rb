@@ -1,8 +1,8 @@
 class Stackql < Formula
   desc "SQL interface for arbitrary resources with full CRUD support"
   homepage "https://stackql.io/"
-  url "https://github.com/stackql/stackql/archive/refs/tags/v0.5.748.tar.gz"
-  sha256 "362a42ced18addb6ef1f7fbb6647ddf07d60bc58f3a32d91a380a2fd1e6fc296"
+  url "https://github.com/stackql/stackql/archive/refs/tags/v0.6.65.tar.gz"
+  sha256 "0866d4f25c4a2e8e013f8dbc2c9c6b246adde76f273364aa2ffaa9da7e39b2d6"
   license "MIT"
 
   livecheck do
@@ -11,12 +11,12 @@ class Stackql < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "f76c9444f3885e3e43add39558f676f37694d100018fbdc1b66a4d189c46ee14"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "d93ae48058cfe333846a1fd491be2b4366e7140a4b6a0386e6361e7d26b86cca"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4a2f9b71a05baa6b3de059a1465786e4291d0c3d3af95b7dccf7dda7bb41350a"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e03d1c84dd91b72ba7dda3af35549c13d22ef4ae4bc3adad9d7a39736b87a76c"
-    sha256 cellar: :any_skip_relocation, ventura:       "c93a63f07891fd5fd59f15002621d78e69d0e5dfcd7a6072e943fba1ce1de423"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ff814a007d459933d04382de82975f2dfcb725e4c9562167d7c2230469ff2e7e"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "978797e12d3f511ecc65574dbcbb5b55c69b1b0aea6700c39b26253ce50cac1f"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "332490b5a740a8ee6d62a0a2646a0f8c367cdd54f739009e5e9bd79af2dd5c71"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "d97b0dbe61b045815ed32071bd3b4ada56eeacd52b03b82f73fb92a55b5fe1dc"
+    sha256 cellar: :any_skip_relocation, sonoma:        "ee41f2323cb21ebc22e0b1181f402bb8a5944b901538e006b748e4be05331de0"
+    sha256 cellar: :any_skip_relocation, ventura:       "300586d20b95617e2ca9e5f90768e57f22f94ddedd7357a52cec6c39e7c4c01f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6fea8e3a64328ce5ae7f27cb7eee7496b5ff855c1f0f77a340032aba17b41ecf"
   end
 
   depends_on "go" => :build

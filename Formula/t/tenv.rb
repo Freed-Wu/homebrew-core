@@ -1,18 +1,18 @@
 class Tenv < Formula
   desc "OpenTofu / Terraform / Terragrunt / Atmos version manager"
   homepage "https://tofuutils.github.io/tenv/"
-  url "https://github.com/tofuutils/tenv/archive/refs/tags/v3.2.10.tar.gz"
-  sha256 "ea8eb905229c43f0ea43394003d9832d225deda2e54bbf2d71d3f47b7e2d471d"
+  url "https://github.com/tofuutils/tenv/archive/refs/tags/v4.2.4.tar.gz"
+  sha256 "b7a35bbdb959df5aec61c0ebd7c6e5958be6d3eb04720d57e8f3a22026168dc9"
   license "Apache-2.0"
   head "https://github.com/tofuutils/tenv.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ea8ceed704f04d2ff1ba487a920b1e6811e6cfbcfd5290a103f3c72ec5addfa3"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ea8ceed704f04d2ff1ba487a920b1e6811e6cfbcfd5290a103f3c72ec5addfa3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "ea8ceed704f04d2ff1ba487a920b1e6811e6cfbcfd5290a103f3c72ec5addfa3"
-    sha256 cellar: :any_skip_relocation, sonoma:        "262a989dc911e8f63b2757d88789431461730b2d0ec043983cdb23e90661d8dd"
-    sha256 cellar: :any_skip_relocation, ventura:       "262a989dc911e8f63b2757d88789431461730b2d0ec043983cdb23e90661d8dd"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a57a0037190b568603fbee2577400a680dc33f6ceefbff5468cc7d8d5ff516e7"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b4d791c05954cbcbfc36c7e8a72ef2d517af7b45d93ae3d3a62405a3fc8c9301"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "b4d791c05954cbcbfc36c7e8a72ef2d517af7b45d93ae3d3a62405a3fc8c9301"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "b4d791c05954cbcbfc36c7e8a72ef2d517af7b45d93ae3d3a62405a3fc8c9301"
+    sha256 cellar: :any_skip_relocation, sonoma:        "4185be574e6693737c97d3d84e7fd6ca4716913e3697d26288be8ca86050b7fe"
+    sha256 cellar: :any_skip_relocation, ventura:       "4185be574e6693737c97d3d84e7fd6ca4716913e3697d26288be8ca86050b7fe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "17a6fdd9087207883b78549083cac8f924eb5474da043e863c4790e63250943c"
   end
 
   depends_on "go" => :build

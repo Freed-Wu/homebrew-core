@@ -1,10 +1,9 @@
 class PostgresqlAT17 < Formula
   desc "Object-relational database system"
   homepage "https://www.postgresql.org/"
-  url "https://ftp.postgresql.org/pub/source/v17.0/postgresql-17.0.tar.bz2"
-  sha256 "7e276131c0fdd6b62588dbad9b3bb24b8c3498d5009328dba59af16e819109de"
+  url "https://ftp.postgresql.org/pub/source/v17.3/postgresql-17.3.tar.bz2"
+  sha256 "13c18b35bf67a97bd639925fc581db7fd2aae4d3548eac39fcdb8da74ace2bea"
   license "PostgreSQL"
-  revision 3
 
   livecheck do
     url "https://ftp.postgresql.org/pub/source/"
@@ -12,12 +11,12 @@ class PostgresqlAT17 < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "a46df15a994c5c0c1fa0432ecd6f54a2914ebf5e6494895b915daac2fffde3c6"
-    sha256 arm64_sonoma:  "0044d8a79cc334623caa4e20e649dd750ce3959cd920c68b4bc6f4e2b14ecf22"
-    sha256 arm64_ventura: "03ab3fe640c2963e1204a1539c4769b9609689f3875b045724f48d72ed232740"
-    sha256 sonoma:        "50e3c87e64a4f68708ecd03df550787525f51c4a7321355c205479b826b5782b"
-    sha256 ventura:       "ad7dde0af3578ec67b0e7529a0d84bbff09e70ff3f0c60267a4e003ccd564b7f"
-    sha256 x86_64_linux:  "f7abfb95bd2e0876f9e5900bae7763d0c5e7fc321e3027d703e408eeb6cc173e"
+    sha256 arm64_sequoia: "8c3455e6ff76124b745918b70359c2ca8ad658f0815e603b6f3ef83ac28e16ee"
+    sha256 arm64_sonoma:  "7254f3c3595aa30a66eb84a7d24ccc14a057c02c8606b52d9e5e3a4c47db67e2"
+    sha256 arm64_ventura: "9632a0bd7e41e05fd1585a32c43b54316b051ea956f72da2f5646b9f39c18c81"
+    sha256 sonoma:        "0e9296a8b26267b2ca14bdf149cf0d869d74909fe1e63923d4f3b5b6d092796b"
+    sha256 ventura:       "9c0e87f9ee3a0c7c1cc32e06a35fbc8169f13b640dbd53b0c51c3e252f12863f"
+    sha256 x86_64_linux:  "d6ce1cafa8a18695fd287f7750bbd7f47602b91735d2a834c43400435f9fb203"
   end
 
   keg_only :versioned_formula
@@ -28,7 +27,7 @@ class PostgresqlAT17 < Formula
   depends_on "docbook" => :build
   depends_on "docbook-xsl" => :build
   depends_on "gettext" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "icu4c@76"
   # GSSAPI provided by Kerberos.framework crashes when forked.
   # See https://github.com/Homebrew/homebrew-core/issues/47494.
@@ -67,14 +66,14 @@ class PostgresqlAT17 < Formula
     ENV.prepend "CPPFLAGS", "-I#{Formula["openssl@3"].opt_include} -I#{Formula["readline"].opt_include}"
 
     # Fix 'libintl.h' file not found for extensions
+    # Update config to fix `error: could not find function 'gss_store_cred_into' required for GSSAPI`
     if OS.mac?
-      ENV.prepend "LDFLAGS", "-L#{Formula["gettext"].opt_lib}"
-      ENV.prepend "CPPFLAGS", "-I#{Formula["gettext"].opt_include}"
+      ENV.prepend "LDFLAGS", "-L#{Formula["gettext"].opt_lib} -L#{Formula["krb5"].opt_lib}"
+      ENV.prepend "CPPFLAGS", "-I#{Formula["gettext"].opt_include} -I#{Formula["krb5"].opt_include}"
     end
 
-    args = std_configure_args + %W[
+    args = %W[
       --datadir=#{HOMEBREW_PREFIX}/share/#{name}
-      --libdir=#{HOMEBREW_PREFIX}/lib/#{name}
       --includedir=#{HOMEBREW_PREFIX}/include/#{name}
       --sysconfdir=#{etc}
       --docdir=#{doc}
@@ -91,15 +90,15 @@ class PostgresqlAT17 < Formula
       --with-pam
       --with-perl
       --with-uuid=e2fs
-      --with-extra-version=\ (#{tap.user})
     ]
+    args << "--with-extra-version= (#{tap.user})" if tap
     args += %w[--with-bonjour --with-tcl] if OS.mac?
 
     # PostgreSQL by default uses xcodebuild internally to determine this,
     # which does not work on CLT-only installs.
     args << "PG_SYSROOT=#{MacOS.sdk_path}" if OS.mac? && MacOS.sdk_root_needed?
 
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args(libdir: HOMEBREW_PREFIX/"lib/#{name}")
     system "make"
     # We use an unversioned `postgresql` subdirectory rather than `#{name}` so that the
     # post-installed symlinks can use non-conflicting `#{name}` and be retained on `brew unlink`.

@@ -1,18 +1,17 @@
 class Freerdp < Formula
   desc "X11 implementation of the Remote Desktop Protocol (RDP)"
   homepage "https://www.freerdp.com/"
-  url "https://github.com/FreeRDP/FreeRDP/archive/refs/tags/3.9.0.tar.gz"
-  sha256 "a1d2946c67037bf6bb8aa2f0441c7cacd5e92c835d776cecffb4fcdbaa45ec4f"
+  url "https://github.com/FreeRDP/FreeRDP/releases/download/3.12.0/freerdp-3.12.0.tar.gz"
+  sha256 "b08c1bfe867cde0feb3e51f72f32ee3fa3a37acbd20d6fdeb5a0f614b549f5cb"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 arm64_sequoia: "d0389909074b092cba7ff7e0f2ea45353223bf7e2db21f155c1d3cdda432edc7"
-    sha256 arm64_sonoma:  "893d3f63e9d26d03b70a36432c8e226b79c5a451db1b80f6aeaff25b61f217c8"
-    sha256 arm64_ventura: "ab68bfe5dd9fbca26172f850a0b1ae0f4421fd75a2ced3aa111b2a5c6aa8b4fc"
-    sha256 sonoma:        "2f59a023351939d112131480db417e6d44501ab0026be78f4419b25b84ae5ee1"
-    sha256 ventura:       "7c79507c0f96dd4be1205a5e4cbb5043bb689bc5bec31532bdeac6975227231e"
-    sha256 x86_64_linux:  "3df042e5d31336ee9802d5b27d901f8c67993b83c3b85585103af86726243f47"
+    sha256 arm64_sequoia: "91fc4a4df12c1a66cf7b95ff1c1017ccac1c0bf58a851df922b5e478754d986b"
+    sha256 arm64_sonoma:  "15bdac25ccca811a48a0ed2522ed169448b3648e90f76fa083221afb091da015"
+    sha256 arm64_ventura: "d87510345bd2fffac9498fd32661bf99800446a41f861fd0c1e0496801982752"
+    sha256 sonoma:        "2449c626348d18e6492cd99abd773884867f04ed82e91b4686c3be204d203939"
+    sha256 ventura:       "193ceeb980e95f2674a517450f09981450c5c66bf80cb12f4075454344d7cf39"
+    sha256 x86_64_linux:  "6e0d20e3eac5043cd97fd2c4e63f4a06556f732d0bcd38ee111dfebfda74ee6e"
   end
 
   head do
@@ -21,7 +20,7 @@ class Freerdp < Formula
   end
 
   depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "cjson"
   depends_on "ffmpeg"
   depends_on "jpeg-turbo"

@@ -1,8 +1,8 @@
 class Apt < Formula
   desc "Advanced Package Tool"
   homepage "https://wiki.debian.org/Apt"
-  url "https://deb.debian.org/debian/pool/main/a/apt/apt_2.9.10.tar.xz"
-  sha256 "948ede1c9ebdc2fdbb91a12776f23b33df326ff01bcf0ce062e5bfe3260d1bcb"
+  url "https://deb.debian.org/debian/pool/main/a/apt/apt_2.9.27.tar.xz"
+  sha256 "c9f52d6a3a608c995c19b0d431b0bdf4191e08761ed6a22c37ce3d4fd847eee0"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,7 +11,7 @@ class Apt < Formula
   end
 
   bottle do
-    sha256 x86_64_linux: "89e28d65c7454fdc54385d8d2e01f1f1c611270e6802bd869616f512dfbd8ab3"
+    sha256 x86_64_linux: "c0793623c224974aea4267534456fc2d8634caf2a9ab010a97c2826256edc13f"
   end
 
   keg_only "not linked to prevent conflicts with system apt"
@@ -39,8 +39,6 @@ class Apt < Formula
   depends_on "xz"
   depends_on "zlib"
   depends_on "zstd"
-
-  fails_with gcc: "5"
 
   # List this first as the modules below require it.
   resource "Module::Build" do
@@ -79,8 +77,8 @@ class Apt < Formula
   end
 
   resource "YAML::Tiny" do
-    url "https://cpan.metacpan.org/authors/id/E/ET/ETHER/YAML-Tiny-1.74.tar.gz"
-    sha256 "7b38ca9f5d3ce24230a6b8bdc1f47f5b2db348e7f7f9666c26f5955636e33d6c"
+    url "https://cpan.metacpan.org/authors/id/E/ET/ETHER/YAML-Tiny-1.76.tar.gz"
+    sha256 "a8d584394cf069bf8f17cba3dd5099003b097fce316c31fb094f1b1c171c08a3"
   end
 
   resource "Pod::Parser" do
@@ -104,8 +102,8 @@ class Apt < Formula
   end
 
   resource "XS::Parse::Keyword::Builder" do
-    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/XS-Parse-Keyword-0.46.tar.gz"
-    sha256 "65a2726a910079499ad4bb83c4178059da43306ae92c8734c8fa17c02f22a01d"
+    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/XS-Parse-Keyword-0.48.tar.gz"
+    sha256 "857a070ba465ab5b89d4d8d36d92358edd66e5e7b4a91584611d85125ac9a9c7"
   end
 
   resource "Syntax::Keyword::Try" do

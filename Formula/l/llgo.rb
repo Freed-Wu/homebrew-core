@@ -1,25 +1,30 @@
 class Llgo < Formula
   desc "Go compiler based on LLVM integrate with the C ecosystem and Python"
   homepage "https://github.com/goplus/llgo"
-  url "https://github.com/goplus/llgo/archive/refs/tags/v0.9.7.tar.gz"
-  sha256 "f9721be0b41d1e622923b4aa1d4e8071af93753f36f4c9285697e6af009fa0dc"
+  url "https://github.com/goplus/llgo/archive/refs/tags/v0.9.9.tar.gz"
+  sha256 "705fed97ef8b337863fd9bbb40653c22fd93ba689f879db06801d37e5d8fe809"
   license "Apache-2.0"
   revision 1
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "c2843ed4c34662cd4efb4332efc801ebd481623ccc1cff1448be0804ad197038"
-    sha256 cellar: :any, arm64_sonoma:  "02e5fbd91b3ec0560cd653cd113eaff7d7899521fe56efb95bf76da703e88c9f"
-    sha256 cellar: :any, arm64_ventura: "ee9649478a6a5327d9c7c28880b1cf203cdc4e88c09cc59ce9d8f06e275749db"
-    sha256 cellar: :any, sonoma:        "1a21fcc15688f58e760474cb36700411865591f1dc88608a7434866017af43ae"
-    sha256 cellar: :any, ventura:       "50fd0b364c4ff977f5bc1c64d54a048dce67fcc06e12a0fb228cb2f2d6eabce0"
-    sha256               x86_64_linux:  "ec6fb4fdba58e39f7008ffa6311278e155a7e37856c78b88e953afa4f0a61cec"
+    sha256 cellar: :any, arm64_sequoia: "0eef02db81b85e529e3ab1312f9817892cb07d47f49db77bcd322490bccb7432"
+    sha256 cellar: :any, arm64_sonoma:  "588654804dcef5836318a2fa1e7ddcf5baa1c2409f59fa630031e390dcc8c3af"
+    sha256 cellar: :any, arm64_ventura: "d39e10b6eaede8376dca9d4ece753d9d59ef05a9b2df5747ea62f88214b6b3e9"
+    sha256 cellar: :any, sonoma:        "e40074e4a6d5c9ccf0d296a3ee6e2f12ee86546d17e3127e51eae0d32712be0e"
+    sha256 cellar: :any, ventura:       "04c84b6d696f5b9c68897d9fd39426e07e06a52eefd911c95645298a3634c734"
+    sha256               x86_64_linux:  "10a922642cecc66b75420e9d661e4c12409c2ed7d379123c0d52d339b86de938"
   end
 
   depends_on "bdw-gc"
   depends_on "go"
   depends_on "llvm@18"
   depends_on "openssl@3"
-  depends_on "pkg-config"
+  depends_on "pkgconf"
 
   def llvm
     deps.map(&:to_formula).find { |f| f.name.match?(/^llvm(@\d+)?$/) }
@@ -48,7 +53,7 @@ class Llgo < Formula
 
     libexec.install "LICENSE", "README.md"
 
-    path = llvm.opt_bin + ":" + %w[go pkg-config].map { |f| Formula[f].opt_bin }.join(":")
+    path = llvm.opt_bin + ":" + %w[go pkgconf].map { |f| Formula[f].opt_bin }.join(":")
     opt_lib = %w[bdw-gc openssl@3].map { |f| Formula[f].opt_lib }.join(":")
 
     (libexec/"bin").children.each do |f|
@@ -69,7 +74,7 @@ class Llgo < Formula
     goarch = shell_output(Formula["go"].opt_bin/"go env GOARCH").chomp
     assert_equal "llgo v#{version} #{goos}/#{goarch}", shell_output("#{bin}/llgo version").chomp
 
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "github.com/goplus/llgo/c"
@@ -77,10 +82,10 @@ class Llgo < Formula
       func main() {
         c.Printf(c.Str("Hello LLGO\\n"))
       }
-    EOS
-    (testpath/"go.mod").write <<~EOS
+    GO
+    (testpath/"go.mod").write <<~GOMOD
       module hello
-    EOS
+    GOMOD
     system Formula["go"].opt_bin/"go", "get", "github.com/goplus/llgo@v#{version}"
     system bin/"llgo", "build", "-o", "hello", "."
     assert_equal "Hello LLGO\n", shell_output("./hello")

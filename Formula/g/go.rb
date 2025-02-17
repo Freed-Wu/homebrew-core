@@ -1,9 +1,9 @@
 class Go < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://go.dev/"
-  url "https://go.dev/dl/go1.23.2.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.23.2.src.tar.gz"
-  sha256 "36930162a93df417d90bd22c6e14daff4705baac2b02418edda671cdfa9cd07f"
+  url "https://go.dev/dl/go1.24.0.src.tar.gz"
+  mirror "https://fossies.org/linux/misc/go1.24.0.src.tar.gz"
+  sha256 "d14120614acb29d12bcab72bd689f257eb4be9e0b6f88a8fb7e41ac65f8556e5"
   license "BSD-3-Clause"
   head "https://go.googlesource.com/go.git", branch: "master"
 
@@ -21,24 +21,24 @@ class Go < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
-    sha256 arm64_sonoma:  "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
-    sha256 arm64_ventura: "719329749bebde70f295cacf645c45ae155fda041bc92c50119997a0dd00e522"
-    sha256 sonoma:        "57c7e66ca7ea40cb376a54c278f763cba6a9f6cd737799c6f20ea025950293a9"
-    sha256 ventura:       "57c7e66ca7ea40cb376a54c278f763cba6a9f6cd737799c6f20ea025950293a9"
-    sha256 x86_64_linux:  "6de4daee05bd091a7c29aee73e93bde102c560392d5114e3e92b7d1fae0fbcf4"
+    sha256 arm64_sequoia: "2d1bd81e5d943da29b015e6a2f3eaa1077580fd35c7398486c247bc87ff95434"
+    sha256 arm64_sonoma:  "2d1bd81e5d943da29b015e6a2f3eaa1077580fd35c7398486c247bc87ff95434"
+    sha256 arm64_ventura: "2d1bd81e5d943da29b015e6a2f3eaa1077580fd35c7398486c247bc87ff95434"
+    sha256 sonoma:        "ffc7437814387a60cef12cd31a6b2a14ea16d639f9dc63fccbb488ef9b071be5"
+    sha256 ventura:       "ffc7437814387a60cef12cd31a6b2a14ea16d639f9dc63fccbb488ef9b071be5"
+    sha256 x86_64_linux:  "a0496363bcd151513e4f7a303e83144a6c8353ab5bae79f7a1744c0b25b7d898"
   end
 
   # Don't update this unless this version cannot bootstrap the new version.
   resource "gobootstrap" do
     checksums = {
-      "darwin-arm64" => "6da3f76164b215053daf730a9b8f1d673dbbaa4c61031374a6744b75cb728641",
-      "darwin-amd64" => "754363489e2244e72cb49b4ec6ddfd6a2c60b0700f8c4876e11befb1913b11c5",
-      "linux-arm64"  => "2096507509a98782850d1f0669786c09727053e9fe3c92b03c0d96f48700282b",
-      "linux-amd64"  => "ff445e48af27f93f66bd949ae060d97991c83e11289009d311f25426258f9c44",
+      "darwin-arm64" => "416c35218edb9d20990b5d8fc87be655d8b39926f15524ea35c66ee70273050d",
+      "darwin-amd64" => "e7bbe07e96f0bd3df04225090fe1e7852ed33af37c43a23e16edbbb3b90a5b7c",
+      "linux-arm64"  => "fd017e647ec28525e86ae8203236e0653242722a7436929b1f775744e26278e7",
+      "linux-amd64"  => "4fa4f869b0f7fc6bb1eb2660e74657fbf04cdd290b5aef905585c86051b34d43",
     }
 
-    version "1.20.14"
+    version "1.22.12"
 
     on_arm do
       on_macos do
@@ -63,8 +63,6 @@ class Go < Formula
   end
 
   def install
-    inreplace "go.env", /^GOTOOLCHAIN=.*$/, "GOTOOLCHAIN=local"
-
     (buildpath/"gobootstrap").install resource("gobootstrap")
     ENV["GOROOT_BOOTSTRAP"] = buildpath/"gobootstrap"
 
@@ -87,18 +85,8 @@ class Go < Formula
     rm_r(libexec/"src/runtime/pprof/testdata")
   end
 
-  def caveats
-    <<~EOS
-      Homebrew's Go toolchain is configured with
-        GOTOOLCHAIN=local
-      per Homebrew policy on tools that update themselves.
-    EOS
-  end
-
   test do
-    assert_equal "local", shell_output("#{bin}/go env GOTOOLCHAIN").strip
-
-    (testpath/"hello.go").write <<~EOS
+    (testpath/"hello.go").write <<~GO
       package main
 
       import "fmt"
@@ -106,7 +94,7 @@ class Go < Formula
       func main() {
           fmt.Println("Hello World")
       }
-    EOS
+    GO
 
     # Run go fmt check for no errors then run the program.
     # This is a a bare minimum of go working as it uses fmt, build, and run.
@@ -117,7 +105,7 @@ class Go < Formula
       system bin/"go", "build", "hello.go"
     end
 
-    (testpath/"hello_cgo.go").write <<~EOS
+    (testpath/"hello_cgo.go").write <<~GO
       package main
 
       /*
@@ -130,7 +118,7 @@ class Go < Formula
       func main() {
           C.hello()
       }
-    EOS
+    GO
 
     # Try running a sample using cgo without CC or CXX set to ensure that the
     # toolchain's default choice of compilers work

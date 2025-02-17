@@ -1,21 +1,18 @@
 class GitSpice < Formula
   desc "Manage stacked Git branches"
   homepage "https://github.com/abhinav/git-spice"
-  url "https://github.com/abhinav/git-spice/archive/refs/tags/v0.7.1.tar.gz"
-  sha256 "d5d3fd6979d2b636d61ca200dfc2e04d8a9e5a22666b7799760fc48c98484aa4"
-  license all_of: [
-    "GPL-3.0-or-later",
-    "BSD-3-Clause", # internal/komplete/{komplete.go, komplete_test.go}
-  ]
+  url "https://github.com/abhinav/git-spice/archive/refs/tags/v0.10.0.tar.gz"
+  sha256 "fd0b7768339fe6ca113d6e89a80b8d4f9f3ece38f20073312dbfeb62dd7ccf7a"
+  license "GPL-3.0-or-later"
   head "https://github.com/abhinav/git-spice.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e7c392c57d552e5ad0b1cfecc924d2bd13a7e8d4723f43c56dfe0dbc7bc7ebf2"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e7c392c57d552e5ad0b1cfecc924d2bd13a7e8d4723f43c56dfe0dbc7bc7ebf2"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e7c392c57d552e5ad0b1cfecc924d2bd13a7e8d4723f43c56dfe0dbc7bc7ebf2"
-    sha256 cellar: :any_skip_relocation, sonoma:        "fe99c6d016f0f4423b74e824e82d4c79d922a124279e9d56e001393f43ae2669"
-    sha256 cellar: :any_skip_relocation, ventura:       "fe99c6d016f0f4423b74e824e82d4c79d922a124279e9d56e001393f43ae2669"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "34cc95a827755d8b01ffe61108367c47848e2188abc6349c1255fc0c7217088b"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "44366fc17e25b88bb81c0576ab93063391ee4a72dc9fbe82d74db49b3b6e458c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "44366fc17e25b88bb81c0576ab93063391ee4a72dc9fbe82d74db49b3b6e458c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "44366fc17e25b88bb81c0576ab93063391ee4a72dc9fbe82d74db49b3b6e458c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "bf8a1490342799075d209e5c58d08bd7756d4434843e01c3ccc4516391ea9121"
+    sha256 cellar: :any_skip_relocation, ventura:       "bf8a1490342799075d209e5c58d08bd7756d4434843e01c3ccc4516391ea9121"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "d519483d46e298f6b7b69eaa880c7a77d0fc3d88234f78c3cb239633938a1389"
   end
 
   depends_on "go" => :build
@@ -26,7 +23,7 @@ class GitSpice < Formula
     ldflags = "-s -w -X main._version=#{version}"
     system "go", "build", *std_go_args(ldflags:, output: bin/"gs")
 
-    generate_completions_from_executable(bin/"gs", "shell", "completion", base_name: "gs")
+    generate_completions_from_executable(bin/"gs", "shell", "completion")
   end
 
   test do

@@ -1,23 +1,22 @@
 class Dissent < Formula
   desc "GTK4 Discord client in Go"
   homepage "https://github.com/diamondburned/dissent"
-  url "https://github.com/diamondburned/dissent/archive/refs/tags/v0.0.30.tar.gz"
-  sha256 "63994e46b01e135c36902b67a8495eef71d4a4b09204c712629edadfc8398dc6"
+  url "https://github.com/diamondburned/dissent/archive/refs/tags/v0.0.32.tar.gz"
+  sha256 "39bf16313640436c097a066623f51c50b0c2be9d13e1cb5fdceba34ebb1652a4"
   license "GPL-3.0-or-later"
-  revision 1
   head "https://github.com/diamondburned/dissent.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "f2448419bd81de8a1f256651ab3328c1cd75f3da232fe057b9f56f611abac5ea"
-    sha256 cellar: :any,                 arm64_sonoma:  "ef3779084e55a473b8c56c6415908ac61a9f2d447fa1d1c0da723326eecbcd7b"
-    sha256 cellar: :any,                 arm64_ventura: "a518a0006ad3eefc5f4db860f3ca1d4225efdf8960c4f41a7fddabf6cbb1c2d7"
-    sha256 cellar: :any,                 sonoma:        "d55fd2d47ff74a860f02ac9ccb7bfd82d917cf3a7399273487fe08061c90f690"
-    sha256 cellar: :any,                 ventura:       "d216f4360abd678c659f65d36afff0ed4b3dc515994c0e88e60063506ab5af29"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c96d63371bdfe8c13999e181d862d8cc3ac2efb6aaa91e230f757f2cc141dd7f"
+    sha256 cellar: :any,                 arm64_sequoia: "206163672d6fdd3fa563a5bd39508bb4c00430cf31c4175efeb8febac29fe339"
+    sha256 cellar: :any,                 arm64_sonoma:  "34178ce13dc8c20016b777a0f04520452147f44c9f5280d2db904ab500451654"
+    sha256 cellar: :any,                 arm64_ventura: "68dbe15af80a99063f98f2b1c049ac57e0d82df6b8b2e9619f2c88047bdfe4d7"
+    sha256 cellar: :any,                 sonoma:        "937c8ac8601dc0c849fde1a53c0f5008f69add938abe2cc45f382292639ac7df"
+    sha256 cellar: :any,                 ventura:       "f65b70b8e3b300e54760f4b29e238e3629f2bacd5820816c10ad26bda2e95cc9"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "faebdd245e47aed01574787a3b84dd275d3974f8aa4867e1d324d78940b1ec84"
   end
 
   depends_on "go" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
 
   depends_on "cairo"
   depends_on "gdk-pixbuf"
@@ -28,7 +27,7 @@ class Dissent < Formula
   depends_on "gtksourceview5"
   depends_on "libadwaita"
   depends_on "libcanberra"
-  depends_on "libspelling@0.2"
+  depends_on "libspelling"
   depends_on "pango"
 
   on_macos do

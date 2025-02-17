@@ -1,19 +1,23 @@
 class Zk < Formula
   desc "Plain text note-taking assistant"
   homepage "https://github.com/zk-org/zk"
-  url "https://github.com/zk-org/zk/archive/refs/tags/v0.14.1.tar.gz"
-  sha256 "563331e1f5a03b4dd3a4ff642cc205cc7b6c3c350c98f627a3273067e7ec234c"
+  url "https://github.com/zk-org/zk/archive/refs/tags/v0.14.2.tar.gz"
+  sha256 "51956ab37595f2c95d97594e1a825d35de9be0c31af2f32f2e2d4468b7b88e0c"
   license "GPL-3.0-only"
-  revision 2
   head "https://github.com/zk-org/zk.git", branch: "main"
 
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "664a5847ead175c15e4707b30e8ad541d4d6439adcb5d4e796383617ca4bef04"
-    sha256 cellar: :any,                 arm64_sonoma:  "c78bc5f19eb2488f395915490a9ed166de92234f1b9b98f3f293115dac408914"
-    sha256 cellar: :any,                 arm64_ventura: "1bdf44805c90f588466e12d80f718b28c9580229f49b510f3b29e950dde5f8c4"
-    sha256 cellar: :any,                 sonoma:        "8d0804f647ededf61fb6ac9852ebc2fbea7300ef6e0503e0acfc51972f86a111"
-    sha256 cellar: :any,                 ventura:       "0ed9d6a9cf2fef25819e3fb86533577893babab15cf5f4138b426392017be2b5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "8e944b48af4d8040b7f3b14fbfb823d19c3aed8259ecd9fb6952523eaf2f364c"
+    sha256 cellar: :any,                 arm64_sequoia: "f16805068eb80ed2f67a4b54e2b17d5d627e2a2a70fd19b6c3289e122c1e0a76"
+    sha256 cellar: :any,                 arm64_sonoma:  "f5ae5d324c4ffd2e402091ce39737cb757e99bff7f42ad711160d5183dce93df"
+    sha256 cellar: :any,                 arm64_ventura: "8884aa15091691a698705dfb01cdb9ab586516014c822fab80447b9a5fa5d89f"
+    sha256 cellar: :any,                 sonoma:        "78027aae1bc427c8ab5b0657d455cbfb670b998137eaf492a2a09699323ef620"
+    sha256 cellar: :any,                 ventura:       "5a66bc9ec38fa76978bddcd9acde239373131293cabbbe07bdc2f1eddc7be4a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e5662aa1334225f191db6adf80d805094bf489cfff6a58fb623a09820eb02e8c"
   end
 
   depends_on "go" => :build
@@ -22,11 +26,13 @@ class Zk < Formula
   uses_from_macos "sqlite"
 
   def install
-    ldflags = "-X=main.Version=#{version} -X=main.Build=#{tap.user}"
+    ldflags = "-s -w -X main.Version=#{version} -X main.Build=#{tap.user}"
     system "go", "build", *std_go_args(ldflags:), "-tags", "fts5,icu"
   end
 
   test do
+    assert_match version.to_s, shell_output("#{bin}/zk --version")
+
     system bin/"zk", "init", "--no-input"
     system bin/"zk", "index", "--no-input"
     (testpath/"testnote.md").write "note content"

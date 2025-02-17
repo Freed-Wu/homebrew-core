@@ -1,19 +1,17 @@
 class Openlibm < Formula
   desc "High quality, portable, open source libm implementation"
   homepage "https://openlibm.org"
-  url "https://github.com/JuliaMath/openlibm/archive/refs/tags/v0.8.3.tar.gz"
-  sha256 "9f83e40d1180799e580371691be522f245da4c2fdae3f09cd33031706de4c59c"
+  url "https://github.com/JuliaMath/openlibm/archive/refs/tags/v0.8.5.tar.gz"
+  sha256 "d380c2d871f6dc16e22893569d57bda9121742cc8f6534510526e5278867c6cf"
   license all_of: ["MIT", "ISC", "BSD-2-Clause"]
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia:  "13cc1cf68e2ce18150fff0ba1a0bdca26b114f9ccd305b2fe37390a0d43605ae"
-    sha256 cellar: :any,                 arm64_sonoma:   "ea138b154ee285ea9e7dfc8e75095f5ef10b35e26a385cddb29be717e0845830"
-    sha256 cellar: :any,                 arm64_ventura:  "6c26c17ebbbfa29ba9b240368f553f116a13ac5aa56776ebb648f405f3ed9058"
-    sha256 cellar: :any,                 arm64_monterey: "643421ea8cf4fe60d165534daaba6a9028c85c336a196f4a8b7075a1d5053050"
-    sha256 cellar: :any,                 sonoma:         "d43a797126c456158cfd2916be3c59999dd947389ec3f0f3568d26fb236e3040"
-    sha256 cellar: :any,                 ventura:        "6429d3667b4a15a182f21f497914062f36ff63ac0e7bb85c6a47819fec2b234e"
-    sha256 cellar: :any,                 monterey:       "fbfa7f78bd9e7f46ff19f4b9b5b645a365bb9d488e7a76ef31ef5ba867b1ae01"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "85ab572e3a32c552acf1b0f628dd36c82843ed89227b0123fa1b75affd37fd19"
+    sha256 cellar: :any,                 arm64_sequoia: "ebb6a4126500ffa530262bc877e8b902549373ed7fdf260988ccb814aeeea71a"
+    sha256 cellar: :any,                 arm64_sonoma:  "bc23a592bf2a7bc1997aa2dc9eed30a4aee5fdc46ded528848145aadbfa26c01"
+    sha256 cellar: :any,                 arm64_ventura: "9411ef9fade3b7288f08fbbb85c0b0c5a1aba3f598a9b1ed8fd6cf32e1b8ac46"
+    sha256 cellar: :any,                 sonoma:        "4a11a69b74568f64a3162246b92acbb20999a3bdca9e29aeb432de59649f7548"
+    sha256 cellar: :any,                 ventura:       "f56c0d4a666c1a5d65c7fcf2a43658f39491c5269ff3530955b324e181d8d088"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c35214d56a3ce8d747fe4651d941fda780c00df385d0a06698be7952459453fc"
   end
 
   def install

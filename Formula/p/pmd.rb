@@ -1,12 +1,12 @@
 class Pmd < Formula
   desc "Source code analyzer for Java, JavaScript, and more"
   homepage "https://pmd.github.io"
-  url "https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.7.0/pmd-dist-7.7.0-bin.zip"
-  sha256 "be8bf68f6c1d66984bd9645a93e631b78a1c2f42f5f0f8719082fead67553940"
+  url "https://github.com/pmd/pmd/releases/download/pmd_releases%2F7.10.0/pmd-dist-7.10.0-bin.zip"
+  sha256 "cd676b19dbe87e86f7eed5940a484be2d3ab6a2d1d552e605860ab12fbf05cbb"
   license "BSD-4-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "e5b57051fa5234d48b16120c184ebb21d87d6b118460de6fe6fbfcfea195472e"
+    sha256 cellar: :any_skip_relocation, all: "a6cd380b6f0c1a5587da3c6204995e05edebe8b6ff36e6467aa1a92175220038"
   end
 
   depends_on "openjdk"
@@ -18,7 +18,7 @@ class Pmd < Formula
   end
 
   test do
-    (testpath/"java/testClass.java").write <<~EOS
+    (testpath/"java/testClass.java").write <<~JAVA
       public class BrewTestClass {
         // dummy constant
         public String SOME_CONST = "foo";
@@ -27,7 +27,7 @@ class Pmd < Formula
           return true;
         }
       }
-    EOS
+    JAVA
 
     output = shell_output("#{bin}/pmd check -d #{testpath}/java " \
                           "-R category/java/bestpractices.xml -f json")

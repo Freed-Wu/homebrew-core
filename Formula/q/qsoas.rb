@@ -7,8 +7,8 @@ class Qsoas < Formula
   revision 1
 
   livecheck do
-    url "https://github.com/fourmond/QSoas.git"
-    regex(/(\d+(?:\.\d+)+)$/i)
+    url "https://bip.cnrs.fr/groups/bip06/software/downloads/"
+    regex(/href=.*?qsoas[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
@@ -28,8 +28,6 @@ class Qsoas < Formula
   depends_on "qt@5"
 
   uses_from_macos "ruby"
-
-  fails_with gcc: "5"
 
   def install
     gsl = Formula["gsl"].opt_prefix

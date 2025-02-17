@@ -3,18 +3,17 @@ class Tmuxp < Formula
 
   desc "Tmux session manager. Built on libtmux"
   homepage "https://tmuxp.git-pull.com/"
-  url "https://files.pythonhosted.org/packages/2e/5b/66ceb26459b9324bbd425c673170172066f08a6c180c8da166de6a44cf45/tmuxp-1.47.0.tar.gz"
-  sha256 "1d863a08450fa5956f54af64578121c38c0693961f2154a4674faaa9fe8dcf87"
+  url "https://files.pythonhosted.org/packages/68/d8/0658fbcd0f046cf8408427242c5f90a9e5d07a463e7f2e78a219cb0f197b/tmuxp-1.52.2.tar.gz"
+  sha256 "71f5412b6722538ca2f5964d2c1b39731afa0e906daa1c5723b523cb6199bf77"
   license "MIT"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sequoia: "499f1a5302269c5f26176de36539f8d818fb7f62f7da4603221358e078d51bc2"
-    sha256 cellar: :any,                 arm64_sonoma:  "a9dd1e396905ab1802440122fa804a7a0da882c08af6f66ccf85f33731272384"
-    sha256 cellar: :any,                 arm64_ventura: "b3198721ff490d2a89e7771d7cd3d5c189d18b37a69ceb9b52aa646bd643537f"
-    sha256 cellar: :any,                 sonoma:        "650cddc4c73466ac69931420230a6fd5b07e3e59476a497d3124004ddf40b4f9"
-    sha256 cellar: :any,                 ventura:       "79d80c0c907c971c1c191bfc98659ff8ed988f9d5bea206dd4f0944d562c6bbc"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "6e7a878b8355f6f4f91160fab8ccfbbb3efaea103bc4155dfa4f8bdfee1a0230"
+    sha256 cellar: :any,                 arm64_sequoia: "b16f5c8ba6cae144e717fec790477872eb341c209420ef4ee27a893892938315"
+    sha256 cellar: :any,                 arm64_sonoma:  "8a4a711aa79d204b2452b00f4343ffecdfbe6df5cc4764380955d09c5a8634f0"
+    sha256 cellar: :any,                 arm64_ventura: "73c3e7972ac5c9f86b7a61e33e5380d5c1f3e310bb9798f472881d29567e4585"
+    sha256 cellar: :any,                 sonoma:        "a37309dee794fd5139600dde5944ea37a65c526a8fed288f38bb5a9ffa70693a"
+    sha256 cellar: :any,                 ventura:       "b17042018f4882ce9a80ac2ea6009d32e9a95766a662cdea181e6bbc6b983bff"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "12c180dc927b9926d4824163546f50e6280bc57af50c1f21f0c9ac1fdd47a2ac"
   end
 
   depends_on "libyaml"
@@ -27,8 +26,8 @@ class Tmuxp < Formula
   end
 
   resource "libtmux" do
-    url "https://files.pythonhosted.org/packages/4a/51/b2543613a0f85247559073bc69cdca4cc0ccb590a45c98ac3400a51ba877/libtmux-0.37.0.tar.gz"
-    sha256 "21955c5dce6332db41abad5e26ae8c4062ef2b9a89099bd57a36f52be1d5270f"
+    url "https://files.pythonhosted.org/packages/ea/79/630e2b1b271e59cc17988f9b5473ea17850555b7734f6df25be16f0bd6a2/libtmux-0.42.0.tar.gz"
+    sha256 "5a13bc98d85fdb7105eea880d8f7017c8c4cca6563485972dd4550c57b66ee6f"
   end
 
   resource "pyyaml" do
@@ -43,14 +42,14 @@ class Tmuxp < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/tmuxp --version")
 
-    (testpath/"test_session.yaml").write <<~EOS
+    (testpath/"test_session.yaml").write <<~YAML
       session_name: 2-pane-vertical
       windows:
       - window_name: my test window
         panes:
           - echo hello
           - echo hello
-    EOS
+    YAML
 
     system bin/"tmuxp", "debug-info"
     system bin/"tmuxp", "convert", "--yes", "test_session.yaml"

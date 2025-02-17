@@ -1,17 +1,17 @@
 class PodmanTui < Formula
   desc "Podman Terminal User Interface"
   homepage "https://github.com/containers/podman-tui"
-  url "https://github.com/containers/podman-tui/archive/refs/tags/v1.2.3.tar.gz"
-  sha256 "d513362b270672c688407673326a8b9d850f4351e07cd3841ca321a84d9f5622"
+  url "https://github.com/containers/podman-tui/archive/refs/tags/v1.3.1.tar.gz"
+  sha256 "80cc3775361bc210cca825d2bf584ab5d5a2e9baece6c989792119c4ebd34733"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "14360354324f7baef0247cfbbbfbde040e8859d6853c5e0d79bea260a07fd2d0"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "2dc293c28f7da0625c7579afdf82801ffa7498d4d92e20643f84652c25f0d707"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9d14030cdf0fe5229f9e714742a020154b0d207755c4ba93cce5a8a386792568"
-    sha256 cellar: :any_skip_relocation, sonoma:        "e49815e9898dbb711747aa49fac73932d5e996687b5ed9e23e8a978b5084e02c"
-    sha256 cellar: :any_skip_relocation, ventura:       "55d6ababff783c021347964c877cb95734dbbceb4312904d65c419e348b6898c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "923190a7da8f97f94a8fd065d3cae1c513b2a423d3b97cbeef56dc53c54e217c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "047d3519c0744c7309f8be92a45f134dd19bb548be7c8ea223d4e875207c6a3d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "f9d6c8f44244a87f0e3d55653f61f6077f5fab3358613d80868ec90549872374"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "36c1f31595a722dfbf56263872f855023d4ff6fc7e3cb22747631f92185334c2"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d673edd32d3080e906c59521d4afa9cd9feef3b7e9f021ecbbdd4fab9a3d3ffd"
+    sha256 cellar: :any_skip_relocation, ventura:       "5b5ca71e52638e0c6c4e1207b4027bbf3c7282e27ff57493c3c3bf74416c6a42"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "9182f9adeca51789788257b173d18657b1601fda67c07d86594e693172c74cc2"
   end
 
   depends_on "go" => :build

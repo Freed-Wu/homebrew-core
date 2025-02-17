@@ -1,17 +1,17 @@
 class Jhipster < Formula
   desc "Generate, develop and deploy Spring Boot + Angular/React applications"
   homepage "https://www.jhipster.tech/"
-  url "https://registry.npmjs.org/generator-jhipster/-/generator-jhipster-8.7.3.tgz"
-  sha256 "285766032938db33d93d7083c1789f291516d31ebdfa95229f5a9c7f83e26104"
+  url "https://registry.npmjs.org/generator-jhipster/-/generator-jhipster-8.9.0.tgz"
+  sha256 "57e7c0730c9fd2abf2c3228cb4451c91f09baf2d54df73a1bbc1fc608ff455b3"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "e32fe7d0d2d3818f587fe9fa78cf2f147e4cd48b9d7354215a45d1521ccc3b38"
-    sha256 cellar: :any,                 arm64_sonoma:  "e32fe7d0d2d3818f587fe9fa78cf2f147e4cd48b9d7354215a45d1521ccc3b38"
-    sha256 cellar: :any,                 arm64_ventura: "e32fe7d0d2d3818f587fe9fa78cf2f147e4cd48b9d7354215a45d1521ccc3b38"
-    sha256 cellar: :any,                 sonoma:        "28110892202bd4cda14eb5409b06db13c34b3e13e8e5d594866de2e4e38e517b"
-    sha256 cellar: :any,                 ventura:       "28110892202bd4cda14eb5409b06db13c34b3e13e8e5d594866de2e4e38e517b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "3a301fa2e1f71f73104071694be490cece2b5aa37aaf99236e3d60a78ea1841b"
+    sha256 cellar: :any,                 arm64_sequoia: "943c4bbd21047b795f81f828c44e229f01d609fe84f3aeb93a0992d9b1cb045d"
+    sha256 cellar: :any,                 arm64_sonoma:  "943c4bbd21047b795f81f828c44e229f01d609fe84f3aeb93a0992d9b1cb045d"
+    sha256 cellar: :any,                 arm64_ventura: "943c4bbd21047b795f81f828c44e229f01d609fe84f3aeb93a0992d9b1cb045d"
+    sha256 cellar: :any,                 sonoma:        "b26373ca5af6be83cfd967318a3b4ddcbb78d6794c417f533a5d33e7e791d71b"
+    sha256 cellar: :any,                 ventura:       "b26373ca5af6be83cfd967318a3b4ddcbb78d6794c417f533a5d33e7e791d71b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "bfd6136d147b387493bbe8957b86f8449a03202b1407c28285b707d941fecd00"
   end
 
   depends_on "node"

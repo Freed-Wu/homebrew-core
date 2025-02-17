@@ -30,8 +30,8 @@ class SpiceGtk < Formula
   depends_on "libtool" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => [:build, :test]
-  depends_on "python@3.12" => :build
+  depends_on "pkgconf" => [:build, :test]
+  depends_on "python@3.13" => :build
   depends_on "vala" => :build
 
   depends_on "at-spi2-core"
@@ -88,7 +88,7 @@ class SpiceGtk < Formula
   patch :DATA
 
   def install
-    venv = virtualenv_create(buildpath/"venv", "python3.12")
+    venv = virtualenv_create(buildpath/"venv", "python3.13")
     venv.pip_install resources
     ENV.prepend_path "PATH", venv.root/"bin"
 
@@ -98,20 +98,21 @@ class SpiceGtk < Formula
   end
 
   test do
-    (testpath/"test.cpp").write <<~EOS
+    (testpath/"test.cpp").write <<~CPP
       #include <spice-client.h>
       #include <spice-client-gtk.h>
       int main() {
         return spice_session_new() ? 0 : 1;
       }
-    EOS
+    CPP
     ENV.prepend_path "PKG_CONFIG_PATH", "#{Formula["icu4c"].lib}/pkgconfig"
     system ENV.cc, "test.cpp",
-                   *shell_output("pkg-config --cflags --libs spice-client-gtk-3.0 ").chomp.split,
+                   *shell_output("pkgconf --cflags --libs spice-client-gtk-3.0 ").chomp.split,
                    "-o", "test"
     system "./test"
   end
 end
+
 __END__
 diff --git a/subprojects/keycodemapdb/tools/keymap-gen b/subprojects/keycodemapdb/tools/keymap-gen
 index b6cc95b..d05e945 100755

@@ -1,8 +1,8 @@
 class Freetds < Formula
   desc "Libraries to talk to Microsoft SQL Server and Sybase databases"
   homepage "https://www.freetds.org/"
-  url "https://www.freetds.org/files/stable/freetds-1.4.23.tar.bz2", using: :homebrew_curl
-  sha256 "93a3f186b82c6042a66a1970bd478d7914edb1c5669b642d80b4eaacf2a2d17e"
+  url "https://www.freetds.org/files/stable/freetds-1.4.26.tar.bz2", using: :homebrew_curl
+  sha256 "74641a66cc2bfae302c2a64a4b268a3db8fb0cc7364dc7975c44c57d65cd8d1c"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,12 +11,12 @@ class Freetds < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "038c79a890f8bfa86b4ad80b023a5d2d159e5560ee9fff8cb4843b744c35017a"
-    sha256 arm64_sonoma:  "567e374c5d48379edfcd1a337b8c2276369beee0a2c1feedf0286f4085919888"
-    sha256 arm64_ventura: "59d2dd5e0115c72865f8a2be26c6fd592f3c0b42029749e1d2f3c5ca206a21c6"
-    sha256 sonoma:        "47ec787d486077556a1da8a31107f49177c7db669d90ec3136f8ca2f7c5386ca"
-    sha256 ventura:       "a5844d1abc79fb45eadd6c8bff150e899b8afed949c82bb161ffe232bd99c461"
-    sha256 x86_64_linux:  "23ed83a76e8d45128b5ca26d4b1ed3b44c5738b1aa23149cc8045e6ecf08b057"
+    sha256 arm64_sequoia: "a85a8647355317866438fad77b812ecbec0d378bc6b7a07f10f0a43fc2f04611"
+    sha256 arm64_sonoma:  "1556b1886e260863ebd34fc175ce90fcab9b2f6c45a5e38178720bd90be36c8d"
+    sha256 arm64_ventura: "32976083451f3f999a77e2742f05e3c138ac74c5589a14040e96f4302ceff55b"
+    sha256 sonoma:        "59d5b369e62435f4c9d9df0de26fd67af5cd85996b6e98bc183eb9e1e3a36526"
+    sha256 ventura:       "f4254b67ed5d693440c0875290183e42dca46e2ea512aaa8bc695e97ed29eaf8"
+    sha256 x86_64_linux:  "a263c006e43ab07d412f9f775b01d0c61e11789cc45883183e307e2843844861"
   end
 
   head do
@@ -28,7 +28,7 @@ class Freetds < Formula
     depends_on "libtool" => :build
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "openssl@3"
   depends_on "unixodbc"
 
@@ -51,11 +51,8 @@ class Freetds < Formula
       --enable-odbc-wide
     ]
 
-    if build.head?
-      system "./autogen.sh", *args
-    else
-      system "./configure", *args
-    end
+    configure = build.head? ? "./autogen.sh" : "./configure"
+    system configure, *args
     system "make"
     ENV.deparallelize # Or fails to install on multi-core machines
     system "make", "install"

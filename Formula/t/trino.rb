@@ -3,8 +3,8 @@ class Trino < Formula
 
   desc "Distributed SQL query engine for big data"
   homepage "https://trino.io"
-  url "https://search.maven.org/remotecontent?filepath=io/trino/trino-server/464/trino-server-464.tar.gz", using: :nounzip
-  sha256 "2c57d2d59674aeee267195c4dc8d5dba5faa2ff462a34477c7094747ca79c7ae"
+  url "https://search.maven.org/remotecontent?filepath=io/trino/trino-server/470/trino-server-470.tar.gz", using: :nounzip
+  sha256 "16618db7c176d6c687f5782b97ec49c4a7beeab8f1f3edbd3f2c7b79d0b014ca"
   license "Apache-2.0"
 
   livecheck do
@@ -13,7 +13,12 @@ class Trino < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "9d62c998207a38491d69cd1b65437cae6b3b3e9a17ea2d3519447f042949ab2f"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "ec1b9f36ff27b4bc879822a307ec1d7350ef2f90403c98f13ddbe291dda3eb9c"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "ec1b9f36ff27b4bc879822a307ec1d7350ef2f90403c98f13ddbe291dda3eb9c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "ec1b9f36ff27b4bc879822a307ec1d7350ef2f90403c98f13ddbe291dda3eb9c"
+    sha256 cellar: :any_skip_relocation, sonoma:        "7ef8a2037980a5c013d5a1315fb7d264cc8633c189369f4d81056d04458946da"
+    sha256 cellar: :any_skip_relocation, ventura:       "7ef8a2037980a5c013d5a1315fb7d264cc8633c189369f4d81056d04458946da"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "62360a7519b7481b8bece0ad260ed873a4d5fe31fcd5adce38e1e9a232f80276"
   end
 
   depends_on "gnu-tar" => :build
@@ -22,13 +27,21 @@ class Trino < Formula
   uses_from_macos "python"
 
   resource "trino-src" do
-    url "https://github.com/trinodb/trino/archive/refs/tags/464.tar.gz", using: :nounzip
-    sha256 "0eaa56c13a79119652458d7d94ce72f0e14ccfe20e6ce88fb937662cf6e1acfc"
+    url "https://github.com/trinodb/trino/archive/refs/tags/470.tar.gz", using: :nounzip
+    sha256 "e9989b2734dccd4c7900ccc9b96e7ef37ab3cf0368fb4be3734165442e89f1a5"
+
+    livecheck do
+      formula :parent
+    end
   end
 
   resource "trino-cli" do
-    url "https://search.maven.org/remotecontent?filepath=io/trino/trino-cli/464/trino-cli-464-executable.jar"
-    sha256 "f6721ed63be46510dc6c18436da30cebd7e70656eb5db1598d5bcc9a509ac99f"
+    url "https://search.maven.org/remotecontent?filepath=io/trino/trino-cli/470/trino-cli-470-executable.jar"
+    sha256 "694648f9906b43b308c6b2e529723231047feda6add186ab1eb0389516824d55"
+
+    livecheck do
+      formula :parent
+    end
   end
 
   def install
@@ -62,11 +75,13 @@ class Trino < Formula
     end
 
     # Remove incompatible pre-built binaries
-    libprocname_dirs = libexec.glob("bin/procname/*")
-    # Keep the Linux-x86_64 directory to make bottles identical
-    libprocname_dirs.reject! { |dir| dir.basename.to_s == "Linux-x86_64" } if build.bottle?
-    libprocname_dirs.reject! { |dir| dir.basename.to_s == "#{OS.kernel_name}-#{Hardware::CPU.arch}" }
-    rm_r libprocname_dirs
+    launcher_dirs = libexec.glob("bin/{darwin,linux}-*")
+    # Keep the linux-amd64 directory to make bottles identical
+    launcher_dirs.reject! { |dir| dir.basename.to_s == "linux-amd64" } if build.bottle?
+    launcher_dirs.reject! do |dir|
+      dir.basename.to_s == "#{OS.kernel_name.downcase}-#{Hardware::CPU.intel? ? "amd64" : "arm64"}"
+    end
+    rm_r launcher_dirs
   end
 
   def post_install

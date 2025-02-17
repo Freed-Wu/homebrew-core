@@ -2,11 +2,10 @@ class Neovim < Formula
   desc "Ambitious Vim-fork focused on extensibility and agility"
   homepage "https://neovim.io/"
   license "Apache-2.0"
-  revision 1
 
   stable do
-    url "https://github.com/neovim/neovim/archive/refs/tags/v0.10.2.tar.gz"
-    sha256 "546cb2da9fffbb7e913261344bbf4cf1622721f6c5a67aa77609e976e78b8e89"
+    url "https://github.com/neovim/neovim/archive/refs/tags/v0.10.4.tar.gz"
+    sha256 "10413265a915133f8a853dc757571334ada6e4f0aa15f4c4cc8cc48341186ca2"
 
     # TODO: Remove when the following commit lands in a release.
     # https://github.com/neovim/neovim/commit/fa79a8ad6deefeea81c1959d69aa4c8b2d993f99
@@ -59,12 +58,12 @@ class Neovim < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "b74c4a50c70b5d6b869ffec9956e971d14ea7f26e73e1ae058f355267f1226a5"
-    sha256 arm64_sonoma:  "e39e1ac56d8a0c6c89d418ec494c5a3b67c08c630d7f1b82841fc070c3d50bc0"
-    sha256 arm64_ventura: "6446e3d5b4aded7afd64eb05e4ddf072e04a439cb2bcd574c1f5360918fabb4b"
-    sha256 sonoma:        "c59c7dfebb14003e8830fef8e225a12f205293ec72437cac67bfc48ea4888a1b"
-    sha256 ventura:       "35bf10802691b493670fc8af1e15e7b1fae5bab2cbee0b07b1b8f67ac83c13dd"
-    sha256 x86_64_linux:  "37003f89843037c1b019c33defba09696a6dea359875ee2b8ba85a36d11a838a"
+    sha256 arm64_sequoia: "70a2ed00de4a0e7bfeef6a6b9d3bec7623f086dd06266ea6d11d2e4ae7eeb381"
+    sha256 arm64_sonoma:  "9d4af9c53f7394a20cdf4014b594a52d14b8f0f83b39fa041ab2d5ddc78da7e3"
+    sha256 arm64_ventura: "f9ec03101ec565907c6f9a4b18d9673d75c642dbd6adb695e6dbe80b099cdfe2"
+    sha256 sonoma:        "1ac71c2cc3b0c3521de71bb6ccb2c8d7da80cdccc1709c702792890379090503"
+    sha256 ventura:       "f3503f4c9a4b6173067dbc2f7c6f00ed93b59c7be10875c1cf3ffe45206304c6"
+    sha256 x86_64_linux:  "029a46cbee1a908551a0ff837881b6362d0d469fecd44b5736d9977e8691101b"
   end
 
   head do
@@ -137,13 +136,6 @@ class Neovim < Formula
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
-  end
-
-  def caveats
-    <<~EOS
-      `--HEAD` installs also require:
-        brew install --HEAD utf8proc
-    EOS
   end
 
   test do

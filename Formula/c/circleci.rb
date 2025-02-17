@@ -3,20 +3,18 @@ class Circleci < Formula
   homepage "https://circleci.com/docs/2.0/local-cli/"
   # Updates should be pushed no more frequently than once per week.
   url "https://github.com/CircleCI-Public/circleci-cli.git",
-      tag:      "v0.1.30995",
-      revision: "77b1f5175a42e351a0104a22279fa72f1f1f9ea5"
+      tag:      "v0.1.31425",
+      revision: "ebcbd1fecb31a8537c3dec98b9c8c5dbe77da1d2"
   license "MIT"
   head "https://github.com/CircleCI-Public/circleci-cli.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia:  "6be19f78ebddac0c3616f62f6ad564fb40109d6e7d395ec713056932208c540c"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "3c7c77d1e5648627c96cd3cfe8aad738074ea5f5c6c07e01469e5d3d56c53916"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "3c7c77d1e5648627c96cd3cfe8aad738074ea5f5c6c07e01469e5d3d56c53916"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3c7c77d1e5648627c96cd3cfe8aad738074ea5f5c6c07e01469e5d3d56c53916"
-    sha256 cellar: :any_skip_relocation, sonoma:         "81eed0e31f4c1260d2270b6474522a6b5a83aa6ce0dc697997bff517c3fb8a33"
-    sha256 cellar: :any_skip_relocation, ventura:        "81eed0e31f4c1260d2270b6474522a6b5a83aa6ce0dc697997bff517c3fb8a33"
-    sha256 cellar: :any_skip_relocation, monterey:       "81eed0e31f4c1260d2270b6474522a6b5a83aa6ce0dc697997bff517c3fb8a33"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "aa851d9960c700716ff72091a125fdd68f5f65b911467a80bb7887a9263f3335"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "63f80efbb354a62e985c793bc94f2fb5e66c48b4e7a358c07fcc7e1d88d120fd"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "63f80efbb354a62e985c793bc94f2fb5e66c48b4e7a358c07fcc7e1d88d120fd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "63f80efbb354a62e985c793bc94f2fb5e66c48b4e7a358c07fcc7e1d88d120fd"
+    sha256 cellar: :any_skip_relocation, sonoma:        "d255d2fcd5c4ccdf3cc217cb8a10a3e9841514b54a16dc369e2c8993408aa541"
+    sha256 cellar: :any_skip_relocation, ventura:       "d255d2fcd5c4ccdf3cc217cb8a10a3e9841514b54a16dc369e2c8993408aa541"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "90038ceafa7a1652581218400519bea3fff891f218a78ce4b9b72b32dd52a6a9"
   end
 
   depends_on "go" => :build

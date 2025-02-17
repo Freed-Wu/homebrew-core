@@ -1,21 +1,21 @@
 class Ord < Formula
   desc "Index, block explorer, and command-line wallet"
   homepage "https://ordinals.com/"
-  url "https://github.com/ordinals/ord/archive/refs/tags/0.21.2.tar.gz"
-  sha256 "5999cabaa2139d904cc4d22ec5a5c381f360d7c9d80e9c0e60b0fae44061741f"
+  url "https://github.com/ordinals/ord/archive/refs/tags/0.22.2.tar.gz"
+  sha256 "f270aff0ab7190800876b0a662d05b23e5de8aaf7ebfb77f9711260e2aaff3d9"
   license "CC0-1.0"
   head "https://github.com/ordinals/ord.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "55e9804761b588112abcfff210f097c6a420187acd7af46a5d6b39edb52455c1"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "09677f9ffef0fb9d69b844e63a406f7aabfd779ddc50c26f2560c242e06de43a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "4b3ae56beb18f27d2a7515c22b9e491c657f0480baf3fe1d688171710361fa03"
-    sha256 cellar: :any_skip_relocation, sonoma:        "b0f980d5b42584b4dcaa204d026fd5817e8176331a04313d5284ac2674cc491e"
-    sha256 cellar: :any_skip_relocation, ventura:       "c2c84d68ebc83d5c235d7d63372606665f27805e90dd52097a6bf67090bed353"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "fba7636f555de924f94e133875ea2f3ae60e02e23033a7a6ace73a0598703a6c"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "21cd44840862af5e25d1084191ac483ed8e5ab50ed3473e99ed583755ac7ea4e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "920ac53de2ae30b7f75b170e4bc9c5de420e55cdc72534f1b2201c41078988cd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "15f7c11fc20a7211c838e2bb303bd45f176dd5eb8d2aa433e3cef22dc3172446"
+    sha256 cellar: :any_skip_relocation, sonoma:        "03accef84d1c8ae8878c8097c22e00eadaf3f24df3c9e92608cd10414eb1f31a"
+    sha256 cellar: :any_skip_relocation, ventura:       "8493150704ff4a1d784e1d71a8a35d5fdf0d8448ea9c7bbd74c39ec9e8ba5fbd"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "a42836674782f3a94b51ca38ecb3eac52bae72b0eb7e665737a00ae845552df6"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "rust" => :build
 
   on_linux do

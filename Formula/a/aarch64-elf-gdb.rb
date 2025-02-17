@@ -1,9 +1,9 @@
 class Aarch64ElfGdb < Formula
   desc "GNU debugger for aarch64-elf cross development"
   homepage "https://www.gnu.org/software/gdb/"
-  url "https://ftp.gnu.org/gnu/gdb/gdb-15.2.tar.xz"
-  mirror "https://ftpmirror.gnu.org/gdb/gdb-15.2.tar.xz"
-  sha256 "83350ccd35b5b5a0cba6b334c41294ea968158c573940904f00b92f76345314d"
+  url "https://ftp.gnu.org/gnu/gdb/gdb-16.2.tar.xz"
+  mirror "https://ftpmirror.gnu.org/gdb/gdb-16.2.tar.xz"
+  sha256 "4002cb7f23f45c37c790536a13a720942ce4be0402d929c9085e92f10d480119"
   license "GPL-3.0-or-later"
   head "https://sourceware.org/git/binutils-gdb.git", branch: "master"
 
@@ -12,19 +12,19 @@ class Aarch64ElfGdb < Formula
   end
 
   bottle do
-    sha256 arm64_sequoia: "b62673061d0dc0e43854dc03f881a8c1c862a49c083bddbe4f92e851bdb29eae"
-    sha256 arm64_sonoma:  "8a7fb61f0c58aaec08d9d4a7af0d2e85d4137da492bdfdbd4d4b0a4572e9be43"
-    sha256 arm64_ventura: "83f82a565e83ce1b601c1dcd08a095ff4c6a60045d4d6deae16ca8fa63574beb"
-    sha256 sonoma:        "f09b8ba93f91471910fcd70c481137b28990e33d2f062a300692965b9bfbc5de"
-    sha256 ventura:       "afb225d0c2c19acac114fe52f776256510d9ae3352c5cdc5707facb6eeffa259"
-    sha256 x86_64_linux:  "20b07a8f2ead7c91287fc52b063746f1e733554075133959819bf48ed78aea06"
+    sha256 arm64_sequoia: "324a6c319ea8a9d175e6327d89593fc9eea7d1fbe484d41533479f5b1795b3a8"
+    sha256 arm64_sonoma:  "9a79fc135975687ba9f0ec19696895f6df8c0ba831930e3abf66bc9814f49a4b"
+    sha256 arm64_ventura: "5c1056bf8a6b599855947d3c449e43f439c0367dd0e9a2a2d7501e039f69e250"
+    sha256 sonoma:        "07d44f785b149db031e9b6f9c65ab4bc96bad7cf348c047e7023f8b8618d3026"
+    sha256 ventura:       "96bc5b3fa085b1ca452460f1619eeef4c1a9109616e5f0d5891d36aeb9682a7c"
+    sha256 x86_64_linux:  "b424c1bce12d07f93a06767ea48703bdcf10a6bcba460b1ef4b4b99a4c3c36cf"
   end
 
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "aarch64-elf-gcc" => :test
   depends_on "gmp"
   depends_on "mpfr"
-  depends_on "python@3.12"
+  depends_on "python@3.13"
   depends_on "readline"
   depends_on "xz" # required for lzma support
   depends_on "zstd"
@@ -49,7 +49,7 @@ class Aarch64ElfGdb < Formula
       --with-curses
       --with-expat
       --with-lzma
-      --with-python=#{which("python3.12")}
+      --with-python=#{which("python3.13")}
       --with-system-readline
       --with-system-zlib
       --with-zstd

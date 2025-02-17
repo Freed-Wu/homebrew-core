@@ -1,8 +1,8 @@
 class Ispc < Formula
   desc "Compiler for SIMD programming on the CPU"
   homepage "https://ispc.github.io"
-  url "https://github.com/ispc/ispc/archive/refs/tags/v1.25.2.tar.gz"
-  sha256 "745cc8bcde26e63af2700f1811b66d2ca66b2844c8e2aa9ac19c12ab6a39b82a"
+  url "https://github.com/ispc/ispc/archive/refs/tags/v1.26.0.tar.gz"
+  sha256 "f75b26894af1429a3dc6929ae03e2c9e99bb8c5930eda14add5d2f6674db7afb"
   license "BSD-3-Clause"
 
   # Upstream sometimes creates releases that use a stable tag (e.g., `v1.2.3`)
@@ -14,11 +14,12 @@ class Ispc < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sequoia: "b0f72091d48f949e719772d717989af9cd169f6f89a890702b0104a02752395c"
-    sha256 cellar: :any, arm64_sonoma:  "c7a09a3f7c4204420de15636a254ddac95d3e43fbddcab1aa6b6c85b250245c5"
-    sha256 cellar: :any, arm64_ventura: "164b88b15ba40aaa2fa6bf1a48175a0702d07f0f2dd0959f505633d5fd638478"
-    sha256 cellar: :any, sonoma:        "7945def3908530673b9e6e3b20484734613ed5716180c0d080f8142eff99c329"
-    sha256 cellar: :any, ventura:       "2d802a069f6014fbce7666f9ed2bf5fa978c38d4fcd3445fd3ba2b4b4b7de308"
+    sha256 cellar: :any,                 arm64_sequoia: "8ea0319369588dd8a1ae49ceef5bfae7d1f4a1ee662a232212a194bdc0cfba75"
+    sha256 cellar: :any,                 arm64_sonoma:  "da000d5a68707603b12600beb3d6b9c68c8415216bb254d30dd7309cd97019c2"
+    sha256 cellar: :any,                 arm64_ventura: "879ba81d4d347247e3ff447b562fa132746c3f307d65a9039389280788890528"
+    sha256 cellar: :any,                 sonoma:        "5fdfceb7ec3388c2eef20156baf619a75b2038d1c6dcaf962936ed303610eea0"
+    sha256 cellar: :any,                 ventura:       "ca9fa25ca9e9362c370aacae054959c9118a367a478148c0493f22f9835b86ae"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "812244939a24ef3d938af983d68ef6a16a522fe798ff4c0565dc5c6e56d47f41"
   end
 
   depends_on "bison" => :build
@@ -31,8 +32,6 @@ class Ispc < Formula
   on_linux do
     depends_on "tbb"
   end
-
-  fails_with gcc: "5"
 
   def llvm
     deps.map(&:to_formula).find { |f| f.name.match? "^llvm" }

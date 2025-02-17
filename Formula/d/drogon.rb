@@ -3,18 +3,18 @@ class Drogon < Formula
   homepage "https://drogon.org"
   # pull from git tag to get submodules
   url "https://github.com/drogonframework/drogon.git",
-      tag:      "v1.9.8",
-      revision: "6d9ecb8d8d8dcbbc14db618c0687c7ae4c792f1b"
+      tag:      "v1.9.9",
+      revision: "38dd5fea31a7a2727c0a6f6b6b04252374796cab"
   license "MIT"
   head "https://github.com/drogonframework/drogon.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sequoia: "104d0bcb26fdf65349b70c67fcaf5332c59b5c8a687de02a42e55e95b7822132"
-    sha256 cellar: :any,                 arm64_sonoma:  "ed7df8b6d3de6cb9591a19aff68a08a85655e8de7f5b2eac2d38eb14b4cfaa98"
-    sha256 cellar: :any,                 arm64_ventura: "6be94afa6a2f76bf1ca3bcc9c208699fcd593fa6cca818405ed4fe9eb255b523"
-    sha256 cellar: :any,                 sonoma:        "cf4dda4f454e4d79efab47179a4b271ed1abe4047357b2c96f035b8d3269cf25"
-    sha256 cellar: :any,                 ventura:       "2e4aa714582bb75849194dfde74de99fa1f5a4077d8aec2016a8c07467a0099c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "781436bf99dc8ba66be94afe8f63474cfe4b78c78cbd34d8b7d3695ba10804e9"
+    sha256                               arm64_sequoia: "8dc2155bd7e8cc3c0051f94916eecf745776d2df8f1f47496e18faf21e36ab27"
+    sha256                               arm64_sonoma:  "c93d9767414b174d4c1e9d8e04b52c3c39458a26ffdaee359fba557a5e3a66d0"
+    sha256                               arm64_ventura: "15513fef0b3bbed6f98b4c180025e4a3c1482f74a3db073d6502b6ddadc744cc"
+    sha256                               sonoma:        "389c469f48eb5e301057b59bfd8d89d17c8ed11499853ea9154aba60e9def0a8"
+    sha256                               ventura:       "4b1a76323552af03a531fae8915a22535fb842a9eaa9b51076017665bd569f3f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "c566cde051d497bef9503d7a795c1331f5fecb58d347265dc04086c85128f89c"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -31,7 +31,7 @@ class Drogon < Formula
   end
 
   def install
-    args = []
+    args = ["-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]
     args << "-DUUID_DIR=#{Formula["util-linux"].opt_prefix}" if OS.linux?
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args

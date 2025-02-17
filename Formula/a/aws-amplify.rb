@@ -1,17 +1,17 @@
 class AwsAmplify < Formula
   desc "Build full-stack web and mobile apps in hours. Easy to start, easy to scale"
-  homepage "https://aws.amazon.com/amplify"
-  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.13.0.tgz"
-  sha256 "ab866b12ca7c686feb551fe2f9abc56b889192dba1cb1d1e03d6f42af0410d70"
+  homepage "https://aws.amazon.com/amplify/"
+  url "https://registry.npmjs.org/@aws-amplify/cli-internal/-/cli-internal-12.14.3.tgz"
+  sha256 "f5d02c65af9b3b8f6921ff323921c087bc16822ad50c56fee4bed2dd1d0bb04d"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "e8aa28ccf9df1ce7ac285e2d479cc7ac2387581c35895c35e6331fe15c24fa37"
-    sha256 cellar: :any_skip_relocation, sonoma:        "279e981881421d053d92f81891d6fdbd4790a6f50f8de5c18313cffe21e52de1"
-    sha256 cellar: :any_skip_relocation, ventura:       "279e981881421d053d92f81891d6fdbd4790a6f50f8de5c18313cffe21e52de1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "1f74450b24f282297347a77e999bba503ad0d21c99601d6ea03cf598dec63881"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "4d84c688924ca056034840679e30fa6f58d461b217a1331392ae6c7c8d1ff531"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:  "4d84c688924ca056034840679e30fa6f58d461b217a1331392ae6c7c8d1ff531"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "4d84c688924ca056034840679e30fa6f58d461b217a1331392ae6c7c8d1ff531"
+    sha256 cellar: :any_skip_relocation, sonoma:        "1aa2d4ef42aace4d858ad481406bfbee09caccfc40d0e39f00c0700e78c46e50"
+    sha256 cellar: :any_skip_relocation, ventura:       "1aa2d4ef42aace4d858ad481406bfbee09caccfc40d0e39f00c0700e78c46e50"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "e4dd7134dcabfd799eb09e39548c0cb367d44d03450d4d69c3239b44f2106b11"
   end
 
   depends_on "node"

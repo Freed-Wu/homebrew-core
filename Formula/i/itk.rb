@@ -1,10 +1,9 @@
 class Itk < Formula
   desc "Insight Toolkit is a toolkit for performing registration and segmentation"
   homepage "https://itk.org"
-  url "https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.3.0/InsightToolkit-5.3.0.tar.gz"
-  sha256 "57a4471133dc8f76bde3d6eb45285c440bd40d113428884a1487472b7b71e383"
+  url "https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.4.2/InsightToolkit-5.4.2.tar.gz"
+  sha256 "906e60577c95e0bbf51f661af894b5b16663606e39565c4854c803bc98b13e7d"
   license "Apache-2.0"
-  revision 4
   head "https://github.com/InsightSoftwareConsortium/ITK.git", branch: "master"
 
   livecheck do
@@ -13,16 +12,17 @@ class Itk < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:  "2946d8cc3fe71edc8eaee0182502e6a21e7669f38b2dadd27351a455d063118d"
-    sha256                               arm64_ventura: "0b467199158eab5ec6a202ba68e6a5685ff8c8f99799d475380983b917a1a584"
-    sha256                               sonoma:        "8b6af5f9da7f3fe03c9c36d6c467cd68a56c5fe40b3bb848681ba17b27abc9d7"
-    sha256                               ventura:       "4d45a3ddb6decc2e823f9eab2b0e81f3031438250140391f8596a2fe513d2e6f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:  "7933e5ae1c16bc36938461323a0da872e0a79830b945178a1ce371e7fd7d1d75"
+    sha256                               arm64_sonoma:  "4cdab3fc218d9073814fa111b2fa434738981b433b03fd8c7b8ca6cb969bb932"
+    sha256                               arm64_ventura: "e1ffd71aac3e9b767f7bedc685ba53bb33b4b23379a7dfbe839c1c0c27bd46b6"
+    sha256                               sonoma:        "ca84a390943ce24336cacc8e4f84ae22988a85837dd19f3ac9eebdf728a7c577"
+    sha256                               ventura:       "1b987f32ae3408d273878e8e9b3f415e6b5f2afab2445cc1b664707193b97922"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:  "ab73b637c9c35e1e2e54bb49b18ead595facfd12b343148be742dec3cf63608b"
   end
 
   depends_on "cmake" => :build
 
   depends_on "double-conversion"
+  depends_on "expat"
   depends_on "fftw"
   depends_on "gdcm"
   depends_on "hdf5"
@@ -31,10 +31,10 @@ class Itk < Formula
   depends_on "libtiff"
   depends_on "vtk"
 
-  uses_from_macos "expat"
   uses_from_macos "zlib"
 
   on_macos do
+    depends_on "freetype"
     depends_on "glew"
   end
 
@@ -42,8 +42,6 @@ class Itk < Formula
     depends_on "alsa-lib"
     depends_on "unixodbc"
   end
-
-  fails_with gcc: "5"
 
   def install
     # Avoid CMake trying to find GoogleTest even though tests are disabled
@@ -98,7 +96,7 @@ class Itk < Formula
   end
 
   test do
-    (testpath/"test.cxx").write <<-EOS
+    (testpath/"test.cxx").write <<~CPP
       #include "itkImage.h"
       int main(int argc, char* argv[])
       {
@@ -107,13 +105,13 @@ class Itk < Formula
         image->Update();
         return EXIT_SUCCESS;
       }
-    EOS
+    CPP
 
     v = version.major_minor
     # Build step
-    system ENV.cxx, "-std=c++14", "-isystem", "#{include}/ITK-#{v}", "-o", "test.cxx.o", "-c", "test.cxx"
+    system ENV.cxx, "-std=c++17", "-isystem", "#{include}/ITK-#{v}", "-o", "test.cxx.o", "-c", "test.cxx"
     # Linking step
-    system ENV.cxx, "-std=c++14", "test.cxx.o", "-o", "test",
+    system ENV.cxx, "-std=c++17", "test.cxx.o", "-o", "test",
                     lib/shared_library("libITKCommon-#{v}", 1),
                     lib/shared_library("libITKVNLInstantiation-#{v}", 1),
                     lib/shared_library("libitkvnl_algo-#{v}", 1),
